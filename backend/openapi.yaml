@@ -1,0 +1,1780 @@
+openapi: "3.1.0"
+info:
+  title: Project Works API
+  description: Issue tracking system based on simultaneous engineering.
+  version: "0.1.0"
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:8088/api/v1
+    description: Local development
+
+security:
+  - bearerApiKey: []
+  - cookieSession: []
+
+tags:
+  - name: auth
+    description: Authentication and session management
+  - name: projects
+    description: Project CRUD and folder navigation
+  - name: elements
+    description: Element CRUD (requirements, features, tasks, bugs, evaluations, risks)
+  - name: element-links
+    description: Relationships between elements
+  - name: element-versions
+    description: Git-like version history for elements
+  - name: attachments
+    description: File attachments on elements
+  - name: custom-fields
+    description: Custom field definitions and values
+  - name: phases
+    description: Project phases for task scheduling
+  - name: users
+    description: User management
+  - name: groups
+    description: Group and membership management
+  - name: access
+    description: Group-level project access control
+  - name: api-keys
+    description: API key management for CLI/automation
+
+paths:
+  # ─── Auth ───────────────────────────────────────────────
+
+  /auth/login:
+    get:
+      operationId: authLogin
+      tags: [auth]
+      summary: Initiate OIDC login
+      description: Redirects the user to the configured identity provider (e.g. Office 365).
+      security: []
+      parameters:
+        - name: redirect_uri
+          in: query
+          schema:
+            type: string
+      responses:
+        "302":
+          description: Redirect to identity provider
+
+  /auth/callback:
+    get:
+      operationId: authCallback
+      tags: [auth]
+      summary: OIDC callback
+      description: Handles the identity provider callback and establishes a session.
+      security: []
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "302":
+          description: Redirect to application with session cookie set
+
+  /auth/logout:
+    post:
+      operationId: authLogout
+      tags: [auth]
+      summary: Logout
+      responses:
+        "204":
+          description: Session cleared
+
+  /auth/me:
+    get:
+      operationId: authGetCurrentUser
+      tags: [auth]
+      summary: Get current authenticated user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ─── Projects ───────────────────────────────────────────
+
+  /projects:
+    get:
+      operationId: listProjects
+      tags: [projects]
+      summary: List projects
+      parameters:
+        - name: folder_path_prefix
+          in: query
+          description: Filter by folder path prefix (ltree), e.g. "engineering.firmware"
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Project"
+    post:
+      operationId: createProject
+      tags: [projects]
+      summary: Create a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectCreateRequest"
+      responses:
+        "201":
+          description: Created project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /projects/{project_id}:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+    get:
+      operationId: getProject
+      tags: [projects]
+      summary: Get a project by ID
+      responses:
+        "200":
+          description: The project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      operationId: updateProject
+      tags: [projects]
+      summary: Update a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectUpdateRequest"
+      responses:
+        "200":
+          description: Updated project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteProject
+      tags: [projects]
+      summary: Delete a project
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─── Elements ───────────────────────────────────────────
+
+  /projects/{project_id}/elements:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+    get:
+      operationId: listElements
+      tags: [elements]
+      summary: List elements in a project
+      parameters:
+        - name: element_type
+          in: query
+          description: Filter by element type(s), comma-separated
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/ElementType"
+          style: form
+          explode: false
+        - name: task_status
+          in: query
+          description: Filter by task status(es), comma-separated
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/TaskStatus"
+          style: form
+          explode: false
+        - name: assignee_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: search
+          in: query
+          description: Full-text search query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Offset"
+      responses:
+        "200":
+          description: Paginated list of elements
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ElementListResponse"
+    post:
+      operationId: createElement
+      tags: [elements]
+      summary: Create an element
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ElementCreateRequest"
+      responses:
+        "201":
+          description: Created element
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Element"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /elements/{element_id}:
+    parameters:
+      - $ref: "#/components/parameters/ElementId"
+    get:
+      operationId: getElement
+      tags: [elements]
+      summary: Get an element by ID
+      responses:
+        "200":
+          description: The element with custom fields, supervisors, and clients populated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Element"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      operationId: updateElement
+      tags: [elements]
+      summary: Update an element
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ElementUpdateRequest"
+      responses:
+        "200":
+          description: Updated element
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Element"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteElement
+      tags: [elements]
+      summary: Delete an element
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /projects/{project_id}/elements/search:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+    get:
+      operationId: searchElements
+      tags: [elements]
+      summary: Full-text search for elements
+      parameters:
+        - name: query
+          in: query
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Offset"
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ElementListResponse"
+
+  # ─── Element Links ─────────────────────────────────────
+
+  /elements/{element_id}/links:
+    parameters:
+      - $ref: "#/components/parameters/ElementId"
+    get:
+      operationId: listElementLinks
+      tags: [element-links]
+      summary: List links for an element
+      parameters:
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum: [outgoing, incoming, both]
+            default: both
+      responses:
+        "200":
+          description: Links
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ElementLink"
+    post:
+      operationId: createElementLink
+      tags: [element-links]
+      summary: Create a link from this element to another
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ElementLinkCreateRequest"
+      responses:
+        "201":
+          description: Created link
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ElementLink"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /links/{link_id}:
+    parameters:
+      - name: link_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      operationId: deleteElementLink
+      tags: [element-links]
+      summary: Delete a link
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─── Element Versions ──────────────────────────────────
+
+  /elements/{element_id}/versions:
+    parameters:
+      - $ref: "#/components/parameters/ElementId"
+    get:
+      operationId: listElementVersions
+      tags: [element-versions]
+      summary: List version history for an element
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Offset"
+      responses:
+        "200":
+          description: Version history (newest first)
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ElementVersion"
+
+  /elements/{element_id}/versions/{version_number}:
+    parameters:
+      - $ref: "#/components/parameters/ElementId"
+      - name: version_number
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: getElementAtVersion
+      tags: [element-versions]
+      summary: Reconstruct element state at a given version
+      description: >
+        Applies reverse patches from current state backward to reconstruct
+        the element at the requested version. This is a cold-path operation
+        and may be slow for very old versions.
+      responses:
+        "200":
+          description: Element state at the requested version
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Element"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /elements/{element_id}/versions/{version_number}/diff:
+    parameters:
+      - $ref: "#/components/parameters/ElementId"
+      - name: version_number
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: getElementVersionDiff
+      tags: [element-versions]
+      summary: Get the patch for a specific version
+      responses:
+        "200":
+          description: Forward and reverse patches for this version
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ElementVersionPatch"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─── Attachments ────────────────────────────────────────
+
+  /elements/{element_id}/attachments:
+    parameters:
+      - $ref: "#/components/parameters/ElementId"
+    get:
+      operationId: listAttachments
+      tags: [attachments]
+      summary: List attachments for an element
+      responses:
+        "200":
+          description: Attachments
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Attachment"
+    post:
+      operationId: uploadAttachment
+      tags: [attachments]
+      summary: Upload an attachment
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Created attachment metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /attachments/{attachment_id}:
+    parameters:
+      - name: attachment_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getAttachmentDownloadUrl
+      tags: [attachments]
+      summary: Get a presigned download URL for an attachment
+      responses:
+        "200":
+          description: Presigned URL
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [download_url, expires_at]
+                properties:
+                  download_url:
+                    type: string
+                    format: uri
+                  expires_at:
+                    type: string
+                    format: date-time
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteAttachment
+      tags: [attachments]
+      summary: Delete an attachment
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─── Custom Fields ─────────────────────────────────────
+
+  /projects/{project_id}/custom-field-definitions:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+    get:
+      operationId: listCustomFieldDefinitions
+      tags: [custom-fields]
+      summary: List custom field definitions for a project
+      parameters:
+        - name: element_type
+          in: query
+          description: Filter by applicable element type (or "*" for all)
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Custom field definitions
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CustomFieldDefinition"
+    post:
+      operationId: createCustomFieldDefinition
+      tags: [custom-fields]
+      summary: Create a custom field definition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomFieldDefinitionCreateRequest"
+      responses:
+        "201":
+          description: Created definition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomFieldDefinition"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /custom-field-definitions/{field_definition_id}:
+    parameters:
+      - name: field_definition_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    put:
+      operationId: updateCustomFieldDefinition
+      tags: [custom-fields]
+      summary: Update a custom field definition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomFieldDefinitionUpdateRequest"
+      responses:
+        "200":
+          description: Updated definition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomFieldDefinition"
+    delete:
+      operationId: deleteCustomFieldDefinition
+      tags: [custom-fields]
+      summary: Delete a custom field definition
+      responses:
+        "204":
+          description: Deleted
+
+  /elements/{element_id}/custom-field-values:
+    parameters:
+      - $ref: "#/components/parameters/ElementId"
+    get:
+      operationId: getCustomFieldValues
+      tags: [custom-fields]
+      summary: Get all custom field values for an element
+      responses:
+        "200":
+          description: Custom field values
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CustomFieldValue"
+    put:
+      operationId: setCustomFieldValue
+      tags: [custom-fields]
+      summary: Set a custom field value on an element
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomFieldValueSetRequest"
+      responses:
+        "200":
+          description: Value set
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+  /elements/{element_id}/custom-field-values/{field_definition_id}:
+    parameters:
+      - $ref: "#/components/parameters/ElementId"
+      - name: field_definition_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      operationId: deleteCustomFieldValue
+      tags: [custom-fields]
+      summary: Remove a custom field value from an element
+      responses:
+        "204":
+          description: Deleted
+
+  # ─── Phases ─────────────────────────────────────────────
+
+  /projects/{project_id}/phases:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+    get:
+      operationId: listPhases
+      tags: [phases]
+      summary: List phases for a project (ordered)
+      responses:
+        "200":
+          description: Phases
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Phase"
+    post:
+      operationId: createPhase
+      tags: [phases]
+      summary: Create a phase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhaseCreateRequest"
+      responses:
+        "201":
+          description: Created phase
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phase"
+
+  /phases/{phase_id}:
+    parameters:
+      - name: phase_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    put:
+      operationId: updatePhase
+      tags: [phases]
+      summary: Update a phase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhaseUpdateRequest"
+      responses:
+        "200":
+          description: Updated phase
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Phase"
+    delete:
+      operationId: deletePhase
+      tags: [phases]
+      summary: Delete a phase
+      responses:
+        "204":
+          description: Deleted
+
+  # ─── Users ──────────────────────────────────────────────
+
+  /users:
+    get:
+      operationId: listUsers
+      tags: [users]
+      summary: List users
+      parameters:
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Offset"
+      responses:
+        "200":
+          description: Users
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+
+  /users/{user_id}:
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getUser
+      tags: [users]
+      summary: Get a user by ID
+      responses:
+        "200":
+          description: The user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      operationId: updateUser
+      tags: [users]
+      summary: Update a user's display name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                display_name:
+                  type: string
+      responses:
+        "200":
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─── Groups ─────────────────────────────────────────────
+
+  /groups:
+    get:
+      operationId: listGroups
+      tags: [groups]
+      summary: List all groups
+      responses:
+        "200":
+          description: Groups
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Group"
+    post:
+      operationId: createGroup
+      tags: [groups]
+      summary: Create a group
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [group_name]
+              properties:
+                group_name:
+                  type: string
+      responses:
+        "201":
+          description: Created group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+
+  /groups/{group_id}:
+    parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getGroup
+      tags: [groups]
+      summary: Get a group by ID
+      responses:
+        "200":
+          description: The group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteGroup
+      tags: [groups]
+      summary: Delete a group
+      responses:
+        "204":
+          description: Deleted
+
+  /groups/{group_id}/members:
+    parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: listGroupMembers
+      tags: [groups]
+      summary: List users in a group
+      responses:
+        "200":
+          description: Group members
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+    post:
+      operationId: addGroupMember
+      tags: [groups]
+      summary: Add a user to a group
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [user_id]
+              properties:
+                user_id:
+                  type: string
+                  format: uuid
+      responses:
+        "204":
+          description: Added
+
+  /groups/{group_id}/members/{user_id}:
+    parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      operationId: removeGroupMember
+      tags: [groups]
+      summary: Remove a user from a group
+      responses:
+        "204":
+          description: Removed
+
+  /users/{user_id}/groups:
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: listUserGroups
+      tags: [groups]
+      summary: List groups a user belongs to
+      responses:
+        "200":
+          description: Groups
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Group"
+
+  # ─── Group Project Access ───────────────────────────────
+
+  /projects/{project_id}/access:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+    get:
+      operationId: listProjectAccess
+      tags: [access]
+      summary: List group access for a project
+      responses:
+        "200":
+          description: Access entries
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/GroupProjectAccess"
+    put:
+      operationId: setProjectAccess
+      tags: [access]
+      summary: Set group access level on a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GroupProjectAccess"
+      responses:
+        "200":
+          description: Access set
+
+  /projects/{project_id}/access/{group_id}:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      operationId: removeProjectAccess
+      tags: [access]
+      summary: Remove group access from a project
+      responses:
+        "204":
+          description: Removed
+
+  /groups/{group_id}/access:
+    parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: listGroupAccess
+      tags: [access]
+      summary: List all project access entries for a group
+      responses:
+        "200":
+          description: Access entries for this group
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/GroupProjectAccess"
+
+  /projects/{project_id}/access/check:
+    parameters:
+      - $ref: "#/components/parameters/ProjectId"
+    get:
+      operationId: getUserAccessLevel
+      tags: [access]
+      summary: Check the current user's access level on a project
+      responses:
+        "200":
+          description: The user's effective access level
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [access_level]
+                properties:
+                  access_level:
+                    $ref: "#/components/schemas/AccessLevel"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─── API Keys ───────────────────────────────────────────
+
+  /api-keys:
+    get:
+      operationId: listApiKeys
+      tags: [api-keys]
+      summary: List API keys for the current user
+      responses:
+        "200":
+          description: API keys (hashed_key is never returned)
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ApiKeyInfo"
+    post:
+      operationId: createApiKey
+      tags: [api-keys]
+      summary: Create a new API key
+      description: >
+        Returns the raw key exactly once in the response. The key is stored
+        hashed and cannot be retrieved again.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [label]
+              properties:
+                label:
+                  type: string
+      responses:
+        "201":
+          description: Created API key with raw key shown once
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiKeyCreatedResponse"
+
+  /api-keys/{api_key_id}:
+    parameters:
+      - name: api_key_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      operationId: deleteApiKey
+      tags: [api-keys]
+      summary: Revoke an API key
+      responses:
+        "204":
+          description: Revoked
+
+components:
+  # ─── Security Schemes ──────────────────────────────────
+
+  securitySchemes:
+    bearerApiKey:
+      type: http
+      scheme: bearer
+      description: API key for CLI/automation access
+    cookieSession:
+      type: apiKey
+      in: cookie
+      name: session
+      description: Session cookie set after OIDC login
+
+  # ─── Reusable Parameters ───────────────────────────────
+
+  parameters:
+    ProjectId:
+      name: project_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ElementId:
+      name: element_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 50
+        minimum: 1
+        maximum: 500
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+
+  # ─── Reusable Responses ────────────────────────────────
+
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+  # ─── Schemas ────────────────────────────────────────────
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+
+    # ── Enums ──
+
+    ElementType:
+      type: string
+      enum: [requirement, feature, task, bug, evaluation, risk]
+
+    TaskStatus:
+      type: string
+      enum: [backlog, todo, in_progress, in_review, testing, blocked, done, rejected]
+
+    LinkType:
+      type: string
+      enum: [related, child, implement]
+
+    AccessLevel:
+      type: string
+      enum: [read, write, admin]
+
+    FieldType:
+      type: string
+      enum: [string, textarea, integer, real, choice]
+
+    # ── Domain Objects ──
+
+    Project:
+      type: object
+      required: [project_id, project_name, folder_path, creation_time, modification_time]
+      properties:
+        project_id:
+          type: string
+          format: uuid
+        project_name:
+          type: string
+        project_description:
+          type: string
+        folder_path:
+          type: string
+          description: Ltree path, e.g. "engineering.firmware"
+        creation_time:
+          type: string
+          format: date-time
+        modification_time:
+          type: string
+          format: date-time
+
+    ProjectCreateRequest:
+      type: object
+      required: [project_name]
+      properties:
+        project_name:
+          type: string
+        project_description:
+          type: string
+          default: ""
+        folder_path:
+          type: string
+          default: ""
+
+    ProjectUpdateRequest:
+      type: object
+      properties:
+        project_name:
+          type: string
+        project_description:
+          type: string
+        folder_path:
+          type: string
+
+    Element:
+      type: object
+      required: [element_id, project_id, element_type, title, content_sha, creation_time, modification_time]
+      properties:
+        element_id:
+          type: string
+          format: uuid
+        project_id:
+          type: string
+          format: uuid
+        element_type:
+          $ref: "#/components/schemas/ElementType"
+        title:
+          type: string
+        description:
+          type: string
+        content_sha:
+          type: string
+        creation_time:
+          type: string
+          format: date-time
+        modification_time:
+          type: string
+          format: date-time
+        # Requirement-specific
+        interest_level:
+          type: integer
+          minimum: 1
+          maximum: 10
+        # Feature-specific (computed, read-only)
+        feature_progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+          readOnly: true
+          description: Computed from child task progress. Only present for features.
+        # Task-specific
+        assignee_id:
+          type: string
+          format: uuid
+        task_status:
+          $ref: "#/components/schemas/TaskStatus"
+        task_progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+        close_time:
+          type: string
+          format: date-time
+          readOnly: true
+        parent_feature_id:
+          type: string
+          format: uuid
+        start_phase_id:
+          type: string
+          format: uuid
+        delivery_phase_id:
+          type: string
+          format: uuid
+        # Relations populated on detail view
+        custom_field_values:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomFieldValue"
+        supervisors:
+          type: array
+          items:
+            type: string
+            format: uuid
+        clients:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactInfo"
+
+    ElementCreateRequest:
+      type: object
+      required: [element_type, title]
+      properties:
+        element_type:
+          $ref: "#/components/schemas/ElementType"
+        title:
+          type: string
+        description:
+          type: string
+          default: ""
+        interest_level:
+          type: integer
+          minimum: 1
+          maximum: 10
+        assignee_id:
+          type: string
+          format: uuid
+        task_status:
+          $ref: "#/components/schemas/TaskStatus"
+        task_progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+        parent_feature_id:
+          type: string
+          format: uuid
+        start_phase_id:
+          type: string
+          format: uuid
+        delivery_phase_id:
+          type: string
+          format: uuid
+        supervisors:
+          type: array
+          items:
+            type: string
+            format: uuid
+        clients:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactInfo"
+
+    ElementUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        interest_level:
+          type: integer
+          minimum: 1
+          maximum: 10
+        assignee_id:
+          type: string
+          format: uuid
+        task_status:
+          $ref: "#/components/schemas/TaskStatus"
+        task_progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+        parent_feature_id:
+          type: string
+          format: uuid
+        start_phase_id:
+          type: string
+          format: uuid
+        delivery_phase_id:
+          type: string
+          format: uuid
+        supervisors:
+          type: array
+          items:
+            type: string
+            format: uuid
+        clients:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactInfo"
+
+    ElementListResponse:
+      type: object
+      required: [items, total_count]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Element"
+        total_count:
+          type: integer
+          description: Total number of matching elements (before pagination)
+
+    ContactInfo:
+      type: object
+      required: [contact_name]
+      properties:
+        contact_name:
+          type: string
+        contact_email:
+          type: string
+        contact_notes:
+          type: string
+
+    ElementLink:
+      type: object
+      required: [link_id, source_element_id, destination_element_id, link_type, creation_time]
+      properties:
+        link_id:
+          type: string
+          format: uuid
+        source_element_id:
+          type: string
+          format: uuid
+        destination_element_id:
+          type: string
+          format: uuid
+        link_type:
+          $ref: "#/components/schemas/LinkType"
+        creation_time:
+          type: string
+          format: date-time
+
+    ElementLinkCreateRequest:
+      type: object
+      required: [destination_element_id, link_type]
+      properties:
+        destination_element_id:
+          type: string
+          format: uuid
+        link_type:
+          $ref: "#/components/schemas/LinkType"
+
+    ElementVersion:
+      type: object
+      required: [version_id, element_id, version_number, content_sha, committed_time]
+      properties:
+        version_id:
+          type: string
+          format: uuid
+        element_id:
+          type: string
+          format: uuid
+        version_number:
+          type: integer
+        content_sha:
+          type: string
+        committed_time:
+          type: string
+          format: date-time
+        committed_by_id:
+          type: string
+          format: uuid
+        commit_message:
+          type: string
+
+    ElementVersionPatch:
+      type: object
+      required: [version_id, forward_patch, reverse_patch]
+      properties:
+        version_id:
+          type: string
+          format: uuid
+        forward_patch:
+          type: array
+          items:
+            $ref: "#/components/schemas/PatchOperation"
+        reverse_patch:
+          type: array
+          items:
+            $ref: "#/components/schemas/PatchOperation"
+
+    PatchOperation:
+      type: object
+      required: [op, path]
+      properties:
+        op:
+          type: string
+          enum: [add, remove, replace, move, copy, test]
+        path:
+          type: string
+          description: JSON Pointer (RFC 6901)
+        value: {}
+        from:
+          type: string
+
+    Attachment:
+      type: object
+      required: [attachment_id, element_id, file_name, file_size_bytes, content_type, upload_time]
+      properties:
+        attachment_id:
+          type: string
+          format: uuid
+        element_id:
+          type: string
+          format: uuid
+        file_name:
+          type: string
+        file_size_bytes:
+          type: integer
+          format: int64
+        content_type:
+          type: string
+        upload_time:
+          type: string
+          format: date-time
+        uploaded_by_id:
+          type: string
+          format: uuid
+
+    CustomFieldDefinition:
+      type: object
+      required: [field_definition_id, project_id, applicable_element_type, field_name, field_type, display_order]
+      properties:
+        field_definition_id:
+          type: string
+          format: uuid
+        project_id:
+          type: string
+          format: uuid
+        applicable_element_type:
+          type: string
+          description: Element type name, or "*" for all types
+        field_name:
+          type: string
+        field_type:
+          $ref: "#/components/schemas/FieldType"
+        field_options:
+          type: object
+          description: Type-specific options (choices list, min/max, default)
+        display_order:
+          type: integer
+
+    CustomFieldDefinitionCreateRequest:
+      type: object
+      required: [applicable_element_type, field_name, field_type]
+      properties:
+        applicable_element_type:
+          type: string
+        field_name:
+          type: string
+        field_type:
+          $ref: "#/components/schemas/FieldType"
+        field_options:
+          type: object
+        display_order:
+          type: integer
+          default: 0
+
+    CustomFieldDefinitionUpdateRequest:
+      type: object
+      properties:
+        field_name:
+          type: string
+        field_type:
+          $ref: "#/components/schemas/FieldType"
+        field_options:
+          type: object
+        display_order:
+          type: integer
+
+    CustomFieldValue:
+      type: object
+      required: [field_definition_id, field_name, field_value]
+      properties:
+        field_definition_id:
+          type: string
+          format: uuid
+        field_name:
+          type: string
+        field_value: {}
+
+    CustomFieldValueSetRequest:
+      type: object
+      required: [field_definition_id, field_value]
+      properties:
+        field_definition_id:
+          type: string
+          format: uuid
+        field_value: {}
+
+    Phase:
+      type: object
+      required: [phase_id, project_id, phase_name, phase_order]
+      properties:
+        phase_id:
+          type: string
+          format: uuid
+        project_id:
+          type: string
+          format: uuid
+        phase_name:
+          type: string
+        phase_order:
+          type: integer
+        planned_start_date:
+          type: string
+          format: date
+        planned_end_date:
+          type: string
+          format: date
+
+    PhaseCreateRequest:
+      type: object
+      required: [phase_name, phase_order]
+      properties:
+        phase_name:
+          type: string
+        phase_order:
+          type: integer
+        planned_start_date:
+          type: string
+          format: date
+        planned_end_date:
+          type: string
+          format: date
+
+    PhaseUpdateRequest:
+      type: object
+      properties:
+        phase_name:
+          type: string
+        phase_order:
+          type: integer
+        planned_start_date:
+          type: string
+          format: date
+        planned_end_date:
+          type: string
+          format: date
+
+    User:
+      type: object
+      required: [user_id, email, display_name]
+      properties:
+        user_id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        display_name:
+          type: string
+        external_identity_provider:
+          type: string
+
+    Group:
+      type: object
+      required: [group_id, group_name]
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        group_name:
+          type: string
+
+    GroupProjectAccess:
+      type: object
+      required: [group_id, project_id, access_level]
+      properties:
+        group_id:
+          type: string
+          format: uuid
+        project_id:
+          type: string
+          format: uuid
+        access_level:
+          $ref: "#/components/schemas/AccessLevel"
+
+    ApiKeyInfo:
+      type: object
+      required: [api_key_id, label, created_time]
+      properties:
+        api_key_id:
+          type: string
+          format: uuid
+        label:
+          type: string
+        created_time:
+          type: string
+          format: date-time
+        last_used_time:
+          type: string
+          format: date-time
+
+    ApiKeyCreatedResponse:
+      type: object
+      required: [api_key_id, label, raw_key]
+      properties:
+        api_key_id:
+          type: string
+          format: uuid
+        label:
+          type: string
+        raw_key:
+          type: string
+          description: The raw API key, shown exactly once. Store it securely.
