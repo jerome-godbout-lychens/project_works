@@ -1,0 +1,7 @@
+-- +goose Up
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "ltree";
+
+-- +goose Down
+DROP EXTENSION IF EXISTS "ltree";
+DROP EXTENSION IF EXISTS "uuid-ossp";
