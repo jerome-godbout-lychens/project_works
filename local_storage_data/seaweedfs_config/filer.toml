@@ -1,0 +1,19 @@
+[filer.options]
+recursive_delete = false
+
+[leveldb3]
+enabled = true
+dir = "/data/filer_leveldb3"
+
+# Optional: disable other stores explicitly
+[leveldb2]
+enabled = false
+
+[sqlite]
+enabled = false
+
+[mysql]
+enabled = false
+
+[postgres]
+enabled = false

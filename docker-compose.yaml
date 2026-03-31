@@ -1,0 +1,62 @@
+name: project_works
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: project_works_backend:latest
+    container_name: project_works_backend
+    restart: always
+    networks:
+      - app_network
+    ports:
+      - "8088:8088"
+    environment:
+      DATABASE_DSN: "postgres://project_works:project_works@database:5432/project_works?sslmode=disable"
+      FILESTORE_ENDPOINT: "http://file_storage:8333"
+      FILESTORE_BUCKET: "attachments"
+    depends_on:
+      database:
+        condition: service_healthy
+      file_storage:
+        condition: service_started
+
+  database:
+    image: postgres:16-alpine
+    container_name: project_works_database
+    restart: always
+    networks:
+      - app_network
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: project_works
+      POSTGRES_PASSWORD: project_works
+      POSTGRES_DB: project_works
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./local_storage_data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U project_works"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  file_storage:
+    image: chrislusf/seaweedfs:latest
+    container_name: project_works_file_storage
+    restart: always
+    networks:
+      - app_network
+    ports:
+      - "8333:8333"   # S3 API
+      - "9333:9333"   # master
+      - "8888:8888"   # Filer Web UI
+    command: "server -s3 -s3.config=/etc/seaweedfs/s3.json -dir=/data"
+    volumes:
+      - ./local_storage_data/seaweedfs:/data
+      - ./local_storage_data/seaweedfs_config:/etc/seaweedfs
+
+networks:
+  app_network:
+    driver: bridge
