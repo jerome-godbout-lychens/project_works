@@ -1,0 +1,180 @@
+package postgres
+
+import (
+	"context"
+	"database/sql"
+	"fmt"
+	"time"
+
+	"github.com/jerome-godbout-lychens/project_works/backend/internal/domain"
+)
+
+// ProjectStore implements domain.ProjectStore using PostgreSQL.
+type ProjectStore struct {
+	database *sql.DB
+}
+
+// NewProjectStore creates a new ProjectStore instance.
+func NewProjectStore(database *sql.DB) domain.ProjectStore {
+	return &ProjectStore{
+		database: database,
+	}
+}
+
+// GetProjectById retrieves a project by its identifier.
+func (store *ProjectStore) GetProjectById(ctx context.Context, projectId string) (*domain.Project, error) {
+	query := `
+		SELECT project_identifier, project_name, project_description, folder_path, creation_time, modification_time
+		FROM projects
+		WHERE project_identifier = $1
+	`
+
+	project := &domain.Project{}
+	err := store.database.QueryRowContext(ctx, query, projectId).Scan(
+		&project.ProjectId,
+		&project.ProjectName,
+		&project.ProjectDescription,
+		&project.FolderPath,
+		&project.CreationTime,
+		&project.ModificationTime,
+	)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, fmt.Errorf("project not found: %w", err)
+		}
+		return nil, err
+	}
+
+	return project, nil
+}
+
+// ListProjects retrieves all projects, optionally filtered by folder path prefix.
+// If folderPathPrefix is empty, all projects are returned.
+func (store *ProjectStore) ListProjects(ctx context.Context, folderPathPrefix string) ([]domain.Project, error) {
+	var query string
+	var args []interface{}
+
+	if folderPathPrefix == "" {
+		query = `
+			SELECT project_identifier, project_name, project_description, folder_path, creation_time, modification_time
+			FROM projects
+			ORDER BY folder_path, project_name
+		`
+	} else {
+		query = `
+			SELECT project_identifier, project_name, project_description, folder_path, creation_time, modification_time
+			FROM projects
+			WHERE folder_path <@ $1
+			ORDER BY folder_path, project_name
+		`
+		args = append(args, folderPathPrefix)
+	}
+
+	rows, err := store.database.QueryContext(ctx, query, args...)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var projects []domain.Project
+	for rows.Next() {
+		project := domain.Project{}
+		err := rows.Scan(
+			&project.ProjectId,
+			&project.ProjectName,
+			&project.ProjectDescription,
+			&project.FolderPath,
+			&project.CreationTime,
+			&project.ModificationTime,
+		)
+		if err != nil {
+			return nil, err
+		}
+		projects = append(projects, project)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return projects, nil
+}
+
+// CreateProject creates a new project and populates the ProjectId with the generated identifier.
+func (store *ProjectStore) CreateProject(ctx context.Context, project *domain.Project) error {
+	query := `
+		INSERT INTO projects (project_name, project_description, folder_path)
+		VALUES ($1, $2, $3)
+		RETURNING project_identifier, creation_time, modification_time
+	`
+
+	err := store.database.QueryRowContext(
+		ctx,
+		query,
+		project.ProjectName,
+		project.ProjectDescription,
+		project.FolderPath,
+	).Scan(
+		&project.ProjectId,
+		&project.CreationTime,
+		&project.ModificationTime,
+	)
+
+	return err
+}
+
+// UpdateProject updates an existing project's name, description, and folder path.
+func (store *ProjectStore) UpdateProject(ctx context.Context, project *domain.Project) error {
+	query := `
+		UPDATE projects
+		SET project_name = $1, project_description = $2, folder_path = $3, modification_time = $4
+		WHERE project_identifier = $5
+	`
+
+	result, err := store.database.ExecContext(
+		ctx,
+		query,
+		project.ProjectName,
+		project.ProjectDescription,
+		project.FolderPath,
+		time.Now(),
+		project.ProjectId,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return fmt.Errorf("project not found for update: %s", project.ProjectId)
+	}
+
+	return nil
+}
+
+// DeleteProject deletes a project by its identifier.
+func (store *ProjectStore) DeleteProject(ctx context.Context, projectId string) error {
+	query := `DELETE FROM projects WHERE project_identifier = $1`
+
+	result, err := store.database.ExecContext(ctx, query, projectId)
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return fmt.Errorf("project not found for deletion: %s", projectId)
+	}
+
+	return nil
+}

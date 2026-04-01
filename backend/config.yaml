@@ -1,0 +1,33 @@
+server:
+  domain: localhost
+  port: 8088
+
+database:
+  driver: postgres
+  dsn: "postgres://project_works:project_works@localhost:5432/project_works?sslmode=disable"
+  max_open_conns: 25
+  max_idle_conns: 5
+  conn_max_lifetime: 5m
+
+filestore:
+  driver: s3
+  endpoint: "http://localhost:8333"
+  bucket: attachments
+  region: us-east-1
+
+cache:
+  driver: memory
+  ttl: 5m
+  max_cost_bytes: 67108864  # 64 MB
+
+auth:
+  oidc_issuer_url: ""
+  oidc_client_id: ""
+  oidc_client_secret: ""
+  oidc_redirect_url: "http://localhost:8088/api/v1/auth/callback"
+  session_secret: "change-me-in-production"
+  super_admin_email: ""
+
+versioning:
+  inactivity_window: 5m
+  commit_poll_interval: 60s
