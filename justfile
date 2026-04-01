@@ -12,7 +12,10 @@ docker-stop:
     docker compose -f ./docker-compose.yaml down
 
 docker-logs:
-    docker compose -f ./docker-compose.yaml logs -f web
+    docker compose -f ./docker-compose.yaml logs -f backend
+
+shell_backend:
+    docker compose -f ./docker-compose.yaml exec backend /bin/sh
 
 clear-local-storage: docker-stop
     rm -fr local_storage_data/postgres/*

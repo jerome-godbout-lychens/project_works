@@ -1,4 +1,4 @@
-FROM golang:1.23-alpine AS builder
+FROM golang:1.26-alpine AS builder
 
 RUN apk add --no-cache git
 
@@ -8,6 +8,7 @@ COPY backend/go.mod backend/go.sum* ./
 RUN go mod download
 
 COPY backend/ .
+RUN go mod tidy
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o /build/project-works-server ./cmd/server
 
