@@ -6,11 +6,13 @@ import (
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/domain"
 )
 
+// GroupService orchestrates group and access-level operations.
 type GroupService struct {
-	groupStore      domain.GroupStore
-	accessStore     domain.GroupProjectAccessStore
+	groupStore  domain.GroupStore
+	accessStore domain.GroupProjectAccessStore
 }
 
+// NewGroupService creates a new GroupService.
 func NewGroupService(groupStore domain.GroupStore, accessStore domain.GroupProjectAccessStore) *GroupService {
 	return &GroupService{
 		groupStore:  groupStore,
@@ -22,8 +24,8 @@ func (s *GroupService) GetGroupById(ctx context.Context, groupId string) (*domai
 	return s.groupStore.GetGroupById(ctx, groupId)
 }
 
-func (s *GroupService) ListGroups(ctx context.Context, query *domain.GroupQuery) ([]*domain.Group, error) {
-	return s.groupStore.ListGroups(ctx, query)
+func (s *GroupService) ListGroups(ctx context.Context) ([]domain.Group, error) {
+	return s.groupStore.ListGroups(ctx)
 }
 
 func (s *GroupService) CreateGroup(ctx context.Context, group *domain.Group) error {
@@ -42,40 +44,35 @@ func (s *GroupService) RemoveUserFromGroup(ctx context.Context, groupId string, 
 	return s.groupStore.RemoveUserFromGroup(ctx, groupId, userId)
 }
 
-func (s *GroupService) ListGroupsByUser(ctx context.Context, userId string) ([]*domain.Group, error) {
+func (s *GroupService) ListGroupsByUser(ctx context.Context, userId string) ([]domain.Group, error) {
 	return s.groupStore.ListGroupsByUser(ctx, userId)
 }
 
-func (s *GroupService) ListUsersByGroup(ctx context.Context, groupId string) ([]*domain.User, error) {
+func (s *GroupService) ListUsersByGroup(ctx context.Context, groupId string) ([]domain.User, error) {
 	return s.groupStore.ListUsersByGroup(ctx, groupId)
 }
 
-func (s *GroupService) SetProjectAccess(
-	ctx context.Context,
-	groupId string,
-	projectId string,
-	accessLevel domain.ProjectAccessLevel,
-) error {
+func (s *GroupService) SetProjectAccess(ctx context.Context, groupId string, projectId string, accessLevel domain.AccessLevel) error {
 	access := &domain.GroupProjectAccess{
 		GroupId:     groupId,
 		ProjectId:   projectId,
 		AccessLevel: accessLevel,
 	}
-	return s.accessStore.SetProjectAccess(ctx, access)
+	return s.accessStore.SetAccess(ctx, access)
 }
 
 func (s *GroupService) RemoveProjectAccess(ctx context.Context, groupId string, projectId string) error {
-	return s.accessStore.RemoveProjectAccess(ctx, groupId, projectId)
+	return s.accessStore.RemoveAccess(ctx, groupId, projectId)
 }
 
-func (s *GroupService) ListProjectAccess(ctx context.Context, groupId string) ([]*domain.GroupProjectAccess, error) {
-	return s.accessStore.ListProjectAccessByGroup(ctx, groupId)
+func (s *GroupService) ListAccessByGroup(ctx context.Context, groupId string) ([]domain.GroupProjectAccess, error) {
+	return s.accessStore.ListAccessByGroup(ctx, groupId)
 }
 
-func (s *GroupService) ListGroupAccess(ctx context.Context, projectId string) ([]*domain.GroupProjectAccess, error) {
-	return s.accessStore.ListProjectAccessByProject(ctx, projectId)
+func (s *GroupService) ListAccessByProject(ctx context.Context, projectId string) ([]domain.GroupProjectAccess, error) {
+	return s.accessStore.ListAccessByProject(ctx, projectId)
 }
 
-func (s *GroupService) GetUserAccessLevel(ctx context.Context, userId string, projectId string) (domain.ProjectAccessLevel, error) {
+func (s *GroupService) GetUserAccessLevel(ctx context.Context, userId string, projectId string) (*domain.AccessLevel, error) {
 	return s.accessStore.GetUserAccessLevel(ctx, userId, projectId)
 }

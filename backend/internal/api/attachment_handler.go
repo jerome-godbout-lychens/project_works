@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/danielgtaylor/huma/v2"
-	"github.com/google/uuid"
 
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/auth"
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/service"
@@ -86,7 +85,7 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 	}, func(ctx context.Context, input *ListAttachmentsInput) (*ListAttachmentsOutput, error) {
 		attachments, err := attachmentService.ListAttachmentsByElement(ctx, input.ElementId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list attachments", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list attachments", err)
 		}
 
 		output := &ListAttachmentsOutput{}
@@ -118,7 +117,7 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 		// Get authenticated user from context
 		userId, ok := auth.GetUserIdFromContext(ctx)
 		if !ok {
-			return nil, huma.Error(http.StatusUnauthorized, "User not authenticated", nil)
+			return nil, huma.NewError(http.StatusUnauthorized, "User not authenticated", nil)
 		}
 
 		// Upload attachment with file content
@@ -132,7 +131,7 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 			userId,
 		)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to upload attachment", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to upload attachment", err)
 		}
 
 		return &UploadAttachmentOutput{
@@ -156,14 +155,15 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 		Summary:     "Get a presigned URL to download an attachment",
 		Tags:        []string{"attachments"},
 	}, func(ctx context.Context, input *GetAttachmentPresignedURLInput) (*GetAttachmentPresignedURLOutput, error) {
-		url, expiresAt, err := attachmentService.GetPresignedURL(ctx, input.AttachmentId)
+		const presignedURLExpiration = 15 * time.Minute
+		url, err := attachmentService.GetPresignedURL(ctx, input.AttachmentId, presignedURLExpiration)
 		if err != nil {
-			return nil, huma.Error(http.StatusNotFound, "Failed to get presigned URL", err)
+			return nil, huma.NewError(http.StatusNotFound, "Failed to get presigned URL", err)
 		}
 
 		output := &GetAttachmentPresignedURLOutput{}
 		output.Body.URL = url
-		output.Body.ExpiresAt = expiresAt
+		output.Body.ExpiresAt = time.Now().Add(presignedURLExpiration)
 
 		return output, nil
 	})
@@ -178,7 +178,7 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 	}, func(ctx context.Context, input *DeleteAttachmentInput) (*DeleteAttachmentOutput, error) {
 		err := attachmentService.DeleteAttachment(ctx, input.AttachmentId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete attachment", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete attachment", err)
 		}
 
 		return &DeleteAttachmentOutput{

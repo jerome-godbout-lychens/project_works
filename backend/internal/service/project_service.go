@@ -7,11 +7,13 @@ import (
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/domain"
 )
 
+// ProjectService orchestrates project CRUD with cache support.
 type ProjectService struct {
 	projectStore domain.ProjectStore
 	cacheStore   domain.CacheStore
 }
 
+// NewProjectService creates a new ProjectService.
 func NewProjectService(projectStore domain.ProjectStore, cacheStore domain.CacheStore) *ProjectService {
 	return &ProjectService{
 		projectStore: projectStore,
@@ -20,37 +22,33 @@ func NewProjectService(projectStore domain.ProjectStore, cacheStore domain.Cache
 }
 
 func (s *ProjectService) GetProjectById(ctx context.Context, projectId string) (*domain.Project, error) {
-	// Try cache first
-	if cached, err := s.cacheStore.Get(ctx, fmt.Sprintf("project:%s", projectId)); err == nil && cached != nil {
+	cacheKey := fmt.Sprintf("project:%s", projectId)
+	if cached, found := s.cacheStore.Get(ctx, cacheKey); found {
 		if project, ok := cached.(*domain.Project); ok {
 			return project, nil
 		}
 	}
 
-	// Fetch from store
 	project, err := s.projectStore.GetProjectById(ctx, projectId)
 	if err != nil {
 		return nil, err
 	}
 
-	// Cache the result
-	_ = s.cacheStore.Set(ctx, fmt.Sprintf("project:%s", projectId), project, 0)
-
+	s.cacheStore.Set(ctx, cacheKey, project, 0)
 	return project, nil
 }
 
-func (s *ProjectService) ListProjects(ctx context.Context, query *domain.ProjectQuery) ([]*domain.Project, error) {
-	return s.projectStore.ListProjects(ctx, query)
+// ListProjects returns all projects whose folder path is under the given prefix.
+// Pass an empty string to list all projects.
+func (s *ProjectService) ListProjects(ctx context.Context, folderPathPrefix string) ([]domain.Project, error) {
+	return s.projectStore.ListProjects(ctx, folderPathPrefix)
 }
 
 func (s *ProjectService) CreateProject(ctx context.Context, project *domain.Project) error {
 	if err := s.projectStore.CreateProject(ctx, project); err != nil {
 		return err
 	}
-
-	// Cache the newly created project
-	_ = s.cacheStore.Set(ctx, fmt.Sprintf("project:%s", project.Id), project, 0)
-
+	s.cacheStore.Set(ctx, fmt.Sprintf("project:%s", project.ProjectId), project, 0)
 	return nil
 }
 
@@ -58,10 +56,7 @@ func (s *ProjectService) UpdateProject(ctx context.Context, project *domain.Proj
 	if err := s.projectStore.UpdateProject(ctx, project); err != nil {
 		return err
 	}
-
-	// Invalidate cache
-	_ = s.cacheStore.Delete(ctx, fmt.Sprintf("project:%s", project.Id))
-
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("project:%s", project.ProjectId))
 	return nil
 }
 
@@ -69,9 +64,6 @@ func (s *ProjectService) DeleteProject(ctx context.Context, projectId string) er
 	if err := s.projectStore.DeleteProject(ctx, projectId); err != nil {
 		return err
 	}
-
-	// Invalidate cache
-	_ = s.cacheStore.Delete(ctx, fmt.Sprintf("project:%s", projectId))
-
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("project:%s", projectId))
 	return nil
 }

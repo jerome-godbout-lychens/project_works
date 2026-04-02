@@ -7,41 +7,41 @@ import (
 	"time"
 
 	"github.com/danielgtaylor/huma/v2"
+	"github.com/google/uuid"
 
+	"github.com/jerome-godbout-lychens/project_works/backend/internal/domain"
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/service"
 )
 
 // ElementResponse represents an element in API responses.
 type ElementResponse struct {
-	Id              string                 `json:"id"`
-	ProjectId       string                 `json:"project_id"`
-	ElementType     string                 `json:"element_type"`
-	Title           string                 `json:"title"`
-	Description     string                 `json:"description"`
-	CreatedAt       time.Time              `json:"created_at"`
-	UpdatedAt       time.Time              `json:"updated_at"`
-	SHA             string                 `json:"sha"`
-	LinkedTaskIds   []string               `json:"linked_task_ids"`
-	AttachmentIds   []string               `json:"attachment_ids"`
-	CustomFields    map[string]interface{} `json:"custom_fields"`
-	Status          *string                `json:"status,omitempty"`
-	Progress        *int                   `json:"progress,omitempty"`
-	AssigneeId      *string                `json:"assignee_id,omitempty"`
-	ParentFeatureId *string                `json:"parent_feature_id,omitempty"`
-	StartPhaseId    *string                `json:"start_phase_id,omitempty"`
-	DeliveryPhaseId *string                `json:"delivery_phase_id,omitempty"`
-	ClosedAt        *time.Time             `json:"closed_at,omitempty"`
+	ElementId       string                    `json:"element_id"`
+	ProjectId       string                    `json:"project_id"`
+	ElementType     string                    `json:"element_type"`
+	Title           string                    `json:"title"`
+	Description     string                    `json:"description"`
+	ContentSha      string                    `json:"content_sha"`
+	CreationTime    time.Time                 `json:"creation_time"`
+	ModificationTime time.Time               `json:"modification_time"`
+	TaskStatus      *string                   `json:"task_status,omitempty"`
+	TaskProgress    *int                      `json:"task_progress,omitempty"`
+	AssigneeId      *string                   `json:"assignee_id,omitempty"`
+	ParentFeatureId *string                   `json:"parent_feature_id,omitempty"`
+	StartPhaseId    *string                   `json:"start_phase_id,omitempty"`
+	DeliveryPhaseId *string                   `json:"delivery_phase_id,omitempty"`
+	CloseTime       *time.Time                `json:"close_time,omitempty"`
+	InterestLevel   *int                      `json:"interest_level,omitempty"`
 }
 
 // ListElementsInput holds query parameters for listing elements.
 type ListElementsInput struct {
-	ProjectId    string `path:"project_id" format:"uuid" doc:"The project identifier"`
-	ElementType  string `query:"element_type" doc:"Comma-separated element types to filter (e.g., 'task,feature,requirement')"`
-	TaskStatus   string `query:"task_status" doc:"Comma-separated task statuses to filter (e.g., 'todo,in_progress,done')"`
-	AssigneeId   string `query:"assignee_id" doc:"Filter elements assigned to a specific user"`
-	Search       string `query:"search" doc:"Search term for title and description"`
-	Limit        int    `query:"limit" doc:"Maximum number of elements to return" default:"50"`
-	Offset       int    `query:"offset" doc:"Number of elements to skip" default:"0"`
+	ProjectId   string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ElementType string `query:"element_type" doc:"Comma-separated element types to filter"`
+	TaskStatus  string `query:"task_status" doc:"Comma-separated task statuses to filter"`
+	AssigneeId  string `query:"assignee_id" doc:"Filter by assigned user"`
+	Search      string `query:"search" doc:"Full-text search query"`
+	Limit       int    `query:"limit" default:"50" doc:"Maximum number of elements to return"`
+	Offset      int    `query:"offset" default:"0" doc:"Number of elements to skip"`
 }
 
 // ListElementsOutput returns a list of elements.
@@ -56,16 +56,16 @@ type ListElementsOutput struct {
 type CreateElementInput struct {
 	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
 	Body      struct {
-		ElementType     string                 `json:"element_type" required:"true" doc:"Type of element (task, feature, requirement, bug, evaluation, risk)"`
-		Title           string                 `json:"title" required:"true" doc:"Element title"`
-		Description     string                 `json:"description" doc:"Element description (supports markdown and mermaid)"`
-		Status          *string                `json:"status" doc:"Task status (backlog, todo, in_progress, in_review, testing, blocked, done, rejected)"`
-		Progress        *int                   `json:"progress" doc:"Work percentage for tasks (0-100)"`
-		AssigneeId      *string                `json:"assignee_id" doc:"User identifier for task assignment"`
-		ParentFeatureId *string                `json:"parent_feature_id" doc:"Parent feature identifier for tasks"`
-		StartPhaseId    *string                `json:"start_phase_id" doc:"Phase identifier when task should start"`
-		DeliveryPhaseId *string                `json:"delivery_phase_id" doc:"Phase identifier when task should be delivered"`
-		CustomFields    map[string]interface{} `json:"custom_fields" doc:"Custom field values"`
+		ElementType     string  `json:"element_type" required:"true" doc:"Element type (task, feature, requirement, bug, evaluation, risk)"`
+		Title           string  `json:"title" required:"true" doc:"Element title"`
+		Description     string  `json:"description" doc:"Markdown-capable description"`
+		TaskStatus      *string `json:"task_status" doc:"Task status"`
+		TaskProgress    *int    `json:"task_progress" doc:"Work percentage (0-100)"`
+		AssigneeId      *string `json:"assignee_id" doc:"Assigned user identifier"`
+		ParentFeatureId *string `json:"parent_feature_id" doc:"Parent feature identifier"`
+		StartPhaseId    *string `json:"start_phase_id" doc:"Phase when work should start"`
+		DeliveryPhaseId *string `json:"delivery_phase_id" doc:"Phase when work should be delivered"`
+		InterestLevel   *int    `json:"interest_level" doc:"Client interest level (1-10, for requirements)"`
 	}
 }
 
@@ -88,15 +88,15 @@ type GetElementOutput struct {
 type UpdateElementInput struct {
 	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
 	Body      struct {
-		Title           string                 `json:"title" doc:"Element title"`
-		Description     string                 `json:"description" doc:"Element description"`
-		Status          *string                `json:"status" doc:"Task status"`
-		Progress        *int                   `json:"progress" doc:"Work percentage for tasks (0-100)"`
-		AssigneeId      *string                `json:"assignee_id" doc:"User identifier for task assignment"`
-		ParentFeatureId *string                `json:"parent_feature_id" doc:"Parent feature identifier"`
-		StartPhaseId    *string                `json:"start_phase_id" doc:"Phase identifier when task should start"`
-		DeliveryPhaseId *string                `json:"delivery_phase_id" doc:"Phase identifier when task should be delivered"`
-		CustomFields    map[string]interface{} `json:"custom_fields" doc:"Custom field values"`
+		Title           string  `json:"title" doc:"Element title"`
+		Description     string  `json:"description" doc:"Element description"`
+		TaskStatus      *string `json:"task_status" doc:"Task status"`
+		TaskProgress    *int    `json:"task_progress" doc:"Work percentage (0-100)"`
+		AssigneeId      *string `json:"assignee_id" doc:"Assigned user identifier"`
+		ParentFeatureId *string `json:"parent_feature_id" doc:"Parent feature identifier"`
+		StartPhaseId    *string `json:"start_phase_id" doc:"Phase when work should start"`
+		DeliveryPhaseId *string `json:"delivery_phase_id" doc:"Phase when work should be delivered"`
+		InterestLevel   *int    `json:"interest_level" doc:"Client interest level (1-10)"`
 	}
 }
 
@@ -120,9 +120,9 @@ type DeleteElementOutput struct {
 // SearchElementsInput holds query parameters for searching elements.
 type SearchElementsInput struct {
 	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
-	Query     string `query:"query" doc:"Search query for element titles and descriptions"`
-	Limit     int    `query:"limit" doc:"Maximum number of results to return" default:"50"`
-	Offset    int    `query:"offset" doc:"Number of results to skip" default:"0"`
+	Query     string `query:"query" doc:"Search query for title and description"`
+	Limit     int    `query:"limit" default:"50" doc:"Maximum number of results"`
+	Offset    int    `query:"offset" default:"0" doc:"Number of results to skip"`
 }
 
 // SearchElementsOutput returns search results.
@@ -141,36 +141,37 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		Method:      http.MethodGet,
 		Path:        "/api/v1/projects/{project_id}/elements",
 		Summary:     "List elements in a project",
-		Description: "Retrieve a paginated list of elements, with optional filtering by type, status, and assignee.",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *ListElementsInput) (*ListElementsOutput, error) {
-		// Parse comma-separated filter values
-		elementTypes := parseCommaSeparated(input.ElementType)
-		taskStatuses := parseCommaSeparated(input.TaskStatus)
-
-		listRequest := service.ListElementsRequest{
-			ProjectId:   input.ProjectId,
-			ElementType: elementTypes,
-			TaskStatus:  taskStatuses,
-			AssigneeId:  input.AssigneeId,
-			Search:      input.Search,
-			Limit:       input.Limit,
-			Offset:      input.Offset,
+		var assigneeFilter *string
+		if input.AssigneeId != "" {
+			assigneeFilter = &input.AssigneeId
+		}
+		var searchFilter *string
+		if input.Search != "" {
+			searchFilter = &input.Search
 		}
 
-		elements, total, err := elementService.ListElements(ctx, listRequest)
+		filter := domain.ElementFilter{
+			ElementTypes: parseCommaSeparatedElementTypes(input.ElementType),
+			TaskStatuses: parseCommaSeparatedTaskStatuses(input.TaskStatus),
+			AssigneeId:   assigneeFilter,
+			SearchQuery:  searchFilter,
+			Limit:        input.Limit,
+			Offset:       input.Offset,
+		}
+
+		elements, err := elementService.ListElementsByProject(ctx, input.ProjectId, filter)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list elements", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list elements", err)
 		}
 
 		output := &ListElementsOutput{}
-		output.Body.Total = total
+		output.Body.Total = len(elements)
 		output.Body.Items = make([]ElementResponse, len(elements))
-
 		for i, elem := range elements {
-			output.Body.Items[i] = mapElementToResponse(elem)
+			output.Body.Items[i] = mapElementToResponse(&elem)
 		}
-
 		return output, nil
 	})
 
@@ -182,28 +183,35 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		Summary:     "Create a new element",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *CreateElementInput) (*CreateElementOutput, error) {
-		createRequest := service.CreateElementRequest{
-			ProjectId:       input.ProjectId,
-			ElementType:     input.Body.ElementType,
-			Title:           input.Body.Title,
-			Description:     input.Body.Description,
-			Status:          input.Body.Status,
-			Progress:        input.Body.Progress,
-			AssigneeId:      input.Body.AssigneeId,
-			ParentFeatureId: input.Body.ParentFeatureId,
-			StartPhaseId:    input.Body.StartPhaseId,
-			DeliveryPhaseId: input.Body.DeliveryPhaseId,
-			CustomFields:    input.Body.CustomFields,
+		now := time.Now().UTC()
+		var taskStatus *domain.TaskStatus
+		if input.Body.TaskStatus != nil {
+			ts := domain.TaskStatus(*input.Body.TaskStatus)
+			taskStatus = &ts
 		}
 
-		element, err := elementService.CreateElement(ctx, createRequest)
-		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to create element", err)
+		element := &domain.Element{
+			ElementId:        uuid.New().String(),
+			ProjectId:        input.ProjectId,
+			ElementType:      domain.ElementType(input.Body.ElementType),
+			Title:            input.Body.Title,
+			Description:      input.Body.Description,
+			CreationTime:     now,
+			ModificationTime: now,
+			TaskStatus:       taskStatus,
+			TaskProgress:     input.Body.TaskProgress,
+			AssigneeId:       input.Body.AssigneeId,
+			ParentFeatureId:  input.Body.ParentFeatureId,
+			StartPhaseId:     input.Body.StartPhaseId,
+			DeliveryPhaseId:  input.Body.DeliveryPhaseId,
+			InterestLevel:    input.Body.InterestLevel,
 		}
 
-		return &CreateElementOutput{
-			Body: mapElementToResponse(element),
-		}, nil
+		if err := elementService.CreateElement(ctx, element); err != nil {
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to create element", err)
+		}
+
+		return &CreateElementOutput{Body: mapElementToResponse(element)}, nil
 	})
 
 	// Get element
@@ -214,14 +222,11 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		Summary:     "Get an element by identifier",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *GetElementInput) (*GetElementOutput, error) {
-		element, err := elementService.GetElement(ctx, input.ElementId)
+		element, err := elementService.GetElementById(ctx, input.ElementId)
 		if err != nil {
-			return nil, huma.Error(http.StatusNotFound, "Element not found", err)
+			return nil, huma.NewError(http.StatusNotFound, "Element not found", err)
 		}
-
-		return &GetElementOutput{
-			Body: mapElementToResponse(element),
-		}, nil
+		return &GetElementOutput{Body: mapElementToResponse(element)}, nil
 	})
 
 	// Update element
@@ -232,26 +237,41 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		Summary:     "Update an element",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *UpdateElementInput) (*UpdateElementOutput, error) {
-		updateRequest := service.UpdateElementRequest{
-			Title:           input.Body.Title,
-			Description:     input.Body.Description,
-			Status:          input.Body.Status,
-			Progress:        input.Body.Progress,
-			AssigneeId:      input.Body.AssigneeId,
-			ParentFeatureId: input.Body.ParentFeatureId,
-			StartPhaseId:    input.Body.StartPhaseId,
-			DeliveryPhaseId: input.Body.DeliveryPhaseId,
-			CustomFields:    input.Body.CustomFields,
-		}
-
-		element, err := elementService.UpdateElement(ctx, input.ElementId, updateRequest)
+		existing, err := elementService.GetElementById(ctx, input.ElementId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to update element", err)
+			return nil, huma.NewError(http.StatusNotFound, "Element not found", err)
 		}
 
-		return &UpdateElementOutput{
-			Body: mapElementToResponse(element),
-		}, nil
+		var taskStatus *domain.TaskStatus
+		if input.Body.TaskStatus != nil {
+			ts := domain.TaskStatus(*input.Body.TaskStatus)
+			taskStatus = &ts
+		} else {
+			taskStatus = existing.TaskStatus
+		}
+
+		updated := &domain.Element{
+			ElementId:        input.ElementId,
+			ProjectId:        existing.ProjectId,
+			ElementType:      existing.ElementType,
+			Title:            input.Body.Title,
+			Description:      input.Body.Description,
+			ContentSha:       existing.ContentSha,
+			CreationTime:     existing.CreationTime,
+			ModificationTime: time.Now().UTC(),
+			TaskStatus:       taskStatus,
+			TaskProgress:     input.Body.TaskProgress,
+			AssigneeId:       input.Body.AssigneeId,
+			ParentFeatureId:  input.Body.ParentFeatureId,
+			StartPhaseId:     input.Body.StartPhaseId,
+			DeliveryPhaseId:  input.Body.DeliveryPhaseId,
+			InterestLevel:    input.Body.InterestLevel,
+		}
+
+		if err := elementService.UpdateElement(ctx, input.ElementId, updated); err != nil {
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to update element", err)
+		}
+		return &UpdateElementOutput{Body: mapElementToResponse(updated)}, nil
 	})
 
 	// Delete element
@@ -262,18 +282,12 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		Summary:     "Delete an element",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *DeleteElementInput) (*DeleteElementOutput, error) {
-		err := elementService.DeleteElement(ctx, input.ElementId)
-		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete element", err)
+		if err := elementService.DeleteElement(ctx, input.ElementId); err != nil {
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete element", err)
 		}
-
-		return &DeleteElementOutput{
-			Body: struct {
-				Success bool `json:"success"`
-			}{
-				Success: true,
-			},
-		}, nil
+		return &DeleteElementOutput{Body: struct {
+			Success bool `json:"success"`
+		}{Success: true}}, nil
 	})
 
 	// Search elements
@@ -281,48 +295,48 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		OperationID: "searchElements",
 		Method:      http.MethodGet,
 		Path:        "/api/v1/projects/{project_id}/elements/search",
-		Summary:     "Search elements in a project",
-		Description: "Search for elements by query term in title and description.",
+		Summary:     "Search elements by full-text query",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *SearchElementsInput) (*SearchElementsOutput, error) {
-		elements, total, err := elementService.SearchElements(ctx, input.ProjectId, input.Query, input.Limit, input.Offset)
+		elements, err := elementService.SearchElements(ctx, input.ProjectId, input.Query, input.Limit, input.Offset)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to search elements", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to search elements", err)
 		}
 
 		output := &SearchElementsOutput{}
-		output.Body.Total = total
+		output.Body.Total = len(elements)
 		output.Body.Items = make([]ElementResponse, len(elements))
-
 		for i, elem := range elements {
-			output.Body.Items[i] = mapElementToResponse(elem)
+			output.Body.Items[i] = mapElementToResponse(&elem)
 		}
-
 		return output, nil
 	})
 }
 
-// mapElementToResponse converts a domain element to a response struct.
-func mapElementToResponse(element *service.Element) ElementResponse {
+// mapElementToResponse converts a domain.Element to an ElementResponse.
+func mapElementToResponse(element *domain.Element) ElementResponse {
+	var taskStatusStr *string
+	if element.TaskStatus != nil {
+		s := string(*element.TaskStatus)
+		taskStatusStr = &s
+	}
 	return ElementResponse{
-		Id:              element.Id,
-		ProjectId:       element.ProjectId,
-		ElementType:     element.ElementType,
-		Title:           element.Title,
-		Description:     element.Description,
-		CreatedAt:       element.CreatedAt,
-		UpdatedAt:       element.UpdatedAt,
-		SHA:             element.SHA,
-		LinkedTaskIds:   element.LinkedTaskIds,
-		AttachmentIds:   element.AttachmentIds,
-		CustomFields:    element.CustomFields,
-		Status:          element.Status,
-		Progress:        element.Progress,
-		AssigneeId:      element.AssigneeId,
-		ParentFeatureId: element.ParentFeatureId,
-		StartPhaseId:    element.StartPhaseId,
-		DeliveryPhaseId: element.DeliveryPhaseId,
-		ClosedAt:        element.ClosedAt,
+		ElementId:        element.ElementId,
+		ProjectId:        element.ProjectId,
+		ElementType:      string(element.ElementType),
+		Title:            element.Title,
+		Description:      element.Description,
+		ContentSha:       element.ContentSha,
+		CreationTime:     element.CreationTime,
+		ModificationTime: element.ModificationTime,
+		TaskStatus:       taskStatusStr,
+		TaskProgress:     element.TaskProgress,
+		AssigneeId:       element.AssigneeId,
+		ParentFeatureId:  element.ParentFeatureId,
+		StartPhaseId:     element.StartPhaseId,
+		DeliveryPhaseId:  element.DeliveryPhaseId,
+		CloseTime:        element.CloseTime,
+		InterestLevel:    element.InterestLevel,
 	}
 }
 
@@ -331,16 +345,30 @@ func parseCommaSeparated(input string) []string {
 	if input == "" {
 		return nil
 	}
-
 	parts := strings.Split(input, ",")
 	var result []string
-
 	for _, part := range parts {
-		trimmed := strings.TrimSpace(part)
-		if trimmed != "" {
+		if trimmed := strings.TrimSpace(part); trimmed != "" {
 			result = append(result, trimmed)
 		}
 	}
+	return result
+}
 
+func parseCommaSeparatedElementTypes(input string) []domain.ElementType {
+	raw := parseCommaSeparated(input)
+	result := make([]domain.ElementType, len(raw))
+	for i, s := range raw {
+		result[i] = domain.ElementType(s)
+	}
+	return result
+}
+
+func parseCommaSeparatedTaskStatuses(input string) []domain.TaskStatus {
+	raw := parseCommaSeparated(input)
+	result := make([]domain.TaskStatus, len(raw))
+	for i, s := range raw {
+		result[i] = domain.TaskStatus(s)
+	}
 	return result
 }

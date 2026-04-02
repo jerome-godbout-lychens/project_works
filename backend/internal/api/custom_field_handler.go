@@ -138,9 +138,9 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 		Summary:     "List custom field definitions for a project",
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *ListCustomFieldDefinitionsInput) (*ListCustomFieldDefinitionsOutput, error) {
-		definitions, err := customFieldService.ListFieldDefinitionsByProject(ctx, input.ProjectId)
+		definitions, err := customFieldService.ListFieldDefinitionsByProject(ctx, input.ProjectId, "")
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list custom field definitions", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list custom field definitions", err)
 		}
 
 		output := &ListCustomFieldDefinitionsOutput{}
@@ -186,7 +186,7 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 
 		err := customFieldService.CreateFieldDefinition(ctx, definition)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to create custom field definition", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to create custom field definition", err)
 		}
 
 		return &CreateCustomFieldDefinitionOutput{
@@ -221,7 +221,7 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 
 		err := customFieldService.UpdateFieldDefinition(ctx, definition)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to update custom field definition", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to update custom field definition", err)
 		}
 
 		return &UpdateCustomFieldDefinitionOutput{
@@ -247,7 +247,7 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	}, func(ctx context.Context, input *DeleteCustomFieldDefinitionInput) (*DeleteCustomFieldDefinitionOutput, error) {
 		err := customFieldService.DeleteFieldDefinition(ctx, input.FieldDefinitionId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete custom field definition", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete custom field definition", err)
 		}
 
 		return &DeleteCustomFieldDefinitionOutput{
@@ -269,7 +269,7 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	}, func(ctx context.Context, input *ListCustomFieldValuesInput) (*ListCustomFieldValuesOutput, error) {
 		fieldValues, err := customFieldService.GetFieldValues(ctx, input.ElementId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list custom field values", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list custom field values", err)
 		}
 
 		output := &ListCustomFieldValuesOutput{}
@@ -298,9 +298,9 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 		output.Body.Items = make([]CustomFieldValueResponse, len(input.FieldValues))
 
 		for i, fv := range input.FieldValues {
-			_, err := customFieldService.SetFieldValue(ctx, input.ElementId, fv.FieldDefinitionId, fv.Value)
+			err := customFieldService.SetFieldValue(ctx, input.ElementId, fv.FieldDefinitionId, fv.Value)
 			if err != nil {
-				return nil, huma.Error(http.StatusBadRequest, "Failed to set custom field value", err)
+				return nil, huma.NewError(http.StatusBadRequest, "Failed to set custom field value", err)
 			}
 
 			output.Body.Items[i] = CustomFieldValueResponse{
@@ -322,7 +322,7 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	}, func(ctx context.Context, input *DeleteCustomFieldValueInput) (*DeleteCustomFieldValueOutput, error) {
 		err := customFieldService.DeleteFieldValue(ctx, input.ElementId, input.FieldDefinitionId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete custom field value", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete custom field value", err)
 		}
 
 		return &DeleteCustomFieldValueOutput{

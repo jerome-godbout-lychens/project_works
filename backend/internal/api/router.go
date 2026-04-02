@@ -44,7 +44,7 @@ func NewRouter(
 
 	// Create Huma API with Chi adapter
 	humConfig := huma.DefaultConfig("Project Works API", "1.0.0")
-	humConfig.Servers = []huma.Server{
+	humConfig.Servers = []*huma.Server{
 		{
 			URL:         "http://localhost:8080",
 			Description: "Development server",

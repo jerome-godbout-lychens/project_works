@@ -1,11 +1,9 @@
 package api
 
 import (
-	"context"
 	"crypto/rand"
 	"encoding/base64"
 	"net/http"
-	"time"
 
 	chi "github.com/go-chi/chi/v5"
 

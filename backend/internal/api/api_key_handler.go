@@ -73,12 +73,12 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 	}, func(ctx context.Context, input *ListAPIKeysInput) (*ListAPIKeysOutput, error) {
 		userId, ok := auth.GetUserIdFromContext(ctx)
 		if !ok {
-			return nil, huma.Error(http.StatusUnauthorized, "User not authenticated", nil)
+			return nil, huma.NewError(http.StatusUnauthorized, "User not authenticated", nil)
 		}
 
 		apiKeys, err := apiKeyStore.ListAPIKeysByUser(ctx, userId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list API keys", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list API keys", err)
 		}
 
 		output := &ListAPIKeysOutput{}
@@ -107,13 +107,13 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 	}, func(ctx context.Context, input *GenerateAPIKeyInput) (*GenerateAPIKeyOutput, error) {
 		userId, ok := auth.GetUserIdFromContext(ctx)
 		if !ok {
-			return nil, huma.Error(http.StatusUnauthorized, "User not authenticated", nil)
+			return nil, huma.NewError(http.StatusUnauthorized, "User not authenticated", nil)
 		}
 
 		// Generate raw API key
 		rawKey, err := auth.GenerateRawAPIKey()
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to generate API key", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to generate API key", err)
 		}
 
 		// Hash the raw key for storage
@@ -131,7 +131,7 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 		// Store the API key
 		err = apiKeyStore.CreateAPIKey(ctx, apiKey)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to create API key", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to create API key", err)
 		}
 
 		return &GenerateAPIKeyOutput{
@@ -154,7 +154,7 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 	}, func(ctx context.Context, input *DeleteAPIKeyInput) (*DeleteAPIKeyOutput, error) {
 		err := apiKeyStore.DeleteAPIKey(ctx, input.APIKeyId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete API key", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete API key", err)
 		}
 
 		return &DeleteAPIKeyOutput{

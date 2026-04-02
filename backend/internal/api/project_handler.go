@@ -6,20 +6,20 @@ import (
 	"time"
 
 	"github.com/danielgtaylor/huma/v2"
+	"github.com/google/uuid"
 
+	"github.com/jerome-godbout-lychens/project_works/backend/internal/domain"
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/service"
 )
 
 // ProjectResponse represents a project in API responses.
 type ProjectResponse struct {
-	Id               string    `json:"id"`
-	Name             string    `json:"name"`
-	Description      string    `json:"description"`
-	FolderPath       string    `json:"folder_path"`
-	CreatedAt        time.Time `json:"created_at"`
-	UpdatedAt        time.Time `json:"updated_at"`
-	MaxStorageBytes  int64     `json:"max_storage_bytes"`
-	UsedStorageBytes int64     `json:"used_storage_bytes"`
+	ProjectId          string    `json:"project_id"`
+	ProjectName        string    `json:"project_name"`
+	ProjectDescription string    `json:"project_description"`
+	FolderPath         string    `json:"folder_path"`
+	CreationTime       time.Time `json:"creation_time"`
+	ModificationTime   time.Time `json:"modification_time"`
 }
 
 // ListProjectsInput holds query parameters for listing projects.
@@ -40,10 +40,9 @@ type ListProjectsOutput struct {
 // CreateProjectInput holds the request body for creating a project.
 type CreateProjectInput struct {
 	Body struct {
-		Name             string `json:"name" required:"true" doc:"Project name"`
-		Description      string `json:"description" doc:"Project description"`
-		FolderPath       string `json:"folder_path" doc:"Folder path for organization"`
-		MaxStorageBytes  int64  `json:"max_storage_bytes" doc:"Maximum storage in bytes"`
+		ProjectName        string `json:"project_name" required:"true" doc:"Project name"`
+		ProjectDescription string `json:"project_description" doc:"Project description"`
+		FolderPath         string `json:"folder_path" doc:"Folder path for organization"`
 	}
 }
 
@@ -66,9 +65,8 @@ type GetProjectOutput struct {
 type UpdateProjectInput struct {
 	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
 	Body      struct {
-		Name             string `json:"name" doc:"Project name"`
-		Description      string `json:"description" doc:"Project description"`
-		MaxStorageBytes  int64  `json:"max_storage_bytes" doc:"Maximum storage in bytes"`
+		ProjectName        string `json:"project_name" doc:"Project name"`
+		ProjectDescription string `json:"project_description" doc:"Project description"`
 	}
 }
 
@@ -100,17 +98,17 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 		Description: "Retrieve a paginated list of projects, optionally filtered by folder path prefix.",
 		Tags:        []string{"projects"},
 	}, func(ctx context.Context, input *ListProjectsInput) (*ListProjectsOutput, error) {
-		projects, total, err := projectService.ListProjects(ctx, input.FolderPathPrefix, input.Limit, input.Offset)
+		projects, err := projectService.ListProjects(ctx, input.FolderPathPrefix)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list projects", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list projects", err)
 		}
 
 		output := &ListProjectsOutput{}
-		output.Body.Total = total
+		output.Body.Total = len(projects)
 		output.Body.Items = make([]ProjectResponse, len(projects))
 
 		for i, proj := range projects {
-			output.Body.Items[i] = mapProjectToResponse(proj)
+			output.Body.Items[i] = mapProjectToResponse(&proj)
 		}
 
 		return output, nil
@@ -124,14 +122,18 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 		Summary:     "Create a new project",
 		Tags:        []string{"projects"},
 	}, func(ctx context.Context, input *CreateProjectInput) (*CreateProjectOutput, error) {
-		project, err := projectService.CreateProject(ctx, service.CreateProjectRequest{
-			Name:            input.Body.Name,
-			Description:     input.Body.Description,
-			FolderPath:      input.Body.FolderPath,
-			MaxStorageBytes: input.Body.MaxStorageBytes,
-		})
-		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to create project", err)
+		now := time.Now().UTC()
+		project := &domain.Project{
+			ProjectId:          uuid.New().String(),
+			ProjectName:        input.Body.ProjectName,
+			ProjectDescription: input.Body.ProjectDescription,
+			FolderPath:         input.Body.FolderPath,
+			CreationTime:       now,
+			ModificationTime:   now,
+		}
+
+		if err := projectService.CreateProject(ctx, project); err != nil {
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to create project", err)
 		}
 
 		return &CreateProjectOutput{
@@ -147,9 +149,9 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 		Summary:     "Get a project by identifier",
 		Tags:        []string{"projects"},
 	}, func(ctx context.Context, input *GetProjectInput) (*GetProjectOutput, error) {
-		project, err := projectService.GetProject(ctx, input.ProjectId)
+		project, err := projectService.GetProjectById(ctx, input.ProjectId)
 		if err != nil {
-			return nil, huma.Error(http.StatusNotFound, "Project not found", err)
+			return nil, huma.NewError(http.StatusNotFound, "Project not found", err)
 		}
 
 		return &GetProjectOutput{
@@ -165,15 +167,21 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 		Summary:     "Update a project",
 		Tags:        []string{"projects"},
 	}, func(ctx context.Context, input *UpdateProjectInput) (*UpdateProjectOutput, error) {
-		updateRequest := service.UpdateProjectRequest{
-			Name:            input.Body.Name,
-			Description:     input.Body.Description,
-			MaxStorageBytes: input.Body.MaxStorageBytes,
+		project, err := projectService.GetProjectById(ctx, input.ProjectId)
+		if err != nil {
+			return nil, huma.NewError(http.StatusNotFound, "Project not found", err)
 		}
 
-		project, err := projectService.UpdateProject(ctx, input.ProjectId, updateRequest)
-		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to update project", err)
+		if input.Body.ProjectName != "" {
+			project.ProjectName = input.Body.ProjectName
+		}
+		if input.Body.ProjectDescription != "" {
+			project.ProjectDescription = input.Body.ProjectDescription
+		}
+		project.ModificationTime = time.Now().UTC()
+
+		if err := projectService.UpdateProject(ctx, project); err != nil {
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to update project", err)
 		}
 
 		return &UpdateProjectOutput{
@@ -189,9 +197,8 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 		Summary:     "Delete a project",
 		Tags:        []string{"projects"},
 	}, func(ctx context.Context, input *DeleteProjectInput) (*DeleteProjectOutput, error) {
-		err := projectService.DeleteProject(ctx, input.ProjectId)
-		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete project", err)
+		if err := projectService.DeleteProject(ctx, input.ProjectId); err != nil {
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete project", err)
 		}
 
 		return &DeleteProjectOutput{
@@ -204,16 +211,14 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 	})
 }
 
-// mapProjectToResponse converts a domain project to a response struct.
-func mapProjectToResponse(project *service.Project) ProjectResponse {
+// mapProjectToResponse converts a domain.Project to a response struct.
+func mapProjectToResponse(project *domain.Project) ProjectResponse {
 	return ProjectResponse{
-		Id:               project.Id,
-		Name:             project.Name,
-		Description:      project.Description,
-		FolderPath:       project.FolderPath,
-		CreatedAt:        project.CreatedAt,
-		UpdatedAt:        project.UpdatedAt,
-		MaxStorageBytes:  project.MaxStorageBytes,
-		UsedStorageBytes: project.UsedStorageBytes,
+		ProjectId:          project.ProjectId,
+		ProjectName:        project.ProjectName,
+		ProjectDescription: project.ProjectDescription,
+		FolderPath:         project.FolderPath,
+		CreationTime:       project.CreationTime,
+		ModificationTime:   project.ModificationTime,
 	}
 }

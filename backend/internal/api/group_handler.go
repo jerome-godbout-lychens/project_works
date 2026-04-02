@@ -127,9 +127,9 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 		Summary:     "List all groups",
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *ListGroupsInput) (*ListGroupsOutput, error) {
-		groups, err := groupService.ListGroups(ctx, nil)
+		groups, err := groupService.ListGroups(ctx)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list groups", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list groups", err)
 		}
 
 		output := &ListGroupsOutput{}
@@ -160,7 +160,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 
 		err := groupService.CreateGroup(ctx, group)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to create group", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to create group", err)
 		}
 
 		return &CreateGroupOutput{
@@ -181,7 +181,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	}, func(ctx context.Context, input *GetGroupInput) (*GetGroupOutput, error) {
 		group, err := groupService.GetGroupById(ctx, input.GroupId)
 		if err != nil {
-			return nil, huma.Error(http.StatusNotFound, "Group not found", err)
+			return nil, huma.NewError(http.StatusNotFound, "Group not found", err)
 		}
 
 		return &GetGroupOutput{
@@ -202,7 +202,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	}, func(ctx context.Context, input *DeleteGroupInput) (*DeleteGroupOutput, error) {
 		err := groupService.DeleteGroup(ctx, input.GroupId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete group", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete group", err)
 		}
 
 		return &DeleteGroupOutput{
@@ -224,7 +224,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	}, func(ctx context.Context, input *ListGroupMembersInput) (*ListGroupMembersOutput, error) {
 		users, err := groupService.ListUsersByGroup(ctx, input.GroupId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list group members", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list group members", err)
 		}
 
 		output := &ListGroupMembersOutput{}
@@ -251,7 +251,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	}, func(ctx context.Context, input *AddGroupMemberInput) (*AddGroupMemberOutput, error) {
 		err := groupService.AddUserToGroup(ctx, input.GroupId, input.UserId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to add group member", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to add group member", err)
 		}
 
 		return &AddGroupMemberOutput{
@@ -273,7 +273,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	}, func(ctx context.Context, input *RemoveGroupMemberInput) (*RemoveGroupMemberOutput, error) {
 		err := groupService.RemoveUserFromGroup(ctx, input.GroupId, input.UserId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to remove group member", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to remove group member", err)
 		}
 
 		return &RemoveGroupMemberOutput{
@@ -295,7 +295,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	}, func(ctx context.Context, input *ListUserGroupsInput) (*ListUserGroupsOutput, error) {
 		groups, err := groupService.ListGroupsByUser(ctx, input.UserId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list user groups", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list user groups", err)
 		}
 
 		output := &ListUserGroupsOutput{}

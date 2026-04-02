@@ -20,7 +20,7 @@ func (s *PhaseService) CreatePhase(ctx context.Context, phase *domain.Phase) err
 	return s.phaseStore.CreatePhase(ctx, phase)
 }
 
-func (s *PhaseService) ListPhasesByProject(ctx context.Context, projectId string) ([]*domain.Phase, error) {
+func (s *PhaseService) ListPhasesByProject(ctx context.Context, projectId string) ([]domain.Phase, error) {
 	return s.phaseStore.ListPhasesByProject(ctx, projectId)
 }
 

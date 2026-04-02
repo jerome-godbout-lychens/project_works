@@ -86,7 +86,7 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 	}, func(ctx context.Context, input *ListProjectPhasesInput) (*ListProjectPhasesOutput, error) {
 		phases, err := phaseService.ListPhasesByProject(ctx, input.ProjectId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list project phases", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list project phases", err)
 		}
 
 		output := &ListProjectPhasesOutput{}
@@ -125,7 +125,7 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 
 		err := phaseService.CreatePhase(ctx, phase)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to create phase", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to create phase", err)
 		}
 
 		return &CreateProjectPhaseOutput{
@@ -158,7 +158,7 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 
 		err := phaseService.UpdatePhase(ctx, phase)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to update phase", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to update phase", err)
 		}
 
 		return &UpdatePhaseOutput{
@@ -183,7 +183,7 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 	}, func(ctx context.Context, input *DeletePhaseInput) (*DeletePhaseOutput, error) {
 		err := phaseService.DeletePhase(ctx, input.PhaseId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete phase", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete phase", err)
 		}
 
 		return &DeletePhaseOutput{

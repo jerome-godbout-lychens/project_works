@@ -1,163 +1,102 @@
 package postgres
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
-	"time"
 
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/domain"
 )
 
+// APIKeyStore implements domain.APIKeyStore using PostgreSQL.
 type APIKeyStore struct {
 	db *sql.DB
 }
 
+// NewAPIKeyStore creates a new APIKeyStore instance.
 func NewAPIKeyStore(db *sql.DB) domain.APIKeyStore {
-	return &APIKeyStore{
-		db: db,
-	}
+	return &APIKeyStore{db: db}
 }
 
-func (store *APIKeyStore) CreateAPIKey(apiKey *domain.APIKey) (*domain.APIKey, error) {
-	createdAPIKey := &domain.APIKey{}
-
-	err := store.db.QueryRow(
-		`INSERT INTO api_keys (user_id, hashed_key, label, created_time)
-		 VALUES ($1, $2, $3, $4)
-		 RETURNING id, user_id, hashed_key, label, created_time, last_used_time`,
-		apiKey.UserId,
-		apiKey.HashedKey,
-		apiKey.Label,
-		apiKey.CreatedTime,
-	).Scan(
-		&createdAPIKey.APIKeyId,
-		&createdAPIKey.UserId,
-		&createdAPIKey.HashedKey,
-		&createdAPIKey.Label,
-		&createdAPIKey.CreatedTime,
-		&createdAPIKey.LastUsedTime,
-	)
-
+func (store *APIKeyStore) CreateAPIKey(ctx context.Context, apiKey *domain.APIKey) error {
+	err := store.db.QueryRowContext(ctx,
+		`INSERT INTO api_keys (id, user_id, hashed_key, label, created_time)
+		 VALUES ($1, $2, $3, $4, $5)
+		 RETURNING id`,
+		apiKey.APIKeyId, apiKey.UserId, apiKey.HashedKey, apiKey.Label, apiKey.CreatedTime,
+	).Scan(&apiKey.APIKeyId)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create api key: %w", err)
+		return fmt.Errorf("failed to create api key: %w", err)
 	}
-
-	return createdAPIKey, nil
+	return nil
 }
 
-func (store *APIKeyStore) GetAPIKeyByHash(hashedKey string) (*domain.APIKey, error) {
+func (store *APIKeyStore) GetAPIKeyByHash(ctx context.Context, hashedKey string) (*domain.APIKey, error) {
 	apiKey := &domain.APIKey{}
-
-	err := store.db.QueryRow(
+	err := store.db.QueryRowContext(ctx,
 		`SELECT id, user_id, hashed_key, label, created_time, last_used_time
-		 FROM api_keys
-		 WHERE hashed_key = $1`,
-		hashedKey,
-	).Scan(
-		&apiKey.APIKeyId,
-		&apiKey.UserId,
-		&apiKey.HashedKey,
-		&apiKey.Label,
-		&apiKey.CreatedTime,
-		&apiKey.LastUsedTime,
-	)
-
+		 FROM api_keys WHERE hashed_key = $1`, hashedKey,
+	).Scan(&apiKey.APIKeyId, &apiKey.UserId, &apiKey.HashedKey,
+		&apiKey.Label, &apiKey.CreatedTime, &apiKey.LastUsedTime)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, fmt.Errorf("api key not found: %w", err)
+			return nil, domain.ErrAPIKeyNotFound
 		}
 		return nil, fmt.Errorf("failed to query api key by hash: %w", err)
 	}
-
 	return apiKey, nil
 }
 
-func (store *APIKeyStore) ListAPIKeysByUser(userId domain.UserId, limit int, offset int) ([]*domain.APIKey, error) {
-	rows, err := store.db.Query(
+func (store *APIKeyStore) ListAPIKeysByUser(ctx context.Context, userId string) ([]domain.APIKey, error) {
+	rows, err := store.db.QueryContext(ctx,
 		`SELECT id, user_id, hashed_key, label, created_time, last_used_time
-		 FROM api_keys
-		 WHERE user_id = $1
-		 ORDER BY created_time DESC
-		 LIMIT $2 OFFSET $3`,
-		userId,
-		limit,
-		offset,
+		 FROM api_keys WHERE user_id = $1 ORDER BY created_time DESC`, userId,
 	)
-
 	if err != nil {
 		return nil, fmt.Errorf("failed to query api keys by user: %w", err)
 	}
 	defer rows.Close()
 
-	var apiKeys []*domain.APIKey
-
+	var apiKeys []domain.APIKey
 	for rows.Next() {
-		apiKey := &domain.APIKey{}
-		err := rows.Scan(
-			&apiKey.APIKeyId,
-			&apiKey.UserId,
-			&apiKey.HashedKey,
-			&apiKey.Label,
-			&apiKey.CreatedTime,
-			&apiKey.LastUsedTime,
-		)
-		if err != nil {
+		var apiKey domain.APIKey
+		if err := rows.Scan(&apiKey.APIKeyId, &apiKey.UserId, &apiKey.HashedKey,
+			&apiKey.Label, &apiKey.CreatedTime, &apiKey.LastUsedTime); err != nil {
 			return nil, fmt.Errorf("failed to scan api key: %w", err)
 		}
 		apiKeys = append(apiKeys, apiKey)
 	}
-
-	if err = rows.Err(); err != nil {
-		return nil, fmt.Errorf("error iterating api key rows: %w", err)
-	}
-
-	return apiKeys, nil
+	return apiKeys, rows.Err()
 }
 
-func (store *APIKeyStore) DeleteAPIKey(apiKeyId domain.APIKeyId) error {
-	result, err := store.db.Exec(
-		`DELETE FROM api_keys
-		 WHERE id = $1`,
-		apiKeyId,
-	)
-
+func (store *APIKeyStore) DeleteAPIKey(ctx context.Context, apiKeyId string) error {
+	result, err := store.db.ExecContext(ctx,
+		`DELETE FROM api_keys WHERE id = $1`, apiKeyId)
 	if err != nil {
 		return fmt.Errorf("failed to delete api key: %w", err)
 	}
-
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
 		return fmt.Errorf("failed to get rows affected: %w", err)
 	}
-
 	if rowsAffected == 0 {
-		return fmt.Errorf("api key not found")
+		return domain.ErrAPIKeyNotFound
 	}
-
 	return nil
 }
 
-func (store *APIKeyStore) UpdateLastUsedTime(apiKeyId domain.APIKeyId, lastUsedTime time.Time) error {
-	result, err := store.db.Exec(
-		`UPDATE api_keys
-		 SET last_used_time = $1
-		 WHERE id = $2`,
-		lastUsedTime,
-		apiKeyId,
-	)
-
+func (store *APIKeyStore) UpdateLastUsedTime(ctx context.Context, apiKeyId string) error {
+	result, err := store.db.ExecContext(ctx,
+		`UPDATE api_keys SET last_used_time = NOW() WHERE id = $1`, apiKeyId)
 	if err != nil {
 		return fmt.Errorf("failed to update last used time: %w", err)
 	}
-
 	rowsAffected, err := result.RowsAffected()
 	if err != nil {
 		return fmt.Errorf("failed to get rows affected: %w", err)
 	}
-
 	if rowsAffected == 0 {
-		return fmt.Errorf("api key not found")
+		return domain.ErrAPIKeyNotFound
 	}
-
 	return nil
 }

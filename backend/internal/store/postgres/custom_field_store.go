@@ -144,13 +144,10 @@ func (s *CustomFieldDefinitionStore) UpdateFieldDefinition(ctx context.Context, 
 }
 
 // DeleteFieldDefinition removes a custom field definition from the database.
-func (s *CustomFieldDefinitionStore) DeleteFieldDefinition(ctx context.Context, fieldDefinitionId, projectId string) error {
-	query := `
-		DELETE FROM custom_field_definitions
-		WHERE field_definition_id = $1 AND project_id = $2
-	`
+func (s *CustomFieldDefinitionStore) DeleteFieldDefinition(ctx context.Context, fieldDefinitionId string) error {
+	query := `DELETE FROM custom_field_definitions WHERE field_definition_id = $1`
 
-	result, err := s.db.ExecContext(ctx, query, fieldDefinitionId, projectId)
+	result, err := s.db.ExecContext(ctx, query, fieldDefinitionId)
 	if err != nil {
 		return fmt.Errorf("failed to delete field definition: %w", err)
 	}

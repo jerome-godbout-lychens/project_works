@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"time"
 
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/domain"
 )

@@ -2,7 +2,7 @@ package config
 
 import (
 	"time"
-
+	"strings"
 	"github.com/spf13/viper"
 )
 
@@ -90,7 +90,7 @@ func Load(configPath string) (*Config, error) {
 	// Environment variables: DATABASE_DSN → database.dsn
 	v.SetEnvPrefix("")
 	v.AutomaticEnv()
-	v.SetEnvKeyReplacer(underscoreReplacer())
+	v.SetEnvKeyReplacer(strings.NewReplacer("_", "."))
 
 	// Read config file (optional — env vars alone are enough)
 	_ = v.ReadInConfig()
@@ -103,26 +103,4 @@ func Load(configPath string) (*Config, error) {
 	return &config, nil
 }
 
-// underscoreReplacer maps env vars like DATABASE_DSN to viper keys like database.dsn.
-func underscoreReplacer() *stringReplacer {
-	return &stringReplacer{}
-}
 
-// stringReplacer converts underscores to dots for viper env mapping.
-type stringReplacer struct{}
-
-func (r *stringReplacer) Replace(s string) string {
-	// Simple lowercase + underscore-to-dot mapping
-	result := make([]byte, 0, len(s))
-	for i := 0; i < len(s); i++ {
-		c := s[i]
-		if c == '_' {
-			result = append(result, '.')
-		} else if c >= 'A' && c <= 'Z' {
-			result = append(result, c+32)
-		} else {
-			result = append(result, c)
-		}
-	}
-	return string(result)
-}

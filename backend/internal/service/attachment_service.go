@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"time"
@@ -10,6 +11,7 @@ import (
 	"github.com/jerome-godbout-lychens/project_works/backend/internal/domain"
 )
 
+// AttachmentService orchestrates attachment uploads, downloads, and deletion.
 type AttachmentService struct {
 	attachmentStore           domain.AttachmentStore
 	fileStorage               domain.FileStorage
@@ -20,6 +22,7 @@ type AttachmentService struct {
 	cacheStore                domain.CacheStore
 }
 
+// NewAttachmentService creates a new AttachmentService.
 func NewAttachmentService(
 	attachmentStore domain.AttachmentStore,
 	fileStorage domain.FileStorage,
@@ -40,6 +43,7 @@ func NewAttachmentService(
 	}
 }
 
+// UploadAttachment stores a file in the file storage backend and records its metadata.
 func (s *AttachmentService) UploadAttachment(
 	ctx context.Context,
 	elementId string,
@@ -49,134 +53,119 @@ func (s *AttachmentService) UploadAttachment(
 	data io.Reader,
 	uploadedById string,
 ) (*domain.Attachment, error) {
-	// Generate storage key: attachments/{elementId}/{uuid}/{filename}
 	attachmentUuid := uuid.New().String()
 	storageKey := fmt.Sprintf("attachments/%s/%s/%s", elementId, attachmentUuid, fileName)
 
-	// Upload file to storage
-	if err := s.fileStorage.PutFile(ctx, storageKey, contentType, data); err != nil {
+	// Upload file — note arg order: (ctx, storageKey, data, contentType)
+	if err := s.fileStorage.PutFile(ctx, storageKey, data, contentType); err != nil {
 		return nil, fmt.Errorf("failed to upload file to storage: %w", err)
 	}
 
-	// Create attachment metadata
 	attachment := &domain.Attachment{
-		Id:            attachmentUuid,
+		AttachmentId:  attachmentUuid,
 		ElementId:     elementId,
 		FileName:      fileName,
 		ContentType:   contentType,
 		FileSizeBytes: fileSizeBytes,
-		StorageKey:    storageKey,
+		FileStorageKey: storageKey,
 		UploadedById:  uploadedById,
-		CreationTime:  time.Now().UTC(),
+		UploadTime:    time.Now().UTC(),
 	}
 
 	if err := s.attachmentStore.CreateAttachment(ctx, attachment); err != nil {
-		// Attempt to clean up the uploaded file
 		_ = s.fileStorage.DeleteFile(ctx, storageKey)
 		return nil, fmt.Errorf("failed to create attachment metadata: %w", err)
 	}
 
-	// Stage pending change on the element
-	if err := s.stagePendingChangeForElement(ctx, elementId); err != nil {
+	if err := s.stagePendingChange(ctx, elementId); err != nil {
 		return nil, fmt.Errorf("failed to stage pending change: %w", err)
 	}
 
-	// Invalidate cache
-	s.invalidateElementCache(elementId)
-
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementId))
 	return attachment, nil
 }
 
-func (s *AttachmentService) ListAttachmentsByElement(ctx context.Context, elementId string) ([]*domain.Attachment, error) {
+// ListAttachmentsByElement returns all attachments for the given element.
+func (s *AttachmentService) ListAttachmentsByElement(ctx context.Context, elementId string) ([]domain.Attachment, error) {
 	return s.attachmentStore.ListAttachmentsByElement(ctx, elementId)
 }
 
+// DeleteAttachment removes an attachment's metadata and its underlying file.
 func (s *AttachmentService) DeleteAttachment(ctx context.Context, attachmentId string) error {
-	// Load attachment to get storage key and element ID
 	attachment, err := s.attachmentStore.GetAttachmentById(ctx, attachmentId)
 	if err != nil {
 		return err
 	}
-
 	elementId := attachment.ElementId
 
-	// Delete from store
 	if err := s.attachmentStore.DeleteAttachment(ctx, attachmentId); err != nil {
 		return err
 	}
 
-	// Delete from file storage
-	if err := s.fileStorage.DeleteFile(ctx, attachment.StorageKey); err != nil {
+	if err := s.fileStorage.DeleteFile(ctx, attachment.FileStorageKey); err != nil {
 		return fmt.Errorf("failed to delete file from storage: %w", err)
 	}
 
-	// Stage pending change on the element
-	if err := s.stagePendingChangeForElement(ctx, elementId); err != nil {
+	if err := s.stagePendingChange(ctx, elementId); err != nil {
 		return fmt.Errorf("failed to stage pending change: %w", err)
 	}
 
-	// Invalidate cache
-	s.invalidateElementCache(elementId)
-
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementId))
 	return nil
 }
 
-func (s *AttachmentService) GetPresignedURL(ctx context.Context, attachmentId string) (string, time.Time, error) {
+// GetPresignedURL returns a time-limited URL for direct download of an attachment.
+func (s *AttachmentService) GetPresignedURL(ctx context.Context, attachmentId string, expiration time.Duration) (string, error) {
 	attachment, err := s.attachmentStore.GetAttachmentById(ctx, attachmentId)
 	if err != nil {
-		return "", time.Time{}, err
+		return "", err
 	}
 
-	url, expiration, err := s.fileStorage.GetPresignedURL(ctx, attachment.StorageKey)
+	url, err := s.fileStorage.GeneratePresignedURL(ctx, attachment.FileStorageKey, expiration)
 	if err != nil {
-		return "", time.Time{}, fmt.Errorf("failed to get presigned URL: %w", err)
+		return "", fmt.Errorf("failed to generate presigned URL: %w", err)
 	}
-
-	return url, expiration, nil
+	return url, nil
 }
 
-// stagePendingChangeForElement loads the full element aggregate, builds a snapshot, and stages a pending change
-func (s *AttachmentService) stagePendingChangeForElement(ctx context.Context, elementId string) error {
-	// Load the element
+// stagePendingChange loads the full element aggregate and stages a pending change for versioning.
+func (s *AttachmentService) stagePendingChange(ctx context.Context, elementId string) error {
 	element, err := s.elementStore.GetElementById(ctx, elementId)
 	if err != nil {
 		return err
 	}
 
-	// Load all related data for the snapshot
-	links, err := s.elementLinkStore.ListLinksByElement(ctx, elementId)
+	customFieldValues, err := s.customFieldValueStore.GetFieldValues(ctx, elementId)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to load custom field values: %w", err)
 	}
+	element.CustomFieldValues = customFieldValues
 
-	customFields, err := s.customFieldValueStore.GetValuesByElement(ctx, elementId)
+	outgoing, err := s.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionOutgoing)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to load outgoing links: %w", err)
 	}
+	incoming, err := s.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionIncoming)
+	if err != nil {
+		return fmt.Errorf("failed to load incoming links: %w", err)
+	}
+	allLinks := append(outgoing, incoming...)
 
 	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementId)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to load attachments: %w", err)
 	}
 
-	// Build the snapshot
-	snapshot := &domain.ElementSnapshot{
-		Element:           element,
-		Links:             links,
-		CustomFieldValues: customFields,
-		Attachments:       attachments,
+	snapshot := BuildSnapshot(element, allLinks, attachments)
+	snapshotJSON, err := SerializeSnapshot(snapshot)
+	if err != nil {
+		return fmt.Errorf("failed to serialize snapshot: %w", err)
 	}
 
-	// Stage the pending change
-	pendingChange := &domain.ElementPendingChange{
-		ElementId: elementId,
-		Snapshot:  snapshot,
+	var snapshotMap map[string]interface{}
+	if err := json.Unmarshal(snapshotJSON, &snapshotMap); err != nil {
+		return fmt.Errorf("failed to convert snapshot to map: %w", err)
 	}
 
-	return s.elementPendingChangeStore.UpsertPendingChange(ctx, pendingChange)
-}
-
-func (s *AttachmentService) invalidateElementCache(elementId string) {
-	_ = s.cacheStore.Delete(context.Background(), fmt.Sprintf("element:%s", elementId))
-	_ = s.cacheStore.Delete(context.Background(), fmt.Sprintf("element:attachments:%s", elementId))
+	return s.elementPendingChangeStore.UpsertPendingChange(ctx, elementId, snapshotMap)
 }

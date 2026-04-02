@@ -114,8 +114,12 @@ func (s *VersionService) GetElementAtVersion(
 			return nil, fmt.Errorf("failed to convert reverse patch: %w", err)
 		}
 
-		// Apply patch to JSON
-		patchedJson, err := jsonpatch.ApplyPatch(resultJson, patchJson)
+		// Apply patch to JSON using RFC 6902 (decode then apply)
+		decodedPatch, err := jsonpatch.DecodePatch(patchJson)
+		if err != nil {
+			return nil, fmt.Errorf("failed to decode reverse patch: %w", err)
+		}
+		patchedJson, err := decodedPatch.Apply(resultJson)
 		if err != nil {
 			return nil, fmt.Errorf("failed to apply reverse patch: %w", err)
 		}

@@ -151,11 +151,14 @@ func (s *ElementVersionStore) GetPatchesInRange(
 		var forwardPatchJSON []byte
 		var reversePatchJSON []byte
 
+		var elementId string  // selected for JOIN but not stored in patch struct
+		var versionNumber int // selected for ordering but not stored in patch struct
 		err := rows.Scan(
 			&patch.VersionId,
-			&patch.ElementId,
+			&elementId,
 			&forwardPatchJSON,
 			&reversePatchJSON,
+			&versionNumber,
 		)
 		if err != nil {
 			return nil, err

@@ -69,7 +69,7 @@ func (authMiddleware *AuthMiddleware) Authenticate(next http.Handler) http.Handl
 // authenticateWithAPIKey validates an API key and returns the associated user ID
 func (authMiddleware *AuthMiddleware) authenticateWithAPIKey(ctx context.Context, rawKey string) (string, error) {
 	hashedKey := HashAPIKey(rawKey)
-	apiKeyEntity, err := authMiddleware.apiKeyStore.GetByHashedKey(ctx, hashedKey)
+	apiKeyEntity, err := authMiddleware.apiKeyStore.GetAPIKeyByHash(ctx, hashedKey)
 	if err != nil {
 		return "", err
 	}

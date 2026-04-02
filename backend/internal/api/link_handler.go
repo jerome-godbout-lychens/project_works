@@ -46,6 +46,17 @@ type CreateElementLinkOutput struct {
 	Body LinkResponse
 }
 
+// UpdateLinkInput holds the request body for updating a link's type.
+type UpdateLinkInput struct {
+	LinkId   string `path:"link_id" format:"uuid" doc:"The link identifier"`
+	LinkType string `json:"link_type" required:"true" doc:"New link type (related, child, implement)"`
+}
+
+// UpdateLinkOutput returns the updated link.
+type UpdateLinkOutput struct {
+	Body LinkResponse
+}
+
 // DeleteLinkInput holds the path parameter for deleting a link.
 type DeleteLinkInput struct {
 	LinkId string `path:"link_id" format:"uuid" doc:"The link identifier"`
@@ -71,7 +82,7 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 	}, func(ctx context.Context, input *ListElementLinksInput) (*ListElementLinksOutput, error) {
 		links, err := linkService.ListLinksByElement(ctx, input.ElementId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list links", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list links", err)
 		}
 
 		output := &ListElementLinksOutput{}
@@ -109,7 +120,7 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 		// Validate link type
 		linkType := domain.LinkType(input.LinkType)
 		if !linkType.IsValid() {
-			return nil, huma.Error(http.StatusBadRequest, "Invalid link type", nil)
+			return nil, huma.NewError(http.StatusBadRequest, "Invalid link type", nil)
 		}
 
 		link := &domain.ElementLink{
@@ -122,10 +133,45 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 
 		err := linkService.CreateLink(ctx, link)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to create link", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to create link", err)
 		}
 
 		return &CreateElementLinkOutput{
+			Body: LinkResponse{
+				LinkId:               link.LinkId,
+				SourceElementId:      link.SourceElementId,
+				DestinationElementId: link.DestinationElementId,
+				LinkType:             string(link.LinkType),
+				CreationTime:         link.CreationTime,
+			},
+		}, nil
+	})
+
+	// Update link type
+	huma.Register(api, huma.Operation{
+		OperationID: "updateElementLink",
+		Method:      http.MethodPatch,
+		Path:        "/api/v1/links/{link_id}",
+		Summary:     "Update a link's type",
+		Description: "Change the type of an existing link between two elements.",
+		Tags:        []string{"links"},
+	}, func(ctx context.Context, input *UpdateLinkInput) (*UpdateLinkOutput, error) {
+		newLinkType := domain.LinkType(input.LinkType)
+		if !newLinkType.IsValid() {
+			return nil, huma.NewError(http.StatusBadRequest, "Invalid link type", nil)
+		}
+
+		if err := linkService.UpdateLinkType(ctx, input.LinkId, newLinkType); err != nil {
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to update link", err)
+		}
+
+		// Fetch updated link to return in response
+		link, err := linkService.GetLinkById(ctx, input.LinkId)
+		if err != nil {
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to fetch updated link", err)
+		}
+
+		return &UpdateLinkOutput{
 			Body: LinkResponse{
 				LinkId:               link.LinkId,
 				SourceElementId:      link.SourceElementId,
@@ -146,7 +192,7 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 	}, func(ctx context.Context, input *DeleteLinkInput) (*DeleteLinkOutput, error) {
 		err := linkService.DeleteLink(ctx, input.LinkId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to delete link", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete link", err)
 		}
 
 		return &DeleteLinkOutput{

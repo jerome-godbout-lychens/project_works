@@ -53,7 +53,7 @@ func (s *ElementService) GetElementById(ctx context.Context, elementId string) (
 	}
 
 	// Cache miss or invalid type — load from store
-	element, links, attachments, err := s.loadFullAggregate(ctx, elementId)
+	element, _, _, err := s.loadFullAggregate(ctx, elementId)
 	if err != nil {
 		return nil, err
 	}

@@ -90,9 +90,9 @@ func RegisterAccessHandlers(api huma.API, groupService *service.GroupService) {
 		Summary:     "List group access for a project",
 		Tags:        []string{"access"},
 	}, func(ctx context.Context, input *ListProjectAccessInput) (*ListProjectAccessOutput, error) {
-		accesses, err := groupService.ListGroupAccess(ctx, input.ProjectId)
+		accesses, err := groupService.ListAccessByProject(ctx, input.ProjectId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list project access", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list project access", err)
 		}
 
 		output := &ListProjectAccessOutput{}
@@ -121,7 +121,7 @@ func RegisterAccessHandlers(api huma.API, groupService *service.GroupService) {
 
 		err := groupService.SetProjectAccess(ctx, input.GroupId, input.ProjectId, accessLevel)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to set project access", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to set project access", err)
 		}
 
 		return &SetProjectAccessOutput{
@@ -143,7 +143,7 @@ func RegisterAccessHandlers(api huma.API, groupService *service.GroupService) {
 	}, func(ctx context.Context, input *RemoveProjectAccessInput) (*RemoveProjectAccessOutput, error) {
 		err := groupService.RemoveProjectAccess(ctx, input.GroupId, input.ProjectId)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to remove project access", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to remove project access", err)
 		}
 
 		return &RemoveProjectAccessOutput{
@@ -163,9 +163,9 @@ func RegisterAccessHandlers(api huma.API, groupService *service.GroupService) {
 		Summary:     "List all projects a group has access to",
 		Tags:        []string{"access"},
 	}, func(ctx context.Context, input *ListGroupAccessInput) (*ListGroupAccessOutput, error) {
-		accesses, err := groupService.ListProjectAccess(ctx, input.GroupId)
+		accesses, err := groupService.ListAccessByGroup(ctx, input.GroupId)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list group access", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list group access", err)
 		}
 
 		output := &ListGroupAccessOutput{}
@@ -192,11 +192,11 @@ func RegisterAccessHandlers(api huma.API, groupService *service.GroupService) {
 	}, func(ctx context.Context, input *CheckProjectAccessInput) (*CheckProjectAccessOutput, error) {
 		userId, ok := auth.GetUserIdFromContext(ctx)
 		if !ok {
-			return nil, huma.Error(http.StatusUnauthorized, "User not authenticated", nil)
+			return nil, huma.NewError(http.StatusUnauthorized, "User not authenticated", nil)
 		}
 
 		accessLevel, err := groupService.GetUserAccessLevel(ctx, userId, input.ProjectId)
-		if err != nil {
+		if err != nil || accessLevel == nil {
 			output := &CheckProjectAccessOutput{}
 			output.Body.AccessLevel = ""
 			output.Body.HasAccess = false
@@ -204,7 +204,7 @@ func RegisterAccessHandlers(api huma.API, groupService *service.GroupService) {
 		}
 
 		output := &CheckProjectAccessOutput{}
-		output.Body.AccessLevel = string(accessLevel)
+		output.Body.AccessLevel = string(*accessLevel)
 		output.Body.HasAccess = true
 
 		return output, nil

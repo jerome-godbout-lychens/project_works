@@ -62,9 +62,9 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 		Description: "Retrieve a paginated list of all users in the system.",
 		Tags:        []string{"users"},
 	}, func(ctx context.Context, input *ListUsersInput) (*ListUsersOutput, error) {
-		users, err := userService.ListUsers(ctx, nil)
+		users, err := userService.ListUsers(ctx, input.Limit, input.Offset)
 		if err != nil {
-			return nil, huma.Error(http.StatusInternalServerError, "Failed to list users", err)
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list users", err)
 		}
 
 		output := &ListUsersOutput{}
@@ -92,7 +92,7 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 	}, func(ctx context.Context, input *GetUserInput) (*GetUserOutput, error) {
 		user, err := userService.GetUserById(ctx, input.UserId)
 		if err != nil {
-			return nil, huma.Error(http.StatusNotFound, "User not found", err)
+			return nil, huma.NewError(http.StatusNotFound, "User not found", err)
 		}
 
 		return &GetUserOutput{
@@ -115,7 +115,7 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 		// Get current user
 		user, err := userService.GetUserById(ctx, input.UserId)
 		if err != nil {
-			return nil, huma.Error(http.StatusNotFound, "User not found", err)
+			return nil, huma.NewError(http.StatusNotFound, "User not found", err)
 		}
 
 		// Update display name if provided
@@ -126,7 +126,7 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 		// Save updated user
 		err = userService.UpdateUser(ctx, user)
 		if err != nil {
-			return nil, huma.Error(http.StatusBadRequest, "Failed to update user", err)
+			return nil, huma.NewError(http.StatusBadRequest, "Failed to update user", err)
 		}
 
 		return &UpdateUserOutput{
