@@ -14,9 +14,7 @@ type ElementPendingChangeStore struct {
 }
 
 func NewElementPendingChangeStore(db *sql.DB) domain.ElementPendingChangeStore {
-	return &ElementPendingChangeStore{
-		db: db,
-	}
+	return &ElementPendingChangeStore{db: db}
 }
 
 func (s *ElementPendingChangeStore) UpsertPendingChange(
@@ -30,9 +28,9 @@ func (s *ElementPendingChangeStore) UpsertPendingChange(
 	}
 
 	query := `
-		INSERT INTO element_pending_changes (element_id, last_edit_time, snapshot_before_edits)
+		INSERT INTO element_pending_changes (element_identifier, last_edit_time, snapshot_before_edits)
 		VALUES ($1, NOW(), $2)
-		ON CONFLICT (element_id) DO UPDATE SET last_edit_time = NOW()
+		ON CONFLICT (element_identifier) DO UPDATE SET last_edit_time = NOW()
 	`
 
 	_, err = s.db.ExecContext(ctx, query, elementId, snapshotJSON)
@@ -46,7 +44,7 @@ func (s *ElementPendingChangeStore) GetStalePendingChanges(
 	thresholdTime := time.Now().Add(-inactivityThreshold)
 
 	query := `
-		SELECT element_id, last_edit_time, snapshot_before_edits
+		SELECT element_identifier, last_edit_time, snapshot_before_edits
 		FROM element_pending_changes
 		WHERE last_edit_time < $1
 	`
@@ -90,7 +88,7 @@ func (s *ElementPendingChangeStore) DeletePendingChange(
 	ctx context.Context,
 	elementId string,
 ) error {
-	query := `DELETE FROM element_pending_changes WHERE element_id = $1`
+	query := `DELETE FROM element_pending_changes WHERE element_identifier = $1`
 	_, err := s.db.ExecContext(ctx, query, elementId)
 	return err
 }

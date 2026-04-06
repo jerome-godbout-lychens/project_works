@@ -14,14 +14,10 @@ type CustomFieldDefinitionStore struct {
 	db *sql.DB
 }
 
-// NewCustomFieldDefinitionStore creates a new instance of CustomFieldDefinitionStore.
 func NewCustomFieldDefinitionStore(db *sql.DB) domain.CustomFieldDefinitionStore {
-	return &CustomFieldDefinitionStore{
-		db: db,
-	}
+	return &CustomFieldDefinitionStore{db: db}
 }
 
-// CreateFieldDefinition inserts a new custom field definition into the database.
 func (s *CustomFieldDefinitionStore) CreateFieldDefinition(ctx context.Context, definition *domain.CustomFieldDefinition) error {
 	optionsJSON, err := json.Marshal(definition.FieldOptions)
 	if err != nil {
@@ -29,9 +25,9 @@ func (s *CustomFieldDefinitionStore) CreateFieldDefinition(ctx context.Context, 
 	}
 
 	query := `
-		INSERT INTO custom_field_definitions (field_definition_id, project_id, applicable_element_type, field_name, field_type, field_options, display_order)
+		INSERT INTO custom_field_definitions (field_definition_identifier, project_identifier, applicable_element_type, field_name, field_type, field_options, display_order)
 		VALUES ($1, $2, $3, $4, $5, $6, $7)
-		RETURNING field_definition_id
+		RETURNING field_definition_identifier
 	`
 
 	err = s.db.QueryRowContext(ctx, query,
@@ -51,13 +47,11 @@ func (s *CustomFieldDefinitionStore) CreateFieldDefinition(ctx context.Context, 
 	return nil
 }
 
-// ListFieldDefinitionsByProject retrieves all field definitions for a project and element type.
-// Returns definitions applicable to the specific element type or the wildcard type '*'.
 func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.Context, projectId, elementType string) ([]domain.CustomFieldDefinition, error) {
 	query := `
-		SELECT field_definition_id, project_id, applicable_element_type, field_name, field_type, field_options, display_order
+		SELECT field_definition_identifier, project_identifier, applicable_element_type, field_name, field_type, field_options, display_order
 		FROM custom_field_definitions
-		WHERE project_id = $1 AND (applicable_element_type = $2 OR applicable_element_type = '*')
+		WHERE project_identifier = $1 AND (applicable_element_type = $2 OR applicable_element_type = '*')
 		ORDER BY display_order ASC
 	`
 
@@ -68,7 +62,6 @@ func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.C
 	defer rows.Close()
 
 	var definitions []domain.CustomFieldDefinition
-
 	for rows.Next() {
 		var definition domain.CustomFieldDefinition
 		var optionsJSON []byte
@@ -88,8 +81,7 @@ func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.C
 
 		definition.FieldOptions = make(map[string]interface{})
 		if len(optionsJSON) > 0 {
-			err = json.Unmarshal(optionsJSON, &definition.FieldOptions)
-			if err != nil {
+			if err = json.Unmarshal(optionsJSON, &definition.FieldOptions); err != nil {
 				return nil, fmt.Errorf("failed to unmarshal field options: %w", err)
 			}
 		}
@@ -97,14 +89,9 @@ func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.C
 		definitions = append(definitions, definition)
 	}
 
-	if err = rows.Err(); err != nil {
-		return nil, fmt.Errorf("error iterating field definitions: %w", err)
-	}
-
-	return definitions, nil
+	return definitions, rows.Err()
 }
 
-// UpdateFieldDefinition updates an existing custom field definition.
 func (s *CustomFieldDefinitionStore) UpdateFieldDefinition(ctx context.Context, definition *domain.CustomFieldDefinition) error {
 	optionsJSON, err := json.Marshal(definition.FieldOptions)
 	if err != nil {
@@ -114,7 +101,7 @@ func (s *CustomFieldDefinitionStore) UpdateFieldDefinition(ctx context.Context, 
 	query := `
 		UPDATE custom_field_definitions
 		SET field_name = $1, field_type = $2, field_options = $3, display_order = $4, applicable_element_type = $5
-		WHERE field_definition_id = $6 AND project_id = $7
+		WHERE field_definition_identifier = $6 AND project_identifier = $7
 	`
 
 	result, err := s.db.ExecContext(ctx, query,
@@ -126,7 +113,6 @@ func (s *CustomFieldDefinitionStore) UpdateFieldDefinition(ctx context.Context, 
 		definition.FieldDefinitionId,
 		definition.ProjectId,
 	)
-
 	if err != nil {
 		return fmt.Errorf("failed to update field definition: %w", err)
 	}
@@ -135,7 +121,6 @@ func (s *CustomFieldDefinitionStore) UpdateFieldDefinition(ctx context.Context, 
 	if err != nil {
 		return fmt.Errorf("failed to get rows affected: %w", err)
 	}
-
 	if rowsAffected == 0 {
 		return fmt.Errorf("field definition not found")
 	}
@@ -143,11 +128,9 @@ func (s *CustomFieldDefinitionStore) UpdateFieldDefinition(ctx context.Context, 
 	return nil
 }
 
-// DeleteFieldDefinition removes a custom field definition from the database.
 func (s *CustomFieldDefinitionStore) DeleteFieldDefinition(ctx context.Context, fieldDefinitionId string) error {
-	query := `DELETE FROM custom_field_definitions WHERE field_definition_id = $1`
-
-	result, err := s.db.ExecContext(ctx, query, fieldDefinitionId)
+	result, err := s.db.ExecContext(ctx,
+		`DELETE FROM custom_field_definitions WHERE field_definition_identifier = $1`, fieldDefinitionId)
 	if err != nil {
 		return fmt.Errorf("failed to delete field definition: %w", err)
 	}
@@ -156,7 +139,6 @@ func (s *CustomFieldDefinitionStore) DeleteFieldDefinition(ctx context.Context, 
 	if err != nil {
 		return fmt.Errorf("failed to get rows affected: %w", err)
 	}
-
 	if rowsAffected == 0 {
 		return fmt.Errorf("field definition not found")
 	}
@@ -169,14 +151,10 @@ type CustomFieldValueStore struct {
 	db *sql.DB
 }
 
-// NewCustomFieldValueStore creates a new instance of CustomFieldValueStore.
 func NewCustomFieldValueStore(db *sql.DB) domain.CustomFieldValueStore {
-	return &CustomFieldValueStore{
-		db: db,
-	}
+	return &CustomFieldValueStore{db: db}
 }
 
-// SetFieldValue inserts or updates a custom field value for an element.
 func (s *CustomFieldValueStore) SetFieldValue(ctx context.Context, elementId, fieldDefinitionId string, value interface{}) error {
 	valueJSON, err := json.Marshal(value)
 	if err != nil {
@@ -184,9 +162,9 @@ func (s *CustomFieldValueStore) SetFieldValue(ctx context.Context, elementId, fi
 	}
 
 	query := `
-		INSERT INTO custom_field_values (element_id, field_definition_id, field_value)
+		INSERT INTO element_custom_field_values (element_identifier, field_definition_identifier, field_value)
 		VALUES ($1, $2, $3)
-		ON CONFLICT (element_id, field_definition_id) DO UPDATE
+		ON CONFLICT (element_identifier, field_definition_identifier) DO UPDATE
 		SET field_value = EXCLUDED.field_value
 	`
 
@@ -198,14 +176,12 @@ func (s *CustomFieldValueStore) SetFieldValue(ctx context.Context, elementId, fi
 	return nil
 }
 
-// GetFieldValues retrieves all custom field values for a given element.
-// Returns the field values joined with their definitions to include field names.
 func (s *CustomFieldValueStore) GetFieldValues(ctx context.Context, elementId string) ([]domain.CustomFieldValue, error) {
 	query := `
-		SELECT cfv.field_definition_id, cfd.field_name, cfv.field_value
-		FROM custom_field_values cfv
-		JOIN custom_field_definitions cfd ON cfv.field_definition_id = cfd.field_definition_id
-		WHERE cfv.element_id = $1
+		SELECT cfv.field_definition_identifier, cfd.field_name, cfv.field_value
+		FROM element_custom_field_values cfv
+		JOIN custom_field_definitions cfd ON cfv.field_definition_identifier = cfd.field_definition_identifier
+		WHERE cfv.element_identifier = $1
 		ORDER BY cfd.display_order ASC
 	`
 
@@ -216,7 +192,6 @@ func (s *CustomFieldValueStore) GetFieldValues(ctx context.Context, elementId st
 	defer rows.Close()
 
 	var values []domain.CustomFieldValue
-
 	for rows.Next() {
 		var customFieldValue domain.CustomFieldValue
 		var valueJSON []byte
@@ -230,29 +205,21 @@ func (s *CustomFieldValueStore) GetFieldValues(ctx context.Context, elementId st
 			return nil, fmt.Errorf("failed to scan field value: %w", err)
 		}
 
-		err = json.Unmarshal(valueJSON, &customFieldValue.FieldValue)
-		if err != nil {
+		if err = json.Unmarshal(valueJSON, &customFieldValue.FieldValue); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal field value: %w", err)
 		}
 
 		values = append(values, customFieldValue)
 	}
 
-	if err = rows.Err(); err != nil {
-		return nil, fmt.Errorf("error iterating field values: %w", err)
-	}
-
-	return values, nil
+	return values, rows.Err()
 }
 
-// DeleteFieldValue removes a custom field value for a given element and field definition.
 func (s *CustomFieldValueStore) DeleteFieldValue(ctx context.Context, elementId, fieldDefinitionId string) error {
-	query := `
-		DELETE FROM custom_field_values
-		WHERE element_id = $1 AND field_definition_id = $2
-	`
-
-	result, err := s.db.ExecContext(ctx, query, elementId, fieldDefinitionId)
+	result, err := s.db.ExecContext(ctx,
+		`DELETE FROM element_custom_field_values WHERE element_identifier = $1 AND field_definition_identifier = $2`,
+		elementId, fieldDefinitionId,
+	)
 	if err != nil {
 		return fmt.Errorf("failed to delete field value: %w", err)
 	}
@@ -261,7 +228,6 @@ func (s *CustomFieldValueStore) DeleteFieldValue(ctx context.Context, elementId,
 	if err != nil {
 		return fmt.Errorf("failed to get rows affected: %w", err)
 	}
-
 	if rowsAffected == 0 {
 		return fmt.Errorf("field value not found")
 	}

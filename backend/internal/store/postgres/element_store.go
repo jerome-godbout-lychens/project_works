@@ -21,10 +21,10 @@ func NewElementStore(db *sql.DB) domain.ElementStore {
 }
 
 const elementSelectColumns = `
-	id, project_id, element_type, title, description, content_sha,
-	creation_time, modification_time, interest_level, assignee_id,
-	task_status, task_progress, close_time, parent_feature_id,
-	start_phase_id, delivery_phase_id
+	element_identifier, project_identifier, element_type, title, description, content_sha,
+	creation_time, modification_time, interest_level, assignee_identifier,
+	task_status, task_progress, close_time, parent_feature_identifier,
+	start_phase_identifier, delivery_phase_identifier
 `
 
 func scanElement(row interface {
@@ -55,9 +55,8 @@ func scanElement(row interface {
 	return &element, nil
 }
 
-// GetElementById retrieves a single element by its ID.
 func (s *ElementStore) GetElementById(ctx context.Context, elementId string) (*domain.Element, error) {
-	query := `SELECT` + elementSelectColumns + `FROM elements WHERE id = $1`
+	query := `SELECT` + elementSelectColumns + `FROM elements WHERE element_identifier = $1`
 	element, err := scanElement(s.db.QueryRowContext(ctx, query, elementId))
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -68,9 +67,8 @@ func (s *ElementStore) GetElementById(ctx context.Context, elementId string) (*d
 	return element, nil
 }
 
-// ListElementsByProject retrieves elements for a project with optional filtering.
 func (s *ElementStore) ListElementsByProject(ctx context.Context, projectId string, filter domain.ElementFilter) ([]domain.Element, error) {
-	query := `SELECT` + elementSelectColumns + `FROM elements WHERE project_id = $1`
+	query := `SELECT` + elementSelectColumns + `FROM elements WHERE project_identifier = $1`
 	args := []interface{}{projectId}
 	paramIndex := 2
 
@@ -95,7 +93,7 @@ func (s *ElementStore) ListElementsByProject(ctx context.Context, projectId stri
 	}
 
 	if filter.AssigneeId != nil {
-		query += fmt.Sprintf(" AND assignee_id = $%d", paramIndex)
+		query += fmt.Sprintf(" AND assignee_identifier = $%d", paramIndex)
 		args = append(args, *filter.AssigneeId)
 		paramIndex++
 	}
@@ -138,7 +136,6 @@ func (s *ElementStore) ListElementsByProject(ctx context.Context, projectId stri
 	return elements, rows.Err()
 }
 
-// CreateElement inserts a new element.
 func (s *ElementStore) CreateElement(ctx context.Context, element *domain.Element) error {
 	closeTime := element.CloseTime
 	if element.TaskStatus != nil && (*element.TaskStatus == domain.TaskStatusDone || *element.TaskStatus == domain.TaskStatusRejected) {
@@ -148,10 +145,10 @@ func (s *ElementStore) CreateElement(ctx context.Context, element *domain.Elemen
 
 	query := `
 		INSERT INTO elements (
-			id, project_id, element_type, title, description, content_sha,
-			creation_time, modification_time, interest_level, assignee_id,
-			task_status, task_progress, close_time, parent_feature_id,
-			start_phase_id, delivery_phase_id
+			element_identifier, project_identifier, element_type, title, description, content_sha,
+			creation_time, modification_time, interest_level, assignee_identifier,
+			task_status, task_progress, close_time, parent_feature_identifier,
+			start_phase_identifier, delivery_phase_identifier
 		) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
 		RETURNING` + elementSelectColumns
 
@@ -170,7 +167,6 @@ func (s *ElementStore) CreateElement(ctx context.Context, element *domain.Elemen
 	return nil
 }
 
-// UpdateElement updates an existing element.
 func (s *ElementStore) UpdateElement(ctx context.Context, element *domain.Element) error {
 	current, err := s.GetElementById(ctx, element.ElementId)
 	if err != nil {
@@ -192,10 +188,10 @@ func (s *ElementStore) UpdateElement(ctx context.Context, element *domain.Elemen
 	query := `
 		UPDATE elements SET
 			element_type=$1, title=$2, description=$3, content_sha=$4,
-			modification_time=$5, interest_level=$6, assignee_id=$7,
+			modification_time=$5, interest_level=$6, assignee_identifier=$7,
 			task_status=$8, task_progress=$9, close_time=$10,
-			parent_feature_id=$11, start_phase_id=$12, delivery_phase_id=$13
-		WHERE id=$14
+			parent_feature_identifier=$11, start_phase_identifier=$12, delivery_phase_identifier=$13
+		WHERE element_identifier=$14
 		RETURNING` + elementSelectColumns
 
 	updated, err := scanElement(s.db.QueryRowContext(ctx, query,
@@ -212,9 +208,8 @@ func (s *ElementStore) UpdateElement(ctx context.Context, element *domain.Elemen
 	return nil
 }
 
-// DeleteElement removes an element by ID.
 func (s *ElementStore) DeleteElement(ctx context.Context, elementId string) error {
-	result, err := s.db.ExecContext(ctx, "DELETE FROM elements WHERE id = $1", elementId)
+	result, err := s.db.ExecContext(ctx, "DELETE FROM elements WHERE element_identifier = $1", elementId)
 	if err != nil {
 		return err
 	}
@@ -228,11 +223,10 @@ func (s *ElementStore) DeleteElement(ctx context.Context, elementId string) erro
 	return nil
 }
 
-// SearchElements performs a full-text search across elements in a project.
 func (s *ElementStore) SearchElements(ctx context.Context, projectId string, query string, limit int, offset int) ([]domain.Element, error) {
 	sqlQuery := `SELECT` + elementSelectColumns + `
 		FROM elements
-		WHERE project_id = $1
+		WHERE project_identifier = $1
 		AND to_tsvector('english', title || ' ' || description) @@ plainto_tsquery('english', $2)
 		ORDER BY creation_time DESC
 		LIMIT $3 OFFSET $4`

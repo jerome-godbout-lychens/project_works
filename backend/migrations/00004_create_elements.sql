@@ -68,6 +68,7 @@ CREATE INDEX index_requirement_clients_on_element
     ON requirement_clients (element_identifier);
 
 -- Trigger to auto-update modification_time on element changes
+-- +goose StatementBegin
 CREATE OR REPLACE FUNCTION update_element_modification_time()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -75,6 +76,7 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+-- +goose StatementEnd
 
 CREATE TRIGGER trigger_elements_modification_time
     BEFORE UPDATE ON elements

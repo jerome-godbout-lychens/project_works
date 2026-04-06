@@ -2,7 +2,7 @@ package config
 
 import (
 	"time"
-	"strings"
+
 	"github.com/spf13/viper"
 )
 
@@ -87,10 +87,28 @@ func Load(configPath string) (*Config, error) {
 		v.AddConfigPath("/app")
 	}
 
-	// Environment variables: DATABASE_DSN → database.dsn
-	v.SetEnvPrefix("")
-	v.AutomaticEnv()
-	v.SetEnvKeyReplacer(strings.NewReplacer("_", "."))
+	// Explicitly bind env vars to config keys.
+	// AutomaticEnv does not reliably resolve nested keys (e.g. database.dsn),
+	// so each mapping is declared here.
+	_ = v.BindEnv("server.domain", "SERVER_DOMAIN")
+	_ = v.BindEnv("server.port", "SERVER_PORT")
+	_ = v.BindEnv("database.dsn", "DATABASE_DSN")
+	_ = v.BindEnv("database.max_open_conns", "DATABASE_MAX_OPEN_CONNS")
+	_ = v.BindEnv("database.max_idle_conns", "DATABASE_MAX_IDLE_CONNS")
+	_ = v.BindEnv("database.conn_max_lifetime", "DATABASE_CONN_MAX_LIFETIME")
+	_ = v.BindEnv("filestore.endpoint", "FILESTORE_ENDPOINT")
+	_ = v.BindEnv("filestore.bucket", "FILESTORE_BUCKET")
+	_ = v.BindEnv("filestore.region", "FILESTORE_REGION")
+	_ = v.BindEnv("cache.ttl", "CACHE_TTL")
+	_ = v.BindEnv("cache.max_cost_bytes", "CACHE_MAX_COST_BYTES")
+	_ = v.BindEnv("auth.oidc_issuer_url", "AUTH_OIDC_ISSUER_URL")
+	_ = v.BindEnv("auth.oidc_client_id", "AUTH_OIDC_CLIENT_ID")
+	_ = v.BindEnv("auth.oidc_client_secret", "AUTH_OIDC_CLIENT_SECRET")
+	_ = v.BindEnv("auth.oidc_redirect_url", "AUTH_OIDC_REDIRECT_URL")
+	_ = v.BindEnv("auth.session_secret", "AUTH_SESSION_SECRET")
+	_ = v.BindEnv("auth.super_admin_email", "AUTH_SUPER_ADMIN_EMAIL")
+	_ = v.BindEnv("versioning.inactivity_window", "VERSIONING_INACTIVITY_WINDOW")
+	_ = v.BindEnv("versioning.commit_poll_interval", "VERSIONING_COMMIT_POLL_INTERVAL")
 
 	// Read config file (optional — env vars alone are enough)
 	_ = v.ReadInConfig()

@@ -13,16 +13,15 @@ type APIKeyStore struct {
 	db *sql.DB
 }
 
-// NewAPIKeyStore creates a new APIKeyStore instance.
 func NewAPIKeyStore(db *sql.DB) domain.APIKeyStore {
 	return &APIKeyStore{db: db}
 }
 
 func (store *APIKeyStore) CreateAPIKey(ctx context.Context, apiKey *domain.APIKey) error {
 	err := store.db.QueryRowContext(ctx,
-		`INSERT INTO api_keys (id, user_id, hashed_key, label, created_time)
+		`INSERT INTO api_keys (api_key_identifier, user_identifier, hashed_key, label, created_time)
 		 VALUES ($1, $2, $3, $4, $5)
-		 RETURNING id`,
+		 RETURNING api_key_identifier`,
 		apiKey.APIKeyId, apiKey.UserId, apiKey.HashedKey, apiKey.Label, apiKey.CreatedTime,
 	).Scan(&apiKey.APIKeyId)
 	if err != nil {
@@ -34,7 +33,7 @@ func (store *APIKeyStore) CreateAPIKey(ctx context.Context, apiKey *domain.APIKe
 func (store *APIKeyStore) GetAPIKeyByHash(ctx context.Context, hashedKey string) (*domain.APIKey, error) {
 	apiKey := &domain.APIKey{}
 	err := store.db.QueryRowContext(ctx,
-		`SELECT id, user_id, hashed_key, label, created_time, last_used_time
+		`SELECT api_key_identifier, user_identifier, hashed_key, label, created_time, last_used_time
 		 FROM api_keys WHERE hashed_key = $1`, hashedKey,
 	).Scan(&apiKey.APIKeyId, &apiKey.UserId, &apiKey.HashedKey,
 		&apiKey.Label, &apiKey.CreatedTime, &apiKey.LastUsedTime)
@@ -49,8 +48,8 @@ func (store *APIKeyStore) GetAPIKeyByHash(ctx context.Context, hashedKey string)
 
 func (store *APIKeyStore) ListAPIKeysByUser(ctx context.Context, userId string) ([]domain.APIKey, error) {
 	rows, err := store.db.QueryContext(ctx,
-		`SELECT id, user_id, hashed_key, label, created_time, last_used_time
-		 FROM api_keys WHERE user_id = $1 ORDER BY created_time DESC`, userId,
+		`SELECT api_key_identifier, user_identifier, hashed_key, label, created_time, last_used_time
+		 FROM api_keys WHERE user_identifier = $1 ORDER BY created_time DESC`, userId,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query api keys by user: %w", err)
@@ -71,7 +70,7 @@ func (store *APIKeyStore) ListAPIKeysByUser(ctx context.Context, userId string) 
 
 func (store *APIKeyStore) DeleteAPIKey(ctx context.Context, apiKeyId string) error {
 	result, err := store.db.ExecContext(ctx,
-		`DELETE FROM api_keys WHERE id = $1`, apiKeyId)
+		`DELETE FROM api_keys WHERE api_key_identifier = $1`, apiKeyId)
 	if err != nil {
 		return fmt.Errorf("failed to delete api key: %w", err)
 	}
@@ -87,7 +86,7 @@ func (store *APIKeyStore) DeleteAPIKey(ctx context.Context, apiKeyId string) err
 
 func (store *APIKeyStore) UpdateLastUsedTime(ctx context.Context, apiKeyId string) error {
 	result, err := store.db.ExecContext(ctx,
-		`UPDATE api_keys SET last_used_time = NOW() WHERE id = $1`, apiKeyId)
+		`UPDATE api_keys SET last_used_time = NOW() WHERE api_key_identifier = $1`, apiKeyId)
 	if err != nil {
 		return fmt.Errorf("failed to update last used time: %w", err)
 	}

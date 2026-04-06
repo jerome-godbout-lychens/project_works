@@ -13,9 +13,7 @@ type ElementVersionStore struct {
 }
 
 func NewElementVersionStore(db *sql.DB) domain.ElementVersionStore {
-	return &ElementVersionStore{
-		db: db,
-	}
+	return &ElementVersionStore{db: db}
 }
 
 func (s *ElementVersionStore) CreateVersion(
@@ -40,12 +38,11 @@ func (s *ElementVersionStore) CreateVersion(
 	}
 
 	insertVersionQuery := `
-		INSERT INTO element_versions (element_id, version_number, content_sha, committed_time, committed_by_id, commit_message)
+		INSERT INTO element_versions (element_identifier, version_number, content_sha, committed_time, committed_by_identifier, commit_message)
 		VALUES ($1, $2, $3, $4, $5, $6)
-		RETURNING version_id
+		RETURNING version_identifier
 	`
 
-	var generatedVersionId int
 	err = tx.QueryRowContext(
 		ctx,
 		insertVersionQuery,
@@ -55,24 +52,18 @@ func (s *ElementVersionStore) CreateVersion(
 		version.CommittedTime,
 		version.CommittedById,
 		version.CommitMessage,
-	).Scan(&generatedVersionId)
+	).Scan(&version.VersionId)
 	if err != nil {
 		return err
 	}
 
+	// element_version_patches only stores version_identifier, forward_patch, reverse_patch
 	insertPatchQuery := `
-		INSERT INTO element_version_patches (version_id, element_id, forward_patch, reverse_patch)
-		VALUES ($1, $2, $3, $4)
+		INSERT INTO element_version_patches (version_identifier, forward_patch, reverse_patch)
+		VALUES ($1, $2, $3)
 	`
 
-	_, err = tx.ExecContext(
-		ctx,
-		insertPatchQuery,
-		generatedVersionId,
-		version.ElementId,
-		forwardPatchJSON,
-		reversePatchJSON,
-	)
+	_, err = tx.ExecContext(ctx, insertPatchQuery, version.VersionId, forwardPatchJSON, reversePatchJSON)
 	if err != nil {
 		return err
 	}
@@ -87,9 +78,9 @@ func (s *ElementVersionStore) ListVersionsByElement(
 	offset int,
 ) ([]domain.ElementVersion, error) {
 	query := `
-		SELECT version_id, element_id, version_number, content_sha, committed_time, committed_by_id, commit_message
+		SELECT version_identifier, element_identifier, version_number, content_sha, committed_time, committed_by_identifier, commit_message
 		FROM element_versions
-		WHERE element_id = $1
+		WHERE element_identifier = $1
 		ORDER BY version_number DESC
 		LIMIT $2 OFFSET $3
 	`
@@ -131,11 +122,13 @@ func (s *ElementVersionStore) GetPatchesInRange(
 	fromVersionNumber int,
 	toVersionNumber int,
 ) ([]domain.ElementVersionPatch, error) {
+	// Join patches with versions to filter by element and version range.
+	// element_version_patches has no element_identifier column — filter via the join.
 	query := `
-		SELECT evp.version_id, evp.element_id, evp.forward_patch, evp.reverse_patch, ev.version_number
+		SELECT evp.version_identifier, evp.forward_patch, evp.reverse_patch, ev.version_number
 		FROM element_version_patches evp
-		JOIN element_versions ev ON evp.version_id = ev.version_id
-		WHERE evp.element_id = $1 AND ev.version_number BETWEEN $2 AND $3
+		JOIN element_versions ev ON evp.version_identifier = ev.version_identifier
+		WHERE ev.element_identifier = $1 AND ev.version_number BETWEEN $2 AND $3
 		ORDER BY ev.version_number DESC
 	`
 
@@ -150,12 +143,10 @@ func (s *ElementVersionStore) GetPatchesInRange(
 		var patch domain.ElementVersionPatch
 		var forwardPatchJSON []byte
 		var reversePatchJSON []byte
+		var versionNumber int
 
-		var elementId string  // selected for JOIN but not stored in patch struct
-		var versionNumber int // selected for ordering but not stored in patch struct
 		err := rows.Scan(
 			&patch.VersionId,
-			&elementId,
 			&forwardPatchJSON,
 			&reversePatchJSON,
 			&versionNumber,

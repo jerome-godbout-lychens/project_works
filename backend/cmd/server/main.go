@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -26,6 +27,35 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to load configuration: %v", err)
 	}
+
+	// Log active configuration (passwords redacted)
+	log.Printf("---------- Project Works Server ----------")
+	log.Printf("starting Project Works server (version: %s)", applicationConfig.Version)
+	log.Printf("config: server=%s:%d", applicationConfig.Server.Domain, applicationConfig.Server.Port)
+	log.Printf("config: database.dsn=%s", redactDSN(applicationConfig.Database.DSN))
+	log.Printf("config: database.max_open_conns=%d max_idle_conns=%d conn_max_lifetime=%s",
+		applicationConfig.Database.MaxOpenConns,
+		applicationConfig.Database.MaxIdleConns,
+		applicationConfig.Database.ConnMaxLifetime,
+	)
+	log.Printf("config: filestore.endpoint=%s bucket=%s region=%s",
+		applicationConfig.FileStore.Endpoint,
+		applicationConfig.FileStore.Bucket,
+		applicationConfig.FileStore.Region,
+	)
+	log.Printf("config: cache.ttl=%s max_cost_bytes=%d", applicationConfig.Cache.TimeToLive, applicationConfig.Cache.MaxCostBytes)
+	log.Printf("config: auth.oidc_issuer_url=%q oidc_client_id=%q oidc_redirect_url=%s session_secret_set=%v super_admin_email=%q",
+		applicationConfig.Auth.OIDCIssuerURL,
+		applicationConfig.Auth.OIDCClientId,
+		applicationConfig.Auth.OIDCRedirectURL,
+		applicationConfig.Auth.SessionSecret != "",
+		applicationConfig.Auth.SuperAdminEmail,
+	)
+	log.Printf("config: versioning.inactivity_window=%s commit_poll_interval=%s",
+		applicationConfig.Version.InactivityWindow,
+		applicationConfig.Version.CommitPollInterval,
+	)
+	log.Printf("---------- End Configuration ----------")
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -220,4 +250,30 @@ func main() {
 	}
 
 	log.Println("server stopped gracefully")
+}
+
+// redactDSN removes the password from a postgres DSN for safe logging.
+// Handles both URL-style (postgres://user:pass@host/db) and key=value style DSNs.
+func redactDSN(dsn string) string {
+	// URL style: postgres://user:password@host:port/db?options
+	if idx := strings.Index(dsn, "://"); idx != -1 {
+		rest := dsn[idx+3:]
+		if atIdx := strings.LastIndex(rest, "@"); atIdx != -1 {
+			credentials := rest[:atIdx]
+			hostAndPath := rest[atIdx:]
+			if colonIdx := strings.Index(credentials, ":"); colonIdx != -1 {
+				user := credentials[:colonIdx]
+				return dsn[:idx+3] + user + ":***" + hostAndPath
+			}
+		}
+		return dsn
+	}
+	// Key=value style: user=foo password=secret host=...
+	parts := strings.Fields(dsn)
+	for i, part := range parts {
+		if strings.HasPrefix(strings.ToLower(part), "password=") {
+			parts[i] = "password=***"
+		}
+	}
+	return strings.Join(parts, " ")
 }

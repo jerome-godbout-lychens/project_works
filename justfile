@@ -5,11 +5,16 @@ docker-run:
 docker-build:
     docker compose -f ./docker-compose.yaml build
 
+docker-build-run: docker-build docker-run
+
 database:
     docker compose -f ./docker-compose.yaml up -d database file_storage
 
 docker-stop:
     docker compose -f ./docker-compose.yaml down
+
+docker-stop-remove:
+    docker compose -f ./docker-compose.yaml down --volumes --remove-orphans
 
 docker-logs:
     docker compose -f ./docker-compose.yaml logs -f backend
