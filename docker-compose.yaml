@@ -15,6 +15,10 @@ services:
       DATABASE_DSN: "postgres://project_works:project_works@database:5432/project_works?sslmode=disable"
       FILESTORE_ENDPOINT: "http://file_storage:8333"
       FILESTORE_BUCKET: "attachments"
+      AUTH_SESSION_SECRET: "change-me-in-production"
+      AUTH_SUPER_ADMIN_EMAIL: "demo@example.com"
+      AUTH_SUPER_ADMIN_API_KEY: "super-admin-dev-key-do-not-use-in-production"
+      AUTH_SUPER_ADMIN_DISPLAY_NAME: "Developer Admin"
     depends_on:
       database:
         condition: service_healthy

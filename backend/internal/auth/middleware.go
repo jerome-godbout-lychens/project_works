@@ -15,19 +15,25 @@ type contextKey string
 // ContextKeyUserId is the key used to store the authenticated user ID in the request context
 const ContextKeyUserId contextKey = "userId"
 
+// ContextKeyIsSuperAdmin flags whether the authenticated user is the super admin
+const ContextKeyIsSuperAdmin contextKey = "isSuperAdmin"
+
 // AuthMiddleware handles authentication via API keys and session cookies
 type AuthMiddleware struct {
-	sessionManager *SessionManager
-	apiKeyStore    domain.APIKeyStore
-	userService    *service.UserService
+	sessionManager   *SessionManager
+	apiKeyStore      domain.APIKeyStore
+	userService      *service.UserService
+	superAdminUserId string // empty when no super admin is configured
 }
 
-// NewAuthMiddleware creates a new AuthMiddleware with the given dependencies
-func NewAuthMiddleware(sessionManager *SessionManager, apiKeyStore domain.APIKeyStore, userService *service.UserService) *AuthMiddleware {
+// NewAuthMiddleware creates a new AuthMiddleware with the given dependencies.
+// superAdminUserId may be empty when no super admin is configured.
+func NewAuthMiddleware(sessionManager *SessionManager, apiKeyStore domain.APIKeyStore, userService *service.UserService, superAdminUserId string) *AuthMiddleware {
 	return &AuthMiddleware{
-		sessionManager: sessionManager,
-		apiKeyStore:    apiKeyStore,
-		userService:    userService,
+		sessionManager:   sessionManager,
+		apiKeyStore:      apiKeyStore,
+		userService:      userService,
+		superAdminUserId: superAdminUserId,
 	}
 }
 
@@ -42,8 +48,9 @@ func (authMiddleware *AuthMiddleware) Authenticate(next http.Handler) http.Handl
 			if bearerToken != "" {
 				userId, err := authMiddleware.authenticateWithAPIKey(request.Context(), bearerToken)
 				if err == nil {
-					contextWithUserId := context.WithValue(request.Context(), ContextKeyUserId, userId)
-					next.ServeHTTP(responseWriter, request.WithContext(contextWithUserId))
+					requestContext := context.WithValue(request.Context(), ContextKeyUserId, userId)
+					requestContext = context.WithValue(requestContext, ContextKeyIsSuperAdmin, authMiddleware.superAdminUserId != "" && userId == authMiddleware.superAdminUserId)
+					next.ServeHTTP(responseWriter, request.WithContext(requestContext))
 					return
 				}
 			}
@@ -54,8 +61,9 @@ func (authMiddleware *AuthMiddleware) Authenticate(next http.Handler) http.Handl
 		if err == nil {
 			userId, err := authMiddleware.sessionManager.ValidateSessionToken(sessionCookie.Value)
 			if err == nil {
-				contextWithUserId := context.WithValue(request.Context(), ContextKeyUserId, userId)
-				next.ServeHTTP(responseWriter, request.WithContext(contextWithUserId))
+				requestContext := context.WithValue(request.Context(), ContextKeyUserId, userId)
+				requestContext = context.WithValue(requestContext, ContextKeyIsSuperAdmin, authMiddleware.superAdminUserId != "" && userId == authMiddleware.superAdminUserId)
+				next.ServeHTTP(responseWriter, request.WithContext(requestContext))
 				return
 			}
 		}
@@ -86,9 +94,15 @@ func extractBearerToken(authHeader string) string {
 	return parts[1]
 }
 
-// GetUserIdFromContext retrieves the authenticated user ID from the request context
-// Returns the user ID and a boolean indicating if it was found
+// GetUserIdFromContext retrieves the authenticated user ID from the request context.
+// Returns the user ID and a boolean indicating if it was found.
 func GetUserIdFromContext(ctx context.Context) (string, bool) {
 	userId, ok := ctx.Value(ContextKeyUserId).(string)
 	return userId, ok
+}
+
+// IsSuperAdmin returns true when the authenticated user is the configured super admin.
+func IsSuperAdmin(ctx context.Context) bool {
+	flag, _ := ctx.Value(ContextKeyIsSuperAdmin).(bool)
+	return flag
 }

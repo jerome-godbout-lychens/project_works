@@ -44,12 +44,14 @@ type CacheConfig struct {
 }
 
 type AuthConfig struct {
-	OIDCIssuerURL    string `mapstructure:"oidc_issuer_url"`
-	OIDCClientId     string `mapstructure:"oidc_client_id"`
-	OIDCClientSecret string `mapstructure:"oidc_client_secret"`
-	OIDCRedirectURL  string `mapstructure:"oidc_redirect_url"`
-	SessionSecret    string `mapstructure:"session_secret"`
-	SuperAdminEmail  string `mapstructure:"super_admin_email"`
+	OIDCIssuerURL       string `mapstructure:"oidc_issuer_url"`
+	OIDCClientId        string `mapstructure:"oidc_client_id"`
+	OIDCClientSecret    string `mapstructure:"oidc_client_secret"`
+	OIDCRedirectURL     string `mapstructure:"oidc_redirect_url"`
+	SessionSecret       string `mapstructure:"session_secret"`
+	SuperAdminEmail     string `mapstructure:"super_admin_email"`
+	SuperAdminAPIKey    string `mapstructure:"super_admin_api_key"`
+	SuperAdminName      string `mapstructure:"super_admin_display_name"`
 }
 
 type VersionConfig struct {
@@ -63,7 +65,7 @@ func Load(configPath string) (*Config, error) {
 	v := viper.New()
 
 	// Defaults
-	v.SetDefault("server.domain", "localhost")
+	v.SetDefault("server.domain", "0.0.0.0")
 	v.SetDefault("server.port", 8088)
 	v.SetDefault("database.driver", "postgres")
 	v.SetDefault("database.max_open_conns", 25)
@@ -74,6 +76,7 @@ func Load(configPath string) (*Config, error) {
 	v.SetDefault("cache.driver", "memory")
 	v.SetDefault("cache.ttl", 5*time.Minute)
 	v.SetDefault("cache.max_cost_bytes", 64*1024*1024) // 64 MB
+	v.SetDefault("auth.super_admin_display_name", "Super Admin")
 	v.SetDefault("versioning.inactivity_window", 5*time.Minute)
 	v.SetDefault("versioning.commit_poll_interval", 60*time.Second)
 
@@ -107,6 +110,8 @@ func Load(configPath string) (*Config, error) {
 	_ = v.BindEnv("auth.oidc_redirect_url", "AUTH_OIDC_REDIRECT_URL")
 	_ = v.BindEnv("auth.session_secret", "AUTH_SESSION_SECRET")
 	_ = v.BindEnv("auth.super_admin_email", "AUTH_SUPER_ADMIN_EMAIL")
+	_ = v.BindEnv("auth.super_admin_api_key", "AUTH_SUPER_ADMIN_API_KEY")
+	_ = v.BindEnv("auth.super_admin_display_name", "AUTH_SUPER_ADMIN_DISPLAY_NAME")
 	_ = v.BindEnv("versioning.inactivity_window", "VERSIONING_INACTIVITY_WINDOW")
 	_ = v.BindEnv("versioning.commit_poll_interval", "VERSIONING_COMMIT_POLL_INTERVAL")
 

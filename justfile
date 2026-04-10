@@ -19,7 +19,7 @@ docker-stop-remove:
 docker-logs:
     docker compose -f ./docker-compose.yaml logs -f backend
 
-shell_backend:
+shell-backend:
     docker compose -f ./docker-compose.yaml exec backend /bin/sh
 
 clear-local-storage: docker-stop

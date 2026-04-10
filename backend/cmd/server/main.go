@@ -44,12 +44,13 @@ func main() {
 		applicationConfig.FileStore.Region,
 	)
 	log.Printf("config: cache.ttl=%s max_cost_bytes=%d", applicationConfig.Cache.TimeToLive, applicationConfig.Cache.MaxCostBytes)
-	log.Printf("config: auth.oidc_issuer_url=%q oidc_client_id=%q oidc_redirect_url=%s session_secret_set=%v super_admin_email=%q",
+	log.Printf("config: auth.oidc_issuer_url=%q oidc_client_id=%q oidc_redirect_url=%s session_secret_set=%v super_admin_email=%q super_admin_api_key_set=%v",
 		applicationConfig.Auth.OIDCIssuerURL,
 		applicationConfig.Auth.OIDCClientId,
 		applicationConfig.Auth.OIDCRedirectURL,
 		applicationConfig.Auth.SessionSecret != "",
 		applicationConfig.Auth.SuperAdminEmail,
+		applicationConfig.Auth.SuperAdminAPIKey != "",
 	)
 	log.Printf("config: versioning.inactivity_window=%s commit_poll_interval=%s",
 		applicationConfig.Version.InactivityWindow,
@@ -79,6 +80,7 @@ func main() {
 	log.Println("database migrations applied successfully")
 
 	// ─── Store Implementations ───────────────────────────────
+	log.Println("init: creating store implementations")
 	projectStore := postgres.NewProjectStore(database)
 	elementStore := postgres.NewElementStore(database)
 	elementLinkStore := postgres.NewElementLinkStore(database)
@@ -92,8 +94,25 @@ func main() {
 	groupStore := postgres.NewGroupStore(database)
 	groupProjectAccessStore := postgres.NewGroupProjectAccessStore(database)
 	apiKeyStore := postgres.NewAPIKeyStore(database)
+	log.Println("init: stores ready")
+
+	// ─── Super Admin Seed ────────────────────────────────────
+	log.Println("init: seeding super admin")
+	superAdminUserId, err := auth.SeedSuperAdmin(
+		ctx,
+		userStore,
+		apiKeyStore,
+		applicationConfig.Auth.SuperAdminEmail,
+		applicationConfig.Auth.SuperAdminName,
+		applicationConfig.Auth.SuperAdminAPIKey,
+	)
+	if err != nil {
+		log.Fatalf("failed to seed super admin: %v", err)
+	}
+	log.Printf("init: super admin ready (user_id=%q)", superAdminUserId)
 
 	// ─── File Storage ────────────────────────────────────────
+	log.Println("init: connecting to file storage")
 	fileStorage, err := s3filestore.NewS3FileStorage(
 		ctx,
 		applicationConfig.FileStore.Endpoint,
@@ -103,8 +122,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to initialize file storage: %v", err)
 	}
+	log.Println("init: file storage ready")
 
 	// ─── Cache ───────────────────────────────────────────────
+	log.Println("init: initializing cache")
 	cacheStore, err := memory.NewRistrettoCache(
 		applicationConfig.Cache.MaxCostBytes,
 		applicationConfig.Cache.TimeToLive,
@@ -112,8 +133,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to initialize cache: %v", err)
 	}
+	log.Println("init: cache ready")
 
 	// ─── Services ────────────────────────────────────────────
+	log.Println("init: creating services")
 	projectService := service.NewProjectService(projectStore, cacheStore)
 	elementService := service.NewElementService(
 		elementStore,
@@ -159,8 +182,10 @@ func main() {
 	phaseService := service.NewPhaseService(phaseStore)
 	userService := service.NewUserService(userStore)
 	groupService := service.NewGroupService(groupStore, groupProjectAccessStore)
+	log.Println("init: services ready")
 
 	// ─── Auth ────────────────────────────────────────────────
+	log.Println("init: initializing auth")
 	sessionManager := auth.NewSessionManager(applicationConfig.Auth.SessionSecret)
 
 	var oidcProvider *auth.OIDCProvider
@@ -175,14 +200,16 @@ func main() {
 		if err != nil {
 			log.Fatalf("failed to initialize OIDC provider: %v", err)
 		}
-		log.Println("OIDC provider initialized")
+		log.Println("init: OIDC provider ready")
 	} else {
-		log.Println("OIDC not configured — API key auth only")
+		log.Println("init: OIDC not configured — API key auth only")
 	}
 
-	authMiddleware := auth.NewAuthMiddleware(sessionManager, apiKeyStore, userService)
+	authMiddleware := auth.NewAuthMiddleware(sessionManager, apiKeyStore, userService, superAdminUserId)
+	log.Println("init: auth middleware ready")
 
 	// ─── Version Commit Worker ───────────────────────────────
+	log.Println("init: starting version commit worker")
 	versionWorker := service.NewVersionCommitWorker(
 		elementPendingChangeStore,
 		elementVersionStore,
@@ -193,13 +220,14 @@ func main() {
 		applicationConfig.Version.InactivityWindow,
 		applicationConfig.Version.CommitPollInterval,
 	)
-	versionWorker.Start(ctx)
-	log.Printf("version commit worker started (inactivity: %s, poll: %s)",
+	go versionWorker.Start(ctx)
+	log.Printf("init: version commit worker started (inactivity: %s, poll: %s)",
 		applicationConfig.Version.InactivityWindow,
 		applicationConfig.Version.CommitPollInterval,
 	)
 
 	// ─── HTTP Router ─────────────────────────────────────────
+	log.Println("init: registering HTTP routes")
 	router := api.NewRouter(
 		projectService,
 		elementService,
@@ -215,6 +243,7 @@ func main() {
 		sessionManager,
 		oidcProvider,
 	)
+	log.Println("init: routes registered")
 
 	// ─── HTTP Server ─────────────────────────────────────────
 	listenAddress := fmt.Sprintf(":%d", applicationConfig.Server.Port)
@@ -231,12 +260,13 @@ func main() {
 	signal.Notify(shutdownChannel, syscall.SIGINT, syscall.SIGTERM)
 
 	go func() {
-		log.Printf("server listening on %s", listenAddress)
+		log.Printf("init: server listening on %s", listenAddress)
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("server error: %v", err)
 		}
 	}()
 
+	log.Println("init: startup complete — waiting for shutdown signal")
 	<-shutdownChannel
 	log.Println("shutdown signal received, draining connections...")
 
