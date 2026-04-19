@@ -48,14 +48,28 @@ func (s *CustomFieldDefinitionStore) CreateFieldDefinition(ctx context.Context, 
 }
 
 func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.Context, projectId, elementType string) ([]domain.CustomFieldDefinition, error) {
-	query := `
-		SELECT field_definition_identifier, project_identifier, applicable_element_type, field_name, field_type, field_options, display_order
-		FROM custom_field_definitions
-		WHERE project_identifier = $1 AND (applicable_element_type = $2 OR applicable_element_type = '*')
-		ORDER BY display_order ASC
-	`
+	var query string
+	var args []interface{}
 
-	rows, err := s.db.QueryContext(ctx, query, projectId, elementType)
+	if elementType == "" {
+		query = `
+			SELECT field_definition_identifier, project_identifier, applicable_element_type, field_name, field_type, field_options, display_order
+			FROM custom_field_definitions
+			WHERE project_identifier = $1
+			ORDER BY display_order ASC
+		`
+		args = []interface{}{projectId}
+	} else {
+		query = `
+			SELECT field_definition_identifier, project_identifier, applicable_element_type, field_name, field_type, field_options, display_order
+			FROM custom_field_definitions
+			WHERE project_identifier = $1 AND (applicable_element_type = $2 OR applicable_element_type = '*')
+			ORDER BY display_order ASC
+		`
+		args = []interface{}{projectId, elementType}
+	}
+
+	rows, err := s.db.QueryContext(ctx, query, args...)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query field definitions: %w", err)
 	}

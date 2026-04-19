@@ -41,8 +41,8 @@ type ListProjectsOutput struct {
 type CreateProjectInput struct {
 	Body struct {
 		ProjectName        string `json:"project_name" required:"true" doc:"Project name"`
-		ProjectDescription string `json:"project_description" doc:"Project description"`
-		FolderPath         string `json:"folder_path" doc:"Folder path for organization"`
+		ProjectDescription string `json:"project_description,omitempty" doc:"Project description"`
+		FolderPath         string `json:"folder_path,omitempty" doc:"Folder path for organization"`
 	}
 }
 

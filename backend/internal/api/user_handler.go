@@ -42,8 +42,10 @@ type GetUserOutput struct {
 
 // UpdateUserInput holds the request body for updating a user.
 type UpdateUserInput struct {
-	UserId      string `path:"user_id" format:"uuid" doc:"The user identifier"`
-	DisplayName string `json:"display_name" doc:"Display name for the user"`
+	UserId string `path:"user_id" format:"uuid" doc:"The user identifier"`
+	Body   struct {
+		DisplayName string `json:"display_name,omitempty" doc:"Display name for the user"`
+	}
 }
 
 // UpdateUserOutput returns the updated user.
@@ -119,8 +121,8 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 		}
 
 		// Update display name if provided
-		if input.DisplayName != "" {
-			user.DisplayName = input.DisplayName
+		if input.Body.DisplayName != "" {
+			user.DisplayName = input.Body.DisplayName
 		}
 
 		// Save updated user

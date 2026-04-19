@@ -44,12 +44,14 @@ type ListCustomFieldDefinitionsOutput struct {
 
 // CreateCustomFieldDefinitionInput holds the request body for creating a custom field definition.
 type CreateCustomFieldDefinitionInput struct {
-	ProjectId             string                 `path:"project_id" format:"uuid" doc:"The project identifier"`
-	ApplicableElementType string                 `json:"applicable_element_type" required:"true" doc:"Element type this field applies to (or * for all)"`
-	FieldName             string                 `json:"field_name" required:"true" doc:"Name of the field"`
-	FieldType             string                 `json:"field_type" required:"true" doc:"Type of field (string, textarea, integer, real, choice)"`
-	FieldOptions          map[string]interface{} `json:"field_options" doc:"Optional field configuration options"`
-	DisplayOrder          int                    `json:"display_order" doc:"Display order for UI"`
+	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	Body      struct {
+		ApplicableElementType string                 `json:"applicable_element_type" required:"true" doc:"Element type this field applies to (or * for all)"`
+		FieldName             string                 `json:"field_name" required:"true" doc:"Name of the field"`
+		FieldType             string                 `json:"field_type" required:"true" doc:"Type of field (string, textarea, integer, real, choice)"`
+		FieldOptions          map[string]interface{} `json:"field_options,omitempty" doc:"Optional field configuration options"`
+		DisplayOrder          int                    `json:"display_order,omitempty" doc:"Display order for UI"`
+	}
 }
 
 // CreateCustomFieldDefinitionOutput returns the created custom field definition.
@@ -59,12 +61,14 @@ type CreateCustomFieldDefinitionOutput struct {
 
 // UpdateCustomFieldDefinitionInput holds the request body for updating a custom field definition.
 type UpdateCustomFieldDefinitionInput struct {
-	FieldDefinitionId     string                 `path:"field_definition_id" format:"uuid" doc:"The field definition identifier"`
-	ApplicableElementType string                 `json:"applicable_element_type" doc:"Element type this field applies to"`
-	FieldName             string                 `json:"field_name" doc:"Name of the field"`
-	FieldType             string                 `json:"field_type" doc:"Type of field"`
-	FieldOptions          map[string]interface{} `json:"field_options" doc:"Field configuration options"`
-	DisplayOrder          int                    `json:"display_order" doc:"Display order for UI"`
+	FieldDefinitionId string `path:"field_definition_id" format:"uuid" doc:"The field definition identifier"`
+	Body              struct {
+		ApplicableElementType string                 `json:"applicable_element_type,omitempty" doc:"Element type this field applies to"`
+		FieldName             string                 `json:"field_name,omitempty" doc:"Name of the field"`
+		FieldType             string                 `json:"field_type,omitempty" doc:"Type of field"`
+		FieldOptions          map[string]interface{} `json:"field_options,omitempty" doc:"Field configuration options"`
+		DisplayOrder          int                    `json:"display_order,omitempty" doc:"Display order for UI"`
+	}
 }
 
 // UpdateCustomFieldDefinitionOutput returns the updated custom field definition.
@@ -98,8 +102,10 @@ type ListCustomFieldValuesOutput struct {
 
 // SetCustomFieldValuesInput holds the request body for setting custom field values.
 type SetCustomFieldValuesInput struct {
-	ElementId  string                           `path:"element_id" format:"uuid" doc:"The element identifier"`
-	FieldValues []SetCustomFieldValueRequest     `json:"field_values" required:"true" doc:"Field values to set"`
+	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	Body      struct {
+		FieldValues []SetCustomFieldValueRequest `json:"field_values" required:"true" doc:"Field values to set"`
+	}
 }
 
 // SetCustomFieldValueRequest represents a single field value to set.
@@ -177,11 +183,11 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 		definition := &domain.CustomFieldDefinition{
 			FieldDefinitionId:     uuid.New().String(),
 			ProjectId:             input.ProjectId,
-			ApplicableElementType: input.ApplicableElementType,
-			FieldName:             input.FieldName,
-			FieldType:             input.FieldType,
-			FieldOptions:          input.FieldOptions,
-			DisplayOrder:          input.DisplayOrder,
+			ApplicableElementType: input.Body.ApplicableElementType,
+			FieldName:             input.Body.FieldName,
+			FieldType:             input.Body.FieldType,
+			FieldOptions:          input.Body.FieldOptions,
+			DisplayOrder:          input.Body.DisplayOrder,
 		}
 
 		err := customFieldService.CreateFieldDefinition(ctx, definition)
@@ -212,11 +218,11 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	}, func(ctx context.Context, input *UpdateCustomFieldDefinitionInput) (*UpdateCustomFieldDefinitionOutput, error) {
 		definition := &domain.CustomFieldDefinition{
 			FieldDefinitionId:     input.FieldDefinitionId,
-			ApplicableElementType: input.ApplicableElementType,
-			FieldName:             input.FieldName,
-			FieldType:             input.FieldType,
-			FieldOptions:          input.FieldOptions,
-			DisplayOrder:          input.DisplayOrder,
+			ApplicableElementType: input.Body.ApplicableElementType,
+			FieldName:             input.Body.FieldName,
+			FieldType:             input.Body.FieldType,
+			FieldOptions:          input.Body.FieldOptions,
+			DisplayOrder:          input.Body.DisplayOrder,
 		}
 
 		err := customFieldService.UpdateFieldDefinition(ctx, definition)
@@ -295,9 +301,9 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *SetCustomFieldValuesInput) (*SetCustomFieldValuesOutput, error) {
 		output := &SetCustomFieldValuesOutput{}
-		output.Body.Items = make([]CustomFieldValueResponse, len(input.FieldValues))
+		output.Body.Items = make([]CustomFieldValueResponse, len(input.Body.FieldValues))
 
-		for i, fv := range input.FieldValues {
+		for i, fv := range input.Body.FieldValues {
 			err := customFieldService.SetFieldValue(ctx, input.ElementId, fv.FieldDefinitionId, fv.Value)
 			if err != nil {
 				return nil, huma.NewError(http.StatusBadRequest, "Failed to set custom field value", err)

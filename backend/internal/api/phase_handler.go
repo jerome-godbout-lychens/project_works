@@ -36,11 +36,13 @@ type ListProjectPhasesOutput struct {
 
 // CreateProjectPhaseInput holds the request body for creating a phase.
 type CreateProjectPhaseInput struct {
-	ProjectId        string     `path:"project_id" format:"uuid" doc:"The project identifier"`
-	PhaseName        string     `json:"phase_name" required:"true" doc:"Name of the phase"`
-	PhaseOrder       int        `json:"phase_order" doc:"Order of this phase"`
-	PlannedStartDate *time.Time `json:"planned_start_date" doc:"Planned start date for the phase"`
-	PlannedEndDate   *time.Time `json:"planned_end_date" doc:"Planned end date for the phase"`
+	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	Body      struct {
+		PhaseName        string     `json:"phase_name" required:"true" doc:"Name of the phase"`
+		PhaseOrder       int        `json:"phase_order,omitempty" doc:"Order of this phase"`
+		PlannedStartDate *time.Time `json:"planned_start_date,omitempty" doc:"Planned start date for the phase"`
+		PlannedEndDate   *time.Time `json:"planned_end_date,omitempty" doc:"Planned end date for the phase"`
+	}
 }
 
 // CreateProjectPhaseOutput returns the created phase.
@@ -50,11 +52,13 @@ type CreateProjectPhaseOutput struct {
 
 // UpdatePhaseInput holds the request body for updating a phase.
 type UpdatePhaseInput struct {
-	PhaseId          string     `path:"phase_id" format:"uuid" doc:"The phase identifier"`
-	PhaseName        string     `json:"phase_name" doc:"Name of the phase"`
-	PhaseOrder       int        `json:"phase_order" doc:"Order of this phase"`
-	PlannedStartDate *time.Time `json:"planned_start_date" doc:"Planned start date for the phase"`
-	PlannedEndDate   *time.Time `json:"planned_end_date" doc:"Planned end date for the phase"`
+	PhaseId string `path:"phase_id" format:"uuid" doc:"The phase identifier"`
+	Body    struct {
+		PhaseName        string     `json:"phase_name,omitempty" doc:"Name of the phase"`
+		PhaseOrder       int        `json:"phase_order,omitempty" doc:"Order of this phase"`
+		PlannedStartDate *time.Time `json:"planned_start_date,omitempty" doc:"Planned start date for the phase"`
+		PlannedEndDate   *time.Time `json:"planned_end_date,omitempty" doc:"Planned end date for the phase"`
+	}
 }
 
 // UpdatePhaseOutput returns the updated phase.
@@ -117,10 +121,10 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 		phase := &domain.Phase{
 			PhaseId:          uuid.New().String(),
 			ProjectId:        input.ProjectId,
-			PhaseName:        input.PhaseName,
-			PhaseOrder:       input.PhaseOrder,
-			PlannedStartDate: input.PlannedStartDate,
-			PlannedEndDate:   input.PlannedEndDate,
+			PhaseName:        input.Body.PhaseName,
+			PhaseOrder:       input.Body.PhaseOrder,
+			PlannedStartDate: input.Body.PlannedStartDate,
+			PlannedEndDate:   input.Body.PlannedEndDate,
 		}
 
 		err := phaseService.CreatePhase(ctx, phase)
@@ -150,10 +154,10 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 	}, func(ctx context.Context, input *UpdatePhaseInput) (*UpdatePhaseOutput, error) {
 		phase := &domain.Phase{
 			PhaseId:          input.PhaseId,
-			PhaseName:        input.PhaseName,
-			PhaseOrder:       input.PhaseOrder,
-			PlannedStartDate: input.PlannedStartDate,
-			PlannedEndDate:   input.PlannedEndDate,
+			PhaseName:        input.Body.PhaseName,
+			PhaseOrder:       input.Body.PhaseOrder,
+			PlannedStartDate: input.Body.PlannedStartDate,
+			PlannedEndDate:   input.Body.PlannedEndDate,
 		}
 
 		err := phaseService.UpdatePhase(ctx, phase)

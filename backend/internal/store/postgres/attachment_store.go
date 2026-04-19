@@ -38,7 +38,7 @@ func scanAttachment(row interface{ Scan(...interface{}) error }) (*domain.Attach
 
 func (s *AttachmentStore) CreateAttachment(ctx context.Context, attachment *domain.Attachment) error {
 	err := s.db.QueryRowContext(ctx,
-		`INSERT INTO attachments (attachment_identifier, element_identifier, file_storage_key, file_name, file_size_bytes, content_type, upload_time, uploaded_by_identifier)
+		`INSERT INTO element_attachments (attachment_identifier, element_identifier, file_storage_key, file_name, file_size_bytes, content_type, upload_time, uploaded_by_identifier)
 		 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 		 RETURNING attachment_identifier, upload_time`,
 		attachment.AttachmentId, attachment.ElementId, attachment.FileStorageKey,
@@ -54,7 +54,7 @@ func (s *AttachmentStore) CreateAttachment(ctx context.Context, attachment *doma
 func (s *AttachmentStore) GetAttachmentById(ctx context.Context, attachmentId string) (*domain.Attachment, error) {
 	attachment, err := scanAttachment(s.db.QueryRowContext(ctx,
 		`SELECT attachment_identifier, element_identifier, file_storage_key, file_name, file_size_bytes, content_type, upload_time, uploaded_by_identifier
-		 FROM attachments WHERE attachment_identifier = $1`, attachmentId,
+		 FROM element_attachments WHERE attachment_identifier = $1`, attachmentId,
 	))
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -68,7 +68,7 @@ func (s *AttachmentStore) GetAttachmentById(ctx context.Context, attachmentId st
 func (s *AttachmentStore) ListAttachmentsByElement(ctx context.Context, elementId string) ([]domain.Attachment, error) {
 	rows, err := s.db.QueryContext(ctx,
 		`SELECT attachment_identifier, element_identifier, file_storage_key, file_name, file_size_bytes, content_type, upload_time, uploaded_by_identifier
-		 FROM attachments WHERE element_identifier = $1 ORDER BY upload_time DESC`, elementId,
+		 FROM element_attachments WHERE element_identifier = $1 ORDER BY upload_time DESC`, elementId,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query attachments: %w", err)
@@ -88,7 +88,7 @@ func (s *AttachmentStore) ListAttachmentsByElement(ctx context.Context, elementI
 
 func (s *AttachmentStore) DeleteAttachment(ctx context.Context, attachmentId string) error {
 	result, err := s.db.ExecContext(ctx,
-		`DELETE FROM attachments WHERE attachment_identifier = $1`, attachmentId)
+		`DELETE FROM element_attachments WHERE attachment_identifier = $1`, attachmentId)
 	if err != nil {
 		return fmt.Errorf("failed to delete attachment: %w", err)
 	}

@@ -82,7 +82,9 @@ type ListGroupMembersOutput struct {
 // AddGroupMemberInput holds the request body for adding a member to a group.
 type AddGroupMemberInput struct {
 	GroupId string `path:"group_id" format:"uuid" doc:"The group identifier"`
-	UserId  string `json:"user_id" required:"true" doc:"The user identifier to add"`
+	Body    struct {
+		UserId string `json:"user_id" required:"true" doc:"The user identifier to add"`
+	}
 }
 
 // AddGroupMemberOutput is an empty response for successful addition.
@@ -249,7 +251,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 		Summary:     "Add a user to a group",
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *AddGroupMemberInput) (*AddGroupMemberOutput, error) {
-		err := groupService.AddUserToGroup(ctx, input.GroupId, input.UserId)
+		err := groupService.AddUserToGroup(ctx, input.GroupId, input.Body.UserId)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to add group member", err)
 		}

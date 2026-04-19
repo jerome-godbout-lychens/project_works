@@ -22,6 +22,15 @@ docker-logs:
 shell-backend:
     docker compose -f ./docker-compose.yaml exec backend /bin/sh
 
+integration-test-build:
+    docker build -t project-works-integration-test:latest -f Dockerfile_tests .
+
+integration-test-shell:
+    docker run -it --network project_works_app_network project-works-integration-test:latest
+
+integration-test-run:
+    docker run --rm --network project_works_app_network project-works-integration-test:latest -c "/app/project-works-integration-test -base-url http://project_works_backend:8088 -super-admin-api-key super-admin-dev-key-do-not-use-in-production"
+
 clear-local-storage: docker-stop
     rm -fr local_storage_data/postgres/*
     rm -fr local_storage_data/seaweedfs/*

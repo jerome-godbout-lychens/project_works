@@ -32,9 +32,11 @@ type ListProjectAccessOutput struct {
 
 // SetProjectAccessInput holds the request body for setting project access.
 type SetProjectAccessInput struct {
-	ProjectId   string `path:"project_id" format:"uuid" doc:"The project identifier"`
-	GroupId     string `json:"group_id" required:"true" doc:"The group identifier"`
-	AccessLevel string `json:"access_level" required:"true" doc:"Access level (read, write, admin)"`
+	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	Body      struct {
+		GroupId     string `json:"group_id" required:"true" doc:"The group identifier"`
+		AccessLevel string `json:"access_level" required:"true" doc:"Access level (read, write, admin)"`
+	}
 }
 
 // SetProjectAccessOutput returns the access configuration.
@@ -117,18 +119,18 @@ func RegisterAccessHandlers(api huma.API, groupService *service.GroupService) {
 		Summary:     "Set or update group access to a project",
 		Tags:        []string{"access"},
 	}, func(ctx context.Context, input *SetProjectAccessInput) (*SetProjectAccessOutput, error) {
-		accessLevel := domain.AccessLevel(input.AccessLevel)
+		accessLevel := domain.AccessLevel(input.Body.AccessLevel)
 
-		err := groupService.SetProjectAccess(ctx, input.GroupId, input.ProjectId, accessLevel)
+		err := groupService.SetProjectAccess(ctx, input.Body.GroupId, input.ProjectId, accessLevel)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to set project access", err)
 		}
 
 		return &SetProjectAccessOutput{
 			Body: ProjectAccessResponse{
-				GroupId:     input.GroupId,
+				GroupId:     input.Body.GroupId,
 				ProjectId:   input.ProjectId,
-				AccessLevel: input.AccessLevel,
+				AccessLevel: input.Body.AccessLevel,
 			},
 		}, nil
 	})

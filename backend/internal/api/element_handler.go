@@ -58,14 +58,14 @@ type CreateElementInput struct {
 	Body      struct {
 		ElementType     string  `json:"element_type" required:"true" doc:"Element type (task, feature, requirement, bug, evaluation, risk)"`
 		Title           string  `json:"title" required:"true" doc:"Element title"`
-		Description     string  `json:"description" doc:"Markdown-capable description"`
-		TaskStatus      *string `json:"task_status" doc:"Task status"`
-		TaskProgress    *int    `json:"task_progress" doc:"Work percentage (0-100)"`
-		AssigneeId      *string `json:"assignee_id" doc:"Assigned user identifier"`
-		ParentFeatureId *string `json:"parent_feature_id" doc:"Parent feature identifier"`
-		StartPhaseId    *string `json:"start_phase_id" doc:"Phase when work should start"`
-		DeliveryPhaseId *string `json:"delivery_phase_id" doc:"Phase when work should be delivered"`
-		InterestLevel   *int    `json:"interest_level" doc:"Client interest level (1-10, for requirements)"`
+		Description     string  `json:"description,omitempty" doc:"Markdown-capable description"`
+		TaskStatus      *string `json:"task_status,omitempty" doc:"Task status"`
+		TaskProgress    *int    `json:"task_progress,omitempty" doc:"Work percentage (0-100)"`
+		AssigneeId      *string `json:"assignee_id,omitempty" doc:"Assigned user identifier"`
+		ParentFeatureId *string `json:"parent_feature_id,omitempty" doc:"Parent feature identifier"`
+		StartPhaseId    *string `json:"start_phase_id,omitempty" doc:"Phase when work should start"`
+		DeliveryPhaseId *string `json:"delivery_phase_id,omitempty" doc:"Phase when work should be delivered"`
+		InterestLevel   *int    `json:"interest_level,omitempty" doc:"Client interest level (1-10, for requirements)"`
 	}
 }
 
@@ -88,15 +88,15 @@ type GetElementOutput struct {
 type UpdateElementInput struct {
 	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
 	Body      struct {
-		Title           string  `json:"title" doc:"Element title"`
-		Description     string  `json:"description" doc:"Element description"`
-		TaskStatus      *string `json:"task_status" doc:"Task status"`
-		TaskProgress    *int    `json:"task_progress" doc:"Work percentage (0-100)"`
-		AssigneeId      *string `json:"assignee_id" doc:"Assigned user identifier"`
-		ParentFeatureId *string `json:"parent_feature_id" doc:"Parent feature identifier"`
-		StartPhaseId    *string `json:"start_phase_id" doc:"Phase when work should start"`
-		DeliveryPhaseId *string `json:"delivery_phase_id" doc:"Phase when work should be delivered"`
-		InterestLevel   *int    `json:"interest_level" doc:"Client interest level (1-10)"`
+		Title           string  `json:"title,omitempty" doc:"Element title"`
+		Description     string  `json:"description,omitempty" doc:"Element description"`
+		TaskStatus      *string `json:"task_status,omitempty" doc:"Task status"`
+		TaskProgress    *int    `json:"task_progress,omitempty" doc:"Work percentage (0-100)"`
+		AssigneeId      *string `json:"assignee_id,omitempty" doc:"Assigned user identifier"`
+		ParentFeatureId *string `json:"parent_feature_id,omitempty" doc:"Parent feature identifier"`
+		StartPhaseId    *string `json:"start_phase_id,omitempty" doc:"Phase when work should start"`
+		DeliveryPhaseId *string `json:"delivery_phase_id,omitempty" doc:"Phase when work should be delivered"`
+		InterestLevel   *int    `json:"interest_level,omitempty" doc:"Client interest level (1-10)"`
 	}
 }
 
