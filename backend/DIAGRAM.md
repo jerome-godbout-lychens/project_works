@@ -54,7 +54,7 @@ classDiagram
 
     class AttachmentStore {
         +CreateAttachment(ctx, attachment) error
-        +GetAttachmentById(ctx, attachmentId) Attachment
+        +GetAttachmentByIdentifier(ctx, attachmentIdentifier) Attachment
         +ListAttachmentsByElement(ctx, elementId) []Attachment
         +DeleteAttachment(ctx, attachmentId) error
     }
