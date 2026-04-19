@@ -442,7 +442,7 @@ type ElementStore interface {
     CreateElement(context context.Context, element *Element) error
     UpdateElement(context context.Context, element *Element) error
     DeleteElement(context context.Context, elementIdentifier string) error
-    SearchElements(context context.Context, projectIdentifier string, query string) ([]Element, error)
+    SearchElements(context context.Context, projectIdentifier string, query string, limit int, offset int) ([]Element, error)
 }
 
 // ElementVersionStore handles version history (cold path).
