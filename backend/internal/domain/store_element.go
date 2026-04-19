@@ -6,7 +6,7 @@ import "context"
 type ElementFilter struct {
 	ElementTypes       []ElementType
 	TaskStatuses       []TaskStatus
-	AssigneeId *string
+	AssigneeIdentifier *string
 	SearchQuery        *string
 	Limit              int
 	Offset             int
@@ -14,10 +14,10 @@ type ElementFilter struct {
 
 // ElementStore handles CRUD operations for elements in their current state (hot path).
 type ElementStore interface {
-	GetElementById(context context.Context, elementId string) (*Element, error)
-	ListElementsByProject(context context.Context, projectId string, filter ElementFilter) ([]Element, error)
+	GetElementByIdentifier(context context.Context, elementIdentifier string) (*Element, error)
+	ListElementsByProject(context context.Context, projectIdentifier string, filter ElementFilter) ([]Element, error)
 	CreateElement(context context.Context, element *Element) error
 	UpdateElement(context context.Context, element *Element) error
-	DeleteElement(context context.Context, elementId string) error
-	SearchElements(context context.Context, projectId string, query string, limit int, offset int) ([]Element, error)
+	DeleteElement(context context.Context, elementIdentifier string) error
+	SearchElements(context context.Context, projectIdentifier string, query string, limit int, offset int) ([]Element, error)
 }

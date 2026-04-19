@@ -20,7 +20,7 @@ func NewPhaseStore(database *sql.DB) domain.PhaseStore {
 	}
 }
 
-// CreatePhase creates a new phase and populates the PhaseId with the generated identifier.
+// CreatePhase creates a new phase and populates the PhaseIdentifier with the generated identifier.
 func (store *PhaseStore) CreatePhase(ctx context.Context, phase *domain.Phase) error {
 	query := `
 		INSERT INTO phases (project_identifier, phase_name, phase_order, planned_start_date, planned_end_date)
@@ -31,18 +31,18 @@ func (store *PhaseStore) CreatePhase(ctx context.Context, phase *domain.Phase) e
 	err := store.database.QueryRowContext(
 		ctx,
 		query,
-		phase.ProjectId,
+		phase.ProjectIdentifier,
 		phase.PhaseName,
 		phase.PhaseOrder,
 		phase.PlannedStartDate,
 		phase.PlannedEndDate,
-	).Scan(&phase.PhaseId)
+	).Scan(&phase.PhaseIdentifier)
 
 	return err
 }
 
 // ListPhasesByProject retrieves all phases for a given project, ordered by phase order.
-func (store *PhaseStore) ListPhasesByProject(ctx context.Context, projectId string) ([]domain.Phase, error) {
+func (store *PhaseStore) ListPhasesByProject(ctx context.Context, projectIdentifier string) ([]domain.Phase, error) {
 	query := `
 		SELECT phase_identifier, project_identifier, phase_name, phase_order, planned_start_date, planned_end_date
 		FROM phases
@@ -50,7 +50,7 @@ func (store *PhaseStore) ListPhasesByProject(ctx context.Context, projectId stri
 		ORDER BY phase_order
 	`
 
-	rows, err := store.database.QueryContext(ctx, query, projectId)
+	rows, err := store.database.QueryContext(ctx, query, projectIdentifier)
 	if err != nil {
 		return nil, err
 	}
@@ -60,8 +60,8 @@ func (store *PhaseStore) ListPhasesByProject(ctx context.Context, projectId stri
 	for rows.Next() {
 		phase := domain.Phase{}
 		err := rows.Scan(
-			&phase.PhaseId,
-			&phase.ProjectId,
+			&phase.PhaseIdentifier,
+			&phase.ProjectIdentifier,
 			&phase.PhaseName,
 			&phase.PhaseOrder,
 			&phase.PlannedStartDate,
@@ -95,7 +95,7 @@ func (store *PhaseStore) UpdatePhase(ctx context.Context, phase *domain.Phase) e
 		phase.PhaseOrder,
 		phase.PlannedStartDate,
 		phase.PlannedEndDate,
-		phase.PhaseId,
+		phase.PhaseIdentifier,
 	)
 
 	if err != nil {
@@ -108,17 +108,17 @@ func (store *PhaseStore) UpdatePhase(ctx context.Context, phase *domain.Phase) e
 	}
 
 	if rowsAffected == 0 {
-		return fmt.Errorf("phase not found for update: %s", phase.PhaseId)
+		return fmt.Errorf("phase not found for update: %s", phase.PhaseIdentifier)
 	}
 
 	return nil
 }
 
 // DeletePhase deletes a phase by its identifier.
-func (store *PhaseStore) DeletePhase(ctx context.Context, phaseId string) error {
+func (store *PhaseStore) DeletePhase(ctx context.Context, phaseIdentifier string) error {
 	query := `DELETE FROM phases WHERE phase_identifier = $1`
 
-	result, err := store.database.ExecContext(ctx, query, phaseId)
+	result, err := store.database.ExecContext(ctx, query, phaseIdentifier)
 	if err != nil {
 		return err
 	}
@@ -129,7 +129,7 @@ func (store *PhaseStore) DeletePhase(ctx context.Context, phaseId string) error 
 	}
 
 	if rowsAffected == 0 {
-		return fmt.Errorf("phase not found for deletion: %s", phaseId)
+		return fmt.Errorf("phase not found for deletion: %s", phaseIdentifier)
 	}
 
 	return nil

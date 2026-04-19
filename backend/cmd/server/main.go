@@ -98,7 +98,7 @@ func main() {
 
 	// ─── Super Admin Seed ────────────────────────────────────
 	log.Println("init: seeding super admin")
-	superAdminUserId, err := auth.SeedSuperAdmin(
+	superAdminUserIdentifier, err := auth.SeedSuperAdmin(
 		ctx,
 		userStore,
 		apiKeyStore,
@@ -109,7 +109,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to seed super admin: %v", err)
 	}
-	log.Printf("init: super admin ready (user_id=%q)", superAdminUserId)
+	log.Printf("init: super admin ready (user_id=%q)", superAdminUserIdentifier)
 
 	// ─── File Storage ────────────────────────────────────────
 	log.Println("init: connecting to file storage")
@@ -205,7 +205,7 @@ func main() {
 		log.Println("init: OIDC not configured — API key auth only")
 	}
 
-	authMiddleware := auth.NewAuthMiddleware(sessionManager, apiKeyStore, userService, superAdminUserId)
+	authMiddleware := auth.NewAuthMiddleware(sessionManager, apiKeyStore, userService, superAdminUserIdentifier)
 	log.Println("init: auth middleware ready")
 
 	// ─── Version Commit Worker ───────────────────────────────

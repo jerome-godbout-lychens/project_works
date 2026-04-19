@@ -46,15 +46,15 @@ func NewAttachmentService(
 // UploadAttachment stores a file in the file storage backend and records its metadata.
 func (s *AttachmentService) UploadAttachment(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 	fileName string,
 	contentType string,
 	fileSizeBytes int64,
 	data io.Reader,
-	uploadedById string,
+	uploadedByIdentifier string,
 ) (*domain.Attachment, error) {
 	attachmentUuid := uuid.New().String()
-	storageKey := fmt.Sprintf("attachments/%s/%s/%s", elementId, attachmentUuid, fileName)
+	storageKey := fmt.Sprintf("attachments/%s/%s/%s", elementIdentifier, attachmentUuid, fileName)
 
 	// Upload file — note arg order: (ctx, storageKey, data, contentType)
 	if err := s.fileStorage.PutFile(ctx, storageKey, data, contentType); err != nil {
@@ -62,13 +62,13 @@ func (s *AttachmentService) UploadAttachment(
 	}
 
 	attachment := &domain.Attachment{
-		AttachmentId:  attachmentUuid,
-		ElementId:     elementId,
+		AttachmentIdentifier:  attachmentUuid,
+		ElementIdentifier:     elementIdentifier,
 		FileName:      fileName,
 		ContentType:   contentType,
 		FileSizeBytes: fileSizeBytes,
 		FileStorageKey: storageKey,
-		UploadedById:  uploadedById,
+		UploadedByIdentifier:  uploadedByIdentifier,
 		UploadTime:    time.Now().UTC(),
 	}
 
@@ -77,28 +77,28 @@ func (s *AttachmentService) UploadAttachment(
 		return nil, fmt.Errorf("failed to create attachment metadata: %w", err)
 	}
 
-	if err := s.stagePendingChange(ctx, elementId); err != nil {
+	if err := s.stagePendingChange(ctx, elementIdentifier); err != nil {
 		return nil, fmt.Errorf("failed to stage pending change: %w", err)
 	}
 
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementIdentifier))
 	return attachment, nil
 }
 
 // ListAttachmentsByElement returns all attachments for the given element.
-func (s *AttachmentService) ListAttachmentsByElement(ctx context.Context, elementId string) ([]domain.Attachment, error) {
-	return s.attachmentStore.ListAttachmentsByElement(ctx, elementId)
+func (s *AttachmentService) ListAttachmentsByElement(ctx context.Context, elementIdentifier string) ([]domain.Attachment, error) {
+	return s.attachmentStore.ListAttachmentsByElement(ctx, elementIdentifier)
 }
 
 // DeleteAttachment removes an attachment's metadata and its underlying file.
-func (s *AttachmentService) DeleteAttachment(ctx context.Context, attachmentId string) error {
-	attachment, err := s.attachmentStore.GetAttachmentById(ctx, attachmentId)
+func (s *AttachmentService) DeleteAttachment(ctx context.Context, attachmentIdentifier string) error {
+	attachment, err := s.attachmentStore.GetAttachmentByIdentifier(ctx, attachmentIdentifier)
 	if err != nil {
 		return err
 	}
-	elementId := attachment.ElementId
+	elementIdentifier := attachment.ElementIdentifier
 
-	if err := s.attachmentStore.DeleteAttachment(ctx, attachmentId); err != nil {
+	if err := s.attachmentStore.DeleteAttachment(ctx, attachmentIdentifier); err != nil {
 		return err
 	}
 
@@ -106,17 +106,17 @@ func (s *AttachmentService) DeleteAttachment(ctx context.Context, attachmentId s
 		return fmt.Errorf("failed to delete file from storage: %w", err)
 	}
 
-	if err := s.stagePendingChange(ctx, elementId); err != nil {
+	if err := s.stagePendingChange(ctx, elementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change: %w", err)
 	}
 
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementIdentifier))
 	return nil
 }
 
 // GetPresignedURL returns a time-limited URL for direct download of an attachment.
-func (s *AttachmentService) GetPresignedURL(ctx context.Context, attachmentId string, expiration time.Duration) (string, error) {
-	attachment, err := s.attachmentStore.GetAttachmentById(ctx, attachmentId)
+func (s *AttachmentService) GetPresignedURL(ctx context.Context, attachmentIdentifier string, expiration time.Duration) (string, error) {
+	attachment, err := s.attachmentStore.GetAttachmentByIdentifier(ctx, attachmentIdentifier)
 	if err != nil {
 		return "", err
 	}
@@ -129,29 +129,29 @@ func (s *AttachmentService) GetPresignedURL(ctx context.Context, attachmentId st
 }
 
 // stagePendingChange loads the full element aggregate and stages a pending change for versioning.
-func (s *AttachmentService) stagePendingChange(ctx context.Context, elementId string) error {
-	element, err := s.elementStore.GetElementById(ctx, elementId)
+func (s *AttachmentService) stagePendingChange(ctx context.Context, elementIdentifier string) error {
+	element, err := s.elementStore.GetElementByIdentifier(ctx, elementIdentifier)
 	if err != nil {
 		return err
 	}
 
-	customFieldValues, err := s.customFieldValueStore.GetFieldValues(ctx, elementId)
+	customFieldValues, err := s.customFieldValueStore.GetFieldValues(ctx, elementIdentifier)
 	if err != nil {
 		return fmt.Errorf("failed to load custom field values: %w", err)
 	}
 	element.CustomFieldValues = customFieldValues
 
-	outgoing, err := s.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionOutgoing)
+	outgoing, err := s.elementLinkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionOutgoing)
 	if err != nil {
 		return fmt.Errorf("failed to load outgoing links: %w", err)
 	}
-	incoming, err := s.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionIncoming)
+	incoming, err := s.elementLinkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionIncoming)
 	if err != nil {
 		return fmt.Errorf("failed to load incoming links: %w", err)
 	}
 	allLinks := append(outgoing, incoming...)
 
-	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementId)
+	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementIdentifier)
 	if err != nil {
 		return fmt.Errorf("failed to load attachments: %w", err)
 	}
@@ -167,5 +167,5 @@ func (s *AttachmentService) stagePendingChange(ctx context.Context, elementId st
 		return fmt.Errorf("failed to convert snapshot to map: %w", err)
 	}
 
-	return s.elementPendingChangeStore.UpsertPendingChange(ctx, elementId, snapshotMap)
+	return s.elementPendingChangeStore.UpsertPendingChange(ctx, elementIdentifier, snapshotMap)
 }

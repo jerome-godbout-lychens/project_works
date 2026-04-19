@@ -19,7 +19,7 @@ func NewElementPendingChangeStore(db *sql.DB) domain.ElementPendingChangeStore {
 
 func (s *ElementPendingChangeStore) UpsertPendingChange(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 	snapshotBeforeEdits map[string]interface{},
 ) error {
 	snapshotJSON, err := json.Marshal(snapshotBeforeEdits)
@@ -33,7 +33,7 @@ func (s *ElementPendingChangeStore) UpsertPendingChange(
 		ON CONFLICT (element_identifier) DO UPDATE SET last_edit_time = NOW()
 	`
 
-	_, err = s.db.ExecContext(ctx, query, elementId, snapshotJSON)
+	_, err = s.db.ExecContext(ctx, query, elementIdentifier, snapshotJSON)
 	return err
 }
 
@@ -61,7 +61,7 @@ func (s *ElementPendingChangeStore) GetStalePendingChanges(
 		var snapshotJSON []byte
 
 		err := rows.Scan(
-			&pendingChange.ElementId,
+			&pendingChange.ElementIdentifier,
 			&pendingChange.LastEditTime,
 			&snapshotJSON,
 		)
@@ -86,9 +86,9 @@ func (s *ElementPendingChangeStore) GetStalePendingChanges(
 
 func (s *ElementPendingChangeStore) DeletePendingChange(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 ) error {
 	query := `DELETE FROM element_pending_changes WHERE element_identifier = $1`
-	_, err := s.db.ExecContext(ctx, query, elementId)
+	_, err := s.db.ExecContext(ctx, query, elementIdentifier)
 	return err
 }

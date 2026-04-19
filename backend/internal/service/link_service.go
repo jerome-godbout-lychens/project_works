@@ -43,98 +43,98 @@ func (s *LinkService) CreateLink(ctx context.Context, link *domain.ElementLink) 
 		return err
 	}
 
-	if err := s.stagePendingChange(ctx, link.SourceElementId); err != nil {
+	if err := s.stagePendingChange(ctx, link.SourceElementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change on source element: %w", err)
 	}
-	if err := s.stagePendingChange(ctx, link.DestinationElementId); err != nil {
+	if err := s.stagePendingChange(ctx, link.DestinationElementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change on destination element: %w", err)
 	}
 
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.SourceElementId))
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.DestinationElementId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.SourceElementIdentifier))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.DestinationElementIdentifier))
 	return nil
 }
 
 // DeleteLink removes a link and stages pending changes on both endpoints.
-func (s *LinkService) DeleteLink(ctx context.Context, linkId string) error {
-	link, err := s.linkStore.GetLinkById(ctx, linkId)
+func (s *LinkService) DeleteLink(ctx context.Context, linkIdentifier string) error {
+	link, err := s.linkStore.GetLinkByIdentifier(ctx, linkIdentifier)
 	if err != nil {
 		return err
 	}
 
-	if err := s.linkStore.DeleteLink(ctx, linkId); err != nil {
+	if err := s.linkStore.DeleteLink(ctx, linkIdentifier); err != nil {
 		return err
 	}
 
-	if err := s.stagePendingChange(ctx, link.SourceElementId); err != nil {
+	if err := s.stagePendingChange(ctx, link.SourceElementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change on source element: %w", err)
 	}
-	if err := s.stagePendingChange(ctx, link.DestinationElementId); err != nil {
+	if err := s.stagePendingChange(ctx, link.DestinationElementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change on destination element: %w", err)
 	}
 
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.SourceElementId))
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.DestinationElementId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.SourceElementIdentifier))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.DestinationElementIdentifier))
 	return nil
 }
 
-// GetLinkById retrieves a single link by its identifier.
-func (s *LinkService) GetLinkById(ctx context.Context, linkId string) (*domain.ElementLink, error) {
-	return s.linkStore.GetLinkById(ctx, linkId)
+// GetLinkByIdentifier retrieves a single link by its identifier.
+func (s *LinkService) GetLinkByIdentifier(ctx context.Context, linkIdentifier string) (*domain.ElementLink, error) {
+	return s.linkStore.GetLinkByIdentifier(ctx, linkIdentifier)
 }
 
 // UpdateLinkType changes the type of an existing link and stages pending changes on both endpoints.
-func (s *LinkService) UpdateLinkType(ctx context.Context, linkId string, linkType domain.LinkType) error {
-	link, err := s.linkStore.GetLinkById(ctx, linkId)
+func (s *LinkService) UpdateLinkType(ctx context.Context, linkIdentifier string, linkType domain.LinkType) error {
+	link, err := s.linkStore.GetLinkByIdentifier(ctx, linkIdentifier)
 	if err != nil {
 		return err
 	}
 
-	if err := s.linkStore.UpdateLinkType(ctx, linkId, linkType); err != nil {
+	if err := s.linkStore.UpdateLinkType(ctx, linkIdentifier, linkType); err != nil {
 		return err
 	}
 
-	if err := s.stagePendingChange(ctx, link.SourceElementId); err != nil {
+	if err := s.stagePendingChange(ctx, link.SourceElementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change on source element: %w", err)
 	}
-	if err := s.stagePendingChange(ctx, link.DestinationElementId); err != nil {
+	if err := s.stagePendingChange(ctx, link.DestinationElementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change on destination element: %w", err)
 	}
 
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.SourceElementId))
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.DestinationElementId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.SourceElementIdentifier))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", link.DestinationElementIdentifier))
 	return nil
 }
 
 // ListLinksByElement returns all links for an element in both directions.
-func (s *LinkService) ListLinksByElement(ctx context.Context, elementId string) ([]domain.ElementLink, error) {
-	return s.linkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionBoth)
+func (s *LinkService) ListLinksByElement(ctx context.Context, elementIdentifier string) ([]domain.ElementLink, error) {
+	return s.linkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionBoth)
 }
 
 // stagePendingChange loads the full aggregate for an element and stages a pending change.
-func (s *LinkService) stagePendingChange(ctx context.Context, elementId string) error {
-	element, err := s.elementStore.GetElementById(ctx, elementId)
+func (s *LinkService) stagePendingChange(ctx context.Context, elementIdentifier string) error {
+	element, err := s.elementStore.GetElementByIdentifier(ctx, elementIdentifier)
 	if err != nil {
 		return err
 	}
 
-	customFieldValues, err := s.customFieldValueStore.GetFieldValues(ctx, elementId)
+	customFieldValues, err := s.customFieldValueStore.GetFieldValues(ctx, elementIdentifier)
 	if err != nil {
 		return fmt.Errorf("failed to load custom field values: %w", err)
 	}
 	element.CustomFieldValues = customFieldValues
 
-	outgoing, err := s.linkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionOutgoing)
+	outgoing, err := s.linkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionOutgoing)
 	if err != nil {
 		return fmt.Errorf("failed to load outgoing links: %w", err)
 	}
-	incoming, err := s.linkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionIncoming)
+	incoming, err := s.linkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionIncoming)
 	if err != nil {
 		return fmt.Errorf("failed to load incoming links: %w", err)
 	}
 	allLinks := append(outgoing, incoming...)
 
-	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementId)
+	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementIdentifier)
 	if err != nil {
 		return fmt.Errorf("failed to load attachments: %w", err)
 	}
@@ -150,5 +150,5 @@ func (s *LinkService) stagePendingChange(ctx context.Context, elementId string) 
 		return fmt.Errorf("failed to convert snapshot to map: %w", err)
 	}
 
-	return s.elementPendingChangeStore.UpsertPendingChange(ctx, elementId, snapshotMap)
+	return s.elementPendingChangeStore.UpsertPendingChange(ctx, elementIdentifier, snapshotMap)
 }

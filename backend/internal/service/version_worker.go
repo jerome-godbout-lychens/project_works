@@ -83,7 +83,7 @@ func (w *VersionCommitWorker) processStalePendingChanges(ctx context.Context) {
 
 	for _, pendingChange := range stalePendingChanges {
 		if err := w.commitPendingChange(ctx, pendingChange); err != nil {
-			log.Printf("error committing pending change for element %s: %v", pendingChange.ElementId, err)
+			log.Printf("error committing pending change for element %s: %v", pendingChange.ElementIdentifier, err)
 			continue
 		}
 	}
@@ -91,10 +91,10 @@ func (w *VersionCommitWorker) processStalePendingChanges(ctx context.Context) {
 
 // commitPendingChange commits a single pending change to version history.
 func (w *VersionCommitWorker) commitPendingChange(ctx context.Context, pendingChange domain.PendingChange) error {
-	elementId := pendingChange.ElementId
+	elementIdentifier := pendingChange.ElementIdentifier
 
 	// Load full current aggregate
-	currentElement, currentLinks, currentAttachments, err := w.loadFullAggregate(ctx, elementId)
+	currentElement, currentLinks, currentAttachments, err := w.loadFullAggregate(ctx, elementIdentifier)
 	if err != nil {
 		return fmt.Errorf("failed to load current element aggregate: %w", err)
 	}
@@ -132,7 +132,7 @@ func (w *VersionCommitWorker) commitPendingChange(ctx context.Context, pendingCh
 	contentSha := ComputeContentSha(currentJson)
 
 	// Determine next version number
-	versions, err := w.elementVersionStore.ListVersionsByElement(ctx, elementId, 1, 0)
+	versions, err := w.elementVersionStore.ListVersionsByElement(ctx, elementIdentifier, 1, 0)
 	if err != nil {
 		return fmt.Errorf("failed to list versions: %w", err)
 	}
@@ -144,17 +144,17 @@ func (w *VersionCommitWorker) commitPendingChange(ctx context.Context, pendingCh
 
 	// Create version and patch records
 	version := &domain.ElementVersion{
-		VersionId:     fmt.Sprintf("%s-v%d", elementId, nextVersionNumber),
-		ElementId:     elementId,
+		VersionIdentifier:     fmt.Sprintf("%s-v%d", elementIdentifier, nextVersionNumber),
+		ElementIdentifier:     elementIdentifier,
 		VersionNumber: nextVersionNumber,
 		ContentSha:    contentSha,
 		CommittedTime: time.Now(),
-		CommittedById: "system", // auto-commit, no specific user
+		CommittedByIdentifier: "system", // auto-commit, no specific user
 		CommitMessage: "Auto-committed by VersionCommitWorker",
 	}
 
 	patch := &domain.ElementVersionPatch{
-		VersionId:    version.VersionId,
+		VersionIdentifier:    version.VersionIdentifier,
 		ForwardPatch: forwardPatch,
 		ReversePatch: reversePatch,
 	}
@@ -165,11 +165,11 @@ func (w *VersionCommitWorker) commitPendingChange(ctx context.Context, pendingCh
 	}
 
 	// Delete pending change
-	if err := w.elementPendingChangeStore.DeletePendingChange(ctx, elementId); err != nil {
+	if err := w.elementPendingChangeStore.DeletePendingChange(ctx, elementIdentifier); err != nil {
 		return fmt.Errorf("failed to delete pending change: %w", err)
 	}
 
-	log.Printf("successfully committed version %d for element %s", nextVersionNumber, elementId)
+	log.Printf("successfully committed version %d for element %s", nextVersionNumber, elementIdentifier)
 
 	return nil
 }
@@ -177,32 +177,32 @@ func (w *VersionCommitWorker) commitPendingChange(ctx context.Context, pendingCh
 // loadFullAggregate loads the complete element aggregate including custom fields, links, and attachments.
 func (w *VersionCommitWorker) loadFullAggregate(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 ) (*domain.Element, []domain.ElementLink, []domain.Attachment, error) {
-	element, err := w.elementStore.GetElementById(ctx, elementId)
+	element, err := w.elementStore.GetElementByIdentifier(ctx, elementIdentifier)
 	if err != nil {
 		return nil, nil, nil, err
 	}
 
-	customFieldValues, err := w.customFieldValueStore.GetFieldValues(ctx, elementId)
+	customFieldValues, err := w.customFieldValueStore.GetFieldValues(ctx, elementIdentifier)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to load custom field values: %w", err)
 	}
 	element.CustomFieldValues = customFieldValues
 
-	outgoingLinks, err := w.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionOutgoing)
+	outgoingLinks, err := w.elementLinkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionOutgoing)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to load outgoing links: %w", err)
 	}
 
-	incomingLinks, err := w.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionIncoming)
+	incomingLinks, err := w.elementLinkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionIncoming)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to load incoming links: %w", err)
 	}
 
 	allLinks := append(outgoingLinks, incomingLinks...)
 
-	attachments, err := w.attachmentStore.ListAttachmentsByElement(ctx, elementId)
+	attachments, err := w.attachmentStore.ListAttachmentsByElement(ctx, elementIdentifier)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to load attachments: %w", err)
 	}

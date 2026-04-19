@@ -11,7 +11,7 @@ import (
 
 // UserResponse represents a user in API responses.
 type UserResponse struct {
-	UserId   string `json:"user_id"`
+	UserIdentifier   string `json:"user_identifier"`
 	Email    string `json:"email"`
 	DisplayName string `json:"display_name"`
 }
@@ -32,7 +32,7 @@ type ListUsersOutput struct {
 
 // GetUserInput holds the path parameter for getting a user.
 type GetUserInput struct {
-	UserId string `path:"user_id" format:"uuid" doc:"The user identifier"`
+	UserIdentifier string `path:"user_identifier" format:"uuid" doc:"The user identifier"`
 }
 
 // GetUserOutput returns a single user.
@@ -42,7 +42,7 @@ type GetUserOutput struct {
 
 // UpdateUserInput holds the request body for updating a user.
 type UpdateUserInput struct {
-	UserId string `path:"user_id" format:"uuid" doc:"The user identifier"`
+	UserIdentifier string `path:"user_identifier" format:"uuid" doc:"The user identifier"`
 	Body   struct {
 		DisplayName string `json:"display_name,omitempty" doc:"Display name for the user"`
 	}
@@ -75,7 +75,7 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 
 		for i, user := range users {
 			output.Body.Items[i] = UserResponse{
-				UserId:      user.UserId,
+				UserIdentifier:      user.UserIdentifier,
 				Email:       user.Email,
 				DisplayName: user.DisplayName,
 			}
@@ -88,18 +88,18 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "getUser",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/users/{user_id}",
+		Path:        "/api/v1/users/{user_identifier}",
 		Summary:     "Get a user by identifier",
 		Tags:        []string{"users"},
 	}, func(ctx context.Context, input *GetUserInput) (*GetUserOutput, error) {
-		user, err := userService.GetUserById(ctx, input.UserId)
+		user, err := userService.GetUserByIdentifier(ctx, input.UserIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "User not found", err)
 		}
 
 		return &GetUserOutput{
 			Body: UserResponse{
-				UserId:      user.UserId,
+				UserIdentifier:      user.UserIdentifier,
 				Email:       user.Email,
 				DisplayName: user.DisplayName,
 			},
@@ -110,12 +110,12 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "updateUser",
 		Method:      http.MethodPut,
-		Path:        "/api/v1/users/{user_id}",
+		Path:        "/api/v1/users/{user_identifier}",
 		Summary:     "Update a user",
 		Tags:        []string{"users"},
 	}, func(ctx context.Context, input *UpdateUserInput) (*UpdateUserOutput, error) {
 		// Get current user
-		user, err := userService.GetUserById(ctx, input.UserId)
+		user, err := userService.GetUserByIdentifier(ctx, input.UserIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "User not found", err)
 		}
@@ -133,7 +133,7 @@ func RegisterUserHandlers(api huma.API, userService *service.UserService) {
 
 		return &UpdateUserOutput{
 			Body: UserResponse{
-				UserId:      user.UserId,
+				UserIdentifier:      user.UserIdentifier,
 				Email:       user.Email,
 				DisplayName: user.DisplayName,
 			},

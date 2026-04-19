@@ -4,19 +4,19 @@ import "time"
 
 // ElementVersion is the metadata for one committed version of an element.
 type ElementVersion struct {
-	VersionId     string
-	ElementId     string
+	VersionIdentifier     string
+	ElementIdentifier     string
 	VersionNumber         int
 	ContentSha            string
 	CommittedTime         time.Time
-	CommittedById string
+	CommittedByIdentifier string
 	CommitMessage         string
 }
 
 // ElementVersionPatch holds the diff between two consecutive versions.
 // Both forward and reverse patches are stored to avoid recomputing inverses.
 type ElementVersionPatch struct {
-	VersionId string
+	VersionIdentifier string
 	ForwardPatch      []PatchOperation // transforms version N-1 into version N
 	ReversePatch      []PatchOperation // transforms version N into version N-1
 }
@@ -33,7 +33,7 @@ type PatchOperation struct {
 // The auto-commit background worker uses this to detect idle elements
 // and create version snapshots.
 type PendingChange struct {
-	ElementId   string
+	ElementIdentifier   string
 	LastEditTime        time.Time
 	SnapshotBeforeEdits map[string]interface{} // serialized element state at last commit
 }

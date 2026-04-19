@@ -13,13 +13,13 @@ import (
 
 // GroupResponse represents a group in API responses.
 type GroupResponse struct {
-	GroupId   string `json:"group_id"`
+	GroupIdentifier   string `json:"group_identifier"`
 	GroupName string `json:"group_name"`
 }
 
 // GroupMemberResponse represents a user who is a member of a group.
 type GroupMemberResponse struct {
-	UserId      string `json:"user_id"`
+	UserIdentifier      string `json:"user_identifier"`
 	Email       string `json:"email"`
 	DisplayName string `json:"display_name"`
 }
@@ -47,7 +47,7 @@ type CreateGroupOutput struct {
 
 // GetGroupInput holds the path parameter for getting a group.
 type GetGroupInput struct {
-	GroupId string `path:"group_id" format:"uuid" doc:"The group identifier"`
+	GroupIdentifier string `path:"group_identifier" format:"uuid" doc:"The group identifier"`
 }
 
 // GetGroupOutput returns a single group.
@@ -57,7 +57,7 @@ type GetGroupOutput struct {
 
 // DeleteGroupInput holds the path parameter for deleting a group.
 type DeleteGroupInput struct {
-	GroupId string `path:"group_id" format:"uuid" doc:"The group identifier"`
+	GroupIdentifier string `path:"group_identifier" format:"uuid" doc:"The group identifier"`
 }
 
 // DeleteGroupOutput is an empty response for successful deletion.
@@ -69,7 +69,7 @@ type DeleteGroupOutput struct {
 
 // ListGroupMembersInput holds the path parameter for listing group members.
 type ListGroupMembersInput struct {
-	GroupId string `path:"group_id" format:"uuid" doc:"The group identifier"`
+	GroupIdentifier string `path:"group_identifier" format:"uuid" doc:"The group identifier"`
 }
 
 // ListGroupMembersOutput returns a list of group members.
@@ -81,9 +81,9 @@ type ListGroupMembersOutput struct {
 
 // AddGroupMemberInput holds the request body for adding a member to a group.
 type AddGroupMemberInput struct {
-	GroupId string `path:"group_id" format:"uuid" doc:"The group identifier"`
+	GroupIdentifier string `path:"group_identifier" format:"uuid" doc:"The group identifier"`
 	Body    struct {
-		UserId string `json:"user_id" required:"true" doc:"The user identifier to add"`
+		UserIdentifier string `json:"user_identifier" required:"true" doc:"The user identifier to add"`
 	}
 }
 
@@ -96,8 +96,8 @@ type AddGroupMemberOutput struct {
 
 // RemoveGroupMemberInput holds the path parameters for removing a member from a group.
 type RemoveGroupMemberInput struct {
-	GroupId string `path:"group_id" format:"uuid" doc:"The group identifier"`
-	UserId  string `path:"user_id" format:"uuid" doc:"The user identifier to remove"`
+	GroupIdentifier string `path:"group_identifier" format:"uuid" doc:"The group identifier"`
+	UserIdentifier  string `path:"user_identifier" format:"uuid" doc:"The user identifier to remove"`
 }
 
 // RemoveGroupMemberOutput is an empty response for successful removal.
@@ -109,7 +109,7 @@ type RemoveGroupMemberOutput struct {
 
 // ListUserGroupsInput holds the path parameter for listing user groups.
 type ListUserGroupsInput struct {
-	UserId string `path:"user_id" format:"uuid" doc:"The user identifier"`
+	UserIdentifier string `path:"user_identifier" format:"uuid" doc:"The user identifier"`
 }
 
 // ListUserGroupsOutput returns a list of groups for a user.
@@ -139,7 +139,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 
 		for i, group := range groups {
 			output.Body.Items[i] = GroupResponse{
-				GroupId:   group.GroupId,
+				GroupIdentifier:   group.GroupIdentifier,
 				GroupName: group.GroupName,
 			}
 		}
@@ -156,7 +156,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *CreateGroupInput) (*CreateGroupOutput, error) {
 		group := &domain.Group{
-			GroupId:   uuid.New().String(),
+			GroupIdentifier:   uuid.New().String(),
 			GroupName: input.GroupName,
 		}
 
@@ -167,7 +167,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 
 		return &CreateGroupOutput{
 			Body: GroupResponse{
-				GroupId:   group.GroupId,
+				GroupIdentifier:   group.GroupIdentifier,
 				GroupName: group.GroupName,
 			},
 		}, nil
@@ -177,18 +177,18 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "getGroup",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/groups/{group_id}",
+		Path:        "/api/v1/groups/{group_identifier}",
 		Summary:     "Get a group by identifier",
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *GetGroupInput) (*GetGroupOutput, error) {
-		group, err := groupService.GetGroupById(ctx, input.GroupId)
+		group, err := groupService.GetGroupByIdentifier(ctx, input.GroupIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "Group not found", err)
 		}
 
 		return &GetGroupOutput{
 			Body: GroupResponse{
-				GroupId:   group.GroupId,
+				GroupIdentifier:   group.GroupIdentifier,
 				GroupName: group.GroupName,
 			},
 		}, nil
@@ -198,11 +198,11 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "deleteGroup",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/groups/{group_id}",
+		Path:        "/api/v1/groups/{group_identifier}",
 		Summary:     "Delete a group",
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *DeleteGroupInput) (*DeleteGroupOutput, error) {
-		err := groupService.DeleteGroup(ctx, input.GroupId)
+		err := groupService.DeleteGroup(ctx, input.GroupIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete group", err)
 		}
@@ -220,11 +220,11 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "listGroupMembers",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/groups/{group_id}/members",
+		Path:        "/api/v1/groups/{group_identifier}/members",
 		Summary:     "List members of a group",
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *ListGroupMembersInput) (*ListGroupMembersOutput, error) {
-		users, err := groupService.ListUsersByGroup(ctx, input.GroupId)
+		users, err := groupService.ListUsersByGroup(ctx, input.GroupIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list group members", err)
 		}
@@ -234,7 +234,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 
 		for i, user := range users {
 			output.Body.Items[i] = GroupMemberResponse{
-				UserId:      user.UserId,
+				UserIdentifier:      user.UserIdentifier,
 				Email:       user.Email,
 				DisplayName: user.DisplayName,
 			}
@@ -247,11 +247,11 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "addGroupMember",
 		Method:      http.MethodPost,
-		Path:        "/api/v1/groups/{group_id}/members",
+		Path:        "/api/v1/groups/{group_identifier}/members",
 		Summary:     "Add a user to a group",
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *AddGroupMemberInput) (*AddGroupMemberOutput, error) {
-		err := groupService.AddUserToGroup(ctx, input.GroupId, input.Body.UserId)
+		err := groupService.AddUserToGroup(ctx, input.GroupIdentifier, input.Body.UserIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to add group member", err)
 		}
@@ -269,11 +269,11 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "removeGroupMember",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/groups/{group_id}/members/{user_id}",
+		Path:        "/api/v1/groups/{group_identifier}/members/{user_identifier}",
 		Summary:     "Remove a user from a group",
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *RemoveGroupMemberInput) (*RemoveGroupMemberOutput, error) {
-		err := groupService.RemoveUserFromGroup(ctx, input.GroupId, input.UserId)
+		err := groupService.RemoveUserFromGroup(ctx, input.GroupIdentifier, input.UserIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to remove group member", err)
 		}
@@ -291,11 +291,11 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "listUserGroups",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/users/{user_id}/groups",
+		Path:        "/api/v1/users/{user_identifier}/groups",
 		Summary:     "List groups for a user",
 		Tags:        []string{"groups"},
 	}, func(ctx context.Context, input *ListUserGroupsInput) (*ListUserGroupsOutput, error) {
-		groups, err := groupService.ListGroupsByUser(ctx, input.UserId)
+		groups, err := groupService.ListGroupsByUser(ctx, input.UserIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list user groups", err)
 		}
@@ -305,7 +305,7 @@ func RegisterGroupHandlers(api huma.API, groupService *service.GroupService) {
 
 		for i, group := range groups {
 			output.Body.Items[i] = GroupResponse{
-				GroupId:   group.GroupId,
+				GroupIdentifier:   group.GroupIdentifier,
 				GroupName: group.GroupName,
 			}
 		}

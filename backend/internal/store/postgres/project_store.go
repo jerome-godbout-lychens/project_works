@@ -21,8 +21,8 @@ func NewProjectStore(database *sql.DB) domain.ProjectStore {
 	}
 }
 
-// GetProjectById retrieves a project by its identifier.
-func (store *ProjectStore) GetProjectById(ctx context.Context, projectId string) (*domain.Project, error) {
+// GetProjectByIdentifier retrieves a project by its identifier.
+func (store *ProjectStore) GetProjectByIdentifier(ctx context.Context, projectIdentifier string) (*domain.Project, error) {
 	query := `
 		SELECT project_identifier, project_name, project_description, folder_path, creation_time, modification_time
 		FROM projects
@@ -30,8 +30,8 @@ func (store *ProjectStore) GetProjectById(ctx context.Context, projectId string)
 	`
 
 	project := &domain.Project{}
-	err := store.database.QueryRowContext(ctx, query, projectId).Scan(
-		&project.ProjectId,
+	err := store.database.QueryRowContext(ctx, query, projectIdentifier).Scan(
+		&project.ProjectIdentifier,
 		&project.ProjectName,
 		&project.ProjectDescription,
 		&project.FolderPath,
@@ -81,7 +81,7 @@ func (store *ProjectStore) ListProjects(ctx context.Context, folderPathPrefix st
 	for rows.Next() {
 		project := domain.Project{}
 		err := rows.Scan(
-			&project.ProjectId,
+			&project.ProjectIdentifier,
 			&project.ProjectName,
 			&project.ProjectDescription,
 			&project.FolderPath,
@@ -101,7 +101,7 @@ func (store *ProjectStore) ListProjects(ctx context.Context, folderPathPrefix st
 	return projects, nil
 }
 
-// CreateProject creates a new project and populates the ProjectId with the generated identifier.
+// CreateProject creates a new project and populates the ProjectIdentifier with the generated identifier.
 func (store *ProjectStore) CreateProject(ctx context.Context, project *domain.Project) error {
 	query := `
 		INSERT INTO projects (project_name, project_description, folder_path)
@@ -116,7 +116,7 @@ func (store *ProjectStore) CreateProject(ctx context.Context, project *domain.Pr
 		project.ProjectDescription,
 		project.FolderPath,
 	).Scan(
-		&project.ProjectId,
+		&project.ProjectIdentifier,
 		&project.CreationTime,
 		&project.ModificationTime,
 	)
@@ -139,7 +139,7 @@ func (store *ProjectStore) UpdateProject(ctx context.Context, project *domain.Pr
 		project.ProjectDescription,
 		project.FolderPath,
 		time.Now(),
-		project.ProjectId,
+		project.ProjectIdentifier,
 	)
 
 	if err != nil {
@@ -152,17 +152,17 @@ func (store *ProjectStore) UpdateProject(ctx context.Context, project *domain.Pr
 	}
 
 	if rowsAffected == 0 {
-		return fmt.Errorf("project not found for update: %s", project.ProjectId)
+		return fmt.Errorf("project not found for update: %s", project.ProjectIdentifier)
 	}
 
 	return nil
 }
 
 // DeleteProject deletes a project by its identifier.
-func (store *ProjectStore) DeleteProject(ctx context.Context, projectId string) error {
+func (store *ProjectStore) DeleteProject(ctx context.Context, projectIdentifier string) error {
 	query := `DELETE FROM projects WHERE project_identifier = $1`
 
-	result, err := store.database.ExecContext(ctx, query, projectId)
+	result, err := store.database.ExecContext(ctx, query, projectIdentifier)
 	if err != nil {
 		return err
 	}
@@ -173,7 +173,7 @@ func (store *ProjectStore) DeleteProject(ctx context.Context, projectId string) 
 	}
 
 	if rowsAffected == 0 {
-		return fmt.Errorf("project not found for deletion: %s", projectId)
+		return fmt.Errorf("project not found for deletion: %s", projectIdentifier)
 	}
 
 	return nil

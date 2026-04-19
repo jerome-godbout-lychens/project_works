@@ -14,16 +14,16 @@ import (
 
 // LinkResponse represents an element link in API responses.
 type LinkResponse struct {
-	LinkId               string    `json:"link_id"`
-	SourceElementId      string    `json:"source_element_id"`
-	DestinationElementId string    `json:"destination_element_id"`
+	LinkIdentifier               string    `json:"link_identifier"`
+	SourceElementIdentifier      string    `json:"source_element_identifier"`
+	DestinationElementIdentifier string    `json:"destination_element_identifier"`
 	LinkType             string    `json:"link_type"`
 	CreationTime         time.Time `json:"creation_time"`
 }
 
 // ListElementLinksInput holds query parameters for listing element links.
 type ListElementLinksInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 	Direction string `query:"direction" default:"both" doc:"Direction of links: outgoing, incoming, or both"`
 }
 
@@ -36,9 +36,9 @@ type ListElementLinksOutput struct {
 
 // CreateElementLinkInput holds the request body for creating a link.
 type CreateElementLinkInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The source element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The source element identifier"`
 	Body      struct {
-		DestinationElementId string `json:"destination_element_id" required:"true" doc:"The destination element identifier"`
+		DestinationElementIdentifier string `json:"destination_element_identifier" required:"true" doc:"The destination element identifier"`
 		LinkType             string `json:"link_type" required:"true" doc:"The type of link (related, child, implement)"`
 	}
 }
@@ -50,7 +50,7 @@ type CreateElementLinkOutput struct {
 
 // UpdateLinkInput holds the request body for updating a link's type.
 type UpdateLinkInput struct {
-	LinkId string `path:"link_id" format:"uuid" doc:"The link identifier"`
+	LinkIdentifier string `path:"link_identifier" format:"uuid" doc:"The link identifier"`
 	Body   struct {
 		LinkType string `json:"link_type" required:"true" doc:"New link type (related, child, implement)"`
 	}
@@ -63,7 +63,7 @@ type UpdateLinkOutput struct {
 
 // DeleteLinkInput holds the path parameter for deleting a link.
 type DeleteLinkInput struct {
-	LinkId string `path:"link_id" format:"uuid" doc:"The link identifier"`
+	LinkIdentifier string `path:"link_identifier" format:"uuid" doc:"The link identifier"`
 }
 
 // DeleteLinkOutput is an empty response for successful deletion.
@@ -79,12 +79,12 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "listElementLinks",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/elements/{element_id}/links",
+		Path:        "/api/v1/elements/{element_identifier}/links",
 		Summary:     "List links for an element",
 		Description: "Retrieve all links associated with an element, optionally filtered by direction.",
 		Tags:        []string{"links"},
 	}, func(ctx context.Context, input *ListElementLinksInput) (*ListElementLinksOutput, error) {
-		links, err := linkService.ListLinksByElement(ctx, input.ElementId)
+		links, err := linkService.ListLinksByElement(ctx, input.ElementIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list links", err)
 		}
@@ -94,17 +94,17 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 
 		for _, link := range links {
 			// Filter by direction if specified
-			if input.Direction == "outgoing" && link.SourceElementId != input.ElementId {
+			if input.Direction == "outgoing" && link.SourceElementIdentifier != input.ElementIdentifier {
 				continue
 			}
-			if input.Direction == "incoming" && link.DestinationElementId != input.ElementId {
+			if input.Direction == "incoming" && link.DestinationElementIdentifier != input.ElementIdentifier {
 				continue
 			}
 
 			output.Body.Items = append(output.Body.Items, LinkResponse{
-				LinkId:               link.LinkId,
-				SourceElementId:      link.SourceElementId,
-				DestinationElementId: link.DestinationElementId,
+				LinkIdentifier:               link.LinkIdentifier,
+				SourceElementIdentifier:      link.SourceElementIdentifier,
+				DestinationElementIdentifier: link.DestinationElementIdentifier,
 				LinkType:             string(link.LinkType),
 				CreationTime:         link.CreationTime,
 			})
@@ -117,7 +117,7 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "createElementLink",
 		Method:      http.MethodPost,
-		Path:        "/api/v1/elements/{element_id}/links",
+		Path:        "/api/v1/elements/{element_identifier}/links",
 		Summary:     "Create a new link",
 		Tags:        []string{"links"},
 	}, func(ctx context.Context, input *CreateElementLinkInput) (*CreateElementLinkOutput, error) {
@@ -128,9 +128,9 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 		}
 
 		link := &domain.ElementLink{
-			LinkId:               uuid.New().String(),
-			SourceElementId:      input.ElementId,
-			DestinationElementId: input.Body.DestinationElementId,
+			LinkIdentifier:               uuid.New().String(),
+			SourceElementIdentifier:      input.ElementIdentifier,
+			DestinationElementIdentifier: input.Body.DestinationElementIdentifier,
 			LinkType:             linkType,
 			CreationTime:         time.Now().UTC(),
 		}
@@ -142,9 +142,9 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 
 		return &CreateElementLinkOutput{
 			Body: LinkResponse{
-				LinkId:               link.LinkId,
-				SourceElementId:      link.SourceElementId,
-				DestinationElementId: link.DestinationElementId,
+				LinkIdentifier:               link.LinkIdentifier,
+				SourceElementIdentifier:      link.SourceElementIdentifier,
+				DestinationElementIdentifier: link.DestinationElementIdentifier,
 				LinkType:             string(link.LinkType),
 				CreationTime:         link.CreationTime,
 			},
@@ -155,7 +155,7 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "updateElementLink",
 		Method:      http.MethodPatch,
-		Path:        "/api/v1/links/{link_id}",
+		Path:        "/api/v1/links/{link_identifier}",
 		Summary:     "Update a link's type",
 		Description: "Change the type of an existing link between two elements.",
 		Tags:        []string{"links"},
@@ -165,21 +165,21 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 			return nil, huma.NewError(http.StatusBadRequest, "Invalid link type", nil)
 		}
 
-		if err := linkService.UpdateLinkType(ctx, input.LinkId, newLinkType); err != nil {
+		if err := linkService.UpdateLinkType(ctx, input.LinkIdentifier, newLinkType); err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to update link", err)
 		}
 
 		// Fetch updated link to return in response
-		link, err := linkService.GetLinkById(ctx, input.LinkId)
+		link, err := linkService.GetLinkByIdentifier(ctx, input.LinkIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to fetch updated link", err)
 		}
 
 		return &UpdateLinkOutput{
 			Body: LinkResponse{
-				LinkId:               link.LinkId,
-				SourceElementId:      link.SourceElementId,
-				DestinationElementId: link.DestinationElementId,
+				LinkIdentifier:               link.LinkIdentifier,
+				SourceElementIdentifier:      link.SourceElementIdentifier,
+				DestinationElementIdentifier: link.DestinationElementIdentifier,
 				LinkType:             string(link.LinkType),
 				CreationTime:         link.CreationTime,
 			},
@@ -190,11 +190,11 @@ func RegisterLinkHandlers(api huma.API, linkService *service.LinkService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "deleteElementLink",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/links/{link_id}",
+		Path:        "/api/v1/links/{link_identifier}",
 		Summary:     "Delete a link",
 		Tags:        []string{"links"},
 	}, func(ctx context.Context, input *DeleteLinkInput) (*DeleteLinkOutput, error) {
-		err := linkService.DeleteLink(ctx, input.LinkId)
+		err := linkService.DeleteLink(ctx, input.LinkIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete link", err)
 		}

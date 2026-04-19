@@ -46,13 +46,13 @@ func (s *ElementVersionStore) CreateVersion(
 	err = tx.QueryRowContext(
 		ctx,
 		insertVersionQuery,
-		version.ElementId,
+		version.ElementIdentifier,
 		version.VersionNumber,
 		version.ContentSha,
 		version.CommittedTime,
-		version.CommittedById,
+		version.CommittedByIdentifier,
 		version.CommitMessage,
-	).Scan(&version.VersionId)
+	).Scan(&version.VersionIdentifier)
 	if err != nil {
 		return err
 	}
@@ -63,7 +63,7 @@ func (s *ElementVersionStore) CreateVersion(
 		VALUES ($1, $2, $3)
 	`
 
-	_, err = tx.ExecContext(ctx, insertPatchQuery, version.VersionId, forwardPatchJSON, reversePatchJSON)
+	_, err = tx.ExecContext(ctx, insertPatchQuery, version.VersionIdentifier, forwardPatchJSON, reversePatchJSON)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (s *ElementVersionStore) CreateVersion(
 
 func (s *ElementVersionStore) ListVersionsByElement(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 	limit int,
 	offset int,
 ) ([]domain.ElementVersion, error) {
@@ -85,7 +85,7 @@ func (s *ElementVersionStore) ListVersionsByElement(
 		LIMIT $2 OFFSET $3
 	`
 
-	rows, err := s.db.QueryContext(ctx, query, elementId, limit, offset)
+	rows, err := s.db.QueryContext(ctx, query, elementIdentifier, limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -95,12 +95,12 @@ func (s *ElementVersionStore) ListVersionsByElement(
 	for rows.Next() {
 		var version domain.ElementVersion
 		err := rows.Scan(
-			&version.VersionId,
-			&version.ElementId,
+			&version.VersionIdentifier,
+			&version.ElementIdentifier,
 			&version.VersionNumber,
 			&version.ContentSha,
 			&version.CommittedTime,
-			&version.CommittedById,
+			&version.CommittedByIdentifier,
 			&version.CommitMessage,
 		)
 		if err != nil {
@@ -118,7 +118,7 @@ func (s *ElementVersionStore) ListVersionsByElement(
 
 func (s *ElementVersionStore) GetPatchesInRange(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 	fromVersionNumber int,
 	toVersionNumber int,
 ) ([]domain.ElementVersionPatch, error) {
@@ -132,7 +132,7 @@ func (s *ElementVersionStore) GetPatchesInRange(
 		ORDER BY ev.version_number DESC
 	`
 
-	rows, err := s.db.QueryContext(ctx, query, elementId, fromVersionNumber, toVersionNumber)
+	rows, err := s.db.QueryContext(ctx, query, elementIdentifier, fromVersionNumber, toVersionNumber)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (s *ElementVersionStore) GetPatchesInRange(
 		var versionNumber int
 
 		err := rows.Scan(
-			&patch.VersionId,
+			&patch.VersionIdentifier,
 			&forwardPatchJSON,
 			&reversePatchJSON,
 			&versionNumber,

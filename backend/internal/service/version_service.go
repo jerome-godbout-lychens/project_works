@@ -41,22 +41,22 @@ func NewVersionService(
 // ListVersionsByElement retrieves version history for an element.
 func (s *VersionService) ListVersionsByElement(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 	limit int,
 	offset int,
 ) ([]domain.ElementVersion, error) {
-	return s.versionStore.ListVersionsByElement(ctx, elementId, limit, offset)
+	return s.versionStore.ListVersionsByElement(ctx, elementIdentifier, limit, offset)
 }
 
 // GetElementAtVersion reconstructs the state of an element at a specific version.
 // It loads the current state, serializes it, then applies reverse patches back to the target version.
 func (s *VersionService) GetElementAtVersion(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 	targetVersionNumber int,
 ) (*domain.Element, error) {
 	// Load current full aggregate
-	currentElement, currentLinks, currentAttachments, err := s.loadFullAggregate(ctx, elementId)
+	currentElement, currentLinks, currentAttachments, err := s.loadFullAggregate(ctx, elementIdentifier)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load current element: %w", err)
 	}
@@ -69,7 +69,7 @@ func (s *VersionService) GetElementAtVersion(
 	}
 
 	// Get latest version number
-	versions, err := s.versionStore.ListVersionsByElement(ctx, elementId, 1, 0)
+	versions, err := s.versionStore.ListVersionsByElement(ctx, elementIdentifier, 1, 0)
 	if err != nil {
 		return nil, fmt.Errorf("failed to list versions: %w", err)
 	}
@@ -79,7 +79,7 @@ func (s *VersionService) GetElementAtVersion(
 		if targetVersionNumber == 0 {
 			return currentElement, nil
 		}
-		return nil, fmt.Errorf("version %d does not exist for element %s", targetVersionNumber, elementId)
+		return nil, fmt.Errorf("version %d does not exist for element %s", targetVersionNumber, elementIdentifier)
 	}
 
 	latestVersionNumber := versions[0].VersionNumber
@@ -98,7 +98,7 @@ func (s *VersionService) GetElementAtVersion(
 	}
 
 	// Load reverse patches from latest down to target+1
-	patches, err := s.versionStore.GetPatchesInRange(ctx, elementId, targetVersionNumber+1, latestVersionNumber)
+	patches, err := s.versionStore.GetPatchesInRange(ctx, elementIdentifier, targetVersionNumber+1, latestVersionNumber)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load patches: %w", err)
 	}
@@ -134,7 +134,7 @@ func (s *VersionService) GetElementAtVersion(
 	}
 
 	// Convert snapshot fields back to domain.Element
-	reconstructedElement := s.snapshotToElement(reconstructedSnapshot, currentElement.ElementId, currentElement.ProjectId)
+	reconstructedElement := s.snapshotToElement(reconstructedSnapshot, currentElement.ElementIdentifier, currentElement.ProjectIdentifier)
 
 	return reconstructedElement, nil
 }
@@ -142,16 +142,16 @@ func (s *VersionService) GetElementAtVersion(
 // GetElementVersionDiff retrieves the patch for a specific version.
 func (s *VersionService) GetElementVersionDiff(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 	versionNumber int,
 ) (*domain.ElementVersionPatch, error) {
-	patches, err := s.versionStore.GetPatchesInRange(ctx, elementId, versionNumber, versionNumber)
+	patches, err := s.versionStore.GetPatchesInRange(ctx, elementIdentifier, versionNumber, versionNumber)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load patch: %w", err)
 	}
 
 	if len(patches) == 0 {
-		return nil, fmt.Errorf("patch not found for version %d of element %s", versionNumber, elementId)
+		return nil, fmt.Errorf("patch not found for version %d of element %s", versionNumber, elementIdentifier)
 	}
 
 	return &patches[0], nil
@@ -160,32 +160,32 @@ func (s *VersionService) GetElementVersionDiff(
 // loadFullAggregate loads the complete element aggregate including custom fields, links, and attachments.
 func (s *VersionService) loadFullAggregate(
 	ctx context.Context,
-	elementId string,
+	elementIdentifier string,
 ) (*domain.Element, []domain.ElementLink, []domain.Attachment, error) {
-	element, err := s.elementStore.GetElementById(ctx, elementId)
+	element, err := s.elementStore.GetElementByIdentifier(ctx, elementIdentifier)
 	if err != nil {
 		return nil, nil, nil, err
 	}
 
-	customFieldValues, err := s.customFieldValueStore.GetFieldValues(ctx, elementId)
+	customFieldValues, err := s.customFieldValueStore.GetFieldValues(ctx, elementIdentifier)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to load custom field values: %w", err)
 	}
 	element.CustomFieldValues = customFieldValues
 
-	outgoingLinks, err := s.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionOutgoing)
+	outgoingLinks, err := s.elementLinkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionOutgoing)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to load outgoing links: %w", err)
 	}
 
-	incomingLinks, err := s.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionIncoming)
+	incomingLinks, err := s.elementLinkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionIncoming)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to load incoming links: %w", err)
 	}
 
 	allLinks := append(outgoingLinks, incomingLinks...)
 
-	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementId)
+	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementIdentifier)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to load attachments: %w", err)
 	}
@@ -202,29 +202,29 @@ func (s *VersionService) convertToRFC6902Patch(operations []domain.PatchOperatio
 // This reconstructs all the fields from the snapshot.
 func (s *VersionService) snapshotToElement(
 	snapshot *VersionableSnapshot,
-	elementId string,
-	projectId string,
+	elementIdentifier string,
+	projectIdentifier string,
 ) *domain.Element {
 	element := &domain.Element{
-		ElementId:       elementId,
-		ProjectId:       projectId,
+		ElementIdentifier:       elementIdentifier,
+		ProjectIdentifier:       projectIdentifier,
 		ElementType:     snapshot.ElementType,
 		Title:           snapshot.Title,
 		Description:     snapshot.Description,
 		InterestLevel:   snapshot.InterestLevel,
-		AssigneeId:      snapshot.AssigneeId,
+		AssigneeIdentifier:      snapshot.AssigneeIdentifier,
 		TaskStatus:      snapshot.TaskStatus,
 		TaskProgress:    snapshot.TaskProgress,
-		ParentFeatureId: snapshot.ParentFeatureId,
-		StartPhaseId:    snapshot.StartPhaseId,
-		DeliveryPhaseId: snapshot.DeliveryPhaseId,
+		ParentFeatureIdentifier: snapshot.ParentFeatureIdentifier,
+		StartPhaseIdentifier:    snapshot.StartPhaseIdentifier,
+		DeliveryPhaseIdentifier: snapshot.DeliveryPhaseIdentifier,
 	}
 
 	// Reconstruct custom field values
 	element.CustomFieldValues = make([]domain.CustomFieldValue, len(snapshot.CustomFieldValues))
 	for i, cfv := range snapshot.CustomFieldValues {
 		element.CustomFieldValues[i] = domain.CustomFieldValue{
-			FieldDefinitionId: cfv.FieldDefinitionId,
+			FieldDefinitionIdentifier: cfv.FieldDefinitionIdentifier,
 			FieldName:         cfv.FieldName,
 			FieldValue:        cfv.FieldValue,
 		}

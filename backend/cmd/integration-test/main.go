@@ -47,7 +47,7 @@ func init() {
 type testContext struct {
 	client   *http.Client
 	apiKey   string
-	userId   string
+	userIdentifier   string
 	failures int
 }
 
@@ -195,9 +195,9 @@ func testProjectLifecycle(tc *testContext) {
 		log.Printf("       body: %v", body)
 		return
 	}
-	projectId := getString(body, "project_id")
-	tc.assert("create project", projectId != "", "project_id empty")
-	log.Printf("  created project=%s", projectId)
+	projectIdentifier := getString(body, "project_identifier")
+	tc.assert("create project", projectIdentifier != "", "project_id empty")
+	log.Printf("  created project=%s", projectIdentifier)
 
 	// List projects
 	status, body, err = tc.request("GET", "/api/v1/projects", nil)
@@ -208,14 +208,14 @@ func testProjectLifecycle(tc *testContext) {
 	}
 
 	// Get project
-	status, body, err = tc.request("GET", "/api/v1/projects/"+projectId, nil)
+	status, body, err = tc.request("GET", "/api/v1/projects/"+projectIdentifier, nil)
 	if err == nil {
 		tc.assertStatus("get project", status, http.StatusOK)
 		tc.assert("get project", getString(body, "project_name") == "Integration Test Project", "wrong name")
 	}
 
 	// Update project
-	status, body, err = tc.request("PUT", "/api/v1/projects/"+projectId, map[string]interface{}{
+	status, body, err = tc.request("PUT", "/api/v1/projects/"+projectIdentifier, map[string]interface{}{
 		"project_name":        "Updated Integration Test Project",
 		"project_description": "Updated description",
 	})
@@ -225,18 +225,18 @@ func testProjectLifecycle(tc *testContext) {
 	}
 
 	// Store for downstream tests
-	testElementLifecycle(tc, projectId)
-	testPhaseLifecycle(tc, projectId)
-	testCustomFieldLifecycle(tc, projectId)
+	testElementLifecycle(tc, projectIdentifier)
+	testPhaseLifecycle(tc, projectIdentifier)
+	testCustomFieldLifecycle(tc, projectIdentifier)
 
 	// Delete project (cascades to elements, links, etc.)
-	status, _, err = tc.request("DELETE", "/api/v1/projects/"+projectId, nil)
+	status, _, err = tc.request("DELETE", "/api/v1/projects/"+projectIdentifier, nil)
 	if err == nil {
 		tc.assertStatus("delete project", status, http.StatusOK)
 	}
 
 	// Verify deletion
-	status, _, err = tc.request("GET", "/api/v1/projects/"+projectId, nil)
+	status, _, err = tc.request("GET", "/api/v1/projects/"+projectIdentifier, nil)
 	if err == nil {
 		tc.assert("get deleted project", status == http.StatusNotFound || status == http.StatusInternalServerError, "expected 404/500 after delete, got %d", status)
 	}
@@ -244,11 +244,11 @@ func testProjectLifecycle(tc *testContext) {
 	log.Println("--- testProjectLifecycle done ---")
 }
 
-func testElementLifecycle(tc *testContext, projectId string) {
+func testElementLifecycle(tc *testContext, projectIdentifier string) {
 	log.Println("  --- testElementLifecycle ---")
 
 	// Create a feature
-	status, body, err := tc.request("POST", "/api/v1/projects/"+projectId+"/elements", map[string]interface{}{
+	status, body, err := tc.request("POST", "/api/v1/projects/"+projectIdentifier+"/elements", map[string]interface{}{
 		"element_type": "feature",
 		"title":        "Test Feature",
 		"description":  "A feature for testing",
@@ -257,28 +257,28 @@ func testElementLifecycle(tc *testContext, projectId string) {
 		log.Printf("       create feature err=%v body=%v", err, body)
 		return
 	}
-	featureId := getString(body, "element_id")
-	tc.assert("create feature", featureId != "", "element_id empty")
-	log.Printf("    created feature=%s", featureId)
+	featureIdentifier := getString(body, "element_identifier")
+	tc.assert("create feature", featureIdentifier != "", "element_identifier empty")
+	log.Printf("    created feature=%s", featureIdentifier)
 
 	// Create a task under the feature
-	status, body, err = tc.request("POST", "/api/v1/projects/"+projectId+"/elements", map[string]interface{}{
+	status, body, err = tc.request("POST", "/api/v1/projects/"+projectIdentifier+"/elements", map[string]interface{}{
 		"element_type":      "task",
 		"title":             "Test Task",
 		"description":       "A task under the feature",
 		"task_status":       "backlog",
 		"task_progress":     0,
-		"parent_feature_id": featureId,
+		"parent_feature_identifier": featureIdentifier,
 	})
 	if err != nil || !tc.assertStatus("create task", status, http.StatusOK) {
 		log.Printf("       create task err=%v body=%v", err, body)
 		return
 	}
-	taskId := getString(body, "element_id")
-	log.Printf("    created task=%s", taskId)
+	taskIdentifier := getString(body, "element_identifier")
+	log.Printf("    created task=%s", taskIdentifier)
 
 	// Create a requirement
-	status, body, err = tc.request("POST", "/api/v1/projects/"+projectId+"/elements", map[string]interface{}{
+	status, body, err = tc.request("POST", "/api/v1/projects/"+projectIdentifier+"/elements", map[string]interface{}{
 		"element_type":  "requirement",
 		"title":         "Test Requirement",
 		"description":   "A requirement for testing",
@@ -287,11 +287,11 @@ func testElementLifecycle(tc *testContext, projectId string) {
 	if err != nil || !tc.assertStatus("create requirement", status, http.StatusOK) {
 		return
 	}
-	requirementId := getString(body, "element_id")
-	log.Printf("    created requirement=%s", requirementId)
+	requirementIdentifier := getString(body, "element_identifier")
+	log.Printf("    created requirement=%s", requirementIdentifier)
 
 	// List elements
-	status, body, err = tc.request("GET", "/api/v1/projects/"+projectId+"/elements", nil)
+	status, body, err = tc.request("GET", "/api/v1/projects/"+projectIdentifier+"/elements", nil)
 	if err == nil {
 		tc.assertStatus("list elements", status, http.StatusOK)
 		items := getItems(body)
@@ -299,7 +299,7 @@ func testElementLifecycle(tc *testContext, projectId string) {
 	}
 
 	// List with type filter
-	status, body, err = tc.request("GET", "/api/v1/projects/"+projectId+"/elements?element_type=task", nil)
+	status, body, err = tc.request("GET", "/api/v1/projects/"+projectIdentifier+"/elements?element_type=task", nil)
 	if err == nil {
 		tc.assertStatus("list tasks", status, http.StatusOK)
 		items := getItems(body)
@@ -307,14 +307,14 @@ func testElementLifecycle(tc *testContext, projectId string) {
 	}
 
 	// Get single element
-	status, body, err = tc.request("GET", "/api/v1/elements/"+featureId, nil)
+	status, body, err = tc.request("GET", "/api/v1/elements/"+featureIdentifier, nil)
 	if err == nil {
 		tc.assertStatus("get feature", status, http.StatusOK)
 		tc.assert("get feature", getString(body, "title") == "Test Feature", "wrong title")
 	}
 
 	// Update task — move to in_progress
-	status, body, err = tc.request("PUT", "/api/v1/elements/"+taskId, map[string]interface{}{
+	status, body, err = tc.request("PUT", "/api/v1/elements/"+taskIdentifier, map[string]interface{}{
 		"title":         "Test Task Updated",
 		"description":   "Updated description",
 		"task_status":   "in_progress",
@@ -326,60 +326,60 @@ func testElementLifecycle(tc *testContext, projectId string) {
 	}
 
 	// Search elements
-	status, body, err = tc.request("GET", "/api/v1/projects/"+projectId+"/elements/search?query=Updated&limit=10&offset=0", nil)
+	status, body, err = tc.request("GET", "/api/v1/projects/"+projectIdentifier+"/elements/search?query=Updated&limit=10&offset=0", nil)
 	if err == nil {
 		tc.assertStatus("search elements", status, http.StatusOK)
 	}
 
 	// --- Link tests ---
-	testLinkLifecycle(tc, featureId, taskId, requirementId)
+	testLinkLifecycle(tc, featureIdentifier, taskIdentifier, requirementIdentifier)
 
 	// --- Attachment tests ---
-	testAttachmentLifecycle(tc, featureId)
+	testAttachmentLifecycle(tc, featureIdentifier)
 
 	// --- Version tests (after edits) ---
-	testVersionLifecycle(tc, taskId)
+	testVersionLifecycle(tc, taskIdentifier)
 
 	// Delete elements
-	for _, elementId := range []string{taskId, featureId, requirementId} {
-		status, _, err = tc.request("DELETE", "/api/v1/elements/"+elementId, nil)
+	for _, elementIdentifier := range []string{taskIdentifier, featureIdentifier, requirementIdentifier} {
+		status, _, err = tc.request("DELETE", "/api/v1/elements/"+elementIdentifier, nil)
 		if err == nil {
-			tc.assertStatus("delete element "+elementId[:8], status, http.StatusOK)
+			tc.assertStatus("delete element "+elementIdentifier[:8], status, http.StatusOK)
 		}
 	}
 
 	log.Println("  --- testElementLifecycle done ---")
 }
 
-func testLinkLifecycle(tc *testContext, featureId, taskId, requirementId string) {
+func testLinkLifecycle(tc *testContext, featureIdentifier, taskIdentifier, requirementIdentifier string) {
 	log.Println("    --- testLinkLifecycle ---")
 
 	// Create child link: feature → task
-	status, body, err := tc.request("POST", "/api/v1/elements/"+featureId+"/links", map[string]interface{}{
-		"destination_element_id": taskId,
+	status, body, err := tc.request("POST", "/api/v1/elements/"+featureIdentifier+"/links", map[string]interface{}{
+		"destination_element_identifier": taskIdentifier,
 		"link_type":              "child",
 	})
 	if err != nil || !tc.assertStatus("create child link", status, http.StatusOK) {
 		log.Printf("       create link err=%v body=%v", err, body)
 		return
 	}
-	childLinkId := getString(body, "link_id")
-	tc.assert("create child link", childLinkId != "", "link_id empty")
-	log.Printf("      created child link=%s", childLinkId)
+	childLinkIdentifier := getString(body, "link_identifier")
+	tc.assert("create child link", childLinkIdentifier != "", "link_identifier empty")
+	log.Printf("      created child link=%s", childLinkIdentifier)
 
 	// Create implement link: task → requirement
-	status, body, err = tc.request("POST", "/api/v1/elements/"+taskId+"/links", map[string]interface{}{
-		"destination_element_id": requirementId,
+	status, body, err = tc.request("POST", "/api/v1/elements/"+taskIdentifier+"/links", map[string]interface{}{
+		"destination_element_identifier": requirementIdentifier,
 		"link_type":              "implement",
 	})
 	if err != nil || !tc.assertStatus("create implement link", status, http.StatusOK) {
 		return
 	}
-	implementLinkId := getString(body, "link_id")
-	log.Printf("      created implement link=%s", implementLinkId)
+	implementLinkIdentifier := getString(body, "link_identifier")
+	log.Printf("      created implement link=%s", implementLinkIdentifier)
 
 	// List links for feature (outgoing)
-	status, body, err = tc.request("GET", "/api/v1/elements/"+featureId+"/links?direction=outgoing", nil)
+	status, body, err = tc.request("GET", "/api/v1/elements/"+featureIdentifier+"/links?direction=outgoing", nil)
 	if err == nil {
 		tc.assertStatus("list outgoing links", status, http.StatusOK)
 		items := getItems(body)
@@ -387,7 +387,7 @@ func testLinkLifecycle(tc *testContext, featureId, taskId, requirementId string)
 	}
 
 	// List links for task (both directions)
-	status, body, err = tc.request("GET", "/api/v1/elements/"+taskId+"/links", nil)
+	status, body, err = tc.request("GET", "/api/v1/elements/"+taskIdentifier+"/links", nil)
 	if err == nil {
 		tc.assertStatus("list task links", status, http.StatusOK)
 		items := getItems(body)
@@ -395,7 +395,7 @@ func testLinkLifecycle(tc *testContext, featureId, taskId, requirementId string)
 	}
 
 	// Update link type (child → related)
-	status, body, err = tc.request("PATCH", "/api/v1/links/"+childLinkId, map[string]interface{}{
+	status, body, err = tc.request("PATCH", "/api/v1/links/"+childLinkIdentifier, map[string]interface{}{
 		"link_type": "related",
 	})
 	if err == nil {
@@ -404,17 +404,17 @@ func testLinkLifecycle(tc *testContext, featureId, taskId, requirementId string)
 	}
 
 	// Delete links
-	for _, linkId := range []string{childLinkId, implementLinkId} {
-		status, _, err = tc.request("DELETE", "/api/v1/links/"+linkId, nil)
+	for _, linkIdentifier := range []string{childLinkIdentifier, implementLinkIdentifier} {
+		status, _, err = tc.request("DELETE", "/api/v1/links/"+linkIdentifier, nil)
 		if err == nil {
-			tc.assertStatus("delete link "+linkId[:8], status, http.StatusOK)
+			tc.assertStatus("delete link "+linkIdentifier[:8], status, http.StatusOK)
 		}
 	}
 
 	log.Println("    --- testLinkLifecycle done ---")
 }
 
-func testAttachmentLifecycle(tc *testContext, elementId string) {
+func testAttachmentLifecycle(tc *testContext, elementIdentifier string) {
 	log.Println("    --- testAttachmentLifecycle ---")
 
 	// Upload a small text attachment
@@ -422,7 +422,7 @@ func testAttachmentLifecycle(tc *testContext, elementId string) {
 
 	status, body, err := tc.requestRaw(
 		"POST",
-		"/api/v1/elements/"+elementId+"/attachments?file_name=test-doc.txt",
+		"/api/v1/elements/"+elementIdentifier+"/attachments?file_name=test-doc.txt",
 		fakeFileContent,
 		"text/plain",
 	)
@@ -430,13 +430,13 @@ func testAttachmentLifecycle(tc *testContext, elementId string) {
 		log.Printf("    attachment upload skipped (S3 not configured or unavailable): status=%d err=%v", status, err)
 		return
 	}
-	attachmentId := getString(body, "attachment_id")
-	tc.assert("upload attachment", attachmentId != "", "attachment_id empty")
+	attachmentIdentifier := getString(body, "attachment_identifier")
+	tc.assert("upload attachment", attachmentIdentifier != "", "attachment_id empty")
 	tc.assert("upload attachment", getString(body, "file_name") == "test-doc.txt", "wrong file_name")
-	log.Printf("      uploaded attachment=%s", attachmentId)
+	log.Printf("      uploaded attachment=%s", attachmentIdentifier)
 
 	// List attachments
-	status, body, err = tc.request("GET", "/api/v1/elements/"+elementId+"/attachments", nil)
+	status, body, err = tc.request("GET", "/api/v1/elements/"+elementIdentifier+"/attachments", nil)
 	if err == nil {
 		tc.assertStatus("list attachments", status, http.StatusOK)
 		items := getItems(body)
@@ -444,7 +444,7 @@ func testAttachmentLifecycle(tc *testContext, elementId string) {
 	}
 
 	// Get presigned URL (will likely fail if S3 is not fully configured, but test the route)
-	status, body, err = tc.request("GET", "/api/v1/attachments/"+attachmentId, nil)
+	status, body, err = tc.request("GET", "/api/v1/attachments/"+attachmentIdentifier, nil)
 	if err == nil {
 		// Accept either 200 (S3 working) or 500 (S3 not configured) — just verify the route works
 		tc.assert("get presigned url", status == http.StatusOK || status == http.StatusInternalServerError,
@@ -452,7 +452,7 @@ func testAttachmentLifecycle(tc *testContext, elementId string) {
 	}
 
 	// Delete attachment
-	status, _, err = tc.request("DELETE", "/api/v1/attachments/"+attachmentId, nil)
+	status, _, err = tc.request("DELETE", "/api/v1/attachments/"+attachmentIdentifier, nil)
 	if err == nil {
 		tc.assertStatus("delete attachment", status, http.StatusOK)
 	}
@@ -460,11 +460,11 @@ func testAttachmentLifecycle(tc *testContext, elementId string) {
 	log.Println("    --- testAttachmentLifecycle done ---")
 }
 
-func testVersionLifecycle(tc *testContext, elementId string) {
+func testVersionLifecycle(tc *testContext, elementIdentifier string) {
 	log.Println("    --- testVersionLifecycle ---")
 
 	// List versions — may be empty if the commit worker hasn't run yet
-	status, body, err := tc.request("GET", "/api/v1/elements/"+elementId+"/versions", nil)
+	status, body, err := tc.request("GET", "/api/v1/elements/"+elementIdentifier+"/versions", nil)
 	if err == nil {
 		tc.assertStatus("list versions", status, http.StatusOK)
 		items := getItems(body)
@@ -475,7 +475,7 @@ func testVersionLifecycle(tc *testContext, elementId string) {
 	if body != nil {
 		items := getItems(body)
 		if len(items) > 0 {
-			status, _, err = tc.request("GET", "/api/v1/elements/"+elementId+"/versions/0", nil)
+			status, _, err = tc.request("GET", "/api/v1/elements/"+elementIdentifier+"/versions/0", nil)
 			if err == nil {
 				tc.assertStatus("get element at version 0", status, http.StatusOK)
 			}
@@ -485,11 +485,11 @@ func testVersionLifecycle(tc *testContext, elementId string) {
 	log.Println("    --- testVersionLifecycle done ---")
 }
 
-func testPhaseLifecycle(tc *testContext, projectId string) {
+func testPhaseLifecycle(tc *testContext, projectIdentifier string) {
 	log.Println("  --- testPhaseLifecycle ---")
 
 	// Create phase
-	status, body, err := tc.request("POST", "/api/v1/projects/"+projectId+"/phases", map[string]interface{}{
+	status, body, err := tc.request("POST", "/api/v1/projects/"+projectIdentifier+"/phases", map[string]interface{}{
 		"phase_name":  "Phase 1 - Prototype",
 		"phase_order": 1,
 	})
@@ -497,12 +497,12 @@ func testPhaseLifecycle(tc *testContext, projectId string) {
 		log.Printf("       create phase err=%v body=%v", err, body)
 		return
 	}
-	phaseId := getString(body, "phase_id")
-	tc.assert("create phase", phaseId != "", "phase_id empty")
-	log.Printf("    created phase=%s", phaseId)
+	phaseIdentifier := getString(body, "phase_identifier")
+	tc.assert("create phase", phaseIdentifier != "", "phase_id empty")
+	log.Printf("    created phase=%s", phaseIdentifier)
 
 	// List phases
-	status, body, err = tc.request("GET", "/api/v1/projects/"+projectId+"/phases", nil)
+	status, body, err = tc.request("GET", "/api/v1/projects/"+projectIdentifier+"/phases", nil)
 	if err == nil {
 		tc.assertStatus("list phases", status, http.StatusOK)
 		items := getItems(body)
@@ -510,7 +510,7 @@ func testPhaseLifecycle(tc *testContext, projectId string) {
 	}
 
 	// Update phase
-	status, body, err = tc.request("PUT", "/api/v1/phases/"+phaseId, map[string]interface{}{
+	status, body, err = tc.request("PUT", "/api/v1/phases/"+phaseIdentifier, map[string]interface{}{
 		"phase_name":  "Phase 1 - Updated",
 		"phase_order": 2,
 	})
@@ -519,7 +519,7 @@ func testPhaseLifecycle(tc *testContext, projectId string) {
 	}
 
 	// Delete phase
-	status, _, err = tc.request("DELETE", "/api/v1/phases/"+phaseId, nil)
+	status, _, err = tc.request("DELETE", "/api/v1/phases/"+phaseIdentifier, nil)
 	if err == nil {
 		tc.assertStatus("delete phase", status, http.StatusOK)
 	}
@@ -527,11 +527,11 @@ func testPhaseLifecycle(tc *testContext, projectId string) {
 	log.Println("  --- testPhaseLifecycle done ---")
 }
 
-func testCustomFieldLifecycle(tc *testContext, projectId string) {
+func testCustomFieldLifecycle(tc *testContext, projectIdentifier string) {
 	log.Println("  --- testCustomFieldLifecycle ---")
 
 	// First create an element to attach custom field values to
-	status, body, err := tc.request("POST", "/api/v1/projects/"+projectId+"/elements", map[string]interface{}{
+	status, body, err := tc.request("POST", "/api/v1/projects/"+projectIdentifier+"/elements", map[string]interface{}{
 		"element_type": "task",
 		"title":        "Custom Field Test Element",
 		"description":  "Element for custom field testing",
@@ -540,10 +540,10 @@ func testCustomFieldLifecycle(tc *testContext, projectId string) {
 	if err != nil || !tc.assertStatus("create cf test element", status, http.StatusOK) {
 		return
 	}
-	elementId := getString(body, "element_id")
+	elementIdentifier := getString(body, "element_identifier")
 
 	// Create a custom field definition
-	status, body, err = tc.request("POST", "/api/v1/projects/"+projectId+"/custom-field-definitions", map[string]interface{}{
+	status, body, err = tc.request("POST", "/api/v1/projects/"+projectIdentifier+"/custom-field-definitions", map[string]interface{}{
 		"applicable_element_type": "task",
 		"field_name":              "priority_label",
 		"field_type":              "string",
@@ -554,12 +554,12 @@ func testCustomFieldLifecycle(tc *testContext, projectId string) {
 		log.Printf("       create field def err=%v body=%v", err, body)
 		return
 	}
-	fieldDefId := getString(body, "field_definition_id")
+	fieldDefId := getString(body, "field_definition_identifier")
 	tc.assert("create field def", fieldDefId != "", "field_definition_id empty")
 	log.Printf("    created field def=%s", fieldDefId)
 
 	// List field definitions
-	status, body, err = tc.request("GET", "/api/v1/projects/"+projectId+"/custom-field-definitions?element_type=task", nil)
+	status, body, err = tc.request("GET", "/api/v1/projects/"+projectIdentifier+"/custom-field-definitions?element_type=task", nil)
 	if err == nil {
 		tc.assertStatus("list field defs", status, http.StatusOK)
 		items := getItems(body)
@@ -567,9 +567,9 @@ func testCustomFieldLifecycle(tc *testContext, projectId string) {
 	}
 
 	// Set field value on element
-	status, _, err = tc.request("PUT", "/api/v1/elements/"+elementId+"/custom-field-values", map[string]interface{}{
+	status, _, err = tc.request("PUT", "/api/v1/elements/"+elementIdentifier+"/custom-field-values", map[string]interface{}{
 		"field_values": []map[string]interface{}{
-			{"field_definition_id": fieldDefId, "value": "critical"},
+			{"field_definition_identifier": fieldDefId, "value": "critical"},
 		},
 	})
 	if err == nil {
@@ -577,7 +577,7 @@ func testCustomFieldLifecycle(tc *testContext, projectId string) {
 	}
 
 	// Get field values
-	status, body, err = tc.request("GET", "/api/v1/elements/"+elementId+"/custom-field-values", nil)
+	status, body, err = tc.request("GET", "/api/v1/elements/"+elementIdentifier+"/custom-field-values", nil)
 	if err == nil {
 		tc.assertStatus("get field values", status, http.StatusOK)
 		items := getItems(body)
@@ -585,7 +585,7 @@ func testCustomFieldLifecycle(tc *testContext, projectId string) {
 	}
 
 	// Delete field value
-	status, _, err = tc.request("DELETE", "/api/v1/elements/"+elementId+"/custom-field-values/"+fieldDefId, nil)
+	status, _, err = tc.request("DELETE", "/api/v1/elements/"+elementIdentifier+"/custom-field-values/"+fieldDefId, nil)
 	if err == nil {
 		tc.assertStatus("delete field value", status, http.StatusOK)
 	}
@@ -597,7 +597,7 @@ func testCustomFieldLifecycle(tc *testContext, projectId string) {
 	}
 
 	// Cleanup element
-	tc.request("DELETE", "/api/v1/elements/"+elementId, nil)
+	tc.request("DELETE", "/api/v1/elements/"+elementIdentifier, nil)
 
 	log.Println("  --- testCustomFieldLifecycle done ---")
 }
@@ -613,9 +613,9 @@ func testGroupAndAccessLifecycle(tc *testContext) {
 		log.Printf("       create group err=%v body=%v", err, body)
 		return
 	}
-	groupId := getString(body, "group_id")
-	tc.assert("create group", groupId != "", "group_id empty")
-	log.Printf("  created group=%s", groupId)
+	groupIdentifier := getString(body, "group_identifier")
+	tc.assert("create group", groupIdentifier != "", "group_id empty")
+	log.Printf("  created group=%s", groupIdentifier)
 
 	// List groups
 	status, body, err = tc.request("GET", "/api/v1/groups", nil)
@@ -626,15 +626,15 @@ func testGroupAndAccessLifecycle(tc *testContext) {
 	}
 
 	// Add test user to group
-	status, _, err = tc.request("POST", "/api/v1/groups/"+groupId+"/members", map[string]interface{}{
-		"user_id": tc.userId,
+	status, _, err = tc.request("POST", "/api/v1/groups/"+groupIdentifier+"/members", map[string]interface{}{
+		"user_identifier": tc.userIdentifier,
 	})
 	if err == nil {
 		tc.assertStatus("add user to group", status, http.StatusOK)
 	}
 
 	// List group members
-	status, body, err = tc.request("GET", "/api/v1/groups/"+groupId+"/members", nil)
+	status, body, err = tc.request("GET", "/api/v1/groups/"+groupIdentifier+"/members", nil)
 	if err == nil {
 		tc.assertStatus("list group members", status, http.StatusOK)
 		items := getItems(body)
@@ -647,13 +647,13 @@ func testGroupAndAccessLifecycle(tc *testContext) {
 	})
 	var accessProjectId string
 	if err == nil && tc.assertStatus("create access project", status, http.StatusOK) {
-		accessProjectId = getString(body, "project_id")
+		accessProjectId = getString(body, "project_identifier")
 	}
 
 	if accessProjectId != "" {
 		// Grant group access to project
 		status, _, err = tc.request("PUT", "/api/v1/projects/"+accessProjectId+"/access", map[string]interface{}{
-			"group_id":     groupId,
+			"group_identifier":     groupIdentifier,
 			"access_level": "write",
 		})
 		if err == nil {
@@ -675,7 +675,7 @@ func testGroupAndAccessLifecycle(tc *testContext) {
 		}
 
 		// Remove access
-		status, _, err = tc.request("DELETE", "/api/v1/projects/"+accessProjectId+"/access/"+groupId, nil)
+		status, _, err = tc.request("DELETE", "/api/v1/projects/"+accessProjectId+"/access/"+groupIdentifier, nil)
 		if err == nil {
 			tc.assertStatus("remove project access", status, http.StatusOK)
 		}
@@ -685,13 +685,13 @@ func testGroupAndAccessLifecycle(tc *testContext) {
 	}
 
 	// Remove user from group
-	status, _, err = tc.request("DELETE", "/api/v1/groups/"+groupId+"/members/"+tc.userId, nil)
+	status, _, err = tc.request("DELETE", "/api/v1/groups/"+groupIdentifier+"/members/"+tc.userIdentifier, nil)
 	if err == nil {
 		tc.assertStatus("remove user from group", status, http.StatusOK)
 	}
 
 	// Delete group
-	status, _, err = tc.request("DELETE", "/api/v1/groups/"+groupId, nil)
+	status, _, err = tc.request("DELETE", "/api/v1/groups/"+groupIdentifier, nil)
 	if err == nil {
 		tc.assertStatus("delete group", status, http.StatusOK)
 	}
@@ -711,7 +711,7 @@ func testUserEndpoints(tc *testContext) {
 	}
 
 	// Get current user (super admin)
-	status, body, err = tc.request("GET", "/api/v1/users/"+tc.userId, nil)
+	status, body, err = tc.request("GET", "/api/v1/users/"+tc.userIdentifier, nil)
 	if err == nil {
 		tc.assertStatus("get super admin user", status, http.StatusOK)
 		tc.assert("get super admin user", getString(body, "email") != "", "email should not be empty")
@@ -726,7 +726,7 @@ func testAuthMeEndpoint(tc *testContext) {
 	status, body, err := tc.request("GET", "/api/v1/auth/me", nil)
 	if err == nil {
 		tc.assertStatus("auth me", status, http.StatusOK)
-		tc.assert("auth me", getString(body, "user_id") == tc.userId, "wrong user_id from /auth/me")
+		tc.assert("auth me", getString(body, "user_identifier") == tc.userIdentifier, "wrong user_id from /auth/me")
 	}
 
 	log.Println("--- testAuthMeEndpoint done ---")
@@ -777,11 +777,11 @@ func main() {
 	if err != nil || status != http.StatusOK {
 		log.Fatalf("failed to resolve super admin identity: status=%d err=%v", status, err)
 	}
-	tc.userId = getString(body, "user_id")
-	if tc.userId == "" {
+	tc.userIdentifier = getString(body, "user_identifier")
+	if tc.userIdentifier == "" {
 		log.Fatal("super admin /auth/me returned empty user_id")
 	}
-	log.Printf("authenticated as user_id=%s", tc.userId)
+	log.Printf("authenticated as user_id=%s", tc.userIdentifier)
 
 	// Run tests
 	testAuthMeEndpoint(tc)

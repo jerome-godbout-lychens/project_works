@@ -13,8 +13,8 @@ import (
 
 // CustomFieldDefinitionResponse represents a custom field definition in API responses.
 type CustomFieldDefinitionResponse struct {
-	FieldDefinitionId     string                 `json:"field_definition_id"`
-	ProjectId             string                 `json:"project_id"`
+	FieldDefinitionIdentifier     string                 `json:"field_definition_identifier"`
+	ProjectIdentifier             string                 `json:"project_identifier"`
 	ApplicableElementType string                 `json:"applicable_element_type"`
 	FieldName             string                 `json:"field_name"`
 	FieldType             string                 `json:"field_type"`
@@ -24,14 +24,14 @@ type CustomFieldDefinitionResponse struct {
 
 // CustomFieldValueResponse represents a custom field value in API responses.
 type CustomFieldValueResponse struct {
-	FieldDefinitionId string      `json:"field_definition_id"`
+	FieldDefinitionIdentifier string      `json:"field_definition_identifier"`
 	FieldName         string      `json:"field_name"`
 	FieldValue        interface{} `json:"field_value"`
 }
 
 // ListCustomFieldDefinitionsInput holds query parameters for listing custom field definitions.
 type ListCustomFieldDefinitionsInput struct {
-	ProjectId         string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier         string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 	ElementType       string `query:"element_type" doc:"Optional element type filter"`
 }
 
@@ -44,7 +44,7 @@ type ListCustomFieldDefinitionsOutput struct {
 
 // CreateCustomFieldDefinitionInput holds the request body for creating a custom field definition.
 type CreateCustomFieldDefinitionInput struct {
-	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 	Body      struct {
 		ApplicableElementType string                 `json:"applicable_element_type" required:"true" doc:"Element type this field applies to (or * for all)"`
 		FieldName             string                 `json:"field_name" required:"true" doc:"Name of the field"`
@@ -61,7 +61,7 @@ type CreateCustomFieldDefinitionOutput struct {
 
 // UpdateCustomFieldDefinitionInput holds the request body for updating a custom field definition.
 type UpdateCustomFieldDefinitionInput struct {
-	FieldDefinitionId string `path:"field_definition_id" format:"uuid" doc:"The field definition identifier"`
+	FieldDefinitionIdentifier string `path:"field_definition_identifier" format:"uuid" doc:"The field definition identifier"`
 	Body              struct {
 		ApplicableElementType string                 `json:"applicable_element_type,omitempty" doc:"Element type this field applies to"`
 		FieldName             string                 `json:"field_name,omitempty" doc:"Name of the field"`
@@ -78,7 +78,7 @@ type UpdateCustomFieldDefinitionOutput struct {
 
 // DeleteCustomFieldDefinitionInput holds the path parameter for deleting a custom field definition.
 type DeleteCustomFieldDefinitionInput struct {
-	FieldDefinitionId string `path:"field_definition_id" format:"uuid" doc:"The field definition identifier"`
+	FieldDefinitionIdentifier string `path:"field_definition_identifier" format:"uuid" doc:"The field definition identifier"`
 }
 
 // DeleteCustomFieldDefinitionOutput is an empty response for successful deletion.
@@ -90,7 +90,7 @@ type DeleteCustomFieldDefinitionOutput struct {
 
 // ListCustomFieldValuesInput holds the path parameter for listing custom field values.
 type ListCustomFieldValuesInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 }
 
 // ListCustomFieldValuesOutput returns a list of custom field values.
@@ -102,7 +102,7 @@ type ListCustomFieldValuesOutput struct {
 
 // SetCustomFieldValuesInput holds the request body for setting custom field values.
 type SetCustomFieldValuesInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 	Body      struct {
 		FieldValues []SetCustomFieldValueRequest `json:"field_values" required:"true" doc:"Field values to set"`
 	}
@@ -110,7 +110,7 @@ type SetCustomFieldValuesInput struct {
 
 // SetCustomFieldValueRequest represents a single field value to set.
 type SetCustomFieldValueRequest struct {
-	FieldDefinitionId string      `json:"field_definition_id" required:"true" doc:"The field definition identifier"`
+	FieldDefinitionIdentifier string      `json:"field_definition_identifier" required:"true" doc:"The field definition identifier"`
 	Value             interface{} `json:"value" doc:"The value to set"`
 }
 
@@ -123,8 +123,8 @@ type SetCustomFieldValuesOutput struct {
 
 // DeleteCustomFieldValueInput holds parameters for deleting a custom field value.
 type DeleteCustomFieldValueInput struct {
-	ElementId         string `path:"element_id" format:"uuid" doc:"The element identifier"`
-	FieldDefinitionId string `path:"field_definition_id" format:"uuid" doc:"The field definition identifier"`
+	ElementIdentifier         string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
+	FieldDefinitionIdentifier string `path:"field_definition_identifier" format:"uuid" doc:"The field definition identifier"`
 }
 
 // DeleteCustomFieldValueOutput is an empty response for successful deletion.
@@ -140,11 +140,11 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	huma.Register(api, huma.Operation{
 		OperationID: "listCustomFieldDefinitions",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/projects/{project_id}/custom-field-definitions",
+		Path:        "/api/v1/projects/{project_identifier}/custom-field-definitions",
 		Summary:     "List custom field definitions for a project",
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *ListCustomFieldDefinitionsInput) (*ListCustomFieldDefinitionsOutput, error) {
-		definitions, err := customFieldService.ListFieldDefinitionsByProject(ctx, input.ProjectId, "")
+		definitions, err := customFieldService.ListFieldDefinitionsByProject(ctx, input.ProjectIdentifier, "")
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list custom field definitions", err)
 		}
@@ -159,8 +159,8 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 			}
 
 			output.Body.Items = append(output.Body.Items, CustomFieldDefinitionResponse{
-				FieldDefinitionId:     def.FieldDefinitionId,
-				ProjectId:             def.ProjectId,
+				FieldDefinitionIdentifier:     def.FieldDefinitionIdentifier,
+				ProjectIdentifier:             def.ProjectIdentifier,
 				ApplicableElementType: def.ApplicableElementType,
 				FieldName:             def.FieldName,
 				FieldType:             def.FieldType,
@@ -176,13 +176,13 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	huma.Register(api, huma.Operation{
 		OperationID: "createCustomFieldDefinition",
 		Method:      http.MethodPost,
-		Path:        "/api/v1/projects/{project_id}/custom-field-definitions",
+		Path:        "/api/v1/projects/{project_identifier}/custom-field-definitions",
 		Summary:     "Create a new custom field definition",
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *CreateCustomFieldDefinitionInput) (*CreateCustomFieldDefinitionOutput, error) {
 		definition := &domain.CustomFieldDefinition{
-			FieldDefinitionId:     uuid.New().String(),
-			ProjectId:             input.ProjectId,
+			FieldDefinitionIdentifier:     uuid.New().String(),
+			ProjectIdentifier:             input.ProjectIdentifier,
 			ApplicableElementType: input.Body.ApplicableElementType,
 			FieldName:             input.Body.FieldName,
 			FieldType:             input.Body.FieldType,
@@ -197,8 +197,8 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 
 		return &CreateCustomFieldDefinitionOutput{
 			Body: CustomFieldDefinitionResponse{
-				FieldDefinitionId:     definition.FieldDefinitionId,
-				ProjectId:             definition.ProjectId,
+				FieldDefinitionIdentifier:     definition.FieldDefinitionIdentifier,
+				ProjectIdentifier:             definition.ProjectIdentifier,
 				ApplicableElementType: definition.ApplicableElementType,
 				FieldName:             definition.FieldName,
 				FieldType:             definition.FieldType,
@@ -212,12 +212,12 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	huma.Register(api, huma.Operation{
 		OperationID: "updateCustomFieldDefinition",
 		Method:      http.MethodPut,
-		Path:        "/api/v1/custom-field-definitions/{field_definition_id}",
+		Path:        "/api/v1/custom-field-definitions/{field_definition_identifier}",
 		Summary:     "Update a custom field definition",
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *UpdateCustomFieldDefinitionInput) (*UpdateCustomFieldDefinitionOutput, error) {
 		definition := &domain.CustomFieldDefinition{
-			FieldDefinitionId:     input.FieldDefinitionId,
+			FieldDefinitionIdentifier:     input.FieldDefinitionIdentifier,
 			ApplicableElementType: input.Body.ApplicableElementType,
 			FieldName:             input.Body.FieldName,
 			FieldType:             input.Body.FieldType,
@@ -232,8 +232,8 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 
 		return &UpdateCustomFieldDefinitionOutput{
 			Body: CustomFieldDefinitionResponse{
-				FieldDefinitionId:     definition.FieldDefinitionId,
-				ProjectId:             definition.ProjectId,
+				FieldDefinitionIdentifier:     definition.FieldDefinitionIdentifier,
+				ProjectIdentifier:             definition.ProjectIdentifier,
 				ApplicableElementType: definition.ApplicableElementType,
 				FieldName:             definition.FieldName,
 				FieldType:             definition.FieldType,
@@ -247,11 +247,11 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	huma.Register(api, huma.Operation{
 		OperationID: "deleteCustomFieldDefinition",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/custom-field-definitions/{field_definition_id}",
+		Path:        "/api/v1/custom-field-definitions/{field_definition_identifier}",
 		Summary:     "Delete a custom field definition",
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *DeleteCustomFieldDefinitionInput) (*DeleteCustomFieldDefinitionOutput, error) {
-		err := customFieldService.DeleteFieldDefinition(ctx, input.FieldDefinitionId)
+		err := customFieldService.DeleteFieldDefinition(ctx, input.FieldDefinitionIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete custom field definition", err)
 		}
@@ -269,11 +269,11 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	huma.Register(api, huma.Operation{
 		OperationID: "listCustomFieldValues",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/elements/{element_id}/custom-field-values",
+		Path:        "/api/v1/elements/{element_identifier}/custom-field-values",
 		Summary:     "List custom field values for an element",
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *ListCustomFieldValuesInput) (*ListCustomFieldValuesOutput, error) {
-		fieldValues, err := customFieldService.GetFieldValues(ctx, input.ElementId)
+		fieldValues, err := customFieldService.GetFieldValues(ctx, input.ElementIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list custom field values", err)
 		}
@@ -283,7 +283,7 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 
 		for i, fv := range fieldValues {
 			output.Body.Items[i] = CustomFieldValueResponse{
-				FieldDefinitionId: fv.FieldDefinitionId,
+				FieldDefinitionIdentifier: fv.FieldDefinitionIdentifier,
 				FieldName:         fv.FieldName,
 				FieldValue:        fv.FieldValue,
 			}
@@ -296,7 +296,7 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	huma.Register(api, huma.Operation{
 		OperationID: "setCustomFieldValues",
 		Method:      http.MethodPut,
-		Path:        "/api/v1/elements/{element_id}/custom-field-values",
+		Path:        "/api/v1/elements/{element_identifier}/custom-field-values",
 		Summary:     "Set custom field values for an element",
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *SetCustomFieldValuesInput) (*SetCustomFieldValuesOutput, error) {
@@ -304,13 +304,13 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 		output.Body.Items = make([]CustomFieldValueResponse, len(input.Body.FieldValues))
 
 		for i, fv := range input.Body.FieldValues {
-			err := customFieldService.SetFieldValue(ctx, input.ElementId, fv.FieldDefinitionId, fv.Value)
+			err := customFieldService.SetFieldValue(ctx, input.ElementIdentifier, fv.FieldDefinitionIdentifier, fv.Value)
 			if err != nil {
 				return nil, huma.NewError(http.StatusBadRequest, "Failed to set custom field value", err)
 			}
 
 			output.Body.Items[i] = CustomFieldValueResponse{
-				FieldDefinitionId: fv.FieldDefinitionId,
+				FieldDefinitionIdentifier: fv.FieldDefinitionIdentifier,
 				FieldValue:        fv.Value,
 			}
 		}
@@ -322,11 +322,11 @@ func RegisterCustomFieldHandlers(api huma.API, customFieldService *service.Custo
 	huma.Register(api, huma.Operation{
 		OperationID: "deleteCustomFieldValue",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/elements/{element_id}/custom-field-values/{field_definition_id}",
+		Path:        "/api/v1/elements/{element_identifier}/custom-field-values/{field_definition_identifier}",
 		Summary:     "Delete a custom field value from an element",
 		Tags:        []string{"custom-fields"},
 	}, func(ctx context.Context, input *DeleteCustomFieldValueInput) (*DeleteCustomFieldValueOutput, error) {
-		err := customFieldService.DeleteFieldValue(ctx, input.ElementId, input.FieldDefinitionId)
+		err := customFieldService.DeleteFieldValue(ctx, input.ElementIdentifier, input.FieldDefinitionIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete custom field value", err)
 		}

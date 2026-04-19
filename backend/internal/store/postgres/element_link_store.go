@@ -20,9 +20,9 @@ func NewElementLinkStore(db *sql.DB) domain.ElementLinkStore {
 func scanLink(row interface{ Scan(...interface{}) error }) (*domain.ElementLink, error) {
 	var link domain.ElementLink
 	err := row.Scan(
-		&link.LinkId,
-		&link.SourceElementId,
-		&link.DestinationElementId,
+		&link.LinkIdentifier,
+		&link.SourceElementIdentifier,
+		&link.DestinationElementIdentifier,
 		&link.LinkType,
 		&link.CreationTime,
 	)
@@ -37,7 +37,7 @@ func (s *ElementLinkStore) CreateLink(ctx context.Context, link *domain.ElementL
 		`INSERT INTO element_links (link_identifier, source_element_identifier, destination_element_identifier, link_type, creation_time)
 		 VALUES ($1, $2, $3, $4, $5)
 		 RETURNING link_identifier, source_element_identifier, destination_element_identifier, link_type, creation_time`,
-		link.LinkId, link.SourceElementId, link.DestinationElementId,
+		link.LinkIdentifier, link.SourceElementIdentifier, link.DestinationElementIdentifier,
 		link.LinkType, link.CreationTime,
 	))
 	if err != nil {
@@ -47,10 +47,10 @@ func (s *ElementLinkStore) CreateLink(ctx context.Context, link *domain.ElementL
 	return nil
 }
 
-func (s *ElementLinkStore) GetLinkById(ctx context.Context, linkId string) (*domain.ElementLink, error) {
+func (s *ElementLinkStore) GetLinkByIdentifier(ctx context.Context, linkIdentifier string) (*domain.ElementLink, error) {
 	link, err := scanLink(s.db.QueryRowContext(ctx,
 		`SELECT link_identifier, source_element_identifier, destination_element_identifier, link_type, creation_time
-		 FROM element_links WHERE link_identifier = $1`, linkId,
+		 FROM element_links WHERE link_identifier = $1`, linkIdentifier,
 	))
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -61,10 +61,10 @@ func (s *ElementLinkStore) GetLinkById(ctx context.Context, linkId string) (*dom
 	return link, nil
 }
 
-func (s *ElementLinkStore) UpdateLinkType(ctx context.Context, linkId string, linkType domain.LinkType) error {
+func (s *ElementLinkStore) UpdateLinkType(ctx context.Context, linkIdentifier string, linkType domain.LinkType) error {
 	result, err := s.db.ExecContext(ctx,
 		"UPDATE element_links SET link_type = $1 WHERE link_identifier = $2",
-		linkType, linkId,
+		linkType, linkIdentifier,
 	)
 	if err != nil {
 		return err
@@ -79,8 +79,8 @@ func (s *ElementLinkStore) UpdateLinkType(ctx context.Context, linkId string, li
 	return nil
 }
 
-func (s *ElementLinkStore) DeleteLink(ctx context.Context, linkId string) error {
-	result, err := s.db.ExecContext(ctx, "DELETE FROM element_links WHERE link_identifier = $1", linkId)
+func (s *ElementLinkStore) DeleteLink(ctx context.Context, linkIdentifier string) error {
+	result, err := s.db.ExecContext(ctx, "DELETE FROM element_links WHERE link_identifier = $1", linkIdentifier)
 	if err != nil {
 		return err
 	}
@@ -94,7 +94,7 @@ func (s *ElementLinkStore) DeleteLink(ctx context.Context, linkId string) error 
 	return nil
 }
 
-func (s *ElementLinkStore) ListLinksByElement(ctx context.Context, elementId string, direction domain.LinkDirection) ([]domain.ElementLink, error) {
+func (s *ElementLinkStore) ListLinksByElement(ctx context.Context, elementIdentifier string, direction domain.LinkDirection) ([]domain.ElementLink, error) {
 	var where string
 	switch direction {
 	case domain.LinkDirectionOutgoing:
@@ -110,7 +110,7 @@ func (s *ElementLinkStore) ListLinksByElement(ctx context.Context, elementId str
 	rows, err := s.db.QueryContext(ctx,
 		`SELECT link_identifier, source_element_identifier, destination_element_identifier, link_type, creation_time
 		 FROM element_links WHERE `+where+` ORDER BY creation_time DESC`,
-		elementId,
+		elementIdentifier,
 	)
 	if err != nil {
 		return nil, err

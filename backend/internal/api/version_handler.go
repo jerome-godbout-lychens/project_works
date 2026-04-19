@@ -13,12 +13,12 @@ import (
 
 // ElementVersionMetaResponse holds version metadata (not element content).
 type ElementVersionMetaResponse struct {
-	VersionId     string    `json:"version_id"`
-	ElementId     string    `json:"element_id"`
+	VersionIdentifier     string    `json:"version_identifier"`
+	ElementIdentifier     string    `json:"element_identifier"`
 	VersionNumber int       `json:"version_number"`
 	ContentSha    string    `json:"content_sha"`
 	CommittedAt   time.Time `json:"committed_at"`
-	CommittedById string    `json:"committed_by_id"`
+	CommittedByIdentifier string    `json:"committed_by_id"`
 	CommitMessage string    `json:"commit_message"`
 }
 
@@ -32,14 +32,14 @@ type PatchOperationResponse struct {
 
 // ElementVersionDiffResponse holds the forward and reverse patches for a version.
 type ElementVersionDiffResponse struct {
-	VersionId    string                   `json:"version_id"`
+	VersionIdentifier    string                   `json:"version_identifier"`
 	ForwardPatch []PatchOperationResponse `json:"forward_patch"`
 	ReversePatch []PatchOperationResponse `json:"reverse_patch"`
 }
 
 // ListElementVersionsInput holds parameters for listing element versions.
 type ListElementVersionsInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 	Limit     int    `query:"limit" doc:"Maximum number of versions to return" default:"50"`
 	Offset    int    `query:"offset" doc:"Number of versions to skip" default:"0"`
 }
@@ -53,7 +53,7 @@ type ListElementVersionsOutput struct {
 
 // GetElementAtVersionInput holds parameters for retrieving a specific element version.
 type GetElementAtVersionInput struct {
-	ElementId     string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier     string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 	VersionNumber int    `path:"version_number" doc:"The version number"`
 }
 
@@ -64,7 +64,7 @@ type GetElementAtVersionOutput struct {
 
 // GetElementVersionDiffInput holds parameters for retrieving version patches.
 type GetElementVersionDiffInput struct {
-	ElementId     string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier     string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 	VersionNumber int    `path:"version_number" doc:"The version number to retrieve patches for"`
 }
 
@@ -79,12 +79,12 @@ func RegisterVersionHandlers(api huma.API, versionService *service.VersionServic
 	huma.Register(api, huma.Operation{
 		OperationID: "listElementVersions",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/elements/{element_id}/versions",
+		Path:        "/api/v1/elements/{element_identifier}/versions",
 		Summary:     "List all versions of an element",
 		Description: "Retrieve a paginated list of version metadata for an element, most recent first.",
 		Tags:        []string{"versions"},
 	}, func(ctx context.Context, input *ListElementVersionsInput) (*ListElementVersionsOutput, error) {
-		versions, err := versionService.ListVersionsByElement(ctx, input.ElementId, input.Limit, input.Offset)
+		versions, err := versionService.ListVersionsByElement(ctx, input.ElementIdentifier, input.Limit, input.Offset)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list element versions", err)
 		}
@@ -103,12 +103,12 @@ func RegisterVersionHandlers(api huma.API, versionService *service.VersionServic
 	huma.Register(api, huma.Operation{
 		OperationID: "getElementAtVersion",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/elements/{element_id}/versions/{version_number}",
+		Path:        "/api/v1/elements/{element_identifier}/versions/{version_number}",
 		Summary:     "Get an element at a specific version",
 		Description: "Reconstruct and retrieve the complete state of an element at a specific version number.",
 		Tags:        []string{"versions"},
 	}, func(ctx context.Context, input *GetElementAtVersionInput) (*GetElementAtVersionOutput, error) {
-		element, err := versionService.GetElementAtVersion(ctx, input.ElementId, input.VersionNumber)
+		element, err := versionService.GetElementAtVersion(ctx, input.ElementIdentifier, input.VersionNumber)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "Element version not found", err)
 		}
@@ -122,12 +122,12 @@ func RegisterVersionHandlers(api huma.API, versionService *service.VersionServic
 	huma.Register(api, huma.Operation{
 		OperationID: "getElementVersionDiff",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/elements/{element_id}/versions/{version_number}/diff",
+		Path:        "/api/v1/elements/{element_identifier}/versions/{version_number}/diff",
 		Summary:     "Get patches for a specific element version",
 		Description: "Retrieve the forward and reverse JSON patches that define a specific version transition.",
 		Tags:        []string{"versions"},
 	}, func(ctx context.Context, input *GetElementVersionDiffInput) (*GetElementVersionDiffOutput, error) {
-		patch, err := versionService.GetElementVersionDiff(ctx, input.ElementId, input.VersionNumber)
+		patch, err := versionService.GetElementVersionDiff(ctx, input.ElementIdentifier, input.VersionNumber)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "Element version diff not found", err)
 		}
@@ -141,12 +141,12 @@ func RegisterVersionHandlers(api huma.API, versionService *service.VersionServic
 // mapVersionMetaToResponse converts a domain.ElementVersion to the metadata response.
 func mapVersionMetaToResponse(version domain.ElementVersion) ElementVersionMetaResponse {
 	return ElementVersionMetaResponse{
-		VersionId:     version.VersionId,
-		ElementId:     version.ElementId,
+		VersionIdentifier:     version.VersionIdentifier,
+		ElementIdentifier:     version.ElementIdentifier,
 		VersionNumber: version.VersionNumber,
 		ContentSha:    version.ContentSha,
 		CommittedAt:   version.CommittedTime,
-		CommittedById: version.CommittedById,
+		CommittedByIdentifier: version.CommittedByIdentifier,
 		CommitMessage: version.CommitMessage,
 	}
 }
@@ -154,7 +154,7 @@ func mapVersionMetaToResponse(version domain.ElementVersion) ElementVersionMetaR
 // mapVersionPatchToResponse converts a domain.ElementVersionPatch to the diff response.
 func mapVersionPatchToResponse(patch *domain.ElementVersionPatch) ElementVersionDiffResponse {
 	return ElementVersionDiffResponse{
-		VersionId:    patch.VersionId,
+		VersionIdentifier:    patch.VersionIdentifier,
 		ForwardPatch: convertPatchOperations(patch.ForwardPatch),
 		ReversePatch: convertPatchOperations(patch.ReversePatch),
 	}

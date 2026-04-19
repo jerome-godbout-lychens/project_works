@@ -21,15 +21,15 @@ func NewProjectService(projectStore domain.ProjectStore, cacheStore domain.Cache
 	}
 }
 
-func (s *ProjectService) GetProjectById(ctx context.Context, projectId string) (*domain.Project, error) {
-	cacheKey := fmt.Sprintf("project:%s", projectId)
+func (s *ProjectService) GetProjectByIdentifier(ctx context.Context, projectIdentifier string) (*domain.Project, error) {
+	cacheKey := fmt.Sprintf("project:%s", projectIdentifier)
 	if cached, found := s.cacheStore.Get(ctx, cacheKey); found {
 		if project, ok := cached.(*domain.Project); ok {
 			return project, nil
 		}
 	}
 
-	project, err := s.projectStore.GetProjectById(ctx, projectId)
+	project, err := s.projectStore.GetProjectByIdentifier(ctx, projectIdentifier)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (s *ProjectService) CreateProject(ctx context.Context, project *domain.Proj
 	if err := s.projectStore.CreateProject(ctx, project); err != nil {
 		return err
 	}
-	s.cacheStore.Set(ctx, fmt.Sprintf("project:%s", project.ProjectId), project, 0)
+	s.cacheStore.Set(ctx, fmt.Sprintf("project:%s", project.ProjectIdentifier), project, 0)
 	return nil
 }
 
@@ -56,14 +56,14 @@ func (s *ProjectService) UpdateProject(ctx context.Context, project *domain.Proj
 	if err := s.projectStore.UpdateProject(ctx, project); err != nil {
 		return err
 	}
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("project:%s", project.ProjectId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("project:%s", project.ProjectIdentifier))
 	return nil
 }
 
-func (s *ProjectService) DeleteProject(ctx context.Context, projectId string) error {
-	if err := s.projectStore.DeleteProject(ctx, projectId); err != nil {
+func (s *ProjectService) DeleteProject(ctx context.Context, projectIdentifier string) error {
+	if err := s.projectStore.DeleteProject(ctx, projectIdentifier); err != nil {
 		return err
 	}
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("project:%s", projectId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("project:%s", projectIdentifier))
 	return nil
 }

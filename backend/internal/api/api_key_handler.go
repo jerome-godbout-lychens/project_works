@@ -14,7 +14,7 @@ import (
 
 // APIKeyResponse represents an API key in API responses.
 type APIKeyResponse struct {
-	APIKeyId   string     `json:"api_key_id"`
+	APIKeyIdentifier   string     `json:"api_key_identifier"`
 	Label      string     `json:"label"`
 	CreatedTime time.Time  `json:"created_time"`
 	LastUsedTime *time.Time `json:"last_used_time"`
@@ -22,7 +22,7 @@ type APIKeyResponse struct {
 
 // APIKeyGeneratedResponse represents a newly generated API key (only sent once).
 type APIKeyGeneratedResponse struct {
-	APIKeyId   string    `json:"api_key_id"`
+	APIKeyIdentifier   string    `json:"api_key_identifier"`
 	RawKey     string    `json:"raw_key"`
 	Label      string    `json:"label"`
 	CreatedTime time.Time `json:"created_time"`
@@ -51,7 +51,7 @@ type GenerateAPIKeyOutput struct {
 
 // DeleteAPIKeyInput holds the path parameter for deleting an API key.
 type DeleteAPIKeyInput struct {
-	APIKeyId string `path:"api_key_id" format:"uuid" doc:"The API key identifier"`
+	APIKeyIdentifier string `path:"api_key_identifier" format:"uuid" doc:"The API key identifier"`
 }
 
 // DeleteAPIKeyOutput is an empty response for successful deletion.
@@ -71,12 +71,12 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 		Summary:     "List API keys for the current user",
 		Tags:        []string{"api-keys"},
 	}, func(ctx context.Context, input *ListAPIKeysInput) (*ListAPIKeysOutput, error) {
-		userId, ok := auth.GetUserIdFromContext(ctx)
+		userIdentifier, ok := auth.GetUserIdentifierFromContext(ctx)
 		if !ok {
 			return nil, huma.NewError(http.StatusUnauthorized, "User not authenticated", nil)
 		}
 
-		apiKeys, err := apiKeyStore.ListAPIKeysByUser(ctx, userId)
+		apiKeys, err := apiKeyStore.ListAPIKeysByUser(ctx, userIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list API keys", err)
 		}
@@ -86,7 +86,7 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 
 		for i, key := range apiKeys {
 			output.Body.Items[i] = APIKeyResponse{
-				APIKeyId:    key.APIKeyId,
+				APIKeyIdentifier:    key.APIKeyIdentifier,
 				Label:       key.Label,
 				CreatedTime: key.CreatedTime,
 				LastUsedTime: key.LastUsedTime,
@@ -105,7 +105,7 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 		Description: "Generate a new API key for the current user. The raw key is only returned once.",
 		Tags:        []string{"api-keys"},
 	}, func(ctx context.Context, input *GenerateAPIKeyInput) (*GenerateAPIKeyOutput, error) {
-		userId, ok := auth.GetUserIdFromContext(ctx)
+		userIdentifier, ok := auth.GetUserIdentifierFromContext(ctx)
 		if !ok {
 			return nil, huma.NewError(http.StatusUnauthorized, "User not authenticated", nil)
 		}
@@ -121,8 +121,8 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 
 		// Create API key entity
 		apiKey := &domain.APIKey{
-			APIKeyId:    uuid.New().String(),
-			UserId:      userId,
+			APIKeyIdentifier:    uuid.New().String(),
+			UserIdentifier:      userIdentifier,
 			HashedKey:   hashedKey,
 			Label:       input.Label,
 			CreatedTime: time.Now().UTC(),
@@ -136,7 +136,7 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 
 		return &GenerateAPIKeyOutput{
 			Body: APIKeyGeneratedResponse{
-				APIKeyId:    apiKey.APIKeyId,
+				APIKeyIdentifier:    apiKey.APIKeyIdentifier,
 				RawKey:      rawKey,
 				Label:       apiKey.Label,
 				CreatedTime: apiKey.CreatedTime,
@@ -148,11 +148,11 @@ func RegisterAPIKeyHandlers(api huma.API, apiKeyStore domain.APIKeyStore) {
 	huma.Register(api, huma.Operation{
 		OperationID: "deleteAPIKey",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/api-keys/{api_key_id}",
+		Path:        "/api/v1/api-keys/{api_key_identifier}",
 		Summary:     "Delete an API key",
 		Tags:        []string{"api-keys"},
 	}, func(ctx context.Context, input *DeleteAPIKeyInput) (*DeleteAPIKeyOutput, error) {
-		err := apiKeyStore.DeleteAPIKey(ctx, input.APIKeyId)
+		err := apiKeyStore.DeleteAPIKey(ctx, input.APIKeyIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete API key", err)
 		}

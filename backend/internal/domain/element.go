@@ -5,8 +5,8 @@ import "time"
 // Element is the core domain entity representing any trackable item in a project.
 // Type-specific fields use pointers and are non-nil only when relevant to the ElementType.
 type Element struct {
-	ElementId string
-	ProjectId string
+	ElementIdentifier string
+	ProjectIdentifier string
 	ElementType       ElementType
 	Title             string
 	Description       string
@@ -18,13 +18,13 @@ type Element struct {
 	InterestLevel *int // 1–10 scale, nil for non-requirements.
 
 	// Task-specific fields.
-	AssigneeId      *string
+	AssigneeIdentifier      *string
 	TaskStatus              *TaskStatus
 	TaskProgress            *int // 0–100 percentage, nil for non-tasks.
 	CloseTime               *time.Time
-	ParentFeatureId *string
-	StartPhaseId    *string
-	DeliveryPhaseId *string
+	ParentFeatureIdentifier *string
+	StartPhaseIdentifier    *string
+	DeliveryPhaseIdentifier *string
 
 	// Populated via separate queries (not stored inline in the elements table).
 	CustomFieldValues []CustomFieldValue

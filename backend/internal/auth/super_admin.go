@@ -45,12 +45,12 @@ func SeedSuperAdmin(
 
 	// ── Upsert user ─────────────────────────────────────────────
 	existingUser, err := userStore.GetUserByExternalIdentity(ctx, superAdminProvider, superAdminSubject)
-	var userId string
+	var userIdentifier string
 
 	if errors.Is(err, domain.ErrUserNotFound) {
-		userId = uuid.New().String()
+		userIdentifier = uuid.New().String()
 		newUser := &domain.User{
-			UserId:                   userId,
+			UserIdentifier:                   userIdentifier,
 			Email:                    email,
 			DisplayName:              displayName,
 			ExternalIdentityProvider: superAdminProvider,
@@ -59,11 +59,11 @@ func SeedSuperAdmin(
 		if createErr := userStore.CreateUser(ctx, newUser); createErr != nil {
 			return "", createErr
 		}
-		log.Printf("super admin: created user %s (%s)", userId, email)
+		log.Printf("super admin: created user %s (%s)", userIdentifier, email)
 	} else if err != nil {
 		return "", err
 	} else {
-		userId = existingUser.UserId
+		userIdentifier = existingUser.UserIdentifier
 		// Update email / display name if they changed.
 		if existingUser.Email != email || existingUser.DisplayName != displayName {
 			existingUser.Email = email
@@ -71,7 +71,7 @@ func SeedSuperAdmin(
 			if updateErr := userStore.UpdateUser(ctx, existingUser); updateErr != nil {
 				return "", updateErr
 			}
-			log.Printf("super admin: updated user %s (%s)", userId, email)
+			log.Printf("super admin: updated user %s (%s)", userIdentifier, email)
 		}
 	}
 
@@ -80,26 +80,26 @@ func SeedSuperAdmin(
 
 	// Check whether the current hash already exists.
 	existingKey, err := apiKeyStore.GetAPIKeyByHash(ctx, hashedKey)
-	if err == nil && existingKey.UserId == userId {
+	if err == nil && existingKey.UserIdentifier == userIdentifier {
 		// Key is already present and belongs to the super admin — nothing to do.
-		log.Printf("super admin: api key already up-to-date for user %s", userId)
-		return userId, nil
+		log.Printf("super admin: api key already up-to-date for user %s", userIdentifier)
+		return userIdentifier, nil
 	}
 
 	// Remove any previous super-admin config key for this user so we don't
 	// accumulate stale keys on every config change.
-	existingKeys, listErr := apiKeyStore.ListAPIKeysByUser(ctx, userId)
+	existingKeys, listErr := apiKeyStore.ListAPIKeysByUser(ctx, userIdentifier)
 	if listErr == nil {
 		for _, key := range existingKeys {
 			if key.Label == superAdminKeyLabel {
-				_ = apiKeyStore.DeleteAPIKey(ctx, key.APIKeyId)
+				_ = apiKeyStore.DeleteAPIKey(ctx, key.APIKeyIdentifier)
 			}
 		}
 	}
 
 	newAPIKey := &domain.APIKey{
-		APIKeyId:    uuid.New().String(),
-		UserId:      userId,
+		APIKeyIdentifier:    uuid.New().String(),
+		UserIdentifier:      userIdentifier,
 		HashedKey:   hashedKey,
 		Label:       superAdminKeyLabel,
 		CreatedTime: time.Now(),
@@ -107,6 +107,6 @@ func SeedSuperAdmin(
 	if createErr := apiKeyStore.CreateAPIKey(ctx, newAPIKey); createErr != nil {
 		return "", createErr
 	}
-	log.Printf("super admin: api key seeded for user %s", userId)
-	return userId, nil
+	log.Printf("super admin: api key seeded for user %s", userIdentifier)
+	return userIdentifier, nil
 }

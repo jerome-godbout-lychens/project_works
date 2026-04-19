@@ -20,14 +20,14 @@ func (s *PhaseService) CreatePhase(ctx context.Context, phase *domain.Phase) err
 	return s.phaseStore.CreatePhase(ctx, phase)
 }
 
-func (s *PhaseService) ListPhasesByProject(ctx context.Context, projectId string) ([]domain.Phase, error) {
-	return s.phaseStore.ListPhasesByProject(ctx, projectId)
+func (s *PhaseService) ListPhasesByProject(ctx context.Context, projectIdentifier string) ([]domain.Phase, error) {
+	return s.phaseStore.ListPhasesByProject(ctx, projectIdentifier)
 }
 
 func (s *PhaseService) UpdatePhase(ctx context.Context, phase *domain.Phase) error {
 	return s.phaseStore.UpdatePhase(ctx, phase)
 }
 
-func (s *PhaseService) DeletePhase(ctx context.Context, phaseId string) error {
-	return s.phaseStore.DeletePhase(ctx, phaseId)
+func (s *PhaseService) DeletePhase(ctx context.Context, phaseIdentifier string) error {
+	return s.phaseStore.DeletePhase(ctx, phaseIdentifier)
 }

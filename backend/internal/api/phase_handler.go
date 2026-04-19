@@ -14,8 +14,8 @@ import (
 
 // PhaseResponse represents a project phase in API responses.
 type PhaseResponse struct {
-	PhaseId          string     `json:"phase_id"`
-	ProjectId        string     `json:"project_id"`
+	PhaseIdentifier          string     `json:"phase_identifier"`
+	ProjectIdentifier        string     `json:"project_identifier"`
 	PhaseName        string     `json:"phase_name"`
 	PhaseOrder       int        `json:"phase_order"`
 	PlannedStartDate *time.Time `json:"planned_start_date"`
@@ -24,7 +24,7 @@ type PhaseResponse struct {
 
 // ListProjectPhasesInput holds the path parameter for listing project phases.
 type ListProjectPhasesInput struct {
-	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 }
 
 // ListProjectPhasesOutput returns a list of project phases.
@@ -36,7 +36,7 @@ type ListProjectPhasesOutput struct {
 
 // CreateProjectPhaseInput holds the request body for creating a phase.
 type CreateProjectPhaseInput struct {
-	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 	Body      struct {
 		PhaseName        string     `json:"phase_name" required:"true" doc:"Name of the phase"`
 		PhaseOrder       int        `json:"phase_order,omitempty" doc:"Order of this phase"`
@@ -52,7 +52,7 @@ type CreateProjectPhaseOutput struct {
 
 // UpdatePhaseInput holds the request body for updating a phase.
 type UpdatePhaseInput struct {
-	PhaseId string `path:"phase_id" format:"uuid" doc:"The phase identifier"`
+	PhaseIdentifier string `path:"phase_identifier" format:"uuid" doc:"The phase identifier"`
 	Body    struct {
 		PhaseName        string     `json:"phase_name,omitempty" doc:"Name of the phase"`
 		PhaseOrder       int        `json:"phase_order,omitempty" doc:"Order of this phase"`
@@ -68,7 +68,7 @@ type UpdatePhaseOutput struct {
 
 // DeletePhaseInput holds the path parameter for deleting a phase.
 type DeletePhaseInput struct {
-	PhaseId string `path:"phase_id" format:"uuid" doc:"The phase identifier"`
+	PhaseIdentifier string `path:"phase_identifier" format:"uuid" doc:"The phase identifier"`
 }
 
 // DeletePhaseOutput is an empty response for successful deletion.
@@ -84,11 +84,11 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "listProjectPhases",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/projects/{project_id}/phases",
+		Path:        "/api/v1/projects/{project_identifier}/phases",
 		Summary:     "List phases for a project",
 		Tags:        []string{"phases"},
 	}, func(ctx context.Context, input *ListProjectPhasesInput) (*ListProjectPhasesOutput, error) {
-		phases, err := phaseService.ListPhasesByProject(ctx, input.ProjectId)
+		phases, err := phaseService.ListPhasesByProject(ctx, input.ProjectIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list project phases", err)
 		}
@@ -98,8 +98,8 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 
 		for i, phase := range phases {
 			output.Body.Items[i] = PhaseResponse{
-				PhaseId:          phase.PhaseId,
-				ProjectId:        phase.ProjectId,
+				PhaseIdentifier:          phase.PhaseIdentifier,
+				ProjectIdentifier:        phase.ProjectIdentifier,
 				PhaseName:        phase.PhaseName,
 				PhaseOrder:       phase.PhaseOrder,
 				PlannedStartDate: phase.PlannedStartDate,
@@ -114,13 +114,13 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "createProjectPhase",
 		Method:      http.MethodPost,
-		Path:        "/api/v1/projects/{project_id}/phases",
+		Path:        "/api/v1/projects/{project_identifier}/phases",
 		Summary:     "Create a new phase in a project",
 		Tags:        []string{"phases"},
 	}, func(ctx context.Context, input *CreateProjectPhaseInput) (*CreateProjectPhaseOutput, error) {
 		phase := &domain.Phase{
-			PhaseId:          uuid.New().String(),
-			ProjectId:        input.ProjectId,
+			PhaseIdentifier:          uuid.New().String(),
+			ProjectIdentifier:        input.ProjectIdentifier,
 			PhaseName:        input.Body.PhaseName,
 			PhaseOrder:       input.Body.PhaseOrder,
 			PlannedStartDate: input.Body.PlannedStartDate,
@@ -134,8 +134,8 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 
 		return &CreateProjectPhaseOutput{
 			Body: PhaseResponse{
-				PhaseId:          phase.PhaseId,
-				ProjectId:        phase.ProjectId,
+				PhaseIdentifier:          phase.PhaseIdentifier,
+				ProjectIdentifier:        phase.ProjectIdentifier,
 				PhaseName:        phase.PhaseName,
 				PhaseOrder:       phase.PhaseOrder,
 				PlannedStartDate: phase.PlannedStartDate,
@@ -148,12 +148,12 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "updatePhase",
 		Method:      http.MethodPut,
-		Path:        "/api/v1/phases/{phase_id}",
+		Path:        "/api/v1/phases/{phase_identifier}",
 		Summary:     "Update a phase",
 		Tags:        []string{"phases"},
 	}, func(ctx context.Context, input *UpdatePhaseInput) (*UpdatePhaseOutput, error) {
 		phase := &domain.Phase{
-			PhaseId:          input.PhaseId,
+			PhaseIdentifier:          input.PhaseIdentifier,
 			PhaseName:        input.Body.PhaseName,
 			PhaseOrder:       input.Body.PhaseOrder,
 			PlannedStartDate: input.Body.PlannedStartDate,
@@ -167,8 +167,8 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 
 		return &UpdatePhaseOutput{
 			Body: PhaseResponse{
-				PhaseId:          phase.PhaseId,
-				ProjectId:        phase.ProjectId,
+				PhaseIdentifier:          phase.PhaseIdentifier,
+				ProjectIdentifier:        phase.ProjectIdentifier,
 				PhaseName:        phase.PhaseName,
 				PhaseOrder:       phase.PhaseOrder,
 				PlannedStartDate: phase.PlannedStartDate,
@@ -181,11 +181,11 @@ func RegisterPhaseHandlers(api huma.API, phaseService *service.PhaseService) {
 	huma.Register(api, huma.Operation{
 		OperationID: "deletePhase",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/phases/{phase_id}",
+		Path:        "/api/v1/phases/{phase_identifier}",
 		Summary:     "Delete a phase",
 		Tags:        []string{"phases"},
 	}, func(ctx context.Context, input *DeletePhaseInput) (*DeletePhaseOutput, error) {
-		err := phaseService.DeletePhase(ctx, input.PhaseId)
+		err := phaseService.DeletePhase(ctx, input.PhaseIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete phase", err)
 		}

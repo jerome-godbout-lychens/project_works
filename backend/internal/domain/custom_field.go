@@ -3,8 +3,8 @@ package domain
 // CustomFieldDefinition describes a user-defined field that can be attached to elements
 // of a given type within a project.
 type CustomFieldDefinition struct {
-	FieldDefinitionId string
-	ProjectId         string
+	FieldDefinitionIdentifier string
+	ProjectIdentifier         string
 	ApplicableElementType     string // element type name, or "*" to apply to all types
 	FieldName                 string
 	FieldType                 string // "string", "textarea", "integer", "real", "choice"
@@ -14,7 +14,7 @@ type CustomFieldDefinition struct {
 
 // CustomFieldValue holds the current value of a single custom field for an element.
 type CustomFieldValue struct {
-	FieldDefinitionId string
+	FieldDefinitionIdentifier string
 	FieldName                 string
 	FieldValue                interface{}
 }

@@ -32,8 +32,8 @@ func scanElement(row interface {
 }) (*domain.Element, error) {
 	var element domain.Element
 	err := row.Scan(
-		&element.ElementId,
-		&element.ProjectId,
+		&element.ElementIdentifier,
+		&element.ProjectIdentifier,
 		&element.ElementType,
 		&element.Title,
 		&element.Description,
@@ -41,13 +41,13 @@ func scanElement(row interface {
 		&element.CreationTime,
 		&element.ModificationTime,
 		&element.InterestLevel,
-		&element.AssigneeId,
+		&element.AssigneeIdentifier,
 		&element.TaskStatus,
 		&element.TaskProgress,
 		&element.CloseTime,
-		&element.ParentFeatureId,
-		&element.StartPhaseId,
-		&element.DeliveryPhaseId,
+		&element.ParentFeatureIdentifier,
+		&element.StartPhaseIdentifier,
+		&element.DeliveryPhaseIdentifier,
 	)
 	if err != nil {
 		return nil, err
@@ -55,9 +55,9 @@ func scanElement(row interface {
 	return &element, nil
 }
 
-func (s *ElementStore) GetElementById(ctx context.Context, elementId string) (*domain.Element, error) {
+func (s *ElementStore) GetElementByIdentifier(ctx context.Context, elementIdentifier string) (*domain.Element, error) {
 	query := `SELECT` + elementSelectColumns + `FROM elements WHERE element_identifier = $1`
-	element, err := scanElement(s.db.QueryRowContext(ctx, query, elementId))
+	element, err := scanElement(s.db.QueryRowContext(ctx, query, elementIdentifier))
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, domain.ErrElementNotFound
@@ -67,9 +67,9 @@ func (s *ElementStore) GetElementById(ctx context.Context, elementId string) (*d
 	return element, nil
 }
 
-func (s *ElementStore) ListElementsByProject(ctx context.Context, projectId string, filter domain.ElementFilter) ([]domain.Element, error) {
+func (s *ElementStore) ListElementsByProject(ctx context.Context, projectIdentifier string, filter domain.ElementFilter) ([]domain.Element, error) {
 	query := `SELECT` + elementSelectColumns + `FROM elements WHERE project_identifier = $1`
-	args := []interface{}{projectId}
+	args := []interface{}{projectIdentifier}
 	paramIndex := 2
 
 	if len(filter.ElementTypes) > 0 {
@@ -92,9 +92,9 @@ func (s *ElementStore) ListElementsByProject(ctx context.Context, projectId stri
 		paramIndex += len(filter.TaskStatuses)
 	}
 
-	if filter.AssigneeId != nil {
+	if filter.AssigneeIdentifier != nil {
 		query += fmt.Sprintf(" AND assignee_identifier = $%d", paramIndex)
-		args = append(args, *filter.AssigneeId)
+		args = append(args, *filter.AssigneeIdentifier)
 		paramIndex++
 	}
 
@@ -153,12 +153,12 @@ func (s *ElementStore) CreateElement(ctx context.Context, element *domain.Elemen
 		RETURNING` + elementSelectColumns
 
 	created, err := scanElement(s.db.QueryRowContext(ctx, query,
-		element.ElementId, element.ProjectId, element.ElementType,
+		element.ElementIdentifier, element.ProjectIdentifier, element.ElementType,
 		element.Title, element.Description, element.ContentSha,
 		element.CreationTime, element.ModificationTime,
-		element.InterestLevel, element.AssigneeId, element.TaskStatus,
-		element.TaskProgress, closeTime, element.ParentFeatureId,
-		element.StartPhaseId, element.DeliveryPhaseId,
+		element.InterestLevel, element.AssigneeIdentifier, element.TaskStatus,
+		element.TaskProgress, closeTime, element.ParentFeatureIdentifier,
+		element.StartPhaseIdentifier, element.DeliveryPhaseIdentifier,
 	))
 	if err != nil {
 		return err
@@ -168,7 +168,7 @@ func (s *ElementStore) CreateElement(ctx context.Context, element *domain.Elemen
 }
 
 func (s *ElementStore) UpdateElement(ctx context.Context, element *domain.Element) error {
-	current, err := s.GetElementById(ctx, element.ElementId)
+	current, err := s.GetElementByIdentifier(ctx, element.ElementIdentifier)
 	if err != nil {
 		return err
 	}
@@ -196,10 +196,10 @@ func (s *ElementStore) UpdateElement(ctx context.Context, element *domain.Elemen
 
 	updated, err := scanElement(s.db.QueryRowContext(ctx, query,
 		element.ElementType, element.Title, element.Description, element.ContentSha,
-		element.ModificationTime, element.InterestLevel, element.AssigneeId,
+		element.ModificationTime, element.InterestLevel, element.AssigneeIdentifier,
 		element.TaskStatus, element.TaskProgress, closeTime,
-		element.ParentFeatureId, element.StartPhaseId, element.DeliveryPhaseId,
-		element.ElementId,
+		element.ParentFeatureIdentifier, element.StartPhaseIdentifier, element.DeliveryPhaseIdentifier,
+		element.ElementIdentifier,
 	))
 	if err != nil {
 		return err
@@ -208,8 +208,8 @@ func (s *ElementStore) UpdateElement(ctx context.Context, element *domain.Elemen
 	return nil
 }
 
-func (s *ElementStore) DeleteElement(ctx context.Context, elementId string) error {
-	result, err := s.db.ExecContext(ctx, "DELETE FROM elements WHERE element_identifier = $1", elementId)
+func (s *ElementStore) DeleteElement(ctx context.Context, elementIdentifier string) error {
+	result, err := s.db.ExecContext(ctx, "DELETE FROM elements WHERE element_identifier = $1", elementIdentifier)
 	if err != nil {
 		return err
 	}
@@ -223,7 +223,7 @@ func (s *ElementStore) DeleteElement(ctx context.Context, elementId string) erro
 	return nil
 }
 
-func (s *ElementStore) SearchElements(ctx context.Context, projectId string, query string, limit int, offset int) ([]domain.Element, error) {
+func (s *ElementStore) SearchElements(ctx context.Context, projectIdentifier string, query string, limit int, offset int) ([]domain.Element, error) {
 	sqlQuery := `SELECT` + elementSelectColumns + `
 		FROM elements
 		WHERE project_identifier = $1
@@ -231,7 +231,7 @@ func (s *ElementStore) SearchElements(ctx context.Context, projectId string, que
 		ORDER BY creation_time DESC
 		LIMIT $3 OFFSET $4`
 
-	rows, err := s.db.QueryContext(ctx, sqlQuery, projectId, query, limit, offset)
+	rows, err := s.db.QueryContext(ctx, sqlQuery, projectIdentifier, query, limit, offset)
 	if err != nil {
 		return nil, err
 	}

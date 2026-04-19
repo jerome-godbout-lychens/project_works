@@ -17,12 +17,12 @@ type VersionableSnapshot struct {
 	Title         string               `json:"title"`
 	Description   string               `json:"description"`
 	InterestLevel *int                 `json:"interest_level,omitempty"`
-	AssigneeId    *string              `json:"assignee_id,omitempty"`
+	AssigneeIdentifier    *string              `json:"assignee_identifier,omitempty"`
 	TaskStatus    *domain.TaskStatus   `json:"task_status,omitempty"`
 	TaskProgress  *int                 `json:"task_progress,omitempty"`
-	ParentFeatureId  *string           `json:"parent_feature_id,omitempty"`
-	StartPhaseId     *string           `json:"start_phase_id,omitempty"`
-	DeliveryPhaseId  *string           `json:"delivery_phase_id,omitempty"`
+	ParentFeatureIdentifier  *string           `json:"parent_feature_identifier,omitempty"`
+	StartPhaseIdentifier     *string           `json:"start_phase_identifier,omitempty"`
+	DeliveryPhaseIdentifier  *string           `json:"delivery_phase_identifier,omitempty"`
 	CustomFieldValues []SnapshotCustomField `json:"custom_field_values"`
 	Supervisors       []string              `json:"supervisors"`
 	Clients           []SnapshotContact     `json:"clients"`
@@ -31,7 +31,7 @@ type VersionableSnapshot struct {
 }
 
 type SnapshotCustomField struct {
-	FieldDefinitionId string      `json:"field_definition_id"`
+	FieldDefinitionIdentifier string      `json:"field_definition_identifier"`
 	FieldName         string      `json:"field_name"`
 	FieldValue        interface{} `json:"field_value"`
 }
@@ -43,13 +43,13 @@ type SnapshotContact struct {
 }
 
 type SnapshotLink struct {
-	SourceElementId      string          `json:"source_element_id"`
-	DestinationElementId string          `json:"destination_element_id"`
+	SourceElementIdentifier      string          `json:"source_element_identifier"`
+	DestinationElementIdentifier string          `json:"destination_element_identifier"`
 	LinkType             domain.LinkType `json:"link_type"`
 }
 
 type SnapshotAttachment struct {
-	AttachmentId string `json:"attachment_id"`
+	AttachmentIdentifier string `json:"attachment_identifier"`
 	FileName     string `json:"file_name"`
 	ContentType  string `json:"content_type"`
 	FileSizeBytes int64 `json:"file_size_bytes"`
@@ -66,25 +66,25 @@ func BuildSnapshot(
 		Title:           element.Title,
 		Description:     element.Description,
 		InterestLevel:   element.InterestLevel,
-		AssigneeId:      element.AssigneeId,
+		AssigneeIdentifier:      element.AssigneeIdentifier,
 		TaskStatus:      element.TaskStatus,
 		TaskProgress:    element.TaskProgress,
-		ParentFeatureId: element.ParentFeatureId,
-		StartPhaseId:    element.StartPhaseId,
-		DeliveryPhaseId: element.DeliveryPhaseId,
+		ParentFeatureIdentifier: element.ParentFeatureIdentifier,
+		StartPhaseIdentifier:    element.StartPhaseIdentifier,
+		DeliveryPhaseIdentifier: element.DeliveryPhaseIdentifier,
 	}
 
 	// Custom fields — sorted by definition ID for deterministic output
 	snapshot.CustomFieldValues = make([]SnapshotCustomField, len(element.CustomFieldValues))
 	for i, customField := range element.CustomFieldValues {
 		snapshot.CustomFieldValues[i] = SnapshotCustomField{
-			FieldDefinitionId: customField.FieldDefinitionId,
+			FieldDefinitionIdentifier: customField.FieldDefinitionIdentifier,
 			FieldName:         customField.FieldName,
 			FieldValue:        customField.FieldValue,
 		}
 	}
 	sort.Slice(snapshot.CustomFieldValues, func(i, j int) bool {
-		return snapshot.CustomFieldValues[i].FieldDefinitionId < snapshot.CustomFieldValues[j].FieldDefinitionId
+		return snapshot.CustomFieldValues[i].FieldDefinitionIdentifier < snapshot.CustomFieldValues[j].FieldDefinitionIdentifier
 	})
 
 	// Supervisors — sorted for determinism
@@ -109,14 +109,14 @@ func BuildSnapshot(
 	snapshot.Links = make([]SnapshotLink, len(links))
 	for i, link := range links {
 		snapshot.Links[i] = SnapshotLink{
-			SourceElementId:      link.SourceElementId,
-			DestinationElementId: link.DestinationElementId,
+			SourceElementIdentifier:      link.SourceElementIdentifier,
+			DestinationElementIdentifier: link.DestinationElementIdentifier,
 			LinkType:             link.LinkType,
 		}
 	}
 	sort.Slice(snapshot.Links, func(i, j int) bool {
-		if snapshot.Links[i].DestinationElementId != snapshot.Links[j].DestinationElementId {
-			return snapshot.Links[i].DestinationElementId < snapshot.Links[j].DestinationElementId
+		if snapshot.Links[i].DestinationElementIdentifier != snapshot.Links[j].DestinationElementIdentifier {
+			return snapshot.Links[i].DestinationElementIdentifier < snapshot.Links[j].DestinationElementIdentifier
 		}
 		return string(snapshot.Links[i].LinkType) < string(snapshot.Links[j].LinkType)
 	})
@@ -125,14 +125,14 @@ func BuildSnapshot(
 	snapshot.Attachments = make([]SnapshotAttachment, len(attachments))
 	for i, attachment := range attachments {
 		snapshot.Attachments[i] = SnapshotAttachment{
-			AttachmentId:  attachment.AttachmentId,
+			AttachmentIdentifier:  attachment.AttachmentIdentifier,
 			FileName:      attachment.FileName,
 			ContentType:   attachment.ContentType,
 			FileSizeBytes: attachment.FileSizeBytes,
 		}
 	}
 	sort.Slice(snapshot.Attachments, func(i, j int) bool {
-		return snapshot.Attachments[i].AttachmentId < snapshot.Attachments[j].AttachmentId
+		return snapshot.Attachments[i].AttachmentIdentifier < snapshot.Attachments[j].AttachmentIdentifier
 	})
 
 	return snapshot

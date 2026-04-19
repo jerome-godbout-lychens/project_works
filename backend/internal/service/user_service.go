@@ -18,8 +18,8 @@ func NewUserService(userStore domain.UserStore) *UserService {
 	return &UserService{userStore: userStore}
 }
 
-func (s *UserService) GetUserById(ctx context.Context, userId string) (*domain.User, error) {
-	return s.userStore.GetUserById(ctx, userId)
+func (s *UserService) GetUserByIdentifier(ctx context.Context, userIdentifier string) (*domain.User, error) {
+	return s.userStore.GetUserByIdentifier(ctx, userIdentifier)
 }
 
 func (s *UserService) ListUsers(ctx context.Context, limit int, offset int) ([]domain.User, error) {
@@ -54,7 +54,7 @@ func (s *UserService) GetOrCreateUserFromOIDC(
 
 	// No match found — create a new user.
 	user := &domain.User{
-		UserId:                   uuid.New().String(),
+		UserIdentifier:                   uuid.New().String(),
 		Email:                    email,
 		DisplayName:              displayName,
 		ExternalIdentityProvider: provider,

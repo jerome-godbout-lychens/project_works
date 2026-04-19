@@ -14,7 +14,7 @@ import (
 
 // ProjectResponse represents a project in API responses.
 type ProjectResponse struct {
-	ProjectId          string    `json:"project_id"`
+	ProjectIdentifier          string    `json:"project_identifier"`
 	ProjectName        string    `json:"project_name"`
 	ProjectDescription string    `json:"project_description"`
 	FolderPath         string    `json:"folder_path"`
@@ -53,7 +53,7 @@ type CreateProjectOutput struct {
 
 // GetProjectInput holds the path parameter for getting a project.
 type GetProjectInput struct {
-	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 }
 
 // GetProjectOutput returns a single project.
@@ -63,7 +63,7 @@ type GetProjectOutput struct {
 
 // UpdateProjectInput holds the request body for updating a project.
 type UpdateProjectInput struct {
-	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 	Body      struct {
 		ProjectName        string `json:"project_name" doc:"Project name"`
 		ProjectDescription string `json:"project_description" doc:"Project description"`
@@ -77,7 +77,7 @@ type UpdateProjectOutput struct {
 
 // DeleteProjectInput holds the path parameter for deleting a project.
 type DeleteProjectInput struct {
-	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 }
 
 // DeleteProjectOutput is an empty response for successful deletion.
@@ -124,7 +124,7 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 	}, func(ctx context.Context, input *CreateProjectInput) (*CreateProjectOutput, error) {
 		now := time.Now().UTC()
 		project := &domain.Project{
-			ProjectId:          uuid.New().String(),
+			ProjectIdentifier:          uuid.New().String(),
 			ProjectName:        input.Body.ProjectName,
 			ProjectDescription: input.Body.ProjectDescription,
 			FolderPath:         input.Body.FolderPath,
@@ -145,11 +145,11 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 	huma.Register(api, huma.Operation{
 		OperationID: "getProject",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/projects/{project_id}",
+		Path:        "/api/v1/projects/{project_identifier}",
 		Summary:     "Get a project by identifier",
 		Tags:        []string{"projects"},
 	}, func(ctx context.Context, input *GetProjectInput) (*GetProjectOutput, error) {
-		project, err := projectService.GetProjectById(ctx, input.ProjectId)
+		project, err := projectService.GetProjectByIdentifier(ctx, input.ProjectIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "Project not found", err)
 		}
@@ -163,11 +163,11 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 	huma.Register(api, huma.Operation{
 		OperationID: "updateProject",
 		Method:      http.MethodPut,
-		Path:        "/api/v1/projects/{project_id}",
+		Path:        "/api/v1/projects/{project_identifier}",
 		Summary:     "Update a project",
 		Tags:        []string{"projects"},
 	}, func(ctx context.Context, input *UpdateProjectInput) (*UpdateProjectOutput, error) {
-		project, err := projectService.GetProjectById(ctx, input.ProjectId)
+		project, err := projectService.GetProjectByIdentifier(ctx, input.ProjectIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "Project not found", err)
 		}
@@ -193,11 +193,11 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 	huma.Register(api, huma.Operation{
 		OperationID: "deleteProject",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/projects/{project_id}",
+		Path:        "/api/v1/projects/{project_identifier}",
 		Summary:     "Delete a project",
 		Tags:        []string{"projects"},
 	}, func(ctx context.Context, input *DeleteProjectInput) (*DeleteProjectOutput, error) {
-		if err := projectService.DeleteProject(ctx, input.ProjectId); err != nil {
+		if err := projectService.DeleteProject(ctx, input.ProjectIdentifier); err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete project", err)
 		}
 
@@ -214,7 +214,7 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 // mapProjectToResponse converts a domain.Project to a response struct.
 func mapProjectToResponse(project *domain.Project) ProjectResponse {
 	return ProjectResponse{
-		ProjectId:          project.ProjectId,
+		ProjectIdentifier:          project.ProjectIdentifier,
 		ProjectName:        project.ProjectName,
 		ProjectDescription: project.ProjectDescription,
 		FolderPath:         project.FolderPath,

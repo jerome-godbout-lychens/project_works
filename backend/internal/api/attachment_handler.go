@@ -14,18 +14,18 @@ import (
 
 // AttachmentResponse represents an attachment in API responses.
 type AttachmentResponse struct {
-	AttachmentId  string    `json:"attachment_id"`
-	ElementId     string    `json:"element_id"`
+	AttachmentIdentifier  string    `json:"attachment_identifier"`
+	ElementIdentifier     string    `json:"element_identifier"`
 	FileName      string    `json:"file_name"`
 	FileSizeBytes int64     `json:"file_size_bytes"`
 	ContentType   string    `json:"content_type"`
 	UploadTime    time.Time `json:"upload_time"`
-	UploadedById  string    `json:"uploaded_by_id"`
+	UploadedByIdentifier  string    `json:"uploaded_by_id"`
 }
 
 // ListAttachmentsInput holds query parameters for listing attachments.
 type ListAttachmentsInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 }
 
 // ListAttachmentsOutput returns a list of attachments.
@@ -37,7 +37,7 @@ type ListAttachmentsOutput struct {
 
 // UploadAttachmentInput holds the request body for uploading an attachment.
 type UploadAttachmentInput struct {
-	ElementId   string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier   string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 	FileName    string `query:"file_name" required:"true" doc:"The name of the file"`
 	ContentType string `header:"Content-Type" required:"true" doc:"The MIME type of the file"`
 	RawBody     []byte `doc:"The file content"`
@@ -50,7 +50,7 @@ type UploadAttachmentOutput struct {
 
 // GetAttachmentPresignedURLInput holds the path parameter for getting presigned URL.
 type GetAttachmentPresignedURLInput struct {
-	AttachmentId string `path:"attachment_id" format:"uuid" doc:"The attachment identifier"`
+	AttachmentIdentifier string `path:"attachment_identifier" format:"uuid" doc:"The attachment identifier"`
 }
 
 // GetAttachmentPresignedURLOutput returns the presigned URL.
@@ -63,7 +63,7 @@ type GetAttachmentPresignedURLOutput struct {
 
 // DeleteAttachmentInput holds the path parameter for deleting an attachment.
 type DeleteAttachmentInput struct {
-	AttachmentId string `path:"attachment_id" format:"uuid" doc:"The attachment identifier"`
+	AttachmentIdentifier string `path:"attachment_identifier" format:"uuid" doc:"The attachment identifier"`
 }
 
 // DeleteAttachmentOutput is an empty response for successful deletion.
@@ -79,11 +79,11 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 	huma.Register(api, huma.Operation{
 		OperationID: "listAttachments",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/elements/{element_id}/attachments",
+		Path:        "/api/v1/elements/{element_identifier}/attachments",
 		Summary:     "List attachments for an element",
 		Tags:        []string{"attachments"},
 	}, func(ctx context.Context, input *ListAttachmentsInput) (*ListAttachmentsOutput, error) {
-		attachments, err := attachmentService.ListAttachmentsByElement(ctx, input.ElementId)
+		attachments, err := attachmentService.ListAttachmentsByElement(ctx, input.ElementIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list attachments", err)
 		}
@@ -93,13 +93,13 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 
 		for i, attachment := range attachments {
 			output.Body.Items[i] = AttachmentResponse{
-				AttachmentId:  attachment.AttachmentId,
-				ElementId:     attachment.ElementId,
+				AttachmentIdentifier:  attachment.AttachmentIdentifier,
+				ElementIdentifier:     attachment.ElementIdentifier,
 				FileName:      attachment.FileName,
 				FileSizeBytes: attachment.FileSizeBytes,
 				ContentType:   attachment.ContentType,
 				UploadTime:    attachment.UploadTime,
-				UploadedById:  attachment.UploadedById,
+				UploadedByIdentifier:  attachment.UploadedByIdentifier,
 			}
 		}
 
@@ -110,12 +110,12 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 	huma.Register(api, huma.Operation{
 		OperationID: "uploadAttachment",
 		Method:      http.MethodPost,
-		Path:        "/api/v1/elements/{element_id}/attachments",
+		Path:        "/api/v1/elements/{element_identifier}/attachments",
 		Summary:     "Upload an attachment to an element",
 		Tags:        []string{"attachments"},
 	}, func(ctx context.Context, input *UploadAttachmentInput) (*UploadAttachmentOutput, error) {
 		// Get authenticated user from context
-		userId, ok := auth.GetUserIdFromContext(ctx)
+		userIdentifier, ok := auth.GetUserIdentifierFromContext(ctx)
 		if !ok {
 			return nil, huma.NewError(http.StatusUnauthorized, "User not authenticated", nil)
 		}
@@ -123,12 +123,12 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 		// Upload attachment with file content
 		attachment, err := attachmentService.UploadAttachment(
 			ctx,
-			input.ElementId,
+			input.ElementIdentifier,
 			input.FileName,
 			input.ContentType,
 			int64(len(input.RawBody)),
 			bytes.NewReader(input.RawBody),
-			userId,
+			userIdentifier,
 		)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to upload attachment", err)
@@ -136,13 +136,13 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 
 		return &UploadAttachmentOutput{
 			Body: AttachmentResponse{
-				AttachmentId:  attachment.AttachmentId,
-				ElementId:     attachment.ElementId,
+				AttachmentIdentifier:  attachment.AttachmentIdentifier,
+				ElementIdentifier:     attachment.ElementIdentifier,
 				FileName:      attachment.FileName,
 				FileSizeBytes: attachment.FileSizeBytes,
 				ContentType:   attachment.ContentType,
 				UploadTime:    attachment.UploadTime,
-				UploadedById:  attachment.UploadedById,
+				UploadedByIdentifier:  attachment.UploadedByIdentifier,
 			},
 		}, nil
 	})
@@ -151,12 +151,12 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 	huma.Register(api, huma.Operation{
 		OperationID: "getAttachmentPresignedURL",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/attachments/{attachment_id}",
+		Path:        "/api/v1/attachments/{attachment_identifier}",
 		Summary:     "Get a presigned URL to download an attachment",
 		Tags:        []string{"attachments"},
 	}, func(ctx context.Context, input *GetAttachmentPresignedURLInput) (*GetAttachmentPresignedURLOutput, error) {
 		const presignedURLExpiration = 15 * time.Minute
-		url, err := attachmentService.GetPresignedURL(ctx, input.AttachmentId, presignedURLExpiration)
+		url, err := attachmentService.GetPresignedURL(ctx, input.AttachmentIdentifier, presignedURLExpiration)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "Failed to get presigned URL", err)
 		}
@@ -172,11 +172,11 @@ func RegisterAttachmentHandlers(api huma.API, attachmentService *service.Attachm
 	huma.Register(api, huma.Operation{
 		OperationID: "deleteAttachment",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/attachments/{attachment_id}",
+		Path:        "/api/v1/attachments/{attachment_identifier}",
 		Summary:     "Delete an attachment",
 		Tags:        []string{"attachments"},
 	}, func(ctx context.Context, input *DeleteAttachmentInput) (*DeleteAttachmentOutput, error) {
-		err := attachmentService.DeleteAttachment(ctx, input.AttachmentId)
+		err := attachmentService.DeleteAttachment(ctx, input.AttachmentIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete attachment", err)
 		}

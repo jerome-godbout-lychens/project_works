@@ -31,14 +31,14 @@ func (s *CustomFieldDefinitionStore) CreateFieldDefinition(ctx context.Context, 
 	`
 
 	err = s.db.QueryRowContext(ctx, query,
-		definition.FieldDefinitionId,
-		definition.ProjectId,
+		definition.FieldDefinitionIdentifier,
+		definition.ProjectIdentifier,
 		definition.ApplicableElementType,
 		definition.FieldName,
 		definition.FieldType,
 		optionsJSON,
 		definition.DisplayOrder,
-	).Scan(&definition.FieldDefinitionId)
+	).Scan(&definition.FieldDefinitionIdentifier)
 
 	if err != nil {
 		return fmt.Errorf("failed to create field definition: %w", err)
@@ -47,7 +47,7 @@ func (s *CustomFieldDefinitionStore) CreateFieldDefinition(ctx context.Context, 
 	return nil
 }
 
-func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.Context, projectId, elementType string) ([]domain.CustomFieldDefinition, error) {
+func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.Context, projectIdentifier, elementType string) ([]domain.CustomFieldDefinition, error) {
 	var query string
 	var args []interface{}
 
@@ -58,7 +58,7 @@ func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.C
 			WHERE project_identifier = $1
 			ORDER BY display_order ASC
 		`
-		args = []interface{}{projectId}
+		args = []interface{}{projectIdentifier}
 	} else {
 		query = `
 			SELECT field_definition_identifier, project_identifier, applicable_element_type, field_name, field_type, field_options, display_order
@@ -66,7 +66,7 @@ func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.C
 			WHERE project_identifier = $1 AND (applicable_element_type = $2 OR applicable_element_type = '*')
 			ORDER BY display_order ASC
 		`
-		args = []interface{}{projectId, elementType}
+		args = []interface{}{projectIdentifier, elementType}
 	}
 
 	rows, err := s.db.QueryContext(ctx, query, args...)
@@ -81,8 +81,8 @@ func (s *CustomFieldDefinitionStore) ListFieldDefinitionsByProject(ctx context.C
 		var optionsJSON []byte
 
 		err := rows.Scan(
-			&definition.FieldDefinitionId,
-			&definition.ProjectId,
+			&definition.FieldDefinitionIdentifier,
+			&definition.ProjectIdentifier,
 			&definition.ApplicableElementType,
 			&definition.FieldName,
 			&definition.FieldType,
@@ -124,8 +124,8 @@ func (s *CustomFieldDefinitionStore) UpdateFieldDefinition(ctx context.Context, 
 		optionsJSON,
 		definition.DisplayOrder,
 		definition.ApplicableElementType,
-		definition.FieldDefinitionId,
-		definition.ProjectId,
+		definition.FieldDefinitionIdentifier,
+		definition.ProjectIdentifier,
 	)
 	if err != nil {
 		return fmt.Errorf("failed to update field definition: %w", err)
@@ -142,9 +142,9 @@ func (s *CustomFieldDefinitionStore) UpdateFieldDefinition(ctx context.Context, 
 	return nil
 }
 
-func (s *CustomFieldDefinitionStore) DeleteFieldDefinition(ctx context.Context, fieldDefinitionId string) error {
+func (s *CustomFieldDefinitionStore) DeleteFieldDefinition(ctx context.Context, fieldDefinitionIdentifier string) error {
 	result, err := s.db.ExecContext(ctx,
-		`DELETE FROM custom_field_definitions WHERE field_definition_identifier = $1`, fieldDefinitionId)
+		`DELETE FROM custom_field_definitions WHERE field_definition_identifier = $1`, fieldDefinitionIdentifier)
 	if err != nil {
 		return fmt.Errorf("failed to delete field definition: %w", err)
 	}
@@ -169,7 +169,7 @@ func NewCustomFieldValueStore(db *sql.DB) domain.CustomFieldValueStore {
 	return &CustomFieldValueStore{db: db}
 }
 
-func (s *CustomFieldValueStore) SetFieldValue(ctx context.Context, elementId, fieldDefinitionId string, value interface{}) error {
+func (s *CustomFieldValueStore) SetFieldValue(ctx context.Context, elementIdentifier, fieldDefinitionIdentifier string, value interface{}) error {
 	valueJSON, err := json.Marshal(value)
 	if err != nil {
 		return fmt.Errorf("failed to marshal field value: %w", err)
@@ -182,7 +182,7 @@ func (s *CustomFieldValueStore) SetFieldValue(ctx context.Context, elementId, fi
 		SET field_value = EXCLUDED.field_value
 	`
 
-	_, err = s.db.ExecContext(ctx, query, elementId, fieldDefinitionId, valueJSON)
+	_, err = s.db.ExecContext(ctx, query, elementIdentifier, fieldDefinitionIdentifier, valueJSON)
 	if err != nil {
 		return fmt.Errorf("failed to set field value: %w", err)
 	}
@@ -190,7 +190,7 @@ func (s *CustomFieldValueStore) SetFieldValue(ctx context.Context, elementId, fi
 	return nil
 }
 
-func (s *CustomFieldValueStore) GetFieldValues(ctx context.Context, elementId string) ([]domain.CustomFieldValue, error) {
+func (s *CustomFieldValueStore) GetFieldValues(ctx context.Context, elementIdentifier string) ([]domain.CustomFieldValue, error) {
 	query := `
 		SELECT cfv.field_definition_identifier, cfd.field_name, cfv.field_value
 		FROM element_custom_field_values cfv
@@ -199,7 +199,7 @@ func (s *CustomFieldValueStore) GetFieldValues(ctx context.Context, elementId st
 		ORDER BY cfd.display_order ASC
 	`
 
-	rows, err := s.db.QueryContext(ctx, query, elementId)
+	rows, err := s.db.QueryContext(ctx, query, elementIdentifier)
 	if err != nil {
 		return nil, fmt.Errorf("failed to query field values: %w", err)
 	}
@@ -211,7 +211,7 @@ func (s *CustomFieldValueStore) GetFieldValues(ctx context.Context, elementId st
 		var valueJSON []byte
 
 		err := rows.Scan(
-			&customFieldValue.FieldDefinitionId,
+			&customFieldValue.FieldDefinitionIdentifier,
 			&customFieldValue.FieldName,
 			&valueJSON,
 		)
@@ -229,10 +229,10 @@ func (s *CustomFieldValueStore) GetFieldValues(ctx context.Context, elementId st
 	return values, rows.Err()
 }
 
-func (s *CustomFieldValueStore) DeleteFieldValue(ctx context.Context, elementId, fieldDefinitionId string) error {
+func (s *CustomFieldValueStore) DeleteFieldValue(ctx context.Context, elementIdentifier, fieldDefinitionIdentifier string) error {
 	result, err := s.db.ExecContext(ctx,
 		`DELETE FROM element_custom_field_values WHERE element_identifier = $1 AND field_definition_identifier = $2`,
-		elementId, fieldDefinitionId,
+		elementIdentifier, fieldDefinitionIdentifier,
 	)
 	if err != nil {
 		return fmt.Errorf("failed to delete field value: %w", err)

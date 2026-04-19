@@ -19,14 +19,14 @@ func NewSessionManager(secretKey string) *SessionManager {
 	}
 }
 
-// CreateSessionToken creates a JWT token with the provided userId
+// CreateSessionToken creates a JWT token with the provided userIdentifier
 // Token expires in 24 hours from now
-func (sessionManager *SessionManager) CreateSessionToken(userId string) (string, error) {
+func (sessionManager *SessionManager) CreateSessionToken(userIdentifier string) (string, error) {
 	now := time.Now()
 	expirationTime := now.Add(24 * time.Hour)
 
 	claims := jwt.MapClaims{
-		"sub": userId,
+		"sub": userIdentifier,
 		"iat": now.Unix(),
 		"exp": expirationTime.Unix(),
 	}
@@ -41,7 +41,7 @@ func (sessionManager *SessionManager) CreateSessionToken(userId string) (string,
 }
 
 // ValidateSessionToken parses and validates a JWT token string
-// Returns the userId (sub claim) if valid, otherwise returns an error
+// Returns the userIdentifier (sub claim) if valid, otherwise returns an error
 func (sessionManager *SessionManager) ValidateSessionToken(tokenString string) (string, error) {
 	claims := jwt.MapClaims{}
 
@@ -61,10 +61,10 @@ func (sessionManager *SessionManager) ValidateSessionToken(tokenString string) (
 		return "", errors.New("token is invalid")
 	}
 
-	userId, ok := claims["sub"].(string)
-	if !ok || userId == "" {
-		return "", errors.New("missing or invalid userId claim")
+	userIdentifier, ok := claims["sub"].(string)
+	if !ok || userIdentifier == "" {
+		return "", errors.New("missing or invalid userIdentifier claim")
 	}
 
-	return userId, nil
+	return userIdentifier, nil
 }

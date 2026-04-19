@@ -46,75 +46,75 @@ func (s *CustomFieldService) CreateFieldDefinition(ctx context.Context, definiti
 
 // ListFieldDefinitionsByProject returns field definitions for a project.
 // Pass an empty string for elementType to retrieve definitions for all element types.
-func (s *CustomFieldService) ListFieldDefinitionsByProject(ctx context.Context, projectId string, elementType string) ([]domain.CustomFieldDefinition, error) {
-	return s.fieldDefinitionStore.ListFieldDefinitionsByProject(ctx, projectId, elementType)
+func (s *CustomFieldService) ListFieldDefinitionsByProject(ctx context.Context, projectIdentifier string, elementType string) ([]domain.CustomFieldDefinition, error) {
+	return s.fieldDefinitionStore.ListFieldDefinitionsByProject(ctx, projectIdentifier, elementType)
 }
 
 func (s *CustomFieldService) UpdateFieldDefinition(ctx context.Context, definition *domain.CustomFieldDefinition) error {
 	return s.fieldDefinitionStore.UpdateFieldDefinition(ctx, definition)
 }
 
-func (s *CustomFieldService) DeleteFieldDefinition(ctx context.Context, fieldDefinitionId string) error {
-	return s.fieldDefinitionStore.DeleteFieldDefinition(ctx, fieldDefinitionId)
+func (s *CustomFieldService) DeleteFieldDefinition(ctx context.Context, fieldDefinitionIdentifier string) error {
+	return s.fieldDefinitionStore.DeleteFieldDefinition(ctx, fieldDefinitionIdentifier)
 }
 
 // SetFieldValue sets a custom field value and stages a pending change on the element.
-func (s *CustomFieldService) SetFieldValue(ctx context.Context, elementId string, fieldDefinitionId string, value interface{}) error {
-	if err := s.fieldValueStore.SetFieldValue(ctx, elementId, fieldDefinitionId, value); err != nil {
+func (s *CustomFieldService) SetFieldValue(ctx context.Context, elementIdentifier string, fieldDefinitionIdentifier string, value interface{}) error {
+	if err := s.fieldValueStore.SetFieldValue(ctx, elementIdentifier, fieldDefinitionIdentifier, value); err != nil {
 		return err
 	}
 
-	if err := s.stagePendingChange(ctx, elementId); err != nil {
+	if err := s.stagePendingChange(ctx, elementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change: %w", err)
 	}
 
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementIdentifier))
 	return nil
 }
 
 // GetFieldValues returns all custom field values for an element.
-func (s *CustomFieldService) GetFieldValues(ctx context.Context, elementId string) ([]domain.CustomFieldValue, error) {
-	return s.fieldValueStore.GetFieldValues(ctx, elementId)
+func (s *CustomFieldService) GetFieldValues(ctx context.Context, elementIdentifier string) ([]domain.CustomFieldValue, error) {
+	return s.fieldValueStore.GetFieldValues(ctx, elementIdentifier)
 }
 
 // DeleteFieldValue removes a custom field value and stages a pending change.
-func (s *CustomFieldService) DeleteFieldValue(ctx context.Context, elementId string, fieldDefinitionId string) error {
-	if err := s.fieldValueStore.DeleteFieldValue(ctx, elementId, fieldDefinitionId); err != nil {
+func (s *CustomFieldService) DeleteFieldValue(ctx context.Context, elementIdentifier string, fieldDefinitionIdentifier string) error {
+	if err := s.fieldValueStore.DeleteFieldValue(ctx, elementIdentifier, fieldDefinitionIdentifier); err != nil {
 		return err
 	}
 
-	if err := s.stagePendingChange(ctx, elementId); err != nil {
+	if err := s.stagePendingChange(ctx, elementIdentifier); err != nil {
 		return fmt.Errorf("failed to stage pending change: %w", err)
 	}
 
-	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementId))
+	s.cacheStore.Invalidate(ctx, fmt.Sprintf("element:%s", elementIdentifier))
 	return nil
 }
 
 // stagePendingChange loads the full aggregate and stages a pending change for versioning.
-func (s *CustomFieldService) stagePendingChange(ctx context.Context, elementId string) error {
-	element, err := s.elementStore.GetElementById(ctx, elementId)
+func (s *CustomFieldService) stagePendingChange(ctx context.Context, elementIdentifier string) error {
+	element, err := s.elementStore.GetElementByIdentifier(ctx, elementIdentifier)
 	if err != nil {
 		return err
 	}
 
-	customFieldValues, err := s.fieldValueStore.GetFieldValues(ctx, elementId)
+	customFieldValues, err := s.fieldValueStore.GetFieldValues(ctx, elementIdentifier)
 	if err != nil {
 		return fmt.Errorf("failed to load custom field values: %w", err)
 	}
 	element.CustomFieldValues = customFieldValues
 
-	outgoing, err := s.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionOutgoing)
+	outgoing, err := s.elementLinkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionOutgoing)
 	if err != nil {
 		return fmt.Errorf("failed to load outgoing links: %w", err)
 	}
-	incoming, err := s.elementLinkStore.ListLinksByElement(ctx, elementId, domain.LinkDirectionIncoming)
+	incoming, err := s.elementLinkStore.ListLinksByElement(ctx, elementIdentifier, domain.LinkDirectionIncoming)
 	if err != nil {
 		return fmt.Errorf("failed to load incoming links: %w", err)
 	}
 	allLinks := append(outgoing, incoming...)
 
-	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementId)
+	attachments, err := s.attachmentStore.ListAttachmentsByElement(ctx, elementIdentifier)
 	if err != nil {
 		return fmt.Errorf("failed to load attachments: %w", err)
 	}
@@ -130,5 +130,5 @@ func (s *CustomFieldService) stagePendingChange(ctx context.Context, elementId s
 		return fmt.Errorf("failed to convert snapshot to map: %w", err)
 	}
 
-	return s.elementPendingChangeStore.UpsertPendingChange(ctx, elementId, snapshotMap)
+	return s.elementPendingChangeStore.UpsertPendingChange(ctx, elementIdentifier, snapshotMap)
 }

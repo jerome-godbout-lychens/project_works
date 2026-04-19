@@ -15,8 +15,8 @@ import (
 
 // ElementResponse represents an element in API responses.
 type ElementResponse struct {
-	ElementId       string                    `json:"element_id"`
-	ProjectId       string                    `json:"project_id"`
+	ElementIdentifier       string                    `json:"element_identifier"`
+	ProjectIdentifier       string                    `json:"project_identifier"`
 	ElementType     string                    `json:"element_type"`
 	Title           string                    `json:"title"`
 	Description     string                    `json:"description"`
@@ -25,20 +25,20 @@ type ElementResponse struct {
 	ModificationTime time.Time               `json:"modification_time"`
 	TaskStatus      *string                   `json:"task_status,omitempty"`
 	TaskProgress    *int                      `json:"task_progress,omitempty"`
-	AssigneeId      *string                   `json:"assignee_id,omitempty"`
-	ParentFeatureId *string                   `json:"parent_feature_id,omitempty"`
-	StartPhaseId    *string                   `json:"start_phase_id,omitempty"`
-	DeliveryPhaseId *string                   `json:"delivery_phase_id,omitempty"`
+	AssigneeIdentifier      *string                   `json:"assignee_identifier,omitempty"`
+	ParentFeatureIdentifier *string                   `json:"parent_feature_identifier,omitempty"`
+	StartPhaseIdentifier    *string                   `json:"start_phase_identifier,omitempty"`
+	DeliveryPhaseIdentifier *string                   `json:"delivery_phase_identifier,omitempty"`
 	CloseTime       *time.Time                `json:"close_time,omitempty"`
 	InterestLevel   *int                      `json:"interest_level,omitempty"`
 }
 
 // ListElementsInput holds query parameters for listing elements.
 type ListElementsInput struct {
-	ProjectId   string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier   string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 	ElementType string `query:"element_type" doc:"Comma-separated element types to filter"`
 	TaskStatus  string `query:"task_status" doc:"Comma-separated task statuses to filter"`
-	AssigneeId  string `query:"assignee_id" doc:"Filter by assigned user"`
+	AssigneeIdentifier  string `query:"assignee_identifier" doc:"Filter by assigned user"`
 	Search      string `query:"search" doc:"Full-text search query"`
 	Limit       int    `query:"limit" default:"50" doc:"Maximum number of elements to return"`
 	Offset      int    `query:"offset" default:"0" doc:"Number of elements to skip"`
@@ -54,17 +54,17 @@ type ListElementsOutput struct {
 
 // CreateElementInput holds the request body for creating an element.
 type CreateElementInput struct {
-	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 	Body      struct {
 		ElementType     string  `json:"element_type" required:"true" doc:"Element type (task, feature, requirement, bug, evaluation, risk)"`
 		Title           string  `json:"title" required:"true" doc:"Element title"`
 		Description     string  `json:"description,omitempty" doc:"Markdown-capable description"`
 		TaskStatus      *string `json:"task_status,omitempty" doc:"Task status"`
 		TaskProgress    *int    `json:"task_progress,omitempty" doc:"Work percentage (0-100)"`
-		AssigneeId      *string `json:"assignee_id,omitempty" doc:"Assigned user identifier"`
-		ParentFeatureId *string `json:"parent_feature_id,omitempty" doc:"Parent feature identifier"`
-		StartPhaseId    *string `json:"start_phase_id,omitempty" doc:"Phase when work should start"`
-		DeliveryPhaseId *string `json:"delivery_phase_id,omitempty" doc:"Phase when work should be delivered"`
+		AssigneeIdentifier      *string `json:"assignee_identifier,omitempty" doc:"Assigned user identifier"`
+		ParentFeatureIdentifier *string `json:"parent_feature_identifier,omitempty" doc:"Parent feature identifier"`
+		StartPhaseIdentifier    *string `json:"start_phase_identifier,omitempty" doc:"Phase when work should start"`
+		DeliveryPhaseIdentifier *string `json:"delivery_phase_identifier,omitempty" doc:"Phase when work should be delivered"`
 		InterestLevel   *int    `json:"interest_level,omitempty" doc:"Client interest level (1-10, for requirements)"`
 	}
 }
@@ -76,7 +76,7 @@ type CreateElementOutput struct {
 
 // GetElementInput holds the path parameter for getting an element.
 type GetElementInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 }
 
 // GetElementOutput returns a single element.
@@ -86,16 +86,16 @@ type GetElementOutput struct {
 
 // UpdateElementInput holds the request body for updating an element.
 type UpdateElementInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 	Body      struct {
 		Title           string  `json:"title,omitempty" doc:"Element title"`
 		Description     string  `json:"description,omitempty" doc:"Element description"`
 		TaskStatus      *string `json:"task_status,omitempty" doc:"Task status"`
 		TaskProgress    *int    `json:"task_progress,omitempty" doc:"Work percentage (0-100)"`
-		AssigneeId      *string `json:"assignee_id,omitempty" doc:"Assigned user identifier"`
-		ParentFeatureId *string `json:"parent_feature_id,omitempty" doc:"Parent feature identifier"`
-		StartPhaseId    *string `json:"start_phase_id,omitempty" doc:"Phase when work should start"`
-		DeliveryPhaseId *string `json:"delivery_phase_id,omitempty" doc:"Phase when work should be delivered"`
+		AssigneeIdentifier      *string `json:"assignee_identifier,omitempty" doc:"Assigned user identifier"`
+		ParentFeatureIdentifier *string `json:"parent_feature_identifier,omitempty" doc:"Parent feature identifier"`
+		StartPhaseIdentifier    *string `json:"start_phase_identifier,omitempty" doc:"Phase when work should start"`
+		DeliveryPhaseIdentifier *string `json:"delivery_phase_identifier,omitempty" doc:"Phase when work should be delivered"`
 		InterestLevel   *int    `json:"interest_level,omitempty" doc:"Client interest level (1-10)"`
 	}
 }
@@ -107,7 +107,7 @@ type UpdateElementOutput struct {
 
 // DeleteElementInput holds the path parameter for deleting an element.
 type DeleteElementInput struct {
-	ElementId string `path:"element_id" format:"uuid" doc:"The element identifier"`
+	ElementIdentifier string `path:"element_identifier" format:"uuid" doc:"The element identifier"`
 }
 
 // DeleteElementOutput is an empty response for successful deletion.
@@ -119,7 +119,7 @@ type DeleteElementOutput struct {
 
 // SearchElementsInput holds query parameters for searching elements.
 type SearchElementsInput struct {
-	ProjectId string `path:"project_id" format:"uuid" doc:"The project identifier"`
+	ProjectIdentifier string `path:"project_identifier" format:"uuid" doc:"The project identifier"`
 	Query     string `query:"query" doc:"Search query for title and description"`
 	Limit     int    `query:"limit" default:"50" doc:"Maximum number of results"`
 	Offset    int    `query:"offset" default:"0" doc:"Number of results to skip"`
@@ -139,13 +139,13 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 	huma.Register(api, huma.Operation{
 		OperationID: "listElements",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/projects/{project_id}/elements",
+		Path:        "/api/v1/projects/{project_identifier}/elements",
 		Summary:     "List elements in a project",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *ListElementsInput) (*ListElementsOutput, error) {
 		var assigneeFilter *string
-		if input.AssigneeId != "" {
-			assigneeFilter = &input.AssigneeId
+		if input.AssigneeIdentifier != "" {
+			assigneeFilter = &input.AssigneeIdentifier
 		}
 		var searchFilter *string
 		if input.Search != "" {
@@ -155,13 +155,13 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		filter := domain.ElementFilter{
 			ElementTypes: parseCommaSeparatedElementTypes(input.ElementType),
 			TaskStatuses: parseCommaSeparatedTaskStatuses(input.TaskStatus),
-			AssigneeId:   assigneeFilter,
+			AssigneeIdentifier:   assigneeFilter,
 			SearchQuery:  searchFilter,
 			Limit:        input.Limit,
 			Offset:       input.Offset,
 		}
 
-		elements, err := elementService.ListElementsByProject(ctx, input.ProjectId, filter)
+		elements, err := elementService.ListElementsByProject(ctx, input.ProjectIdentifier, filter)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list elements", err)
 		}
@@ -179,7 +179,7 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 	huma.Register(api, huma.Operation{
 		OperationID: "createElement",
 		Method:      http.MethodPost,
-		Path:        "/api/v1/projects/{project_id}/elements",
+		Path:        "/api/v1/projects/{project_identifier}/elements",
 		Summary:     "Create a new element",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *CreateElementInput) (*CreateElementOutput, error) {
@@ -191,8 +191,8 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		}
 
 		element := &domain.Element{
-			ElementId:        uuid.New().String(),
-			ProjectId:        input.ProjectId,
+			ElementIdentifier:        uuid.New().String(),
+			ProjectIdentifier:        input.ProjectIdentifier,
 			ElementType:      domain.ElementType(input.Body.ElementType),
 			Title:            input.Body.Title,
 			Description:      input.Body.Description,
@@ -200,10 +200,10 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 			ModificationTime: now,
 			TaskStatus:       taskStatus,
 			TaskProgress:     input.Body.TaskProgress,
-			AssigneeId:       input.Body.AssigneeId,
-			ParentFeatureId:  input.Body.ParentFeatureId,
-			StartPhaseId:     input.Body.StartPhaseId,
-			DeliveryPhaseId:  input.Body.DeliveryPhaseId,
+			AssigneeIdentifier:       input.Body.AssigneeIdentifier,
+			ParentFeatureIdentifier:  input.Body.ParentFeatureIdentifier,
+			StartPhaseIdentifier:     input.Body.StartPhaseIdentifier,
+			DeliveryPhaseIdentifier:  input.Body.DeliveryPhaseIdentifier,
 			InterestLevel:    input.Body.InterestLevel,
 		}
 
@@ -218,11 +218,11 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 	huma.Register(api, huma.Operation{
 		OperationID: "getElement",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/elements/{element_id}",
+		Path:        "/api/v1/elements/{element_identifier}",
 		Summary:     "Get an element by identifier",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *GetElementInput) (*GetElementOutput, error) {
-		element, err := elementService.GetElementById(ctx, input.ElementId)
+		element, err := elementService.GetElementByIdentifier(ctx, input.ElementIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "Element not found", err)
 		}
@@ -233,11 +233,11 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 	huma.Register(api, huma.Operation{
 		OperationID: "updateElement",
 		Method:      http.MethodPut,
-		Path:        "/api/v1/elements/{element_id}",
+		Path:        "/api/v1/elements/{element_identifier}",
 		Summary:     "Update an element",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *UpdateElementInput) (*UpdateElementOutput, error) {
-		existing, err := elementService.GetElementById(ctx, input.ElementId)
+		existing, err := elementService.GetElementByIdentifier(ctx, input.ElementIdentifier)
 		if err != nil {
 			return nil, huma.NewError(http.StatusNotFound, "Element not found", err)
 		}
@@ -251,8 +251,8 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 		}
 
 		updated := &domain.Element{
-			ElementId:        input.ElementId,
-			ProjectId:        existing.ProjectId,
+			ElementIdentifier:        input.ElementIdentifier,
+			ProjectIdentifier:        existing.ProjectIdentifier,
 			ElementType:      existing.ElementType,
 			Title:            input.Body.Title,
 			Description:      input.Body.Description,
@@ -261,14 +261,14 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 			ModificationTime: time.Now().UTC(),
 			TaskStatus:       taskStatus,
 			TaskProgress:     input.Body.TaskProgress,
-			AssigneeId:       input.Body.AssigneeId,
-			ParentFeatureId:  input.Body.ParentFeatureId,
-			StartPhaseId:     input.Body.StartPhaseId,
-			DeliveryPhaseId:  input.Body.DeliveryPhaseId,
+			AssigneeIdentifier:       input.Body.AssigneeIdentifier,
+			ParentFeatureIdentifier:  input.Body.ParentFeatureIdentifier,
+			StartPhaseIdentifier:     input.Body.StartPhaseIdentifier,
+			DeliveryPhaseIdentifier:  input.Body.DeliveryPhaseIdentifier,
 			InterestLevel:    input.Body.InterestLevel,
 		}
 
-		if err := elementService.UpdateElement(ctx, input.ElementId, updated); err != nil {
+		if err := elementService.UpdateElement(ctx, input.ElementIdentifier, updated); err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to update element", err)
 		}
 		return &UpdateElementOutput{Body: mapElementToResponse(updated)}, nil
@@ -278,11 +278,11 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 	huma.Register(api, huma.Operation{
 		OperationID: "deleteElement",
 		Method:      http.MethodDelete,
-		Path:        "/api/v1/elements/{element_id}",
+		Path:        "/api/v1/elements/{element_identifier}",
 		Summary:     "Delete an element",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *DeleteElementInput) (*DeleteElementOutput, error) {
-		if err := elementService.DeleteElement(ctx, input.ElementId); err != nil {
+		if err := elementService.DeleteElement(ctx, input.ElementIdentifier); err != nil {
 			return nil, huma.NewError(http.StatusBadRequest, "Failed to delete element", err)
 		}
 		return &DeleteElementOutput{Body: struct {
@@ -294,11 +294,11 @@ func RegisterElementHandlers(api huma.API, elementService *service.ElementServic
 	huma.Register(api, huma.Operation{
 		OperationID: "searchElements",
 		Method:      http.MethodGet,
-		Path:        "/api/v1/projects/{project_id}/elements/search",
+		Path:        "/api/v1/projects/{project_identifier}/elements/search",
 		Summary:     "Search elements by full-text query",
 		Tags:        []string{"elements"},
 	}, func(ctx context.Context, input *SearchElementsInput) (*SearchElementsOutput, error) {
-		elements, err := elementService.SearchElements(ctx, input.ProjectId, input.Query, input.Limit, input.Offset)
+		elements, err := elementService.SearchElements(ctx, input.ProjectIdentifier, input.Query, input.Limit, input.Offset)
 		if err != nil {
 			return nil, huma.NewError(http.StatusInternalServerError, "Failed to search elements", err)
 		}
@@ -321,8 +321,8 @@ func mapElementToResponse(element *domain.Element) ElementResponse {
 		taskStatusStr = &s
 	}
 	return ElementResponse{
-		ElementId:        element.ElementId,
-		ProjectId:        element.ProjectId,
+		ElementIdentifier:        element.ElementIdentifier,
+		ProjectIdentifier:        element.ProjectIdentifier,
 		ElementType:      string(element.ElementType),
 		Title:            element.Title,
 		Description:      element.Description,
@@ -331,10 +331,10 @@ func mapElementToResponse(element *domain.Element) ElementResponse {
 		ModificationTime: element.ModificationTime,
 		TaskStatus:       taskStatusStr,
 		TaskProgress:     element.TaskProgress,
-		AssigneeId:       element.AssigneeId,
-		ParentFeatureId:  element.ParentFeatureId,
-		StartPhaseId:     element.StartPhaseId,
-		DeliveryPhaseId:  element.DeliveryPhaseId,
+		AssigneeIdentifier:       element.AssigneeIdentifier,
+		ParentFeatureIdentifier:  element.ParentFeatureIdentifier,
+		StartPhaseIdentifier:     element.StartPhaseIdentifier,
+		DeliveryPhaseIdentifier:  element.DeliveryPhaseIdentifier,
 		CloseTime:        element.CloseTime,
 		InterestLevel:    element.InterestLevel,
 	}

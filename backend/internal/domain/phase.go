@@ -4,8 +4,8 @@ import "time"
 
 // Phase represents a project phase used for scheduling tasks.
 type Phase struct {
-	PhaseId   string
-	ProjectId string
+	PhaseIdentifier   string
+	ProjectIdentifier string
 	PhaseName         string
 	PhaseOrder        int
 	PlannedStartDate  *time.Time

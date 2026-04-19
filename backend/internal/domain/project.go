@@ -4,7 +4,7 @@ import "time"
 
 // Project represents a trackable project, organized in a folder hierarchy.
 type Project struct {
-	ProjectId  string
+	ProjectIdentifier  string
 	ProjectName        string
 	ProjectDescription string
 	FolderPath         string // ltree path, e.g. "engineering.firmware.sensors"

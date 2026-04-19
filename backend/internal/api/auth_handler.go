@@ -24,7 +24,7 @@ type LogoutResponse struct {
 
 // CurrentUserResponse returns the authenticated user information.
 type CurrentUserResponse struct {
-	UserId      string `json:"user_id"`
+	UserIdentifier      string `json:"user_identifier"`
 	Email       string `json:"email"`
 	DisplayName string `json:"display_name"`
 }
@@ -123,7 +123,7 @@ func RegisterAuthHandlers(
 		}
 
 		// Create session token
-		sessionToken, err := sessionManager.CreateSessionToken(user.UserId)
+		sessionToken, err := sessionManager.CreateSessionToken(user.UserIdentifier)
 		if err != nil {
 			http.Error(w, "Failed to create session token", http.StatusInternalServerError)
 			return
@@ -161,14 +161,14 @@ func RegisterAuthHandlers(
 
 	// Current user endpoint: returns authenticated user info
 	chiRouter.Get("/api/v1/auth/me", func(w http.ResponseWriter, r *http.Request) {
-		userId, ok := auth.GetUserIdFromContext(r.Context())
+		userIdentifier, ok := auth.GetUserIdentifierFromContext(r.Context())
 		if !ok {
 			w.WriteHeader(http.StatusUnauthorized)
 			w.Write([]byte(`{"error":"Unauthorized"}`))
 			return
 		}
 
-		user, err := userService.GetUserById(r.Context(), userId)
+		user, err := userService.GetUserByIdentifier(r.Context(), userIdentifier)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(`{"error":"Failed to get user"}`))
@@ -179,14 +179,14 @@ func RegisterAuthHandlers(
 		w.WriteHeader(http.StatusOK)
 
 		response := CurrentUserResponse{
-			UserId:      user.UserId,
+			UserIdentifier:      user.UserIdentifier,
 			Email:       user.Email,
 			DisplayName: user.DisplayName,
 		}
 
 		// Simple JSON marshaling
 		w.Write([]byte(`{`))
-		w.Write([]byte(`"user_id":"` + response.UserId + `",`))
+		w.Write([]byte(`"user_identifier":"` + response.UserIdentifier + `",`))
 		w.Write([]byte(`"email":"` + response.Email + `",`))
 		w.Write([]byte(`"display_name":"` + response.DisplayName + `"`))
 		w.Write([]byte(`}`))
