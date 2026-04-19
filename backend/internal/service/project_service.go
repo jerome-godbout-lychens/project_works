@@ -44,6 +44,11 @@ func (s *ProjectService) ListProjects(ctx context.Context, folderPathPrefix stri
 	return s.projectStore.ListProjects(ctx, folderPathPrefix)
 }
 
+// ListFolderPaths returns all distinct folder-path prefixes across every project.
+func (s *ProjectService) ListFolderPaths(ctx context.Context) ([]string, error) {
+	return s.projectStore.ListFolderPaths(ctx)
+}
+
 func (s *ProjectService) CreateProject(ctx context.Context, project *domain.Project) error {
 	if err := s.projectStore.CreateProject(ctx, project); err != nil {
 		return err

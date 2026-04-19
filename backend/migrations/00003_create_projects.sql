@@ -3,13 +3,13 @@ CREATE TABLE projects (
     project_identifier UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     project_name TEXT NOT NULL,
     project_description TEXT NOT NULL DEFAULT '',
-    folder_path LTREE NOT NULL DEFAULT '',
+    folder_path TEXT NOT NULL DEFAULT '',
     creation_time TIMESTAMPTZ NOT NULL DEFAULT now(),
     modification_time TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE INDEX index_projects_on_folder_path
-    ON projects USING GIST (folder_path);
+    ON projects (folder_path text_pattern_ops);
 
 CREATE TABLE group_project_access (
     group_identifier UUID NOT NULL REFERENCES groups (group_identifier) ON DELETE CASCADE,

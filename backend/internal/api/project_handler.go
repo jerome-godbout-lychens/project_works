@@ -67,6 +67,14 @@ type UpdateProjectInput struct {
 	Body      struct {
 		ProjectName        string `json:"project_name" doc:"Project name"`
 		ProjectDescription string `json:"project_description" doc:"Project description"`
+		FolderPath         string `json:"folder_path,omitempty" doc:"Folder path for organization (moves project within the tree)"`
+	}
+}
+
+// ListFolderPathsOutput returns every distinct folder-path prefix across all projects.
+type ListFolderPathsOutput struct {
+	Body struct {
+		FolderPaths []string `json:"folder_paths" doc:"Sorted list of all folder paths at every depth level"`
 	}
 }
 
@@ -178,6 +186,9 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 		if input.Body.ProjectDescription != "" {
 			project.ProjectDescription = input.Body.ProjectDescription
 		}
+		if input.Body.FolderPath != "" {
+			project.FolderPath = input.Body.FolderPath
+		}
 		project.ModificationTime = time.Now().UTC()
 
 		if err := projectService.UpdateProject(ctx, project); err != nil {
@@ -187,6 +198,27 @@ func RegisterProjectHandlers(api huma.API, projectService *service.ProjectServic
 		return &UpdateProjectOutput{
 			Body: mapProjectToResponse(project),
 		}, nil
+	})
+
+	// List all folder paths (for building the tree navigation in the GUI)
+	huma.Register(api, huma.Operation{
+		OperationID: "listProjectFolders",
+		Method:      http.MethodGet,
+		Path:        "/api/v1/projects/folders",
+		Summary:     "List all folder paths",
+		Description: "Returns every distinct folder-path prefix across all projects, sorted. Use this to render intermediate folder nodes in a tree view even when a folder contains no direct projects.",
+		Tags:        []string{"projects"},
+	}, func(ctx context.Context, _ *struct{}) (*ListFolderPathsOutput, error) {
+		paths, err := projectService.ListFolderPaths(ctx)
+		if err != nil {
+			return nil, huma.NewError(http.StatusInternalServerError, "Failed to list folder paths", err)
+		}
+		if paths == nil {
+			paths = []string{}
+		}
+		output := &ListFolderPathsOutput{}
+		output.Body.FolderPaths = paths
+		return output, nil
 	})
 
 	// Delete project

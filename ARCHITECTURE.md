@@ -130,7 +130,7 @@ Groups map to projects via a `group_project_access` join table. No per-user proj
 ## Data Model Overview
 
 ```
-projects (folder-tree via ltree)
+projects (folder-tree via text path e.g. "engineering/firmware")
 elements (polymorphic: type discriminator + type-specific table per element)
   ├── requirements
   ├── features
@@ -145,7 +145,7 @@ api_keys (hashed)
 phases (for start_phase / delivery_phase on tasks)
 ```
 
-PostgreSQL `ltree` extension handles the multi-depth project folder tree efficiently.
+The `folder_path` column on `projects` uses a Unix-style slash-delimited text path (e.g. `"engineering/firmware/sensors"`). The GUI splits on `/` to reconstruct the tree. A B-tree index with `text_pattern_ops` supports efficient prefix queries (`LIKE 'engineering/%'`).
 
 ---
 

@@ -44,11 +44,11 @@ COLD PATH (version history — append-only)
 | project_identifier | UUID | PK |
 | project_name | TEXT | NOT NULL |
 | project_description | TEXT | |
-| folder_path | LTREE | e.g. `engineering.firmware.sensors` |
+| folder_path | TEXT | Unix-style path e.g. `engineering/firmware/sensors` |
 | creation_time | TIMESTAMPTZ | NOT NULL, DEFAULT now() |
 | modification_time | TIMESTAMPTZ | NOT NULL, auto-updated |
 
-Index: `folder_path` using GiST for ltree queries.
+Index: B-tree on `folder_path` with `text_pattern_ops` for efficient `LIKE 'prefix/%'` queries.
 
 ### elements
 
@@ -381,7 +381,7 @@ type Project struct {
     ProjectIdentifier  string
     ProjectName        string
     ProjectDescription string
-    FolderPath         string // ltree path e.g. "engineering.firmware"
+    FolderPath         string // Unix-style path e.g. "engineering/firmware"
     CreationTime       time.Time
     ModificationTime   time.Time
 }
@@ -470,6 +470,11 @@ type ElementLinkStore interface {
 type ProjectStore interface {
     GetProjectByIdentifier(context context.Context, projectIdentifier string) (*Project, error)
     ListProjects(context context.Context, folderPathPrefix string) ([]Project, error)
+    // ListFolderPaths returns every distinct folder-path prefix at every depth
+    // level across all projects. Used by the GUI to render intermediate folder
+    // nodes (e.g. "engineering", "engineering.firmware") even when no project
+    // sits directly in that folder.
+    ListFolderPaths(context context.Context) ([]string, error)
     CreateProject(context context.Context, project *Project) error
     UpdateProject(context context.Context, project *Project) error
     DeleteProject(context context.Context, projectIdentifier string) error

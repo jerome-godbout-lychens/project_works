@@ -115,7 +115,10 @@ paths:
       parameters:
         - name: folder_path_prefix
           in: query
-          description: Filter by folder path prefix (ltree), e.g. "engineering.firmware"
+          description: >
+            Filter to projects at or below this folder path (slash-delimited),
+            e.g. "engineering/firmware". Returns projects whose folder_path equals
+            the prefix or starts with "prefix/".
           schema:
             type: string
       responses:
@@ -151,13 +154,40 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
 
-  /projects/{project_id}:
+  /projects/folders:
+    get:
+      operationId: listProjectFolders
+      tags: [projects]
+      summary: List all folder paths
+      description: >
+        Returns every distinct folder-path prefix at every depth level across all
+        projects, sorted lexicographically. For example, a project at
+        "engineering/firmware/sensors" contributes three entries:
+        "engineering", "engineering/firmware", "engineering/firmware/sensors".
+        Use this endpoint to render intermediate folder nodes in a tree view even
+        when a folder contains no direct projects.
+      responses:
+        "200":
+          description: Sorted list of all folder paths
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [folder_paths]
+                properties:
+                  folder_paths:
+                    type: array
+                    items:
+                      type: string
+                    example: ["engineering", "engineering/firmware", "engineering/firmware/sensors"]
+
+  /projects/{project_identifier}:
     parameters:
-      - $ref: "#/components/parameters/ProjectId"
+      - $ref: "#/components/parameters/ProjectIdentifier"
     get:
       operationId: getProject
       tags: [projects]
-      summary: Get a project by ID
+      summary: Get a project by identifier
       responses:
         "200":
           description: The project
@@ -198,9 +228,9 @@ paths:
 
   # ─── Elements ───────────────────────────────────────────
 
-  /projects/{project_id}/elements:
+  /projects/{project_identifier}/elements:
     parameters:
-      - $ref: "#/components/parameters/ProjectId"
+      - $ref: "#/components/parameters/ProjectIdentifier"
     get:
       operationId: listElements
       tags: [elements]
@@ -224,7 +254,7 @@ paths:
               $ref: "#/components/schemas/TaskStatus"
           style: form
           explode: false
-        - name: assignee_id
+        - name: assignee_identifier
           in: query
           schema:
             type: string
@@ -263,13 +293,13 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
 
-  /elements/{element_id}:
+  /elements/{element_identifier}:
     parameters:
-      - $ref: "#/components/parameters/ElementId"
+      - $ref: "#/components/parameters/ElementIdentifier"
     get:
       operationId: getElement
       tags: [elements]
-      summary: Get an element by ID
+      summary: Get an element by identifier
       responses:
         "200":
           description: The element with custom fields, supervisors, and clients populated
@@ -308,9 +338,9 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
-  /projects/{project_id}/elements/search:
+  /projects/{project_identifier}/elements/search:
     parameters:
-      - $ref: "#/components/parameters/ProjectId"
+      - $ref: "#/components/parameters/ProjectIdentifier"
     get:
       operationId: searchElements
       tags: [elements]
@@ -333,9 +363,9 @@ paths:
 
   # ─── Element Links ─────────────────────────────────────
 
-  /elements/{element_id}/links:
+  /elements/{element_identifier}/links:
     parameters:
-      - $ref: "#/components/parameters/ElementId"
+      - $ref: "#/components/parameters/ElementIdentifier"
     get:
       operationId: listElementLinks
       tags: [element-links]
@@ -380,9 +410,9 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
 
-  /links/{link_id}:
+  /links/{link_identifier}:
     parameters:
-      - name: link_id
+      - name: link_identifier
         in: path
         required: true
         schema:
@@ -400,9 +430,9 @@ paths:
 
   # ─── Element Versions ──────────────────────────────────
 
-  /elements/{element_id}/versions:
+  /elements/{element_identifier}/versions:
     parameters:
-      - $ref: "#/components/parameters/ElementId"
+      - $ref: "#/components/parameters/ElementIdentifier"
     get:
       operationId: listElementVersions
       tags: [element-versions]
@@ -424,9 +454,9 @@ paths:
                     items:
                       $ref: "#/components/schemas/ElementVersion"
 
-  /elements/{element_id}/versions/{version_number}:
+  /elements/{element_identifier}/versions/{version_number}:
     parameters:
-      - $ref: "#/components/parameters/ElementId"
+      - $ref: "#/components/parameters/ElementIdentifier"
       - name: version_number
         in: path
         required: true
@@ -450,9 +480,9 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
-  /elements/{element_id}/versions/{version_number}/diff:
+  /elements/{element_identifier}/versions/{version_number}/diff:
     parameters:
-      - $ref: "#/components/parameters/ElementId"
+      - $ref: "#/components/parameters/ElementIdentifier"
       - name: version_number
         in: path
         required: true
@@ -474,9 +504,9 @@ paths:
 
   # ─── Attachments ────────────────────────────────────────
 
-  /elements/{element_id}/attachments:
+  /elements/{element_identifier}/attachments:
     parameters:
-      - $ref: "#/components/parameters/ElementId"
+      - $ref: "#/components/parameters/ElementIdentifier"
     get:
       operationId: listAttachments
       tags: [attachments]
@@ -519,9 +549,9 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
 
-  /attachments/{attachment_id}:
+  /attachments/{attachment_identifier}:
     parameters:
-      - name: attachment_id
+      - name: attachment_identifier
         in: path
         required: true
         schema:
@@ -560,9 +590,9 @@ paths:
 
   # ─── Custom Fields ─────────────────────────────────────
 
-  /projects/{project_id}/custom-field-definitions:
+  /projects/{project_identifier}/custom-field-definitions:
     parameters:
-      - $ref: "#/components/parameters/ProjectId"
+      - $ref: "#/components/parameters/ProjectIdentifier"
     get:
       operationId: listCustomFieldDefinitions
       tags: [custom-fields]
@@ -606,9 +636,9 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
 
-  /custom-field-definitions/{field_definition_id}:
+  /custom-field-definitions/{field_definition_identifier}:
     parameters:
-      - name: field_definition_id
+      - name: field_definition_identifier
         in: path
         required: true
         schema:
@@ -639,9 +669,9 @@ paths:
         "204":
           description: Deleted
 
-  /elements/{element_id}/custom-field-values:
+  /elements/{element_identifier}/custom-field-values:
     parameters:
-      - $ref: "#/components/parameters/ElementId"
+      - $ref: "#/components/parameters/ElementIdentifier"
     get:
       operationId: getCustomFieldValues
       tags: [custom-fields]
@@ -675,10 +705,10 @@ paths:
         "400":
           $ref: "#/components/responses/BadRequest"
 
-  /elements/{element_id}/custom-field-values/{field_definition_id}:
+  /elements/{element_identifier}/custom-field-values/{field_definition_identifier}:
     parameters:
-      - $ref: "#/components/parameters/ElementId"
-      - name: field_definition_id
+      - $ref: "#/components/parameters/ElementIdentifier"
+      - name: field_definition_identifier
         in: path
         required: true
         schema:
@@ -694,9 +724,9 @@ paths:
 
   # ─── Phases ─────────────────────────────────────────────
 
-  /projects/{project_id}/phases:
+  /projects/{project_identifier}/phases:
     parameters:
-      - $ref: "#/components/parameters/ProjectId"
+      - $ref: "#/components/parameters/ProjectIdentifier"
     get:
       operationId: listPhases
       tags: [phases]
@@ -732,9 +762,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/Phase"
 
-  /phases/{phase_id}:
+  /phases/{phase_identifier}:
     parameters:
-      - name: phase_id
+      - name: phase_identifier
         in: path
         required: true
         schema:
@@ -789,9 +819,9 @@ paths:
                     items:
                       $ref: "#/components/schemas/User"
 
-  /users/{user_id}:
+  /users/{user_identifier}:
     parameters:
-      - name: user_id
+      - name: user_identifier
         in: path
         required: true
         schema:
@@ -800,7 +830,7 @@ paths:
     get:
       operationId: getUser
       tags: [users]
-      summary: Get a user by ID
+      summary: Get a user by identifier
       responses:
         "200":
           description: The user
@@ -875,9 +905,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/Group"
 
-  /groups/{group_id}:
+  /groups/{group_identifier}:
     parameters:
-      - name: group_id
+      - name: group_identifier
         in: path
         required: true
         schema:
@@ -886,7 +916,7 @@ paths:
     get:
       operationId: getGroup
       tags: [groups]
-      summary: Get a group by ID
+      summary: Get a group by identifier
       responses:
         "200":
           description: The group
@@ -904,9 +934,9 @@ paths:
         "204":
           description: Deleted
 
-  /groups/{group_id}/members:
+  /groups/{group_identifier}/members:
     parameters:
-      - name: group_id
+      - name: group_identifier
         in: path
         required: true
         schema:
@@ -939,24 +969,24 @@ paths:
           application/json:
             schema:
               type: object
-              required: [user_id]
+              required: [user_identifier]
               properties:
-                user_id:
+                user_identifier:
                   type: string
                   format: uuid
       responses:
         "204":
           description: Added
 
-  /groups/{group_id}/members/{user_id}:
+  /groups/{group_identifier}/members/{user_identifier}:
     parameters:
-      - name: group_id
+      - name: group_identifier
         in: path
         required: true
         schema:
           type: string
           format: uuid
-      - name: user_id
+      - name: user_identifier
         in: path
         required: true
         schema:
@@ -970,9 +1000,9 @@ paths:
         "204":
           description: Removed
 
-  /users/{user_id}/groups:
+  /users/{user_identifier}/groups:
     parameters:
-      - name: user_id
+      - name: user_identifier
         in: path
         required: true
         schema:
@@ -998,9 +1028,9 @@ paths:
 
   # ─── Group Project Access ───────────────────────────────
 
-  /projects/{project_id}/access:
+  /projects/{project_identifier}/access:
     parameters:
-      - $ref: "#/components/parameters/ProjectId"
+      - $ref: "#/components/parameters/ProjectIdentifier"
     get:
       operationId: listProjectAccess
       tags: [access]
@@ -1032,10 +1062,10 @@ paths:
         "200":
           description: Access set
 
-  /projects/{project_id}/access/{group_id}:
+  /projects/{project_identifier}/access/{group_identifier}:
     parameters:
-      - $ref: "#/components/parameters/ProjectId"
-      - name: group_id
+      - $ref: "#/components/parameters/ProjectIdentifier"
+      - name: group_identifier
         in: path
         required: true
         schema:
@@ -1049,9 +1079,9 @@ paths:
         "204":
           description: Removed
 
-  /groups/{group_id}/access:
+  /groups/{group_identifier}/access:
     parameters:
-      - name: group_id
+      - name: group_identifier
         in: path
         required: true
         schema:
@@ -1075,9 +1105,9 @@ paths:
                     items:
                       $ref: "#/components/schemas/GroupProjectAccess"
 
-  /projects/{project_id}/access/check:
+  /projects/{project_identifier}/access/check:
     parameters:
-      - $ref: "#/components/parameters/ProjectId"
+      - $ref: "#/components/parameters/ProjectIdentifier"
     get:
       operationId: getUserAccessLevel
       tags: [access]
@@ -1141,9 +1171,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/ApiKeyCreatedResponse"
 
-  /api-keys/{api_key_id}:
+  /api-keys/{api_key_identifier}:
     parameters:
-      - name: api_key_id
+      - name: api_key_identifier
         in: path
         required: true
         schema:
@@ -1174,15 +1204,15 @@ components:
   # ─── Reusable Parameters ───────────────────────────────
 
   parameters:
-    ProjectId:
-      name: project_id
+    ProjectIdentifier:
+      name: project_identifier
       in: path
       required: true
       schema:
         type: string
         format: uuid
-    ElementId:
-      name: element_id
+    ElementIdentifier:
+      name: element_identifier
       in: path
       required: true
       schema:
@@ -1264,9 +1294,9 @@ components:
 
     Project:
       type: object
-      required: [project_id, project_name, folder_path, creation_time, modification_time]
+      required: [project_identifier, project_name, folder_path, creation_time, modification_time]
       properties:
-        project_id:
+        project_identifier:
           type: string
           format: uuid
         project_name:
@@ -1275,7 +1305,11 @@ components:
           type: string
         folder_path:
           type: string
-          description: Ltree path, e.g. "engineering.firmware"
+          description: >
+            Unix-style slash-delimited path used to organise projects into a
+            multi-depth folder tree, e.g. "engineering/firmware/sensors".
+            An empty string means the project sits at the root.
+            Split on "/" in the GUI to reconstruct tree nodes.
         creation_time:
           type: string
           format: date-time
@@ -1295,6 +1329,7 @@ components:
         folder_path:
           type: string
           default: ""
+          description: Unix-style path, e.g. "engineering/firmware". Empty = root level.
 
     ProjectUpdateRequest:
       type: object
@@ -1305,15 +1340,18 @@ components:
           type: string
         folder_path:
           type: string
+          description: >
+            Move the project to a different folder by supplying a new path.
+            Omit to keep the current folder.
 
     Element:
       type: object
-      required: [element_id, project_id, element_type, title, content_sha, creation_time, modification_time]
+      required: [element_identifier, project_identifier, element_type, title, content_sha, creation_time, modification_time]
       properties:
-        element_id:
+        element_identifier:
           type: string
           format: uuid
-        project_id:
+        project_identifier:
           type: string
           format: uuid
         element_type:
@@ -1343,7 +1381,7 @@ components:
           readOnly: true
           description: Computed from child task progress. Only present for features.
         # Task-specific
-        assignee_id:
+        assignee_identifier:
           type: string
           format: uuid
         task_status:
@@ -1356,13 +1394,13 @@ components:
           type: string
           format: date-time
           readOnly: true
-        parent_feature_id:
+        parent_feature_identifier:
           type: string
           format: uuid
-        start_phase_id:
+        start_phase_identifier:
           type: string
           format: uuid
-        delivery_phase_id:
+        delivery_phase_identifier:
           type: string
           format: uuid
         # Relations populated on detail view
@@ -1395,7 +1433,7 @@ components:
           type: integer
           minimum: 1
           maximum: 10
-        assignee_id:
+        assignee_identifier:
           type: string
           format: uuid
         task_status:
@@ -1404,13 +1442,13 @@ components:
           type: integer
           minimum: 0
           maximum: 100
-        parent_feature_id:
+        parent_feature_identifier:
           type: string
           format: uuid
-        start_phase_id:
+        start_phase_identifier:
           type: string
           format: uuid
-        delivery_phase_id:
+        delivery_phase_identifier:
           type: string
           format: uuid
         supervisors:
@@ -1434,7 +1472,7 @@ components:
           type: integer
           minimum: 1
           maximum: 10
-        assignee_id:
+        assignee_identifier:
           type: string
           format: uuid
         task_status:
@@ -1443,13 +1481,13 @@ components:
           type: integer
           minimum: 0
           maximum: 100
-        parent_feature_id:
+        parent_feature_identifier:
           type: string
           format: uuid
-        start_phase_id:
+        start_phase_identifier:
           type: string
           format: uuid
-        delivery_phase_id:
+        delivery_phase_identifier:
           type: string
           format: uuid
         supervisors:
@@ -1487,15 +1525,15 @@ components:
 
     ElementLink:
       type: object
-      required: [link_id, source_element_id, destination_element_id, link_type, creation_time]
+      required: [link_identifier, source_element_identifier, destination_element_identifier, link_type, creation_time]
       properties:
-        link_id:
+        link_identifier:
           type: string
           format: uuid
-        source_element_id:
+        source_element_identifier:
           type: string
           format: uuid
-        destination_element_id:
+        destination_element_identifier:
           type: string
           format: uuid
         link_type:
@@ -1506,9 +1544,9 @@ components:
 
     ElementLinkCreateRequest:
       type: object
-      required: [destination_element_id, link_type]
+      required: [destination_element_identifier, link_type]
       properties:
-        destination_element_id:
+        destination_element_identifier:
           type: string
           format: uuid
         link_type:
@@ -1516,12 +1554,12 @@ components:
 
     ElementVersion:
       type: object
-      required: [version_id, element_id, version_number, content_sha, committed_time]
+      required: [version_identifier, element_identifier, version_number, content_sha, committed_time]
       properties:
-        version_id:
+        version_identifier:
           type: string
           format: uuid
-        element_id:
+        element_identifier:
           type: string
           format: uuid
         version_number:
@@ -1531,7 +1569,7 @@ components:
         committed_time:
           type: string
           format: date-time
-        committed_by_id:
+        committed_by_identifier:
           type: string
           format: uuid
         commit_message:
@@ -1539,9 +1577,9 @@ components:
 
     ElementVersionPatch:
       type: object
-      required: [version_id, forward_patch, reverse_patch]
+      required: [version_identifier, forward_patch, reverse_patch]
       properties:
-        version_id:
+        version_identifier:
           type: string
           format: uuid
         forward_patch:
@@ -1569,12 +1607,12 @@ components:
 
     Attachment:
       type: object
-      required: [attachment_id, element_id, file_name, file_size_bytes, content_type, upload_time]
+      required: [attachment_identifier, element_identifier, file_name, file_size_bytes, content_type, upload_time]
       properties:
-        attachment_id:
+        attachment_identifier:
           type: string
           format: uuid
-        element_id:
+        element_identifier:
           type: string
           format: uuid
         file_name:
@@ -1587,18 +1625,18 @@ components:
         upload_time:
           type: string
           format: date-time
-        uploaded_by_id:
+        uploaded_by_identifier:
           type: string
           format: uuid
 
     CustomFieldDefinition:
       type: object
-      required: [field_definition_id, project_id, applicable_element_type, field_name, field_type, display_order]
+      required: [field_definition_identifier, project_identifier, applicable_element_type, field_name, field_type, display_order]
       properties:
-        field_definition_id:
+        field_definition_identifier:
           type: string
           format: uuid
-        project_id:
+        project_identifier:
           type: string
           format: uuid
         applicable_element_type:
@@ -1644,9 +1682,9 @@ components:
 
     CustomFieldValue:
       type: object
-      required: [field_definition_id, field_name, field_value]
+      required: [field_definition_identifier, field_name, field_value]
       properties:
-        field_definition_id:
+        field_definition_identifier:
           type: string
           format: uuid
         field_name:
@@ -1655,21 +1693,21 @@ components:
 
     CustomFieldValueSetRequest:
       type: object
-      required: [field_definition_id, field_value]
+      required: [field_definition_identifier, field_value]
       properties:
-        field_definition_id:
+        field_definition_identifier:
           type: string
           format: uuid
         field_value: {}
 
     Phase:
       type: object
-      required: [phase_id, project_id, phase_name, phase_order]
+      required: [phase_identifier, project_identifier, phase_name, phase_order]
       properties:
-        phase_id:
+        phase_identifier:
           type: string
           format: uuid
-        project_id:
+        project_identifier:
           type: string
           format: uuid
         phase_name:
@@ -1714,9 +1752,9 @@ components:
 
     User:
       type: object
-      required: [user_id, email, display_name]
+      required: [user_identifier, email, display_name]
       properties:
-        user_id:
+        user_identifier:
           type: string
           format: uuid
         email:
@@ -1729,9 +1767,9 @@ components:
 
     Group:
       type: object
-      required: [group_id, group_name]
+      required: [group_identifier, group_name]
       properties:
-        group_id:
+        group_identifier:
           type: string
           format: uuid
         group_name:
@@ -1739,12 +1777,12 @@ components:
 
     GroupProjectAccess:
       type: object
-      required: [group_id, project_id, access_level]
+      required: [group_identifier, project_identifier, access_level]
       properties:
-        group_id:
+        group_identifier:
           type: string
           format: uuid
-        project_id:
+        project_identifier:
           type: string
           format: uuid
         access_level:
@@ -1752,9 +1790,9 @@ components:
 
     ApiKeyInfo:
       type: object
-      required: [api_key_id, label, created_time]
+      required: [api_key_identifier, label, created_time]
       properties:
-        api_key_id:
+        api_key_identifier:
           type: string
           format: uuid
         label:
@@ -1768,9 +1806,9 @@ components:
 
     ApiKeyCreatedResponse:
       type: object
-      required: [api_key_id, label, raw_key]
+      required: [api_key_identifier, label, raw_key]
       properties:
-        api_key_id:
+        api_key_identifier:
           type: string
           format: uuid
         label:
