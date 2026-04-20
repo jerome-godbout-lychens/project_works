@@ -23,6 +23,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -44,11 +45,18 @@ func init() {
 // Helpers
 // ---------------------------------------------------------------------------
 
+type testResult struct {
+	name    string
+	passed  bool
+	message string
+}
+
 type testContext struct {
-	client   *http.Client
-	apiKey   string
-	userIdentifier   string
-	failures int
+	client         *http.Client
+	apiKey         string
+	userIdentifier string
+	failures       int
+	results        []testResult
 }
 
 func (tc *testContext) request(method, path string, body interface{}) (int, map[string]interface{}, error) {
@@ -130,16 +138,23 @@ func (tc *testContext) requestRaw(method, path string, bodyBytes []byte, content
 func (tc *testContext) assert(testName string, condition bool, format string, args ...interface{}) {
 	if !condition {
 		tc.failures++
-		log.Printf("FAIL  %s: %s", testName, fmt.Sprintf(format, args...))
+		msg := fmt.Sprintf(format, args...)
+		log.Printf("FAIL  %s: %s", testName, msg)
+		tc.results = append(tc.results, testResult{name: testName, passed: false, message: msg})
+	} else {
+		tc.results = append(tc.results, testResult{name: testName, passed: true})
 	}
 }
 
 func (tc *testContext) assertStatus(testName string, got, want int) bool {
 	if got != want {
 		tc.failures++
-		log.Printf("FAIL  %s: status=%d, want %d", testName, got, want)
+		msg := fmt.Sprintf("status=%d, want %d", got, want)
+		log.Printf("FAIL  %s: %s", testName, msg)
+		tc.results = append(tc.results, testResult{name: testName, passed: false, message: msg})
 		return false
 	}
+	tc.results = append(tc.results, testResult{name: testName, passed: true})
 	return true
 }
 
@@ -733,6 +748,79 @@ func testAuthMeEndpoint(tc *testContext) {
 }
 
 // ---------------------------------------------------------------------------
+// Report
+// ---------------------------------------------------------------------------
+
+func writeMarkdownReport(results []testResult) {
+	if err := os.MkdirAll("test-results", 0o755); err != nil {
+		log.Printf("failed to create test-results dir: %v", err)
+		return
+	}
+	f, err := os.Create("test-results/integration-tests.md")
+	if err != nil {
+		log.Printf("failed to create integration test report: %v", err)
+		return
+	}
+	defer f.Close()
+
+	// Merge multiple assertions sharing the same name (e.g. assertStatus + assert
+	// on the same API call) into a single row, collecting any failure messages.
+	type entry struct {
+		name    string
+		passed  bool
+		message string
+	}
+	var rows []entry
+	nameToIdx := map[string]int{}
+	for _, r := range results {
+		if idx, ok := nameToIdx[r.name]; ok {
+			if !r.passed {
+				rows[idx].passed = false
+				if r.message != "" {
+					if rows[idx].message != "" {
+						rows[idx].message += "; " + r.message
+					} else {
+						rows[idx].message = r.message
+					}
+				}
+			}
+		} else {
+			nameToIdx[r.name] = len(rows)
+			rows = append(rows, entry{name: r.name, passed: r.passed, message: r.message})
+		}
+	}
+
+	passed, failed := 0, 0
+	for _, row := range rows {
+		if row.passed {
+			passed++
+		} else {
+			failed++
+		}
+	}
+
+	fmt.Fprintf(f, "-----------\n-----------\n\n")
+	fmt.Fprintf(f, "## 🧪 Integration Test Results: %s<br/>\n\n", time.Now().UTC().Format(time.RFC1123))
+	fmt.Fprintf(f, "| Result | Test | Errors |\n")
+	fmt.Fprintf(f, "| :--- | :--- | :--- |\n")
+	for _, row := range rows {
+		icon := "✅ "
+		if !row.passed {
+			icon = "❌ "
+		}
+		name := strings.ReplaceAll(row.name, "_", "\\_")
+		msg := strings.ReplaceAll(row.message, "|", "\\|")
+		fmt.Fprintf(f, "| %s | %s | %s |\n", icon, name, msg)
+	}
+
+	fmt.Fprintf(f, "\n-----------\n\n")
+	fmt.Fprintf(f, "## 📊 Test Results Summary:\n\n")
+	fmt.Fprintf(f, " * **✅ Passed:** %d\n", passed)
+	fmt.Fprintf(f, " * **❌ Failed:** %d\n", failed)
+	fmt.Fprintf(f, "\n-----------\n")
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -791,6 +879,7 @@ func main() {
 
 	// Summary
 	log.Println("===========================================")
+	writeMarkdownReport(tc.results)
 	if tc.failures > 0 {
 		log.Printf("  FAILED: %d assertion(s) failed", tc.failures)
 		log.Println("===========================================")

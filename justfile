@@ -59,13 +59,15 @@ unit-test-ci: unit-test unit-test-markdown
 
 unit-test-ci-docker:
     # Run unit tests in a Docker container and generate test reports. The test results are stored in the host's test-results directory just like CI pipelines.
+    mkdir -p test-results
     docker run --rm -v "$(pwd)/test-results:/app/test-results" -w /app project-works-test:latest -c "just unit-test-ci"
 
 ###
 # Integrations Tests
 integration-test-shell:
     # Run integration tests in an interactive shell inside the test Docker container. This allows for debugging and inspecting test results directly within the container environment.
-    docker run -it --network project_works_app_network -w /app project-works-test:latest
+    mkdir -p test-results
+    docker run -it --network project_works_app_network -v "$(pwd)/test-results:/app/test-results" -w /app project-works-test:latest
 
 integration-test-run:
     # Run integration tests against the compiled backend service. This command assumes that the backend service is running and accessible at the specified base URL.
@@ -73,4 +75,5 @@ integration-test-run:
 
 integration-test-run-docker:
     # Run integration tests in a Docker container. This command assumes that the backend service is running and accessible at the specified base URL.
-    docker run --rm --network project_works_app_network -w /app project-works-test:latest -c "just integration-test-run"
+    mkdir -p test-results
+    docker run --rm --network project_works_app_network -v "$(pwd)/test-results:/app/test-results" -w /app project-works-test:latest -c "just integration-test-run"
