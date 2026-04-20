@@ -1,0 +1,43 @@
+name: Run Tests in Docker
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t my_test_image -f Dockerfile_tests .
+
+      - name: Run Tests in Docker
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/test-results:/app/test-results" \
+            -w /app \
+            my_test_image \
+            -c "just unit-test-ci"
+
+      - name: Upload JSON Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-json-report
+          path: test-results/unit-tests.json
+      
+      - name: Upload Markdown Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-md-report
+          path: test-results/unit-tests.md
+      
+      - name: Parse and Display Test Results
+        run: cat test-results/unit-tests.md >> $GITHUB_STEP_SUMMARY

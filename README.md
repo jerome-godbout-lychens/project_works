@@ -28,8 +28,7 @@ This tool aime to have a kind of git built in for work progress and branching fo
 Install `just` cli or type the command from the just file that match the instruction if you prefer.
 
 1. Configure the config file
-1. Compile the docker images `just docker-build`
-1. Run the network stack `just docker-run`
+1. Compile and run the docker images `just docker-build-run`
 1. Open you web browser into the displayed link in the console.
 1. Config the system.
 1. Enjoy!
@@ -61,6 +60,18 @@ The [./LICENSE] file dipslay the software license.
 ## Contribution
 
 The project aime to have a working state before it open up, since the architecture will be modified quiet a lot in time. API and backward compatibility might get broken between version without notices.
+
+## Tests
+
+You should build the tests images when you want to test the setup: `just test-build`
+
+### Unit tests
+
+You can run the unit tests with the test docker by running: `just unit-test-ci-docker`. It will run the unit tests just like the CI. The results appear into the `test-results/` folder.
+
+### Integration tests
+
+You can also make a check of the integration tests if you run the local version of the system. To run the system you should do the `just docker-build-run` and then you should be able to run the tests with `just integration-test-run-docker`.
 
 ### Languages
 
