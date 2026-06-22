@@ -1,0 +1,1 @@
+{"nodes": [{"id": "pkg_github_com_jerome_godbout_lychens_project_works_backend", "label": "github.com/jerome-godbout-lychens/project_works/backend", "file_type": "code", "type": "package", "ecosystem": "go", "source_file": "backend/go.mod", "source_location": "L1"}], "edges": []}

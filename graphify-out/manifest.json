@@ -1,0 +1,872 @@
+{
+  "/Users/godboutj/code/project_works/.claude/settings.local.json": {
+    "mtime": 1782133146.799558,
+    "ast_hash": "56da96217565406115973c86626b1e03",
+    "semantic_hash": "56da96217565406115973c86626b1e03"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/arch-alledges.json": {
+    "mtime": 1782133102.072885,
+    "ast_hash": "9e209ba1d2ddef529b4632194bc31747",
+    "semantic_hash": "9e209ba1d2ddef529b4632194bc31747"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/arch-filenodes.json": {
+    "mtime": 1782133102.0633485,
+    "ast_hash": "6a065739b4314f5e26aff10ec7c5d8be",
+    "semantic_hash": "6a065739b4314f5e26aff10ec7c5d8be"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/arch-imports.json": {
+    "mtime": 1782133102.0679178,
+    "ast_hash": "dcb28d6d9906a55d37197c39be3bfd3b",
+    "semantic_hash": "dcb28d6d9906a55d37197c39be3bfd3b"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/assemble-review.json": {
+    "mtime": 1782133075.3785155,
+    "ast_hash": "d98b8afdb874636d18f2aae1545bb9c8",
+    "semantic_hash": "d98b8afdb874636d18f2aae1545bb9c8"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/assembled-graph.json": {
+    "mtime": 1782133812.4457269,
+    "ast_hash": "3dd49627e4bf87c6cbdc65d744794be0",
+    "semantic_hash": "3dd49627e4bf87c6cbdc65d744794be0"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-1.json": {
+    "mtime": 1782132712.7974942,
+    "ast_hash": "a27caf47c0649080df9e16e55d93af61",
+    "semantic_hash": "a27caf47c0649080df9e16e55d93af61"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-2.json": {
+    "mtime": 1782132712.7981482,
+    "ast_hash": "b12f3458003968dcc67be1f472abd916",
+    "semantic_hash": "b12f3458003968dcc67be1f472abd916"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-3.json": {
+    "mtime": 1782132712.7988744,
+    "ast_hash": "e9cde70a1f2ed10f0b03f1b27e43710a",
+    "semantic_hash": "e9cde70a1f2ed10f0b03f1b27e43710a"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-4.json": {
+    "mtime": 1782132712.7997148,
+    "ast_hash": "cd0a2b88b3e19bf50ca7b7eb90eb2e58",
+    "semantic_hash": "cd0a2b88b3e19bf50ca7b7eb90eb2e58"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-5.json": {
+    "mtime": 1782132712.8005242,
+    "ast_hash": "46ed7b6a03fddeb9fc7b56f4e0e9bd76",
+    "semantic_hash": "46ed7b6a03fddeb9fc7b56f4e0e9bd76"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-6.json": {
+    "mtime": 1782132712.8011737,
+    "ast_hash": "0399ac22a1dce6705b966c19c3f2824e",
+    "semantic_hash": "0399ac22a1dce6705b966c19c3f2824e"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-7.json": {
+    "mtime": 1782132712.8019223,
+    "ast_hash": "710835447f376578e01643ae3e8fc017",
+    "semantic_hash": "710835447f376578e01643ae3e8fc017"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-8.json": {
+    "mtime": 1782132712.8026237,
+    "ast_hash": "4bebb4a2c3451145431a9f3882930b11",
+    "semantic_hash": "4bebb4a2c3451145431a9f3882930b11"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-1-part-9.json": {
+    "mtime": 1782132712.8036249,
+    "ast_hash": "c4ee2e88ee1a20aab1df786d0e164a66",
+    "semantic_hash": "c4ee2e88ee1a20aab1df786d0e164a66"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-2-part-1.json": {
+    "mtime": 1782132748.9367821,
+    "ast_hash": "c3e095406e02d172a9e5d61ca765fc2e",
+    "semantic_hash": "c3e095406e02d172a9e5d61ca765fc2e"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-2-part-2.json": {
+    "mtime": 1782132748.9370198,
+    "ast_hash": "d1a0f7ba1b4dac5643b321010804c632",
+    "semantic_hash": "d1a0f7ba1b4dac5643b321010804c632"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-2-part-3.json": {
+    "mtime": 1782132748.9371715,
+    "ast_hash": "a27b7fa08d1457bdb45dbe67299a19b2",
+    "semantic_hash": "a27b7fa08d1457bdb45dbe67299a19b2"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-2-part-4.json": {
+    "mtime": 1782132748.937596,
+    "ast_hash": "a3a31ed366283444383d941f1643912b",
+    "semantic_hash": "a3a31ed366283444383d941f1643912b"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-2-part-5.json": {
+    "mtime": 1782132748.9377615,
+    "ast_hash": "f2b75cf34bb0344fdc41d18edc58c1d1",
+    "semantic_hash": "f2b75cf34bb0344fdc41d18edc58c1d1"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-3-part-1.json": {
+    "mtime": 1782132712.4168737,
+    "ast_hash": "36f04b23680036ad6dfde7868d059df5",
+    "semantic_hash": "36f04b23680036ad6dfde7868d059df5"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-3-part-2.json": {
+    "mtime": 1782132712.4182742,
+    "ast_hash": "ade02e300d5f5bd547b3b7e33df5dd1f",
+    "semantic_hash": "ade02e300d5f5bd547b3b7e33df5dd1f"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-3-part-3.json": {
+    "mtime": 1782132712.4188318,
+    "ast_hash": "c1077d63e5c78301b3888804abd5e3a3",
+    "semantic_hash": "c1077d63e5c78301b3888804abd5e3a3"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-3-part-4.json": {
+    "mtime": 1782132712.4191866,
+    "ast_hash": "0f3cedbdd9531fd16f41e40c7c2d1170",
+    "semantic_hash": "0f3cedbdd9531fd16f41e40c7c2d1170"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-3-part-5.json": {
+    "mtime": 1782132712.419551,
+    "ast_hash": "d933c9548193f423cf21eaa074d24af6",
+    "semantic_hash": "d933c9548193f423cf21eaa074d24af6"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-4.json": {
+    "mtime": 1782132433.975617,
+    "ast_hash": "b3d30cd5faf7563b20a0a7b01cd72ff1",
+    "semantic_hash": "b3d30cd5faf7563b20a0a7b01cd72ff1"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-5.json": {
+    "mtime": 1782132421.2572305,
+    "ast_hash": "c7a8462bedf887ca390ab5a5f588bbaf",
+    "semantic_hash": "c7a8462bedf887ca390ab5a5f588bbaf"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-6.json": {
+    "mtime": 1782132918.489459,
+    "ast_hash": "db0f4695007dd8fc8967727d48032d74",
+    "semantic_hash": "db0f4695007dd8fc8967727d48032d74"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-7.json": {
+    "mtime": 1782132867.5394797,
+    "ast_hash": "73c3e09db5e01dee8ed10472d62c81a0",
+    "semantic_hash": "73c3e09db5e01dee8ed10472d62c81a0"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-8.json": {
+    "mtime": 1782132907.8799765,
+    "ast_hash": "5ecd579e6b4bd50b46afca6f2f79baf1",
+    "semantic_hash": "5ecd579e6b4bd50b46afca6f2f79baf1"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batch-9.json": {
+    "mtime": 1782132907.3654563,
+    "ast_hash": "8c7fefeab14b1c52a0a0461be75288f5",
+    "semantic_hash": "8c7fefeab14b1c52a0a0461be75288f5"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/batches.json": {
+    "mtime": 1782132152.1643617,
+    "ast_hash": "2f8c4ccd3545ab6d1601d1da7824ebf2",
+    "semantic_hash": "2f8c4ccd3545ab6d1601d1da7824ebf2"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/fingerprint-input.json": {
+    "mtime": 1782133844.7728624,
+    "ast_hash": "4996ea3e6c864537531e9c05068951f7",
+    "semantic_hash": "4996ea3e6c864537531e9c05068951f7"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/layers-normalized.json": {
+    "mtime": 1782133323.3329535,
+    "ast_hash": "aed765f556bb6db360344a700848144f",
+    "semantic_hash": "aed765f556bb6db360344a700848144f"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/layers.json": {
+    "mtime": 1782133228.7356863,
+    "ast_hash": "e34bede362c9e2694109e6f59aa2a69c",
+    "semantic_hash": "e34bede362c9e2694109e6f59aa2a69c"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/review.json": {
+    "mtime": 1782133833.6399395,
+    "ast_hash": "77c6b2796c13f7ee63d85bec9c592926",
+    "semantic_hash": "77c6b2796c13f7ee63d85bec9c592926"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-arch-analyze.js": {
+    "mtime": 1782133194.5387032,
+    "ast_hash": "bd9222cbf2f9645e0de2520c5d9ef236",
+    "semantic_hash": "bd9222cbf2f9645e0de2520c5d9ef236"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-arch-input.json": {
+    "mtime": 1782133147.000426,
+    "ast_hash": "b9b6aa6b1cdcc7680c1504de14ed1bb7",
+    "semantic_hash": "b9b6aa6b1cdcc7680c1504de14ed1bb7"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-arch-results.json": {
+    "mtime": 1782133197.6942208,
+    "ast_hash": "83c0c6cd82358f508c2cd236f48f1767",
+    "semantic_hash": "83c0c6cd82358f508c2cd236f48f1767"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-assign.js": {
+    "mtime": 1782133228.6097834,
+    "ast_hash": "fd62b4b583f00ba1cb877cd40075940f",
+    "semantic_hash": "fd62b4b583f00ba1cb877cd40075940f"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-1.json": {
+    "mtime": 1782132378.2184064,
+    "ast_hash": "cae19dcf822c2bf982f01c5444270f35",
+    "semantic_hash": "cae19dcf822c2bf982f01c5444270f35"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-2.json": {
+    "mtime": 1782132442.691263,
+    "ast_hash": "f9bd419c12f1068149ab3bc020aa1532",
+    "semantic_hash": "f9bd419c12f1068149ab3bc020aa1532"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-3.json": {
+    "mtime": 1782132443.7293558,
+    "ast_hash": "de18f292ec740bb29fdb188e64ba6751",
+    "semantic_hash": "de18f292ec740bb29fdb188e64ba6751"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-4.json": {
+    "mtime": 1782132400.9571514,
+    "ast_hash": "73585dbd996586b0382b4a4e4feea022",
+    "semantic_hash": "73585dbd996586b0382b4a4e4feea022"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-5.json": {
+    "mtime": 1782132395.5880785,
+    "ast_hash": "544fe023f16605873da8fd8cce168656",
+    "semantic_hash": "544fe023f16605873da8fd8cce168656"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-6.json": {
+    "mtime": 1782132832.4921896,
+    "ast_hash": "905a669ee943ed2b986bdfb0d5ae24b9",
+    "semantic_hash": "905a669ee943ed2b986bdfb0d5ae24b9"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-7.json": {
+    "mtime": 1782132826.275743,
+    "ast_hash": "8fac85e1d1a501e1d1803289ad62aecd",
+    "semantic_hash": "8fac85e1d1a501e1d1803289ad62aecd"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-8.json": {
+    "mtime": 1782132826.8629968,
+    "ast_hash": "0fe5498f05780872e50c8fdb6ea76973",
+    "semantic_hash": "0fe5498f05780872e50c8fdb6ea76973"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-analyzer-input-9.json": {
+    "mtime": 1782132829.1535306,
+    "ast_hash": "b04c6b04d0ee3c6725ce5f19377b9dea",
+    "semantic_hash": "b04c6b04d0ee3c6725ce5f19377b9dea"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-1.json": {
+    "mtime": 1782132405.2538884,
+    "ast_hash": "90a103a9dfe743ce0e9f91854e5cdf16",
+    "semantic_hash": "90a103a9dfe743ce0e9f91854e5cdf16"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-2.json": {
+    "mtime": 1782132447.7372644,
+    "ast_hash": "3f7476d40dc3555f274b4265d125e75b",
+    "semantic_hash": "3f7476d40dc3555f274b4265d125e75b"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-3.json": {
+    "mtime": 1782132449.0073688,
+    "ast_hash": "014c58ca89c108fc5477898b4b2a63ca",
+    "semantic_hash": "014c58ca89c108fc5477898b4b2a63ca"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-4.json": {
+    "mtime": 1782132401.08189,
+    "ast_hash": "dbb88c79bd15b6114b3f1f4c28c60b6a",
+    "semantic_hash": "dbb88c79bd15b6114b3f1f4c28c60b6a"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-5.json": {
+    "mtime": 1782132395.8253393,
+    "ast_hash": "1c779c775561c096a23faa7777ff5bf6",
+    "semantic_hash": "1c779c775561c096a23faa7777ff5bf6"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-6.json": {
+    "mtime": 1782132836.0676675,
+    "ast_hash": "a102756307b2af9e875200f93b081eb7",
+    "semantic_hash": "a102756307b2af9e875200f93b081eb7"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-7.json": {
+    "mtime": 1782132826.5195818,
+    "ast_hash": "f1cbe3152256e4c2bf17b1b03b65a57c",
+    "semantic_hash": "f1cbe3152256e4c2bf17b1b03b65a57c"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-8.json": {
+    "mtime": 1782132827.0237296,
+    "ast_hash": "ed88d4895f06f32acd0782ae77a42c7f",
+    "semantic_hash": "ed88d4895f06f32acd0782ae77a42c7f"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-file-extract-results-9.json": {
+    "mtime": 1782132829.3839984,
+    "ast_hash": "e5648480926c8526575e0e4b9c5191f3",
+    "semantic_hash": "e5648480926c8526575e0e4b9c5191f3"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-import-map-input.json": {
+    "mtime": 1782131788.830265,
+    "ast_hash": "5d01007db0d51120ed3cd369f584e7a6",
+    "semantic_hash": "5d01007db0d51120ed3cd369f584e7a6"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-import-map-output.json": {
+    "mtime": 1782131798.6415963,
+    "ast_hash": "110054f1757b9c0b68964433413725a7",
+    "semantic_hash": "110054f1757b9c0b68964433413725a7"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-scan-files.json": {
+    "mtime": 1782131748.6718123,
+    "ast_hash": "d5d2bb72e39e83aacaaf0cb02b7839ff",
+    "semantic_hash": "d5d2bb72e39e83aacaaf0cb02b7839ff"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-tour-analyze.js": {
+    "mtime": 1782133702.3923104,
+    "ast_hash": "2cad91a8ecd8888ca58fb717968c2ee4",
+    "semantic_hash": "2cad91a8ecd8888ca58fb717968c2ee4"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-tour-input.json": {
+    "mtime": 1782133673.4721317,
+    "ast_hash": "702f65d1fc82544df0cfdfcb76527e2e",
+    "semantic_hash": "702f65d1fc82544df0cfdfcb76527e2e"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tmp/ua-tour-results.json": {
+    "mtime": 1782133709.8831215,
+    "ast_hash": "072f11df4de940663ba0cd08cc1c9978",
+    "semantic_hash": "072f11df4de940663ba0cd08cc1c9978"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tour-filenodes.json": {
+    "mtime": 1782133646.8894067,
+    "ast_hash": "97bbdeb959dc1df4cf76f9cbe87d4022",
+    "semantic_hash": "97bbdeb959dc1df4cf76f9cbe87d4022"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tour-layers.json": {
+    "mtime": 1782133646.8897367,
+    "ast_hash": "6235ab49f9362d60e6dd89a2857e91d2",
+    "semantic_hash": "6235ab49f9362d60e6dd89a2857e91d2"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tour-normalized.json": {
+    "mtime": 1782133802.02396,
+    "ast_hash": "90b6bf782bef3e257d54d4e1a81c85a8",
+    "semantic_hash": "90b6bf782bef3e257d54d4e1a81c85a8"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/.trash-1782133862/tour.json": {
+    "mtime": 1782133773.7421248,
+    "ast_hash": "5381df5476aa5fed033e0c824ee0ef75",
+    "semantic_hash": "5381df5476aa5fed033e0c824ee0ef75"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/fingerprints.json": {
+    "mtime": 1782133851.0826395,
+    "ast_hash": "ddef0ed4c359fe4a25926a30ab144c35",
+    "semantic_hash": "ddef0ed4c359fe4a25926a30ab144c35"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/intermediate/scan-result.json": {
+    "mtime": 1782131825.380645,
+    "ast_hash": "3d0a49557791042e652fa8310b21f17e",
+    "semantic_hash": "3d0a49557791042e652fa8310b21f17e"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/knowledge-graph.json": {
+    "mtime": 1782133844.5825622,
+    "ast_hash": "3dd49627e4bf87c6cbdc65d744794be0",
+    "semantic_hash": "3dd49627e4bf87c6cbdc65d744794be0"
+  },
+  "/Users/godboutj/code/project_works/.understand-anything/meta.json": {
+    "mtime": 1782133862.1385014,
+    "ast_hash": "1303d78621a3b5e2b4177743f96fd182",
+    "semantic_hash": "1303d78621a3b5e2b4177743f96fd182"
+  },
+  "/Users/godboutj/code/project_works/TestsResultsParser.sh": {
+    "mtime": 1776646110.1685286,
+    "ast_hash": "68dae68b1b41762f47fc50d1147f41d2",
+    "semantic_hash": "68dae68b1b41762f47fc50d1147f41d2"
+  },
+  "/Users/godboutj/code/project_works/backend/cmd/integration-test/main.go": {
+    "mtime": 1776650231.669003,
+    "ast_hash": "2de172a722ecb99e21e5984568574717",
+    "semantic_hash": "2de172a722ecb99e21e5984568574717"
+  },
+  "/Users/godboutj/code/project_works/backend/cmd/server/main.go": {
+    "mtime": 1776627415.544476,
+    "ast_hash": "9eff7ca8af40a2abdb22f842d18aadf8",
+    "semantic_hash": "9eff7ca8af40a2abdb22f842d18aadf8"
+  },
+  "/Users/godboutj/code/project_works/backend/go.mod": {
+    "mtime": 1775011406.6223881,
+    "ast_hash": "2a76c0ade74826d75d0b06ac342b39c5",
+    "semantic_hash": "2a76c0ade74826d75d0b06ac342b39c5"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/access_handler.go": {
+    "mtime": 1776627415.5709653,
+    "ast_hash": "bfe0678750d2d7acbc2703275bc92d62",
+    "semantic_hash": "bfe0678750d2d7acbc2703275bc92d62"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/api_key_handler.go": {
+    "mtime": 1776627415.5714514,
+    "ast_hash": "e6f45101c7d521b7f53a9d0b025533a0",
+    "semantic_hash": "e6f45101c7d521b7f53a9d0b025533a0"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/attachment_handler.go": {
+    "mtime": 1776627415.5696154,
+    "ast_hash": "fa7bbc09a87e36233bd79c1b08be89dc",
+    "semantic_hash": "fa7bbc09a87e36233bd79c1b08be89dc"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/auth_handler.go": {
+    "mtime": 1776627415.5603788,
+    "ast_hash": "5f713dffd3e871fcaddbeb41e3bcd541",
+    "semantic_hash": "5f713dffd3e871fcaddbeb41e3bcd541"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/custom_field_handler.go": {
+    "mtime": 1776627415.5702314,
+    "ast_hash": "62d2c197c185add3b3097ba4b3554614",
+    "semantic_hash": "62d2c197c185add3b3097ba4b3554614"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/element_handler.go": {
+    "mtime": 1776627415.5683062,
+    "ast_hash": "867b34f835cbe0d0b42b4fd30c02e569",
+    "semantic_hash": "867b34f835cbe0d0b42b4fd30c02e569"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/group_handler.go": {
+    "mtime": 1776627415.5583649,
+    "ast_hash": "b08bace642d99cade8f3a9e9277cd62f",
+    "semantic_hash": "b08bace642d99cade8f3a9e9277cd62f"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/link_handler.go": {
+    "mtime": 1776627415.569101,
+    "ast_hash": "62c577fc8575fd4ea38110e503b289f9",
+    "semantic_hash": "62c577fc8575fd4ea38110e503b289f9"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/phase_handler.go": {
+    "mtime": 1776627415.5593655,
+    "ast_hash": "d184957e621d5f70563aa45822719df9",
+    "semantic_hash": "d184957e621d5f70563aa45822719df9"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/project_handler.go": {
+    "mtime": 1776628188.4630132,
+    "ast_hash": "e90fdbe02b210c8161c9c7467bea9c18",
+    "semantic_hash": "e90fdbe02b210c8161c9c7467bea9c18"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/router.go": {
+    "mtime": 1776627415.5730274,
+    "ast_hash": "6b930d71bea3fc5ab8f5127d252044bf",
+    "semantic_hash": "6b930d71bea3fc5ab8f5127d252044bf"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/user_handler.go": {
+    "mtime": 1776627415.5719976,
+    "ast_hash": "9f33a049504d8c67b4e74f0468416ee9",
+    "semantic_hash": "9f33a049504d8c67b4e74f0468416ee9"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/api/version_handler.go": {
+    "mtime": 1776627415.5725977,
+    "ast_hash": "65c63eb2450e0133d652af3a244f91a3",
+    "semantic_hash": "65c63eb2450e0133d652af3a244f91a3"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/auth/api_key.go": {
+    "mtime": 1776627415.5555704,
+    "ast_hash": "ef3471fc9fb3d02895855caf49273264",
+    "semantic_hash": "ef3471fc9fb3d02895855caf49273264"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/auth/api_key_test.go": {
+    "mtime": 1776642603.795474,
+    "ast_hash": "cd7be15bb9a771cca9861505f4ce2956",
+    "semantic_hash": "cd7be15bb9a771cca9861505f4ce2956"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/auth/middleware.go": {
+    "mtime": 1776627415.5564396,
+    "ast_hash": "d443bfbdfbf2e4a7c3008a82e292db68",
+    "semantic_hash": "d443bfbdfbf2e4a7c3008a82e292db68"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/auth/oidc.go": {
+    "mtime": 1776627415.552641,
+    "ast_hash": "38be4398384cba7aa6d4f7ffcb2b3271",
+    "semantic_hash": "38be4398384cba7aa6d4f7ffcb2b3271"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/auth/session.go": {
+    "mtime": 1776627415.5531013,
+    "ast_hash": "65a8e679ee877a9509a3822a7dff6888",
+    "semantic_hash": "65a8e679ee877a9509a3822a7dff6888"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/auth/super_admin.go": {
+    "mtime": 1776627415.5549443,
+    "ast_hash": "bf31627fff23f855d11bfec83fae7234",
+    "semantic_hash": "bf31627fff23f855d11bfec83fae7234"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/auth/super_admin_test.go": {
+    "mtime": 1776642642.6874707,
+    "ast_hash": "3543e6c922446d96b6496038622dcf01",
+    "semantic_hash": "3543e6c922446d96b6496038622dcf01"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/cache/memory/ristretto_cache.go": {
+    "mtime": 1776627415.5515342,
+    "ast_hash": "0c33949b7cf2b5195dadd034961567bb",
+    "semantic_hash": "0c33949b7cf2b5195dadd034961567bb"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/cache/memory/ristretto_cache_test.go": {
+    "mtime": 1776642829.3460703,
+    "ast_hash": "149b5f5a62b542b727c9c2fd3a5682b4",
+    "semantic_hash": "149b5f5a62b542b727c9c2fd3a5682b4"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/config/config.go": {
+    "mtime": 1776627415.5522306,
+    "ast_hash": "f0ab2e49e88c7a23f500c5e93afc4cc4",
+    "semantic_hash": "f0ab2e49e88c7a23f500c5e93afc4cc4"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/attachment.go": {
+    "mtime": 1776627415.5825279,
+    "ast_hash": "887e882547d3c35706b1987bd82d528a",
+    "semantic_hash": "887e882547d3c35706b1987bd82d528a"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/custom_field.go": {
+    "mtime": 1776627415.5855803,
+    "ast_hash": "5cb6cbcd233e6f72c40a06ecaf6523b9",
+    "semantic_hash": "5cb6cbcd233e6f72c40a06ecaf6523b9"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/element.go": {
+    "mtime": 1776627415.5798156,
+    "ast_hash": "cf6ed4eda57fe43a9570cd1cf522e11b",
+    "semantic_hash": "cf6ed4eda57fe43a9570cd1cf522e11b"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/element_link.go": {
+    "mtime": 1776627415.5846622,
+    "ast_hash": "7cf6ff67a0d0b5dfeedb120e108c5772",
+    "semantic_hash": "7cf6ff67a0d0b5dfeedb120e108c5772"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/element_test.go": {
+    "mtime": 1776642565.522497,
+    "ast_hash": "751dbf3b34d05d8e3c73ee6fbad6e4d7",
+    "semantic_hash": "751dbf3b34d05d8e3c73ee6fbad6e4d7"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/element_type.go": {
+    "mtime": 1776627415.5822845,
+    "ast_hash": "792dca8675f020156b9b1848f4cc84c3",
+    "semantic_hash": "792dca8675f020156b9b1848f4cc84c3"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/element_type_test.go": {
+    "mtime": 1776642581.65264,
+    "ast_hash": "330e09ea654a88eefff912c12baf823f",
+    "semantic_hash": "330e09ea654a88eefff912c12baf823f"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/errors.go": {
+    "mtime": 1776627415.5859609,
+    "ast_hash": "eed377732c39a6087277b9554d70efb7",
+    "semantic_hash": "eed377732c39a6087277b9554d70efb7"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/link_type.go": {
+    "mtime": 1776627415.5791981,
+    "ast_hash": "08b7a04f5d2acd32c8aa83df64c29289",
+    "semantic_hash": "08b7a04f5d2acd32c8aa83df64c29289"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/link_type_test.go": {
+    "mtime": 1776642586.406143,
+    "ast_hash": "1b4764e0b6520fb5d067d980e000972f",
+    "semantic_hash": "1b4764e0b6520fb5d067d980e000972f"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/phase.go": {
+    "mtime": 1776627415.5794513,
+    "ast_hash": "6d34c4772d62f58584484c7fe8fc391d",
+    "semantic_hash": "6d34c4772d62f58584484c7fe8fc391d"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/project.go": {
+    "mtime": 1776627415.5842009,
+    "ast_hash": "403cadc5c12988d842b3863abedf5b6f",
+    "semantic_hash": "403cadc5c12988d842b3863abedf5b6f"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_attachment.go": {
+    "mtime": 1776641933.622312,
+    "ast_hash": "360a0e022ad2759fbbe716f9ce012c92",
+    "semantic_hash": "360a0e022ad2759fbbe716f9ce012c92"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_cache.go": {
+    "mtime": 1776627415.5819418,
+    "ast_hash": "5df4dd0fa178799b0f22326415af2466",
+    "semantic_hash": "5df4dd0fa178799b0f22326415af2466"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_custom_field.go": {
+    "mtime": 1776627415.5816665,
+    "ast_hash": "7a01d1d2b33ecfb7970f80e22d1c5285",
+    "semantic_hash": "7a01d1d2b33ecfb7970f80e22d1c5285"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_element.go": {
+    "mtime": 1776627415.580576,
+    "ast_hash": "a97f2e1fc4f1bdf094e83acafd3cd253",
+    "semantic_hash": "a97f2e1fc4f1bdf094e83acafd3cd253"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_element_link.go": {
+    "mtime": 1776627415.5827749,
+    "ast_hash": "7213414e983a7fd38188d5065a5dd090",
+    "semantic_hash": "7213414e983a7fd38188d5065a5dd090"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_element_version.go": {
+    "mtime": 1776627415.5836911,
+    "ast_hash": "698899fc6bb063d4ed4116bd0fde022d",
+    "semantic_hash": "698899fc6bb063d4ed4116bd0fde022d"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_file_storage.go": {
+    "mtime": 1776627415.584957,
+    "ast_hash": "8396556eda2dd49badc9b5c88991d18d",
+    "semantic_hash": "8396556eda2dd49badc9b5c88991d18d"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_phase.go": {
+    "mtime": 1776627415.585198,
+    "ast_hash": "a687da639bf639611a54d1cd6a555ac9",
+    "semantic_hash": "a687da639bf639611a54d1cd6a555ac9"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_project.go": {
+    "mtime": 1776628161.5935717,
+    "ast_hash": "45336656659f3c2e4ac1151753d2d6c0",
+    "semantic_hash": "45336656659f3c2e4ac1151753d2d6c0"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/store_user.go": {
+    "mtime": 1776627415.5813057,
+    "ast_hash": "7505e6b493e5a67fb3c8596f999fb492",
+    "semantic_hash": "7505e6b493e5a67fb3c8596f999fb492"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/task_status.go": {
+    "mtime": 1776627415.5830722,
+    "ast_hash": "4a88241b4d52eca0b97a0e06f943918b",
+    "semantic_hash": "4a88241b4d52eca0b97a0e06f943918b"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/task_status_test.go": {
+    "mtime": 1776642574.9721458,
+    "ast_hash": "9a7c37a39fde3330def59ce4329bac22",
+    "semantic_hash": "9a7c37a39fde3330def59ce4329bac22"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/user.go": {
+    "mtime": 1776627415.578972,
+    "ast_hash": "f59310dfcc3b14ca1e046e06a33af3b6",
+    "semantic_hash": "f59310dfcc3b14ca1e046e06a33af3b6"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/domain/version.go": {
+    "mtime": 1776627415.5786889,
+    "ast_hash": "b5bd8331f172e693cbb2cef887b45232",
+    "semantic_hash": "b5bd8331f172e693cbb2cef887b45232"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/filestore/s3/s3_file_storage.go": {
+    "mtime": 1776627415.5576155,
+    "ast_hash": "a94b42b6b3aae2a6ef4e73ad0309a415",
+    "semantic_hash": "a94b42b6b3aae2a6ef4e73ad0309a415"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/attachment_service.go": {
+    "mtime": 1776641933.6234097,
+    "ast_hash": "43dbe50c75d8a0cd4affd310e443d2d4",
+    "semantic_hash": "43dbe50c75d8a0cd4affd310e443d2d4"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/custom_field_service.go": {
+    "mtime": 1776627415.5758567,
+    "ast_hash": "e5fb1d5a89f163a8152418391667a480",
+    "semantic_hash": "e5fb1d5a89f163a8152418391667a480"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/element_service.go": {
+    "mtime": 1776627415.5735989,
+    "ast_hash": "f6e0279f2eeea35d828ed0509037b5c3",
+    "semantic_hash": "f6e0279f2eeea35d828ed0509037b5c3"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/group_service.go": {
+    "mtime": 1776627415.5750265,
+    "ast_hash": "50b017876af8a00195da4c59063a3b88",
+    "semantic_hash": "50b017876af8a00195da4c59063a3b88"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/link_service.go": {
+    "mtime": 1776627415.576991,
+    "ast_hash": "c89907b0e8ca338a6772d8d741471cd2",
+    "semantic_hash": "c89907b0e8ca338a6772d8d741471cd2"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/link_service_test.go": {
+    "mtime": 1776642811.5665805,
+    "ast_hash": "9a07ddb184a73a64116c81eba2f6c038",
+    "semantic_hash": "9a07ddb184a73a64116c81eba2f6c038"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/phase_service.go": {
+    "mtime": 1776627415.5752807,
+    "ast_hash": "c15103f2dbdf2ae0563550db37857b8f",
+    "semantic_hash": "c15103f2dbdf2ae0563550db37857b8f"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/phase_service_test.go": {
+    "mtime": 1776642786.5007854,
+    "ast_hash": "64407d71b05723636e8ffcd2626d39eb",
+    "semantic_hash": "64407d71b05723636e8ffcd2626d39eb"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/project_service.go": {
+    "mtime": 1776628170.2246265,
+    "ast_hash": "b2ac1a17969de81a32b1b8bdf2446d6c",
+    "semantic_hash": "b2ac1a17969de81a32b1b8bdf2446d6c"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/project_service_test.go": {
+    "mtime": 1776642765.6984134,
+    "ast_hash": "39a6b462748ad5e8566dcafe23cd2f6b",
+    "semantic_hash": "39a6b462748ad5e8566dcafe23cd2f6b"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/service_fakes_test.go": {
+    "mtime": 1776642740.5653424,
+    "ast_hash": "e28f830c494c62d02cccdc6b80474986",
+    "semantic_hash": "e28f830c494c62d02cccdc6b80474986"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/user_service.go": {
+    "mtime": 1776627415.5777771,
+    "ast_hash": "9d7966f33ac7cfe98d01618f10595120",
+    "semantic_hash": "9d7966f33ac7cfe98d01618f10595120"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/user_service_test.go": {
+    "mtime": 1776642776.1527996,
+    "ast_hash": "d7df752b8cb64382b193897544860986",
+    "semantic_hash": "d7df752b8cb64382b193897544860986"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/version_service.go": {
+    "mtime": 1776627415.578303,
+    "ast_hash": "9bbc4093e6a67e5666bb506b142969b6",
+    "semantic_hash": "9bbc4093e6a67e5666bb506b142969b6"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/version_worker.go": {
+    "mtime": 1776627415.5743096,
+    "ast_hash": "36ae86a3e1c7692c8f07f8aadfa9cd74",
+    "semantic_hash": "36ae86a3e1c7692c8f07f8aadfa9cd74"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/versionable_snapshot.go": {
+    "mtime": 1776627415.5774887,
+    "ast_hash": "30746b7d70825fd200dc2e624ae7502b",
+    "semantic_hash": "30746b7d70825fd200dc2e624ae7502b"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/service/versionable_snapshot_test.go": {
+    "mtime": 1776642691.6312215,
+    "ast_hash": "546d9a24778c5358ecdce49836f41ca3",
+    "semantic_hash": "546d9a24778c5358ecdce49836f41ca3"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/api_key_store.go": {
+    "mtime": 1776627415.591099,
+    "ast_hash": "6ea9397934df5ccce33864a582a1428d",
+    "semantic_hash": "6ea9397934df5ccce33864a582a1428d"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/attachment_store.go": {
+    "mtime": 1776641933.6258652,
+    "ast_hash": "1f5952b46b061a89e36f1e82cc3fcd5a",
+    "semantic_hash": "1f5952b46b061a89e36f1e82cc3fcd5a"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/connection.go": {
+    "mtime": 1776627415.5899615,
+    "ast_hash": "26504e5a369070328a6bd26131567f4b",
+    "semantic_hash": "26504e5a369070328a6bd26131567f4b"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/custom_field_store.go": {
+    "mtime": 1776627415.5866187,
+    "ast_hash": "c0abb02bea40ae0c6812777f5d61921c",
+    "semantic_hash": "c0abb02bea40ae0c6812777f5d61921c"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/element_link_store.go": {
+    "mtime": 1776627415.5902717,
+    "ast_hash": "eeac07dfe57a3bdf1f5f8339d16b01b8",
+    "semantic_hash": "eeac07dfe57a3bdf1f5f8339d16b01b8"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/element_pending_store.go": {
+    "mtime": 1776627415.5889463,
+    "ast_hash": "82daeb55da6b1b7d3b2c2f1944c36330",
+    "semantic_hash": "82daeb55da6b1b7d3b2c2f1944c36330"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/element_store.go": {
+    "mtime": 1776627415.5877793,
+    "ast_hash": "ab249aa395df82bc3bde3030b18c4601",
+    "semantic_hash": "ab249aa395df82bc3bde3030b18c4601"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/element_version_store.go": {
+    "mtime": 1776627415.5871615,
+    "ast_hash": "8c14eaf2c909695d9992c02c399f14df",
+    "semantic_hash": "8c14eaf2c909695d9992c02c399f14df"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/group_store.go": {
+    "mtime": 1776627415.589595,
+    "ast_hash": "00e793722b3400829015e9ff3ab2be3a",
+    "semantic_hash": "00e793722b3400829015e9ff3ab2be3a"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/phase_store.go": {
+    "mtime": 1776627415.5913892,
+    "ast_hash": "cdcd121215b8941668c0dfdfc9f40215",
+    "semantic_hash": "cdcd121215b8941668c0dfdfc9f40215"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/project_store.go": {
+    "mtime": 1776640095.848057,
+    "ast_hash": "1b3d71a3d60841f1474495551ea0ce83",
+    "semantic_hash": "1b3d71a3d60841f1474495551ea0ce83"
+  },
+  "/Users/godboutj/code/project_works/backend/internal/store/postgres/user_store.go": {
+    "mtime": 1776627415.5881157,
+    "ast_hash": "95faff5219d6a8054808baa7e69ddeff",
+    "semantic_hash": "95faff5219d6a8054808baa7e69ddeff"
+  },
+  "/Users/godboutj/code/project_works/backend/migrations/00001_create_extensions.sql": {
+    "mtime": 1774923931.2464964,
+    "ast_hash": "1185d44564cd949a52aaa3d06213becd",
+    "semantic_hash": "1185d44564cd949a52aaa3d06213becd"
+  },
+  "/Users/godboutj/code/project_works/backend/migrations/00002_create_users_and_groups.sql": {
+    "mtime": 1774923938.4177597,
+    "ast_hash": "78dec6215092818f64d1cff8f0f78ca6",
+    "semantic_hash": "78dec6215092818f64d1cff8f0f78ca6"
+  },
+  "/Users/godboutj/code/project_works/backend/migrations/00003_create_projects.sql": {
+    "mtime": 1776641144.5451326,
+    "ast_hash": "80e8e1803d2e911b5096be343966ce4d",
+    "semantic_hash": "80e8e1803d2e911b5096be343966ce4d"
+  },
+  "/Users/godboutj/code/project_works/backend/migrations/00004_create_elements.sql": {
+    "mtime": 1775487920.7918198,
+    "ast_hash": "74655a20b6234f282d5153240a1d49fd",
+    "semantic_hash": "74655a20b6234f282d5153240a1d49fd"
+  },
+  "/Users/godboutj/code/project_works/backend/migrations/00005_create_element_links.sql": {
+    "mtime": 1774923965.4815867,
+    "ast_hash": "cbf9f701f646ea77bc99d1d2422054b7",
+    "semantic_hash": "cbf9f701f646ea77bc99d1d2422054b7"
+  },
+  "/Users/godboutj/code/project_works/backend/migrations/00006_create_custom_fields.sql": {
+    "mtime": 1774923975.1967325,
+    "ast_hash": "ee6dfacd19111c1b3c5438b77754dca4",
+    "semantic_hash": "ee6dfacd19111c1b3c5438b77754dca4"
+  },
+  "/Users/godboutj/code/project_works/backend/migrations/00007_create_attachments.sql": {
+    "mtime": 1774923982.2703621,
+    "ast_hash": "b2218c3b4afd70085a1e79414d4342c4",
+    "semantic_hash": "b2218c3b4afd70085a1e79414d4342c4"
+  },
+  "/Users/godboutj/code/project_works/backend/migrations/00008_create_element_versions.sql": {
+    "mtime": 1774923992.3427982,
+    "ast_hash": "5032ac075b7374092bbfd76ca4d76d0a",
+    "semantic_hash": "5032ac075b7374092bbfd76ca4d76d0a"
+  },
+  "/Users/godboutj/code/project_works/local_storage_data/seaweedfs_config/s3.json": {
+    "mtime": 1774925531.9287794,
+    "ast_hash": "5283341d56922fa9a4fe1107dcdcfffa",
+    "semantic_hash": "5283341d56922fa9a4fe1107dcdcfffa"
+  },
+  "/Users/godboutj/code/project_works/.github/workflows/package.yml": {
+    "mtime": 1775011776.2919762,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/Users/godboutj/code/project_works/.github/workflows/tests.yml": {
+    "mtime": 1776649737.9556653,
+    "ast_hash": "6c187d279afe5e6e66106c1132764a71",
+    "semantic_hash": "6c187d279afe5e6e66106c1132764a71"
+  },
+  "/Users/godboutj/code/project_works/ARCHITECTURE.md": {
+    "mtime": 1776640111.062666,
+    "ast_hash": "ac1ed70a42dda1be2be5b7cc65c11735",
+    "semantic_hash": "ac1ed70a42dda1be2be5b7cc65c11735"
+  },
+  "/Users/godboutj/code/project_works/Claude.md": {
+    "mtime": 1774921825.0360572,
+    "ast_hash": "5103209ec85f423fa99ff358751704ec",
+    "semantic_hash": "5103209ec85f423fa99ff358751704ec"
+  },
+  "/Users/godboutj/code/project_works/DATA_MODEL.md": {
+    "mtime": 1776640104.764168,
+    "ast_hash": "f37f206a63b42b4c686602c8963b4975",
+    "semantic_hash": "f37f206a63b42b4c686602c8963b4975"
+  },
+  "/Users/godboutj/code/project_works/README.md": {
+    "mtime": 1776649592.863927,
+    "ast_hash": "a68dec7f97862cfb65ec9afc42513320",
+    "semantic_hash": "a68dec7f97862cfb65ec9afc42513320"
+  },
+  "/Users/godboutj/code/project_works/backend/DIAGRAM.md": {
+    "mtime": 1776641985.3806322,
+    "ast_hash": "c0c304e3361be2b9532d4a444fd95f74",
+    "semantic_hash": "c0c304e3361be2b9532d4a444fd95f74"
+  },
+  "/Users/godboutj/code/project_works/backend/config.yaml": {
+    "mtime": 1775493733.9902012,
+    "ast_hash": "96e8a1efddcf949737dc1137726d3f1e",
+    "semantic_hash": "96e8a1efddcf949737dc1137726d3f1e"
+  },
+  "/Users/godboutj/code/project_works/backend/openapi.yaml": {
+    "mtime": 1776641322.6059833,
+    "ast_hash": "0955cc911153f16051cd49be1170445a",
+    "semantic_hash": "0955cc911153f16051cd49be1170445a"
+  },
+  "/Users/godboutj/code/project_works/docker-compose.yaml": {
+    "mtime": 1775793194.9698358,
+    "ast_hash": "4b44c9f607a6047379fc37196b72d6a3",
+    "semantic_hash": "4b44c9f607a6047379fc37196b72d6a3"
+  }
+}
