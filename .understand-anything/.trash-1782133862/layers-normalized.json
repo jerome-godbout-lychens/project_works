@@ -1,0 +1,203 @@
+[
+  {
+    "id": "layer:api",
+    "name": "API Layer",
+    "description": "HTTP request handling via go-chi and Huma \u2014 route registration, request/response binding, and the OpenAPI interface consumed by the frontend and CLI.",
+    "nodeIds": [
+      "file:backend/internal/api/version_handler.go",
+      "file:backend/internal/api/group_handler.go",
+      "file:backend/internal/api/link_handler.go",
+      "file:backend/internal/api/phase_handler.go",
+      "file:backend/internal/api/project_handler.go",
+      "file:backend/internal/api/user_handler.go",
+      "file:backend/internal/api/custom_field_handler.go",
+      "file:backend/internal/api/element_handler.go",
+      "file:backend/internal/api/access_handler.go",
+      "file:backend/internal/api/api_key_handler.go",
+      "file:backend/internal/api/attachment_handler.go",
+      "file:backend/internal/api/auth_handler.go",
+      "file:backend/internal/api/router.go"
+    ]
+  },
+  {
+    "id": "layer:auth",
+    "name": "Authentication & Authorization",
+    "description": "Office 365 OIDC login, API keys for automation, sessions, super-admin fallback, and the middleware enforcing group-based project access.",
+    "nodeIds": [
+      "file:backend/internal/auth/api_key.go",
+      "file:backend/internal/auth/api_key_test.go",
+      "file:backend/internal/auth/middleware.go",
+      "file:backend/internal/auth/oidc.go",
+      "file:backend/internal/auth/session.go",
+      "file:backend/internal/auth/super_admin.go",
+      "file:backend/internal/auth/super_admin_test.go"
+    ]
+  },
+  {
+    "id": "layer:service",
+    "name": "Service Layer",
+    "description": "Business logic and orchestration including the git-like versioning subsystem (snapshots, patches, async version worker) that sits between handlers and stores.",
+    "nodeIds": [
+      "file:backend/internal/service/user_service_test.go",
+      "file:backend/internal/service/version_service.go",
+      "file:backend/internal/service/version_worker.go",
+      "file:backend/internal/service/attachment_service.go",
+      "file:backend/internal/service/element_service.go",
+      "file:backend/internal/service/link_service_test.go",
+      "file:backend/internal/service/versionable_snapshot.go",
+      "file:backend/internal/service/versionable_snapshot_test.go",
+      "file:backend/internal/service/phase_service.go",
+      "file:backend/internal/service/phase_service_test.go",
+      "file:backend/internal/service/project_service.go",
+      "file:backend/internal/service/project_service_test.go",
+      "file:backend/internal/service/service_fakes_test.go",
+      "file:backend/internal/service/user_service.go",
+      "file:backend/internal/service/custom_field_service.go",
+      "file:backend/internal/service/group_service.go",
+      "file:backend/internal/service/link_service.go"
+    ]
+  },
+  {
+    "id": "layer:domain",
+    "name": "Domain & Store Interfaces",
+    "description": "Core domain models (elements, requirements, features, tasks, links, phases, versions) and the pluggable store/cache/file-storage interfaces every other layer depends on.",
+    "nodeIds": [
+      "file:backend/internal/domain/attachment.go",
+      "file:backend/internal/domain/store_element.go",
+      "file:backend/internal/domain/store_element_link.go",
+      "file:backend/internal/domain/store_file_storage.go",
+      "file:backend/internal/domain/store_phase.go",
+      "file:backend/internal/domain/store_project.go",
+      "file:backend/internal/domain/store_user.go",
+      "file:backend/internal/domain/task_status.go",
+      "file:backend/internal/domain/task_status_test.go",
+      "file:backend/internal/domain/user.go",
+      "file:backend/internal/domain/version.go",
+      "file:backend/internal/domain/custom_field.go",
+      "file:backend/internal/domain/element.go",
+      "file:backend/internal/domain/element_link.go",
+      "file:backend/internal/domain/element_test.go",
+      "file:backend/internal/domain/element_type_test.go",
+      "file:backend/internal/domain/errors.go",
+      "file:backend/internal/domain/link_type.go",
+      "file:backend/internal/domain/link_type_test.go",
+      "file:backend/internal/domain/phase.go",
+      "file:backend/internal/domain/project.go",
+      "file:backend/internal/domain/store_attachment.go",
+      "file:backend/internal/domain/store_cache.go",
+      "file:backend/internal/domain/store_custom_field.go",
+      "file:backend/internal/domain/element_type.go",
+      "file:backend/internal/domain/store_element_version.go"
+    ]
+  },
+  {
+    "id": "layer:persistence",
+    "name": "Persistence & Storage",
+    "description": "Concrete implementations of the domain store interfaces \u2014 PostgreSQL stores, S3 file storage, and the Ristretto in-memory read cache.",
+    "nodeIds": [
+      "file:backend/internal/store/postgres/element_link_store.go",
+      "file:backend/internal/store/postgres/element_pending_store.go",
+      "file:backend/internal/store/postgres/element_store.go",
+      "file:backend/internal/store/postgres/api_key_store.go",
+      "file:backend/internal/store/postgres/attachment_store.go",
+      "file:backend/internal/store/postgres/custom_field_store.go",
+      "file:backend/internal/store/postgres/project_store.go",
+      "file:backend/internal/store/postgres/user_store.go",
+      "file:backend/internal/store/postgres/element_version_store.go",
+      "file:backend/internal/store/postgres/group_store.go",
+      "file:backend/internal/store/postgres/phase_store.go",
+      "file:backend/internal/cache/memory/ristretto_cache.go",
+      "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "file:backend/internal/cache/memory/ristretto_cache_test.go",
+      "file:backend/internal/store/postgres/connection.go"
+    ]
+  },
+  {
+    "id": "layer:data",
+    "name": "Data Schema & Migrations",
+    "description": "PostgreSQL schema migrations and the table/schema/endpoint definitions describing the persisted data model and the OpenAPI surface.",
+    "nodeIds": [
+      "schema:backend/migrations/00001_create_extensions.sql",
+      "schema:backend/migrations/00002_create_users_and_groups.sql",
+      "schema:backend/migrations/00003_create_projects.sql",
+      "schema:backend/migrations/00004_create_elements.sql",
+      "schema:backend/migrations/00005_create_element_links.sql",
+      "schema:backend/migrations/00006_create_custom_fields.sql",
+      "schema:backend/migrations/00007_create_attachments.sql",
+      "schema:backend/migrations/00008_create_element_versions.sql",
+      "table:backend/migrations/00002_create_users_and_groups.sql:users",
+      "table:backend/migrations/00002_create_users_and_groups.sql:groups",
+      "table:backend/migrations/00002_create_users_and_groups.sql:group_memberships",
+      "table:backend/migrations/00002_create_users_and_groups.sql:api_keys",
+      "table:backend/migrations/00003_create_projects.sql:projects",
+      "table:backend/migrations/00003_create_projects.sql:group_project_access",
+      "table:backend/migrations/00003_create_projects.sql:phases",
+      "table:backend/migrations/00004_create_elements.sql:elements",
+      "table:backend/migrations/00004_create_elements.sql:element_supervisors",
+      "table:backend/migrations/00004_create_elements.sql:requirement_clients",
+      "table:backend/migrations/00005_create_element_links.sql:element_links",
+      "table:backend/migrations/00006_create_custom_fields.sql:custom_field_definitions",
+      "table:backend/migrations/00006_create_custom_fields.sql:element_custom_field_values",
+      "table:backend/migrations/00007_create_attachments.sql:element_attachments",
+      "table:backend/migrations/00008_create_element_versions.sql:element_versions",
+      "table:backend/migrations/00008_create_element_versions.sql:element_version_patches",
+      "table:backend/migrations/00008_create_element_versions.sql:element_pending_changes",
+      "schema:backend/openapi.yaml",
+      "endpoint:backend/openapi.yaml:auth",
+      "endpoint:backend/openapi.yaml:projects",
+      "endpoint:backend/openapi.yaml:elements",
+      "endpoint:backend/openapi.yaml:links",
+      "endpoint:backend/openapi.yaml:versions",
+      "endpoint:backend/openapi.yaml:attachments",
+      "endpoint:backend/openapi.yaml:custom-fields",
+      "endpoint:backend/openapi.yaml:phases",
+      "endpoint:backend/openapi.yaml:users",
+      "endpoint:backend/openapi.yaml:groups",
+      "endpoint:backend/openapi.yaml:access",
+      "endpoint:backend/openapi.yaml:api-keys"
+    ]
+  },
+  {
+    "id": "layer:infrastructure",
+    "name": "Infrastructure & CI/CD",
+    "description": "Docker images, Docker Compose topology (backend, database, file storage), test container, and GitHub Actions packaging/test pipelines.",
+    "nodeIds": [
+      "service:docker-compose.yaml",
+      "service:docker-compose.yaml:backend",
+      "service:docker-compose.yaml:database",
+      "service:docker-compose.yaml:file_storage",
+      "service:Dockerfile",
+      "service:Dockerfile:builder",
+      "service:Dockerfile:alpine",
+      "pipeline:.github/workflows/package.yml",
+      "pipeline:.github/workflows/tests.yml",
+      "service:Dockerfile_tests"
+    ]
+  },
+  {
+    "id": "layer:config",
+    "name": "Configuration & Tooling",
+    "description": "Application config loading, the config.yaml / go.mod project config, and build/dev tooling scripts (justfile, test results parser, entry points).",
+    "nodeIds": [
+      "file:backend/cmd/server/main.go",
+      "file:backend/internal/config/config.go",
+      "file:TestsResultsParser.sh",
+      "config:backend/config.yaml",
+      "config:backend/go.mod",
+      "file:backend/cmd/integration-test/main.go",
+      "file:justfile"
+    ]
+  },
+  {
+    "id": "layer:documentation",
+    "name": "Documentation",
+    "description": "Project documentation: README, ARCHITECTURE, DATA_MODEL, backend DIAGRAM, and Claude guidance.",
+    "nodeIds": [
+      "document:ARCHITECTURE.md",
+      "document:Claude.md",
+      "document:DATA_MODEL.md",
+      "document:README.md",
+      "document:backend/DIAGRAM.md"
+    ]
+  }
+]

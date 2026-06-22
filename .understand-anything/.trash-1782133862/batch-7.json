@@ -1,0 +1,166 @@
+{
+  "nodes": [
+    {
+      "id": "document:ARCHITECTURE.md",
+      "type": "document",
+      "name": "ARCHITECTURE.md",
+      "filePath": "ARCHITECTURE.md",
+      "summary": "Architecture and technology design document describing the Go backend layered/clean architecture, React+TypeScript frontend, repository layout, CQRS-lite read model, plugin system, OpenAPI-first API, custom fields, auth flow, and deployment targets.",
+      "tags": ["documentation", "architecture", "design", "overview"],
+      "complexity": "moderate",
+      "languageNotes": "Describes a layered backend (cmd/api/service/store/domain) with a CQRS-lite read cache and pluggable database/file storage."
+    },
+    {
+      "id": "document:Claude.md",
+      "type": "document",
+      "name": "Claude.md",
+      "filePath": "Claude.md",
+      "summary": "Product and domain specification covering the simultaneous-engineering concept, element types (requirements, features, tasks, bugs, evals), link types, task status lifecycle, authentication, and configuration requirements.",
+      "tags": ["documentation", "specification", "domain", "requirements"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:DATA_MODEL.md",
+      "type": "document",
+      "name": "DATA_MODEL.md",
+      "filePath": "DATA_MODEL.md",
+      "summary": "Detailed data model design documenting the hot-path tables (projects, elements, custom fields, links, attachments, phases, auth), cold-path versioning tables, Go domain types, store interfaces, and the auto-commit versioning flow.",
+      "tags": ["documentation", "database", "schema-definition", "data-model"],
+      "complexity": "complex",
+      "languageNotes": "Splits storage into a hot mutable path and a cold append-only patch-based versioning path for git-like element history."
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Project overview README with background, installation requirements and steps, app workflow, element types, license, contribution notes, and unit/integration test instructions.",
+      "tags": ["documentation", "entry-point", "overview", "getting-started"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:TestsResultsParser.sh",
+      "type": "file",
+      "name": "TestsResultsParser.sh",
+      "filePath": "TestsResultsParser.sh",
+      "summary": "Bash script that parses Go test JSON output with jq into a Markdown summary table for the GitHub Actions step summary, counting passed/failed/skipped tests and failing the job on any failures.",
+      "tags": ["script", "ci-cd", "test", "reporting"],
+      "complexity": "simple",
+      "languageNotes": "Uses jq slurp mode to group test output by test name and emits GitHub Actions ::error annotations."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:ARCHITECTURE.md",
+      "target": "file:backend/cmd/server/main.go",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ARCHITECTURE.md",
+      "target": "document:DATA_MODEL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DATA_MODEL.md",
+      "target": "file:backend/migrations/00004_create_elements.sql",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DATA_MODEL.md",
+      "target": "file:backend/migrations/00003_create_projects.sql",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DATA_MODEL.md",
+      "target": "file:backend/migrations/00005_create_element_links.sql",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DATA_MODEL.md",
+      "target": "file:backend/migrations/00006_create_custom_fields.sql",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DATA_MODEL.md",
+      "target": "file:backend/migrations/00007_create_attachments.sql",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DATA_MODEL.md",
+      "target": "file:backend/migrations/00008_create_element_versions.sql",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DATA_MODEL.md",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:DATA_MODEL.md",
+      "target": "file:backend/internal/store/postgres/element_store.go",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Claude.md",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Claude.md",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:Claude.md",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:backend/cmd/server/main.go",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:TestsResultsParser.sh",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:TestsResultsParser.sh",
+      "target": "file:.github/workflows/tests.yml",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

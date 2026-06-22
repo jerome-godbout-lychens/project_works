@@ -1,0 +1,1237 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "type": "file",
+      "name": "ristretto_cache.go",
+      "filePath": "backend/internal/cache/memory/ristretto_cache.go",
+      "summary": "In-memory implementation of the domain CacheStore interface backed by the Ristretto library, with prefix-based invalidation via a mutex-guarded key tracker.",
+      "tags": [
+        "cache",
+        "service",
+        "concurrency",
+        "in-memory"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Maintains a separate keyTracker map under a sync.Mutex because Ristretto cannot enumerate keys, enabling InvalidateByPrefix."
+    },
+    {
+      "id": "class:backend/internal/cache/memory/ristretto_cache.go:RistrettoCache",
+      "type": "class",
+      "name": "RistrettoCache",
+      "filePath": "backend/internal/cache/memory/ristretto_cache.go",
+      "lineRange": [
+        15,
+        23
+      ],
+      "summary": "Ristretto-backed cache holding the underlying cache handle, default TTL, and a mutex-protected key tracker for prefix invalidation.",
+      "tags": [
+        "cache",
+        "data-model",
+        "concurrency"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/cache/memory/ristretto_cache.go:NewRistrettoCache",
+      "type": "function",
+      "name": "NewRistrettoCache",
+      "filePath": "backend/internal/cache/memory/ristretto_cache.go",
+      "lineRange": [
+        26,
+        41
+      ],
+      "summary": "Constructs a RistrettoCache with the given max cost in bytes and default TTL, initializing the underlying Ristretto cache and key tracker.",
+      "tags": [
+        "factory",
+        "cache",
+        "constructor"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/cache/memory/ristretto_cache.go:InvalidateByPrefix",
+      "type": "function",
+      "name": "InvalidateByPrefix",
+      "filePath": "backend/internal/cache/memory/ristretto_cache.go",
+      "lineRange": [
+        67,
+        80
+      ],
+      "summary": "Deletes all cached entries whose key shares the given prefix by scanning the tracked key set under lock.",
+      "tags": [
+        "cache",
+        "invalidation",
+        "concurrency"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/cache/memory/ristretto_cache.go:Set",
+      "type": "function",
+      "name": "Set",
+      "filePath": "backend/internal/cache/memory/ristretto_cache.go",
+      "lineRange": [
+        47,
+        57
+      ],
+      "summary": "Stores a value with TTL in the underlying cache and records the key in the tracker for later prefix invalidation.",
+      "tags": [
+        "cache",
+        "concurrency"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/custom_field.go",
+      "type": "file",
+      "name": "custom_field.go",
+      "filePath": "backend/internal/domain/custom_field.go",
+      "summary": "Domain types for project-scoped custom field definitions and their per-element values.",
+      "tags": [
+        "data-model",
+        "domain",
+        "custom-fields"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/custom_field.go:CustomFieldDefinition",
+      "type": "class",
+      "name": "CustomFieldDefinition",
+      "filePath": "backend/internal/domain/custom_field.go",
+      "lineRange": [
+        5,
+        13
+      ],
+      "summary": "Defines a custom field for a project, including applicable element type, name, value type, options, and display order.",
+      "tags": [
+        "data-model",
+        "domain",
+        "custom-fields"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/custom_field.go:CustomFieldValue",
+      "type": "class",
+      "name": "CustomFieldValue",
+      "filePath": "backend/internal/domain/custom_field.go",
+      "lineRange": [
+        16,
+        20
+      ],
+      "summary": "Holds the value assigned to a custom field definition for a specific element.",
+      "tags": [
+        "data-model",
+        "domain",
+        "custom-fields"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/element.go",
+      "type": "file",
+      "name": "element.go",
+      "filePath": "backend/internal/domain/element.go",
+      "summary": "Core Element domain type unifying requirements, features, tasks, bugs, and other element kinds, plus ContactInfo and feature-progress computation.",
+      "tags": [
+        "data-model",
+        "domain",
+        "entry-point"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "A single Element struct carries fields for all element types using nullable pointers, rather than per-type structs."
+    },
+    {
+      "id": "class:backend/internal/domain/element.go:Element",
+      "type": "class",
+      "name": "Element",
+      "filePath": "backend/internal/domain/element.go",
+      "lineRange": [
+        7,
+        33
+      ],
+      "summary": "Unified element record holding identity, type, content, timestamps, and type-specific fields like task status, progress, phases, supervisors, and custom field values.",
+      "tags": [
+        "data-model",
+        "domain",
+        "core"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/domain/element.go:ComputeFeatureProgress",
+      "type": "function",
+      "name": "ComputeFeatureProgress",
+      "filePath": "backend/internal/domain/element.go",
+      "lineRange": [
+        45,
+        61
+      ],
+      "summary": "Computes a feature's progress as the integer average of its child tasks' progress values, ignoring tasks with nil progress.",
+      "tags": [
+        "domain",
+        "business-logic",
+        "aggregation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/element_link.go",
+      "type": "file",
+      "name": "element_link.go",
+      "filePath": "backend/internal/domain/element_link.go",
+      "summary": "Domain type representing a typed link between a source and destination element.",
+      "tags": [
+        "data-model",
+        "domain",
+        "relationships"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/element_link.go:ElementLink",
+      "type": "class",
+      "name": "ElementLink",
+      "filePath": "backend/internal/domain/element_link.go",
+      "lineRange": [
+        6,
+        12
+      ],
+      "summary": "A directed, typed relationship between two elements with creation timestamp.",
+      "tags": [
+        "data-model",
+        "domain",
+        "relationships"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/element_test.go",
+      "type": "file",
+      "name": "element_test.go",
+      "filePath": "backend/internal/domain/element_test.go",
+      "summary": "Unit tests for ComputeFeatureProgress covering empty input, averaging, nil-progress handling, and integer truncation.",
+      "tags": [
+        "test",
+        "domain",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/domain/element_type_test.go",
+      "type": "file",
+      "name": "element_type_test.go",
+      "filePath": "backend/internal/domain/element_type_test.go",
+      "summary": "Unit tests validating ElementType.IsValid and that AllElementTypes contains all six unique values.",
+      "tags": [
+        "test",
+        "domain",
+        "unit-test"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/errors.go",
+      "type": "file",
+      "name": "errors.go",
+      "filePath": "backend/internal/domain/errors.go",
+      "summary": "Sentinel error values shared across the domain layer for not-found and validation conditions.",
+      "tags": [
+        "domain",
+        "error-handling",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/link_type.go",
+      "type": "file",
+      "name": "link_type.go",
+      "filePath": "backend/internal/domain/link_type.go",
+      "summary": "Defines the LinkType enumeration (related, child, implement) with validity checking and a full-set accessor.",
+      "tags": [
+        "data-model",
+        "domain",
+        "enum",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/link_type.go:AllLinkTypes",
+      "type": "function",
+      "name": "AllLinkTypes",
+      "filePath": "backend/internal/domain/link_type.go",
+      "lineRange": [
+        21,
+        27
+      ],
+      "summary": "Returns the slice of all valid link types.",
+      "tags": [
+        "domain",
+        "enum"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/link_type.go:IsValid",
+      "type": "function",
+      "name": "IsValid",
+      "filePath": "backend/internal/domain/link_type.go",
+      "lineRange": [
+        30,
+        37
+      ],
+      "summary": "Reports whether a LinkType value is one of the defined link types.",
+      "tags": [
+        "domain",
+        "validation",
+        "enum"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/link_type_test.go",
+      "type": "file",
+      "name": "link_type_test.go",
+      "filePath": "backend/internal/domain/link_type_test.go",
+      "summary": "Unit tests for LinkType.IsValid and that AllLinkTypes contains all three unique values.",
+      "tags": [
+        "test",
+        "domain",
+        "unit-test"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/phase.go",
+      "type": "file",
+      "name": "phase.go",
+      "filePath": "backend/internal/domain/phase.go",
+      "summary": "Domain type for a project phase with ordering and planned start/end dates.",
+      "tags": [
+        "data-model",
+        "domain",
+        "scheduling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/phase.go:Phase",
+      "type": "class",
+      "name": "Phase",
+      "filePath": "backend/internal/domain/phase.go",
+      "lineRange": [
+        6,
+        13
+      ],
+      "summary": "Represents a named, ordered project phase with planned start and end dates.",
+      "tags": [
+        "data-model",
+        "domain",
+        "scheduling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/project.go",
+      "type": "file",
+      "name": "project.go",
+      "filePath": "backend/internal/domain/project.go",
+      "summary": "Domain type for a project with name, description, folder path, and timestamps.",
+      "tags": [
+        "data-model",
+        "domain",
+        "core"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/project.go:Project",
+      "type": "class",
+      "name": "Project",
+      "filePath": "backend/internal/domain/project.go",
+      "lineRange": [
+        6,
+        13
+      ],
+      "summary": "Represents a project including its folder path for hierarchical navigation and audit timestamps.",
+      "tags": [
+        "data-model",
+        "domain",
+        "core"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_attachment.go",
+      "type": "file",
+      "name": "store_attachment.go",
+      "filePath": "backend/internal/domain/store_attachment.go",
+      "summary": "Repository interface defining attachment persistence operations, decoupling the domain from any concrete store implementation.",
+      "tags": [
+        "interface",
+        "domain",
+        "repository",
+        "type-definition"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_attachment.go:AttachmentStore",
+      "type": "class",
+      "name": "AttachmentStore",
+      "filePath": "backend/internal/domain/store_attachment.go",
+      "lineRange": [
+        6,
+        11
+      ],
+      "summary": "Interface for create, get, list-by-element, and delete attachment operations.",
+      "tags": [
+        "interface",
+        "domain",
+        "repository"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_cache.go",
+      "type": "file",
+      "name": "store_cache.go",
+      "filePath": "backend/internal/domain/store_cache.go",
+      "summary": "Repository interface defining cache operations (get, set, invalidate, invalidate-by-prefix) implemented by cache backends.",
+      "tags": [
+        "interface",
+        "domain",
+        "cache",
+        "type-definition"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_cache.go:CacheStore",
+      "type": "class",
+      "name": "CacheStore",
+      "filePath": "backend/internal/domain/store_cache.go",
+      "lineRange": [
+        10,
+        15
+      ],
+      "summary": "Interface abstracting the cache backend with get, set, invalidate, and prefix invalidation methods.",
+      "tags": [
+        "interface",
+        "domain",
+        "cache"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_custom_field.go",
+      "type": "file",
+      "name": "store_custom_field.go",
+      "filePath": "backend/internal/domain/store_custom_field.go",
+      "summary": "Repository interfaces for custom field definition and value persistence.",
+      "tags": [
+        "interface",
+        "domain",
+        "repository",
+        "custom-fields"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_custom_field.go:CustomFieldDefinitionStore",
+      "type": "class",
+      "name": "CustomFieldDefinitionStore",
+      "filePath": "backend/internal/domain/store_custom_field.go",
+      "lineRange": [
+        6,
+        11
+      ],
+      "summary": "Interface for creating, listing, updating, and deleting custom field definitions.",
+      "tags": [
+        "interface",
+        "domain",
+        "repository"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_custom_field.go:CustomFieldValueStore",
+      "type": "class",
+      "name": "CustomFieldValueStore",
+      "filePath": "backend/internal/domain/store_custom_field.go",
+      "lineRange": [
+        14,
+        18
+      ],
+      "summary": "Interface for setting, getting, and deleting custom field values on elements.",
+      "tags": [
+        "interface",
+        "domain",
+        "repository"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "type": "file",
+      "name": "s3_file_storage.go",
+      "filePath": "backend/internal/filestore/s3/s3_file_storage.go",
+      "summary": "S3-compatible implementation of the domain FileStorage interface using the AWS SDK v2, supporting put, get, delete, and presigned URL generation.",
+      "tags": [
+        "service",
+        "file-storage",
+        "infrastructure",
+        "aws"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Uses AWS SDK v2 with a custom endpoint resolver to support S3-compatible backends like MinIO."
+    },
+    {
+      "id": "class:backend/internal/filestore/s3/s3_file_storage.go:S3FileStorage",
+      "type": "class",
+      "name": "S3FileStorage",
+      "filePath": "backend/internal/filestore/s3/s3_file_storage.go",
+      "lineRange": [
+        17,
+        21
+      ],
+      "summary": "Holds the S3 client, presigner, and bucket name used to store and retrieve attachment files.",
+      "tags": [
+        "service",
+        "file-storage",
+        "aws"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/filestore/s3/s3_file_storage.go:NewS3FileStorage",
+      "type": "function",
+      "name": "NewS3FileStorage",
+      "filePath": "backend/internal/filestore/s3/s3_file_storage.go",
+      "lineRange": [
+        26,
+        52
+      ],
+      "summary": "Loads AWS config (optionally with a custom endpoint), constructs the S3 client and presigner, and returns an S3FileStorage.",
+      "tags": [
+        "factory",
+        "file-storage",
+        "aws",
+        "constructor"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/filestore/s3/s3_file_storage.go:GeneratePresignedURL",
+      "type": "function",
+      "name": "GeneratePresignedURL",
+      "filePath": "backend/internal/filestore/s3/s3_file_storage.go",
+      "lineRange": [
+        83,
+        92
+      ],
+      "summary": "Generates a time-limited presigned GET URL for an object so clients can download attachments directly.",
+      "tags": [
+        "file-storage",
+        "aws",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/filestore/s3/s3_file_storage.go:PutFile",
+      "type": "function",
+      "name": "PutFile",
+      "filePath": "backend/internal/filestore/s3/s3_file_storage.go",
+      "lineRange": [
+        54,
+        62
+      ],
+      "summary": "Uploads a byte payload to the configured S3 bucket under the given storage key and content type.",
+      "tags": [
+        "file-storage",
+        "aws"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "class:backend/internal/cache/memory/ristretto_cache.go:RistrettoCache",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "function:backend/internal/cache/memory/ristretto_cache.go:NewRistrettoCache",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "function:backend/internal/cache/memory/ristretto_cache.go:InvalidateByPrefix",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "function:backend/internal/cache/memory/ristretto_cache.go:Set",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "class:backend/internal/cache/memory/ristretto_cache.go:RistrettoCache",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "function:backend/internal/cache/memory/ristretto_cache.go:NewRistrettoCache",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "class:backend/internal/domain/store_cache.go:CacheStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/domain/custom_field.go",
+      "target": "class:backend/internal/domain/custom_field.go:CustomFieldDefinition",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/custom_field.go",
+      "target": "class:backend/internal/domain/custom_field.go:CustomFieldValue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/custom_field.go",
+      "target": "class:backend/internal/domain/custom_field.go:CustomFieldDefinition",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/custom_field.go",
+      "target": "class:backend/internal/domain/custom_field.go:CustomFieldValue",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/element.go",
+      "target": "class:backend/internal/domain/element.go:Element",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/element.go",
+      "target": "function:backend/internal/domain/element.go:ComputeFeatureProgress",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/element.go",
+      "target": "class:backend/internal/domain/element.go:Element",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/element.go",
+      "target": "function:backend/internal/domain/element.go:ComputeFeatureProgress",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/element.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/internal/domain/element_link.go",
+      "target": "class:backend/internal/domain/element_link.go:ElementLink",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/element_link.go",
+      "target": "class:backend/internal/domain/element_link.go:ElementLink",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/element_test.go",
+      "target": "function:backend/internal/domain/element.go:ComputeFeatureProgress",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/domain/link_type.go",
+      "target": "function:backend/internal/domain/link_type.go:AllLinkTypes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/link_type.go",
+      "target": "function:backend/internal/domain/link_type.go:IsValid",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/link_type.go",
+      "target": "function:backend/internal/domain/link_type.go:AllLinkTypes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/link_type.go",
+      "target": "function:backend/internal/domain/link_type.go:IsValid",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/link_type.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/internal/domain/link_type_test.go",
+      "target": "function:backend/internal/domain/link_type.go:IsValid",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/link_type_test.go",
+      "target": "function:backend/internal/domain/link_type.go:AllLinkTypes",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/phase.go",
+      "target": "class:backend/internal/domain/phase.go:Phase",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/phase.go",
+      "target": "class:backend/internal/domain/phase.go:Phase",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/project.go",
+      "target": "class:backend/internal/domain/project.go:Project",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/project.go",
+      "target": "class:backend/internal/domain/project.go:Project",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_attachment.go",
+      "target": "class:backend/internal/domain/store_attachment.go:AttachmentStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/store_attachment.go",
+      "target": "class:backend/internal/domain/store_attachment.go:AttachmentStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_cache.go",
+      "target": "class:backend/internal/domain/store_cache.go:CacheStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/store_cache.go",
+      "target": "class:backend/internal/domain/store_cache.go:CacheStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_custom_field.go",
+      "target": "class:backend/internal/domain/store_custom_field.go:CustomFieldDefinitionStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/store_custom_field.go",
+      "target": "class:backend/internal/domain/store_custom_field.go:CustomFieldValueStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/store_custom_field.go",
+      "target": "class:backend/internal/domain/store_custom_field.go:CustomFieldDefinitionStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_custom_field.go",
+      "target": "class:backend/internal/domain/store_custom_field.go:CustomFieldValueStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "class:backend/internal/filestore/s3/s3_file_storage.go:S3FileStorage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "function:backend/internal/filestore/s3/s3_file_storage.go:NewS3FileStorage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "function:backend/internal/filestore/s3/s3_file_storage.go:GeneratePresignedURL",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "function:backend/internal/filestore/s3/s3_file_storage.go:PutFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "class:backend/internal/filestore/s3/s3_file_storage.go:S3FileStorage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "function:backend/internal/filestore/s3/s3_file_storage.go:NewS3FileStorage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

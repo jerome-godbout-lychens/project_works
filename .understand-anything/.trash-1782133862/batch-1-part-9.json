@@ -1,0 +1,732 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/service/versionable_snapshot.go",
+      "type": "file",
+      "name": "versionable_snapshot.go",
+      "filePath": "backend/internal/service/versionable_snapshot.go",
+      "summary": "Builds, serializes, and content-hashes a normalized snapshot of an element aggregate (fields, contacts, links, attachments) for version diffing.",
+      "tags": [
+        "service",
+        "snapshot",
+        "serialization",
+        "versioning",
+        "hashing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/service/versionable_snapshot_test.go",
+      "type": "file",
+      "name": "versionable_snapshot_test.go",
+      "filePath": "backend/internal/service/versionable_snapshot_test.go",
+      "summary": "Unit tests for snapshot building, serialization round-trips, and content SHA stability used by the versioning subsystem.",
+      "tags": [
+        "test",
+        "snapshot",
+        "serialization",
+        "unit-test"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:backend/internal/service/versionable_snapshot.go:VersionableSnapshot",
+      "type": "class",
+      "name": "VersionableSnapshot",
+      "filePath": "backend/internal/service/versionable_snapshot.go",
+      "lineRange": [
+        6,
+        40
+      ],
+      "summary": "Normalized snapshot of an element aggregate used for version diffing.",
+      "tags": [
+        "data-model",
+        "snapshot",
+        "version"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot.go:BuildSnapshot",
+      "type": "function",
+      "name": "BuildSnapshot",
+      "filePath": "backend/internal/service/versionable_snapshot.go",
+      "lineRange": [
+        59,
+        139
+      ],
+      "summary": "Builds a normalized, deterministically ordered snapshot from an element aggregate.",
+      "tags": [
+        "service",
+        "snapshot",
+        "serialization"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot.go:SerializeSnapshot",
+      "type": "function",
+      "name": "SerializeSnapshot",
+      "filePath": "backend/internal/service/versionable_snapshot.go",
+      "lineRange": [
+        142,
+        144
+      ],
+      "summary": "Serializes a snapshot to JSON bytes.",
+      "tags": [
+        "serialization",
+        "snapshot"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot.go:DeserializeSnapshot",
+      "type": "function",
+      "name": "DeserializeSnapshot",
+      "filePath": "backend/internal/service/versionable_snapshot.go",
+      "lineRange": [
+        147,
+        153
+      ],
+      "summary": "Deserializes JSON bytes into a snapshot.",
+      "tags": [
+        "serialization",
+        "snapshot"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot.go:ComputeContentSha",
+      "type": "function",
+      "name": "ComputeContentSha",
+      "filePath": "backend/internal/service/versionable_snapshot.go",
+      "lineRange": [
+        156,
+        159
+      ],
+      "summary": "Computes a content SHA over a serialized snapshot for version identity.",
+      "tags": [
+        "hashing",
+        "snapshot",
+        "version"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_CopiesCoreFields",
+      "type": "function",
+      "name": "TestBuildSnapshot_CopiesCoreFields",
+      "filePath": "backend/internal/service/versionable_snapshot_test.go",
+      "lineRange": [
+        43,
+        63
+      ],
+      "summary": "Unit test: TestBuildSnapshot_CopiesCoreFields.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_SortsSupervisorsClientsAndCustomFields",
+      "type": "function",
+      "name": "TestBuildSnapshot_SortsSupervisorsClientsAndCustomFields",
+      "filePath": "backend/internal/service/versionable_snapshot_test.go",
+      "lineRange": [
+        65,
+        86
+      ],
+      "summary": "Unit test: TestBuildSnapshot_SortsSupervisorsClientsAndCustomFields.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_SortsLinksAndAttachments",
+      "type": "function",
+      "name": "TestBuildSnapshot_SortsLinksAndAttachments",
+      "filePath": "backend/internal/service/versionable_snapshot_test.go",
+      "lineRange": [
+        88,
+        117
+      ],
+      "summary": "Unit test: TestBuildSnapshot_SortsLinksAndAttachments.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_DeterministicJSONForUnorderedInputs",
+      "type": "function",
+      "name": "TestBuildSnapshot_DeterministicJSONForUnorderedInputs",
+      "filePath": "backend/internal/service/versionable_snapshot_test.go",
+      "lineRange": [
+        119,
+        145
+      ],
+      "summary": "Unit test: TestBuildSnapshot_DeterministicJSONForUnorderedInputs.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot_test.go:TestSerializeDeserializeRoundTrip",
+      "type": "function",
+      "name": "TestSerializeDeserializeRoundTrip",
+      "filePath": "backend/internal/service/versionable_snapshot_test.go",
+      "lineRange": [
+        147,
+        176
+      ],
+      "summary": "Unit test: TestSerializeDeserializeRoundTrip.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/versionable_snapshot_test.go:TestComputeContentSha_DeterministicAndDifferentiatesInputs",
+      "type": "function",
+      "name": "TestComputeContentSha_DeterministicAndDifferentiatesInputs",
+      "filePath": "backend/internal/service/versionable_snapshot_test.go",
+      "lineRange": [
+        178,
+        192
+      ],
+      "summary": "Unit test: TestComputeContentSha_DeterministicAndDifferentiatesInputs.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "class:backend/internal/service/versionable_snapshot.go:VersionableSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "class:backend/internal/service/versionable_snapshot.go:VersionableSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "function:backend/internal/service/versionable_snapshot.go:BuildSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "function:backend/internal/service/versionable_snapshot.go:BuildSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "function:backend/internal/service/versionable_snapshot.go:SerializeSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "function:backend/internal/service/versionable_snapshot.go:SerializeSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "function:backend/internal/service/versionable_snapshot.go:DeserializeSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "function:backend/internal/service/versionable_snapshot.go:DeserializeSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "function:backend/internal/service/versionable_snapshot.go:ComputeContentSha",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "function:backend/internal/service/versionable_snapshot.go:ComputeContentSha",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_CopiesCoreFields",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_CopiesCoreFields",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_SortsSupervisorsClientsAndCustomFields",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_SortsSupervisorsClientsAndCustomFields",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_SortsLinksAndAttachments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_SortsLinksAndAttachments",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_DeterministicJSONForUnorderedInputs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestBuildSnapshot_DeterministicJSONForUnorderedInputs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestSerializeDeserializeRoundTrip",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestSerializeDeserializeRoundTrip",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestComputeContentSha_DeterministicAndDifferentiatesInputs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "function:backend/internal/service/versionable_snapshot_test.go:TestComputeContentSha_DeterministicAndDifferentiatesInputs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/versionable_snapshot_test.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

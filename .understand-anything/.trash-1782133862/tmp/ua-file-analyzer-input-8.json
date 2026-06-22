@@ -1,0 +1,15 @@
+{
+  "projectRoot": "/Users/godboutj/code/project_works",
+  "batchFiles": [
+    {"path": "backend/DIAGRAM.md", "language": "markdown", "sizeLines": 295, "fileCategory": "docs"},
+    {"path": "backend/config.yaml", "language": "yaml", "sizeLines": 35, "fileCategory": "config"},
+    {"path": "backend/go.mod", "language": "mod", "sizeLines": 3, "fileCategory": "config"},
+    {"path": "backend/openapi.yaml", "language": "yaml", "sizeLines": 1818, "fileCategory": "config"}
+  ],
+  "batchImportData": {
+    "backend/DIAGRAM.md": [],
+    "backend/config.yaml": [],
+    "backend/go.mod": [],
+    "backend/openapi.yaml": []
+  }
+}

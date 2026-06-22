@@ -1,0 +1,1261 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/api/version_handler.go",
+      "type": "file",
+      "name": "version_handler.go",
+      "filePath": "backend/internal/api/version_handler.go",
+      "summary": "Registers REST endpoints for listing element version history, retrieving an element at a specific version, and computing diffs between versions.",
+      "tags": [
+        "api-handler",
+        "version",
+        "history",
+        "diff",
+        "rest"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/domain/attachment.go",
+      "type": "file",
+      "name": "attachment.go",
+      "filePath": "backend/internal/domain/attachment.go",
+      "summary": "Domain model for a file attachment associated with an element, including metadata such as content type, size, and uploader.",
+      "tags": [
+        "data-model",
+        "attachment",
+        "domain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_element.go",
+      "type": "file",
+      "name": "store_element.go",
+      "filePath": "backend/internal/domain/store_element.go",
+      "summary": "Defines the ElementStore persistence interface and ElementFilter struct for querying, creating, updating, and searching elements.",
+      "tags": [
+        "type-definition",
+        "store-interface",
+        "element",
+        "persistence"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Go interface defining the storage contract, enabling pluggable database backends."
+    },
+    {
+      "id": "file:backend/internal/domain/store_element_link.go",
+      "type": "file",
+      "name": "store_element_link.go",
+      "filePath": "backend/internal/domain/store_element_link.go",
+      "summary": "Defines the ElementLinkStore persistence interface for creating, retrieving, updating, deleting, and listing links between elements.",
+      "tags": [
+        "type-definition",
+        "store-interface",
+        "element-link",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_file_storage.go",
+      "type": "file",
+      "name": "store_file_storage.go",
+      "filePath": "backend/internal/domain/store_file_storage.go",
+      "summary": "Defines the FileStorage interface abstracting blob storage operations (put, get, delete, presigned URLs) for pluggable backends like S3.",
+      "tags": [
+        "type-definition",
+        "store-interface",
+        "file-storage",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_phase.go",
+      "type": "file",
+      "name": "store_phase.go",
+      "filePath": "backend/internal/domain/store_phase.go",
+      "summary": "Defines the PhaseStore persistence interface for creating, listing, updating, and deleting project phases.",
+      "tags": [
+        "type-definition",
+        "store-interface",
+        "phase",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_project.go",
+      "type": "file",
+      "name": "store_project.go",
+      "filePath": "backend/internal/domain/store_project.go",
+      "summary": "Defines the ProjectStore persistence interface for project CRUD and folder-path listing.",
+      "tags": [
+        "type-definition",
+        "store-interface",
+        "project",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_user.go",
+      "type": "file",
+      "name": "store_user.go",
+      "filePath": "backend/internal/domain/store_user.go",
+      "summary": "Defines persistence interfaces for users, groups, group-project access, and API keys, supporting authentication and group-based authorization.",
+      "tags": [
+        "type-definition",
+        "store-interface",
+        "user",
+        "rbac",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/task_status.go",
+      "type": "file",
+      "name": "task_status.go",
+      "filePath": "backend/internal/domain/task_status.go",
+      "summary": "Defines the TaskStatus enum with open/closed classification helpers and validation for the eight task lifecycle states.",
+      "tags": [
+        "data-model",
+        "enum",
+        "task-status",
+        "validation",
+        "domain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/task_status_test.go",
+      "type": "file",
+      "name": "task_status_test.go",
+      "filePath": "backend/internal/domain/task_status_test.go",
+      "summary": "Unit tests validating TaskStatus validity, open/closed classification, and completeness of the enumerated status set.",
+      "tags": [
+        "test",
+        "task-status",
+        "domain",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/domain/user.go",
+      "type": "file",
+      "name": "user.go",
+      "filePath": "backend/internal/domain/user.go",
+      "summary": "Domain models for users, groups, group memberships, group-project access levels, and API keys.",
+      "tags": [
+        "data-model",
+        "user",
+        "group",
+        "api-key",
+        "domain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/version.go",
+      "type": "file",
+      "name": "version.go",
+      "filePath": "backend/internal/domain/version.go",
+      "summary": "Domain models for element version metadata, version patches, RFC6902-style patch operations, and pending changes used in git-like version history.",
+      "tags": [
+        "data-model",
+        "version",
+        "patch",
+        "history",
+        "domain"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/api/version_handler.go:RegisterVersionHandlers",
+      "type": "function",
+      "name": "RegisterVersionHandlers",
+      "filePath": "backend/internal/api/version_handler.go",
+      "lineRange": [
+        77,
+        139
+      ],
+      "summary": "Registers element version-history REST operations and wires them to the version service.",
+      "tags": [
+        "api-handler",
+        "registration",
+        "version"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/api/version_handler.go:mapVersionMetaToResponse",
+      "type": "function",
+      "name": "mapVersionMetaToResponse",
+      "filePath": "backend/internal/api/version_handler.go",
+      "lineRange": [
+        142,
+        152
+      ],
+      "summary": "Maps version metadata to its API response DTO.",
+      "tags": [
+        "utility",
+        "mapping",
+        "version"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/api/version_handler.go:convertPatchOperations",
+      "type": "function",
+      "name": "convertPatchOperations",
+      "filePath": "backend/internal/api/version_handler.go",
+      "lineRange": [
+        164,
+        175
+      ],
+      "summary": "Converts domain patch operations into API patch-operation responses.",
+      "tags": [
+        "utility",
+        "mapping",
+        "patch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_element.go:ElementStore",
+      "type": "class",
+      "name": "ElementStore",
+      "filePath": "backend/internal/domain/store_element.go",
+      "lineRange": [
+        16,
+        23
+      ],
+      "summary": "Persistence interface for element queries, CRUD, and search.",
+      "tags": [
+        "store-interface",
+        "element",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_element.go:ElementFilter",
+      "type": "class",
+      "name": "ElementFilter",
+      "filePath": "backend/internal/domain/store_element.go",
+      "lineRange": [
+        6,
+        13
+      ],
+      "summary": "Filter struct describing element query criteria (type, status, etc.).",
+      "tags": [
+        "data-model",
+        "filter",
+        "element"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_element_link.go:ElementLinkStore",
+      "type": "class",
+      "name": "ElementLinkStore",
+      "filePath": "backend/internal/domain/store_element_link.go",
+      "lineRange": [
+        15,
+        21
+      ],
+      "summary": "Persistence interface for element link CRUD and listing.",
+      "tags": [
+        "store-interface",
+        "element-link",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_file_storage.go:FileStorage",
+      "type": "class",
+      "name": "FileStorage",
+      "filePath": "backend/internal/domain/store_file_storage.go",
+      "lineRange": [
+        11,
+        16
+      ],
+      "summary": "Interface abstracting blob storage operations including presigned URLs.",
+      "tags": [
+        "store-interface",
+        "file-storage",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_phase.go:PhaseStore",
+      "type": "class",
+      "name": "PhaseStore",
+      "filePath": "backend/internal/domain/store_phase.go",
+      "lineRange": [
+        6,
+        11
+      ],
+      "summary": "Persistence interface for project phase CRUD.",
+      "tags": [
+        "store-interface",
+        "phase",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_project.go:ProjectStore",
+      "type": "class",
+      "name": "ProjectStore",
+      "filePath": "backend/internal/domain/store_project.go",
+      "lineRange": [
+        6,
+        16
+      ],
+      "summary": "Persistence interface for project CRUD and folder-path listing.",
+      "tags": [
+        "store-interface",
+        "project",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_user.go:UserStore",
+      "type": "class",
+      "name": "UserStore",
+      "filePath": "backend/internal/domain/store_user.go",
+      "lineRange": [
+        6,
+        12
+      ],
+      "summary": "Persistence interface for user CRUD and external-identity lookup.",
+      "tags": [
+        "store-interface",
+        "user",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_user.go:GroupStore",
+      "type": "class",
+      "name": "GroupStore",
+      "filePath": "backend/internal/domain/store_user.go",
+      "lineRange": [
+        15,
+        24
+      ],
+      "summary": "Persistence interface for group CRUD and membership management.",
+      "tags": [
+        "store-interface",
+        "group",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_user.go:GroupProjectAccessStore",
+      "type": "class",
+      "name": "GroupProjectAccessStore",
+      "filePath": "backend/internal/domain/store_user.go",
+      "lineRange": [
+        27,
+        33
+      ],
+      "summary": "Persistence interface for group-to-project access-level management.",
+      "tags": [
+        "store-interface",
+        "rbac",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_user.go:APIKeyStore",
+      "type": "class",
+      "name": "APIKeyStore",
+      "filePath": "backend/internal/domain/store_user.go",
+      "lineRange": [
+        36,
+        42
+      ],
+      "summary": "Persistence interface for API key CRUD and last-used tracking.",
+      "tags": [
+        "store-interface",
+        "api-key",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/attachment.go:Attachment",
+      "type": "class",
+      "name": "Attachment",
+      "filePath": "backend/internal/domain/attachment.go",
+      "lineRange": [
+        6,
+        15
+      ],
+      "summary": "Attachment metadata model.",
+      "tags": [
+        "data-model",
+        "attachment"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/user.go:User",
+      "type": "class",
+      "name": "User",
+      "filePath": "backend/internal/domain/user.go",
+      "lineRange": [
+        6,
+        12
+      ],
+      "summary": "User domain model.",
+      "tags": [
+        "data-model",
+        "user"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/user.go:Group",
+      "type": "class",
+      "name": "Group",
+      "filePath": "backend/internal/domain/user.go",
+      "lineRange": [
+        15,
+        18
+      ],
+      "summary": "Group domain model.",
+      "tags": [
+        "data-model",
+        "group"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/user.go:APIKey",
+      "type": "class",
+      "name": "APIKey",
+      "filePath": "backend/internal/domain/user.go",
+      "lineRange": [
+        43,
+        50
+      ],
+      "summary": "API key domain model.",
+      "tags": [
+        "data-model",
+        "api-key"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/version.go:ElementVersion",
+      "type": "class",
+      "name": "ElementVersion",
+      "filePath": "backend/internal/domain/version.go",
+      "lineRange": [
+        6,
+        14
+      ],
+      "summary": "Element version metadata model.",
+      "tags": [
+        "data-model",
+        "version"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/version.go:ElementVersionPatch",
+      "type": "class",
+      "name": "ElementVersionPatch",
+      "filePath": "backend/internal/domain/version.go",
+      "lineRange": [
+        18,
+        22
+      ],
+      "summary": "Stored version patch model.",
+      "tags": [
+        "data-model",
+        "version",
+        "patch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/version.go:PatchOperation",
+      "type": "class",
+      "name": "PatchOperation",
+      "filePath": "backend/internal/domain/version.go",
+      "lineRange": [
+        25,
+        30
+      ],
+      "summary": "RFC6902-style patch operation model.",
+      "tags": [
+        "data-model",
+        "patch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/version.go:PendingChange",
+      "type": "class",
+      "name": "PendingChange",
+      "filePath": "backend/internal/domain/version.go",
+      "lineRange": [
+        35,
+        39
+      ],
+      "summary": "Pending uncommitted change model awaiting version commit.",
+      "tags": [
+        "data-model",
+        "version",
+        "pending-change"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/task_status.go:AllTaskStatuses",
+      "type": "function",
+      "name": "AllTaskStatuses",
+      "filePath": "backend/internal/domain/task_status.go",
+      "lineRange": [
+        18,
+        29
+      ],
+      "summary": "Returns the full slice of valid task statuses.",
+      "tags": [
+        "enum",
+        "task-status"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/task_status.go:IsValid",
+      "type": "function",
+      "name": "IsValid",
+      "filePath": "backend/internal/domain/task_status.go",
+      "lineRange": [
+        32,
+        39
+      ],
+      "summary": "Reports whether the task status is one of the valid values.",
+      "tags": [
+        "validation",
+        "task-status"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/task_status_test.go:TestTaskStatus_IsValid",
+      "type": "function",
+      "name": "TestTaskStatus_IsValid",
+      "filePath": "backend/internal/domain/task_status_test.go",
+      "lineRange": [
+        5,
+        27
+      ],
+      "summary": "Tests TaskStatus validity checking.",
+      "tags": [
+        "test",
+        "task-status"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/task_status_test.go:TestTaskStatus_IsOpenAndClosed",
+      "type": "function",
+      "name": "TestTaskStatus_IsOpenAndClosed",
+      "filePath": "backend/internal/domain/task_status_test.go",
+      "lineRange": [
+        29,
+        56
+      ],
+      "summary": "Tests open/closed classification of task statuses.",
+      "tags": [
+        "test",
+        "task-status"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/task_status_test.go:TestAllTaskStatuses_ContainsAllEightValues",
+      "type": "function",
+      "name": "TestAllTaskStatuses_ContainsAllEightValues",
+      "filePath": "backend/internal/domain/task_status_test.go",
+      "lineRange": [
+        58,
+        71
+      ],
+      "summary": "Tests that all eight task statuses are enumerated.",
+      "tags": [
+        "test",
+        "task-status"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "function:backend/internal/api/version_handler.go:RegisterVersionHandlers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "function:backend/internal/api/version_handler.go:RegisterVersionHandlers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "function:backend/internal/api/version_handler.go:mapVersionMetaToResponse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "function:backend/internal/api/version_handler.go:convertPatchOperations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_element.go",
+      "target": "class:backend/internal/domain/store_element.go:ElementStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_element.go",
+      "target": "class:backend/internal/domain/store_element.go:ElementStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_element.go",
+      "target": "class:backend/internal/domain/store_element.go:ElementFilter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_element.go",
+      "target": "class:backend/internal/domain/store_element.go:ElementFilter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_element_link.go",
+      "target": "class:backend/internal/domain/store_element_link.go:ElementLinkStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_element_link.go",
+      "target": "class:backend/internal/domain/store_element_link.go:ElementLinkStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_file_storage.go",
+      "target": "class:backend/internal/domain/store_file_storage.go:FileStorage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_file_storage.go",
+      "target": "class:backend/internal/domain/store_file_storage.go:FileStorage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_phase.go",
+      "target": "class:backend/internal/domain/store_phase.go:PhaseStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_phase.go",
+      "target": "class:backend/internal/domain/store_phase.go:PhaseStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_project.go",
+      "target": "class:backend/internal/domain/store_project.go:ProjectStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_project.go",
+      "target": "class:backend/internal/domain/store_project.go:ProjectStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_user.go",
+      "target": "class:backend/internal/domain/store_user.go:UserStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_user.go",
+      "target": "class:backend/internal/domain/store_user.go:UserStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_user.go",
+      "target": "class:backend/internal/domain/store_user.go:GroupStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_user.go",
+      "target": "class:backend/internal/domain/store_user.go:GroupStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_user.go",
+      "target": "class:backend/internal/domain/store_user.go:GroupProjectAccessStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_user.go",
+      "target": "class:backend/internal/domain/store_user.go:GroupProjectAccessStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_user.go",
+      "target": "class:backend/internal/domain/store_user.go:APIKeyStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/store_user.go",
+      "target": "class:backend/internal/domain/store_user.go:APIKeyStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/attachment.go",
+      "target": "class:backend/internal/domain/attachment.go:Attachment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/attachment.go",
+      "target": "class:backend/internal/domain/attachment.go:Attachment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/user.go",
+      "target": "class:backend/internal/domain/user.go:User",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/user.go",
+      "target": "class:backend/internal/domain/user.go:User",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/user.go",
+      "target": "class:backend/internal/domain/user.go:Group",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/user.go",
+      "target": "class:backend/internal/domain/user.go:Group",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/user.go",
+      "target": "class:backend/internal/domain/user.go:APIKey",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/user.go",
+      "target": "class:backend/internal/domain/user.go:APIKey",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/version.go",
+      "target": "class:backend/internal/domain/version.go:ElementVersion",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/version.go",
+      "target": "class:backend/internal/domain/version.go:ElementVersion",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/version.go",
+      "target": "class:backend/internal/domain/version.go:ElementVersionPatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/version.go",
+      "target": "class:backend/internal/domain/version.go:ElementVersionPatch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/version.go",
+      "target": "class:backend/internal/domain/version.go:PatchOperation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/version.go",
+      "target": "class:backend/internal/domain/version.go:PatchOperation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/version.go",
+      "target": "class:backend/internal/domain/version.go:PendingChange",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/version.go",
+      "target": "class:backend/internal/domain/version.go:PendingChange",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/task_status.go",
+      "target": "function:backend/internal/domain/task_status.go:AllTaskStatuses",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/task_status.go",
+      "target": "function:backend/internal/domain/task_status.go:AllTaskStatuses",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/task_status.go",
+      "target": "function:backend/internal/domain/task_status.go:IsValid",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/task_status.go",
+      "target": "function:backend/internal/domain/task_status.go:IsValid",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/task_status_test.go",
+      "target": "function:backend/internal/domain/task_status_test.go:TestTaskStatus_IsValid",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/task_status_test.go",
+      "target": "function:backend/internal/domain/task_status_test.go:TestTaskStatus_IsValid",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/task_status_test.go",
+      "target": "function:backend/internal/domain/task_status_test.go:TestTaskStatus_IsOpenAndClosed",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/task_status_test.go",
+      "target": "function:backend/internal/domain/task_status_test.go:TestTaskStatus_IsOpenAndClosed",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/task_status_test.go",
+      "target": "function:backend/internal/domain/task_status_test.go:TestAllTaskStatuses_ContainsAllEightValues",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/domain/task_status_test.go",
+      "target": "function:backend/internal/domain/task_status_test.go:TestAllTaskStatuses_ContainsAllEightValues",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/attachment_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/custom_field_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/element_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/group_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/link_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/link_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/phase_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/phase_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/project_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/project_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/service_fakes_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/user_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/user_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/version_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/version_worker.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/version_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

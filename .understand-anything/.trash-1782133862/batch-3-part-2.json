@@ -1,0 +1,746 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/api/api_key_handler.go",
+      "type": "file",
+      "name": "api_key_handler.go",
+      "filePath": "backend/internal/api/api_key_handler.go",
+      "summary": "Registers Huma API endpoints for listing, generating, and deleting per-user API keys, hashing the raw key before storage and returning the plaintext only once on creation.",
+      "tags": [
+        "api-handler",
+        "api-key",
+        "authentication",
+        "huma",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/api/api_key_handler.go:RegisterAPIKeyHandlers",
+      "type": "function",
+      "name": "RegisterAPIKeyHandlers",
+      "filePath": "backend/internal/api/api_key_handler.go",
+      "lineRange": [
+        65,
+        168
+      ],
+      "summary": "Registers list/generate/delete API-key Huma operations, hashing generated keys before persistence.",
+      "tags": [
+        "api-handler",
+        "api-key",
+        "authentication",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/api/attachment_handler.go",
+      "type": "file",
+      "name": "attachment_handler.go",
+      "filePath": "backend/internal/api/attachment_handler.go",
+      "summary": "Registers Huma API endpoints for listing, uploading, presigning download URLs for, and deleting element attachments via the attachment service.",
+      "tags": [
+        "api-handler",
+        "attachment",
+        "file-upload",
+        "huma",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/api/attachment_handler.go:RegisterAttachmentHandlers",
+      "type": "function",
+      "name": "RegisterAttachmentHandlers",
+      "filePath": "backend/internal/api/attachment_handler.go",
+      "lineRange": [
+        77,
+        192
+      ],
+      "summary": "Registers attachment list/upload/presign/delete Huma operations backed by the attachment service.",
+      "tags": [
+        "api-handler",
+        "attachment",
+        "huma",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/api/auth_handler.go",
+      "type": "file",
+      "name": "auth_handler.go",
+      "filePath": "backend/internal/api/auth_handler.go",
+      "summary": "Registers chi HTTP routes for the OIDC login flow (login redirect, callback, logout) and the current-user endpoint, managing OAuth state cookies and session tokens.",
+      "tags": [
+        "api-handler",
+        "authentication",
+        "oidc",
+        "session",
+        "go"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/api/auth_handler.go:RegisterAuthHandlers",
+      "type": "function",
+      "name": "RegisterAuthHandlers",
+      "filePath": "backend/internal/api/auth_handler.go",
+      "lineRange": [
+        35,
+        194
+      ],
+      "summary": "Wires the chi routes for OIDC login, callback, logout and current-user, handling OAuth state cookies and session issuance.",
+      "tags": [
+        "api-handler",
+        "authentication",
+        "oidc",
+        "session",
+        "go"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/api/auth_handler.go:RegisterAuthHandlersWithHuma",
+      "type": "function",
+      "name": "RegisterAuthHandlersWithHuma",
+      "filePath": "backend/internal/api/auth_handler.go",
+      "lineRange": [
+        199,
+        206
+      ],
+      "summary": "Adapter that registers the auth routes on the chi router alongside the Huma API.",
+      "tags": [
+        "api-handler",
+        "adapter",
+        "go"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "function:backend/internal/api/api_key_handler.go:RegisterAPIKeyHandlers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "function:backend/internal/api/api_key_handler.go:RegisterAPIKeyHandlers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/auth/api_key_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/auth/api_key.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/auth/middleware.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/auth/oidc.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/auth/session.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/auth/super_admin_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/auth/super_admin.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/api_key_handler.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "function:backend/internal/api/attachment_handler.go:RegisterAttachmentHandlers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "function:backend/internal/api/attachment_handler.go:RegisterAttachmentHandlers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/auth/api_key_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/auth/api_key.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/auth/middleware.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/auth/oidc.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/auth/session.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/auth/super_admin_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/auth/super_admin.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/attachment_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/custom_field_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/element_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/group_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/link_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/link_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/phase_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/phase_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/project_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/project_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/service_fakes_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/user_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/user_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/version_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/version_worker.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/attachment_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "function:backend/internal/api/auth_handler.go:RegisterAuthHandlers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "function:backend/internal/api/auth_handler.go:RegisterAuthHandlers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "function:backend/internal/api/auth_handler.go:RegisterAuthHandlersWithHuma",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "function:backend/internal/api/auth_handler.go:RegisterAuthHandlersWithHuma",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/auth/api_key_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/auth/api_key.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/auth/middleware.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/auth/oidc.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/auth/session.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/auth/super_admin_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/auth/super_admin.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/attachment_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/custom_field_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/element_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/group_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/link_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/link_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/phase_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/phase_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/project_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/project_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/service_fakes_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/user_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/user_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/version_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/version_worker.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/auth_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

@@ -1,0 +1,488 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 8,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "backend/migrations/00001_create_extensions.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 7,
+      "nonEmptyLines": 6,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 0
+      }
+    },
+    {
+      "path": "backend/migrations/00002_create_users_and_groups.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 44,
+      "nonEmptyLines": 37,
+      "definitions": [
+        {
+          "name": "users",
+          "kind": "table",
+          "fields": [
+            "user_identifier",
+            "email",
+            "display_name",
+            "external_identity_provider",
+            "external_identity_subject"
+          ],
+          "startLine": 2,
+          "endLine": 8
+        },
+        {
+          "name": "groups",
+          "kind": "table",
+          "fields": [
+            "group_identifier",
+            "group_name"
+          ],
+          "startLine": 14,
+          "endLine": 17
+        },
+        {
+          "name": "group_memberships",
+          "kind": "table",
+          "fields": [
+            "group_identifier",
+            "user_identifier"
+          ],
+          "startLine": 19,
+          "endLine": 23
+        },
+        {
+          "name": "api_keys",
+          "kind": "table",
+          "fields": [
+            "api_key_identifier",
+            "user_identifier",
+            "hashed_key",
+            "label",
+            "created_time",
+            "last_used_time"
+          ],
+          "startLine": 28,
+          "endLine": 35
+        },
+        {
+          "name": "index_users_on_external_identity",
+          "kind": "index",
+          "fields": [],
+          "startLine": 10,
+          "endLine": 10
+        },
+        {
+          "name": "index_group_memberships_on_user",
+          "kind": "index",
+          "fields": [],
+          "startLine": 25,
+          "endLine": 25
+        },
+        {
+          "name": "index_api_keys_on_user",
+          "kind": "index",
+          "fields": [],
+          "startLine": 37,
+          "endLine": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 7
+      }
+    },
+    {
+      "path": "backend/migrations/00003_create_projects.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 39,
+      "nonEmptyLines": 33,
+      "definitions": [
+        {
+          "name": "projects",
+          "kind": "table",
+          "fields": [
+            "project_identifier",
+            "project_name",
+            "project_description",
+            "folder_path",
+            "creation_time",
+            "modification_time"
+          ],
+          "startLine": 2,
+          "endLine": 9
+        },
+        {
+          "name": "group_project_access",
+          "kind": "table",
+          "fields": [
+            "group_identifier",
+            "project_identifier",
+            "access_level"
+          ],
+          "startLine": 14,
+          "endLine": 19
+        },
+        {
+          "name": "phases",
+          "kind": "table",
+          "fields": [
+            "phase_identifier",
+            "project_identifier",
+            "phase_name",
+            "phase_order",
+            "planned_start_date",
+            "planned_end_date"
+          ],
+          "startLine": 24,
+          "endLine": 31
+        },
+        {
+          "name": "index_projects_on_folder_path",
+          "kind": "index",
+          "fields": [],
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "name": "index_group_project_access_on_project",
+          "kind": "index",
+          "fields": [],
+          "startLine": 21,
+          "endLine": 21
+        },
+        {
+          "name": "index_phases_on_project",
+          "kind": "index",
+          "fields": [],
+          "startLine": 33,
+          "endLine": 33
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 6
+      }
+    },
+    {
+      "path": "backend/migrations/00004_create_elements.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 91,
+      "nonEmptyLines": 78,
+      "definitions": [
+        {
+          "name": "elements",
+          "kind": "table",
+          "fields": [
+            "element_identifier",
+            "project_identifier",
+            "element_type",
+            "title",
+            "description",
+            "content_sha",
+            "creation_time",
+            "modification_time",
+            "task_status",
+            "task_progress",
+            "close_time",
+            "parent_feature_identifier",
+            "start_phase_identifier",
+            "delivery_phase_identifier"
+          ],
+          "startLine": 2,
+          "endLine": 27
+        },
+        {
+          "name": "element_supervisors",
+          "kind": "table",
+          "fields": [
+            "element_identifier",
+            "user_identifier"
+          ],
+          "startLine": 52,
+          "endLine": 56
+        },
+        {
+          "name": "requirement_clients",
+          "kind": "table",
+          "fields": [
+            "requirement_client_identifier",
+            "element_identifier",
+            "contact_name",
+            "contact_email",
+            "contact_notes"
+          ],
+          "startLine": 59,
+          "endLine": 65
+        },
+        {
+          "name": "index_elements_on_project",
+          "kind": "index",
+          "fields": [],
+          "startLine": 30,
+          "endLine": 30
+        },
+        {
+          "name": "index_elements_on_project_and_type",
+          "kind": "index",
+          "fields": [],
+          "startLine": 34,
+          "endLine": 34
+        },
+        {
+          "name": "index_elements_on_parent_feature",
+          "kind": "index",
+          "fields": [],
+          "startLine": 38,
+          "endLine": 38
+        },
+        {
+          "name": "index_elements_on_type_and_status",
+          "kind": "index",
+          "fields": [],
+          "startLine": 43,
+          "endLine": 43
+        },
+        {
+          "name": "index_elements_fulltext",
+          "kind": "index",
+          "fields": [],
+          "startLine": 48,
+          "endLine": 48
+        },
+        {
+          "name": "index_requirement_clients_on_element",
+          "kind": "index",
+          "fields": [],
+          "startLine": 67,
+          "endLine": 67
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 9
+      }
+    },
+    {
+      "path": "backend/migrations/00005_create_element_links.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 23,
+      "nonEmptyLines": 19,
+      "definitions": [
+        {
+          "name": "element_links",
+          "kind": "table",
+          "fields": [
+            "link_identifier",
+            "source_element_identifier",
+            "destination_element_identifier",
+            "link_type",
+            "creation_time"
+          ],
+          "startLine": 2,
+          "endLine": 12
+        },
+        {
+          "name": "index_element_links_on_source",
+          "kind": "index",
+          "fields": [],
+          "startLine": 15,
+          "endLine": 15
+        },
+        {
+          "name": "index_element_links_on_destination",
+          "kind": "index",
+          "fields": [],
+          "startLine": 19,
+          "endLine": 19
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 3
+      }
+    },
+    {
+      "path": "backend/migrations/00006_create_custom_fields.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 31,
+      "nonEmptyLines": 26,
+      "definitions": [
+        {
+          "name": "custom_field_definitions",
+          "kind": "table",
+          "fields": [
+            "field_definition_identifier",
+            "project_identifier",
+            "applicable_element_type",
+            "field_name",
+            "field_type",
+            "field_options",
+            "display_order"
+          ],
+          "startLine": 2,
+          "endLine": 13
+        },
+        {
+          "name": "element_custom_field_values",
+          "kind": "table",
+          "fields": [
+            "element_identifier",
+            "field_definition_identifier",
+            "field_value"
+          ],
+          "startLine": 18,
+          "endLine": 23
+        },
+        {
+          "name": "index_custom_field_definitions_on_project",
+          "kind": "index",
+          "fields": [],
+          "startLine": 15,
+          "endLine": 15
+        },
+        {
+          "name": "index_custom_field_values_on_value",
+          "kind": "index",
+          "fields": [],
+          "startLine": 26,
+          "endLine": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 4
+      }
+    },
+    {
+      "path": "backend/migrations/00007_create_attachments.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 17,
+      "nonEmptyLines": 15,
+      "definitions": [
+        {
+          "name": "element_attachments",
+          "kind": "table",
+          "fields": [
+            "attachment_identifier",
+            "element_identifier",
+            "file_storage_key",
+            "file_name",
+            "file_size_bytes",
+            "content_type",
+            "upload_time",
+            "uploaded_by_identifier"
+          ],
+          "startLine": 2,
+          "endLine": 11
+        },
+        {
+          "name": "index_element_attachments_on_element",
+          "kind": "index",
+          "fields": [],
+          "startLine": 13,
+          "endLine": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 2
+      }
+    },
+    {
+      "path": "backend/migrations/00008_create_element_versions.sql",
+      "language": "sql",
+      "fileCategory": "data",
+      "totalLines": 45,
+      "nonEmptyLines": 38,
+      "definitions": [
+        {
+          "name": "element_versions",
+          "kind": "table",
+          "fields": [
+            "version_identifier",
+            "element_identifier",
+            "version_number",
+            "content_sha",
+            "committed_time",
+            "committed_by_identifier",
+            "commit_message"
+          ],
+          "startLine": 4,
+          "endLine": 15
+        },
+        {
+          "name": "element_version_patches",
+          "kind": "table",
+          "fields": [
+            "version_identifier",
+            "forward_patch"
+          ],
+          "startLine": 23,
+          "endLine": 27
+        },
+        {
+          "name": "element_pending_changes",
+          "kind": "table",
+          "fields": [
+            "element_identifier",
+            "last_edit_time",
+            "snapshot_before_edits"
+          ],
+          "startLine": 32,
+          "endLine": 36
+        },
+        {
+          "name": "index_element_versions_on_element_and_number",
+          "kind": "index",
+          "fields": [],
+          "startLine": 18,
+          "endLine": 18
+        },
+        {
+          "name": "index_pending_changes_on_last_edit_time",
+          "kind": "index",
+          "fields": [],
+          "startLine": 39,
+          "endLine": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "definitionCount": 5
+      }
+    }
+  ]
+}

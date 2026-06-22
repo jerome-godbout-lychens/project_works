@@ -1,0 +1,176 @@
+{
+  "nodes": [
+    {
+      "id": "document:backend/DIAGRAM.md",
+      "type": "document",
+      "name": "DIAGRAM.md",
+      "filePath": "backend/DIAGRAM.md",
+      "summary": "Backend architecture documentation with Mermaid diagrams covering package structure, domain interfaces, cache-backed read flow, the versioning pending-change/commit lifecycle, version reconstruction, authentication, service-layer dependencies, and an API endpoints overview.",
+      "tags": ["documentation", "architecture", "diagrams", "overview"],
+      "complexity": "complex",
+      "languageNotes": "Uses Mermaid code fences to render class, sequence, and dependency diagrams inline."
+    },
+    {
+      "id": "config:backend/config.yaml",
+      "type": "config",
+      "name": "config.yaml",
+      "filePath": "backend/config.yaml",
+      "summary": "Runtime configuration for the backend covering server host/port, database connection, file storage, cache, authentication (including super-admin local account), and versioning behavior.",
+      "tags": ["configuration", "runtime", "server", "database", "authentication"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:backend/go.mod",
+      "type": "config",
+      "name": "go.mod",
+      "filePath": "backend/go.mod",
+      "summary": "Go module definition declaring the module path github.com/jerome-godbout-lychens/project_works/backend and pinning the Go 1.23 toolchain.",
+      "tags": ["configuration", "go-module", "build-system", "dependencies"],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:backend/openapi.yaml",
+      "type": "schema",
+      "name": "openapi.yaml",
+      "filePath": "backend/openapi.yaml",
+      "summary": "OpenAPI 3 specification defining the complete backend REST contract: auth, projects and folders, elements, links, versions and diffs, attachments, custom field definitions and values, phases, users, groups and membership, project access control, and API keys.",
+      "tags": ["api-schema", "schema-definition", "openapi", "rest", "documentation"],
+      "complexity": "complex",
+      "languageNotes": "OpenAPI 3 document with ~36 path templates grouped by resource; the YAML parser could not be machine-read so endpoint grouping was derived from the raw path list."
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:auth",
+      "type": "endpoint",
+      "name": "auth",
+      "summary": "Authentication endpoints: OAuth login, callback, logout, and current-user (/auth/login, /auth/callback, /auth/logout, /auth/me).",
+      "tags": ["api-schema", "authentication", "oauth", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:projects",
+      "type": "endpoint",
+      "name": "projects",
+      "summary": "Project and folder management endpoints including listing, creation, folder hierarchy, and per-project retrieval/update (/projects, /projects/folders, /projects/{project_identifier}).",
+      "tags": ["api-schema", "projects", "crud", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:elements",
+      "type": "endpoint",
+      "name": "elements",
+      "summary": "Element CRUD and search endpoints scoped to a project, plus standalone element access (/projects/{project_identifier}/elements, /elements/{element_identifier}, /elements/search).",
+      "tags": ["api-schema", "elements", "crud", "search", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:links",
+      "type": "endpoint",
+      "name": "links",
+      "summary": "Element link management endpoints for creating links from an element and operating on a single link (/elements/{element_identifier}/links, /links/{link_identifier}).",
+      "tags": ["api-schema", "links", "relationships", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:versions",
+      "type": "endpoint",
+      "name": "versions",
+      "summary": "Element version history endpoints: list versions, fetch a specific version, and diff between versions (/elements/{element_identifier}/versions[/{version_number}][/diff]).",
+      "tags": ["api-schema", "versioning", "history", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:attachments",
+      "type": "endpoint",
+      "name": "attachments",
+      "summary": "File attachment endpoints for listing/uploading on an element and accessing a single attachment (/elements/{element_identifier}/attachments, /attachments/{attachment_identifier}).",
+      "tags": ["api-schema", "attachments", "file-storage", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:custom-fields",
+      "type": "endpoint",
+      "name": "custom-fields",
+      "summary": "Custom field endpoints covering per-project field definitions and per-element field values (/projects/{project_identifier}/custom-field-definitions, /elements/{element_identifier}/custom-field-values).",
+      "tags": ["api-schema", "custom-fields", "extensibility", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:phases",
+      "type": "endpoint",
+      "name": "phases",
+      "summary": "Project phase endpoints for listing/creating phases and operating on a single phase (/projects/{project_identifier}/phases, /phases/{phase_identifier}).",
+      "tags": ["api-schema", "phases", "crud", "endpoint"],
+      "complexity": "simple"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:users",
+      "type": "endpoint",
+      "name": "users",
+      "summary": "User management endpoints for listing users, single-user access, and a user's group memberships (/users, /users/{user_identifier}, /users/{user_identifier}/groups).",
+      "tags": ["api-schema", "users", "crud", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:groups",
+      "type": "endpoint",
+      "name": "groups",
+      "summary": "Group endpoints covering group CRUD, membership management, and group access listings (/groups, /groups/{group_identifier}, /groups/{group_identifier}/members[/{user_identifier}], /groups/{group_identifier}/access).",
+      "tags": ["api-schema", "groups", "membership", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:access",
+      "type": "endpoint",
+      "name": "access",
+      "summary": "Project access-control endpoints for granting/revoking group access to projects and checking access (/projects/{project_identifier}/access[/{group_identifier}], /projects/{project_identifier}/access/check).",
+      "tags": ["api-schema", "access-control", "authorization", "endpoint"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:backend/openapi.yaml:api-keys",
+      "type": "endpoint",
+      "name": "api-keys",
+      "summary": "API key endpoints for listing/creating automation keys and operating on a single key (/api-keys, /api-keys/{api_key_identifier}).",
+      "tags": ["api-schema", "api-keys", "automation", "endpoint"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:auth", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:projects", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:elements", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:links", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:versions", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:attachments", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:custom-fields", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:phases", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:users", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:groups", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:access", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "schema:backend/openapi.yaml", "target": "endpoint:backend/openapi.yaml:api-keys", "type": "contains", "direction": "forward", "weight": 1.0 },
+
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/auth_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/project_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/element_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/link_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/version_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/attachment_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/custom_field_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/phase_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/user_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/group_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/access_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/api_key_handler.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+    { "source": "schema:backend/openapi.yaml", "target": "file:backend/internal/api/router.go", "type": "defines_schema", "direction": "forward", "weight": 0.8 },
+
+    { "source": "config:backend/config.yaml", "target": "file:backend/cmd/server/main.go", "type": "configures", "direction": "forward", "weight": 0.6 },
+    { "source": "config:backend/config.yaml", "target": "file:backend/internal/config/config.go", "type": "configures", "direction": "forward", "weight": 0.6 },
+
+    { "source": "config:backend/go.mod", "target": "file:backend/cmd/server/main.go", "type": "configures", "direction": "forward", "weight": 0.6 },
+
+    { "source": "document:backend/DIAGRAM.md", "target": "file:backend/cmd/server/main.go", "type": "documents", "direction": "forward", "weight": 0.5 },
+    { "source": "document:backend/DIAGRAM.md", "target": "file:backend/internal/api/router.go", "type": "documents", "direction": "forward", "weight": 0.5 },
+    { "source": "document:backend/DIAGRAM.md", "target": "schema:backend/openapi.yaml", "type": "documents", "direction": "forward", "weight": 0.5 },
+    { "source": "document:backend/DIAGRAM.md", "target": "file:backend/internal/auth/api_key.go", "type": "documents", "direction": "forward", "weight": 0.5 }
+  ]
+}

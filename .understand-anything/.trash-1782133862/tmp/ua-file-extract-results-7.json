@@ -1,0 +1,464 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 5,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "ARCHITECTURE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 232,
+      "nonEmptyLines": 181,
+      "sections": [
+        {
+          "heading": "Architecture & Technology Design",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Technology Stack",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Backend — Go",
+          "level": 3,
+          "line": 5
+        },
+        {
+          "heading": "Frontend — TypeScript + React",
+          "level": 3,
+          "line": 20
+        },
+        {
+          "heading": "Repository Structure",
+          "level": 2,
+          "line": 38
+        },
+        {
+          "heading": "Architectural Principles",
+          "level": 2,
+          "line": 81
+        },
+        {
+          "heading": "1. Layered / Clean Architecture (backend)",
+          "level": 3,
+          "line": 83
+        },
+        {
+          "heading": "2. CQRS-lite for Read Performance",
+          "level": 3,
+          "line": 97
+        },
+        {
+          "heading": "3. Plugin System",
+          "level": 3,
+          "line": 105
+        },
+        {
+          "heading": "4. OpenAPI-First API",
+          "level": 3,
+          "line": 111
+        },
+        {
+          "heading": "5. Custom Fields",
+          "level": 3,
+          "line": 115
+        },
+        {
+          "heading": "6. Authentication Flow",
+          "level": 3,
+          "line": 119
+        },
+        {
+          "heading": "Data Model Overview",
+          "level": 2,
+          "line": 130
+        },
+        {
+          "heading": "Key Views / Matrices",
+          "level": 2,
+          "line": 152
+        },
+        {
+          "heading": "Deployment Targets",
+          "level": 2,
+          "line": 165
+        },
+        {
+          "heading": "Config example (environment-driven)",
+          "level": 3,
+          "line": 178
+        },
+        {
+          "heading": "Local Dev Setup",
+          "level": 2,
+          "line": 223
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 17
+      }
+    },
+    {
+      "path": "Claude.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 140,
+      "nonEmptyLines": 92,
+      "sections": [
+        {
+          "heading": "Project Works",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Introduction",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Simultaneous engineering",
+          "level": 2,
+          "line": 7
+        },
+        {
+          "heading": "Structure",
+          "level": 2,
+          "line": 16
+        },
+        {
+          "heading": "General",
+          "level": 3,
+          "line": 18
+        },
+        {
+          "heading": "Code split",
+          "level": 3,
+          "line": 22
+        },
+        {
+          "heading": "Storage",
+          "level": 3,
+          "line": 32
+        },
+        {
+          "heading": "Behaviors",
+          "level": 2,
+          "line": 36
+        },
+        {
+          "heading": "Config",
+          "level": 3,
+          "line": 38
+        },
+        {
+          "heading": "Authentication",
+          "level": 3,
+          "line": 48
+        },
+        {
+          "heading": "Projects",
+          "level": 3,
+          "line": 52
+        },
+        {
+          "heading": "Filter and select",
+          "level": 3,
+          "line": 56
+        },
+        {
+          "heading": "Display",
+          "level": 3,
+          "line": 60
+        },
+        {
+          "heading": "Fields",
+          "level": 3,
+          "line": 73
+        },
+        {
+          "heading": "Link information",
+          "level": 5,
+          "line": 88
+        },
+        {
+          "heading": "Link type",
+          "level": 6,
+          "line": 96
+        },
+        {
+          "heading": "Requirements",
+          "level": 4,
+          "line": 106
+        },
+        {
+          "heading": "Features",
+          "level": 4,
+          "line": 112
+        },
+        {
+          "heading": "Task",
+          "level": 4,
+          "line": 117
+        },
+        {
+          "heading": "Task status",
+          "level": 5,
+          "line": 127
+        },
+        {
+          "heading": "Bug",
+          "level": 4,
+          "line": 138
+        },
+        {
+          "heading": "Eval",
+          "level": 4,
+          "line": 140
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 22
+      }
+    },
+    {
+      "path": "DATA_MODEL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 559,
+      "nonEmptyLines": 461,
+      "sections": [
+        {
+          "heading": "Data Model Design",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Design Goals",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Table Layout Overview",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "Hot Path Tables",
+          "level": 2,
+          "line": 38
+        },
+        {
+          "heading": "projects",
+          "level": 3,
+          "line": 40
+        },
+        {
+          "heading": "elements",
+          "level": 3,
+          "line": 53
+        },
+        {
+          "heading": "element_custom_field_values",
+          "level": 3,
+          "line": 89
+        },
+        {
+          "heading": "element_links",
+          "level": 3,
+          "line": 99
+        },
+        {
+          "heading": "element_attachments",
+          "level": 3,
+          "line": 115
+        },
+        {
+          "heading": "custom_field_definitions",
+          "level": 3,
+          "line": 128
+        },
+        {
+          "heading": "phases",
+          "level": 3,
+          "line": 142
+        },
+        {
+          "heading": "Supervisors & Clients (many-to-many)",
+          "level": 3,
+          "line": 153
+        },
+        {
+          "heading": "Auth tables",
+          "level": 3,
+          "line": 160
+        },
+        {
+          "heading": "Cold Path — Versioning",
+          "level": 2,
+          "line": 172
+        },
+        {
+          "heading": "How it works",
+          "level": 3,
+          "line": 174
+        },
+        {
+          "heading": "Reconstructing a past version",
+          "level": 3,
+          "line": 192
+        },
+        {
+          "heading": "element_versions",
+          "level": 3,
+          "line": 204
+        },
+        {
+          "heading": "element_version_patches",
+          "level": 3,
+          "line": 218
+        },
+        {
+          "heading": "element_pending_changes",
+          "level": 3,
+          "line": 228
+        },
+        {
+          "heading": "Go Domain Types",
+          "level": 2,
+          "line": 240
+        },
+        {
+          "heading": "Store Interfaces",
+          "level": 2,
+          "line": 425
+        },
+        {
+          "heading": "Auto-Commit Flow (detail)",
+          "level": 2,
+          "line": 528
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 22
+      }
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 78,
+      "nonEmptyLines": 47,
+      "sections": [
+        {
+          "heading": "Project Works",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "Badge",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "Background",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Install",
+          "level": 2,
+          "line": 18
+        },
+        {
+          "heading": "Requirements",
+          "level": 3,
+          "line": 20
+        },
+        {
+          "heading": "Steps",
+          "level": 3,
+          "line": 26
+        },
+        {
+          "heading": "App Workflow",
+          "level": 2,
+          "line": 36
+        },
+        {
+          "heading": "Tips",
+          "level": 3,
+          "line": 38
+        },
+        {
+          "heading": "Element Type",
+          "level": 3,
+          "line": 44
+        },
+        {
+          "heading": "License",
+          "level": 2,
+          "line": 56
+        },
+        {
+          "heading": "Contribution",
+          "level": 2,
+          "line": 60
+        },
+        {
+          "heading": "Tests",
+          "level": 2,
+          "line": 64
+        },
+        {
+          "heading": "Unit tests",
+          "level": 3,
+          "line": 68
+        },
+        {
+          "heading": "Integration tests",
+          "level": 3,
+          "line": 72
+        },
+        {
+          "heading": "Languages",
+          "level": 3,
+          "line": 76
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 15
+      }
+    },
+    {
+      "path": "TestsResultsParser.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "totalLines": 48,
+      "nonEmptyLines": 42,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

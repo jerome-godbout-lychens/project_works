@@ -1,0 +1,1148 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/api/router.go",
+      "type": "file",
+      "name": "router.go",
+      "filePath": "backend/internal/api/router.go",
+      "summary": "Constructs the chi router, applies the auth middleware, mounts the Huma OpenAPI API, and registers every domain handler group plus the auth routes.",
+      "tags": [
+        "router",
+        "entry-point",
+        "huma",
+        "middleware",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/api/router.go:NewRouter",
+      "type": "function",
+      "name": "NewRouter",
+      "filePath": "backend/internal/api/router.go",
+      "lineRange": [
+        16,
+        70
+      ],
+      "summary": "Builds the chi router, applies auth middleware, mounts the Huma API, and registers every handler group plus auth routes.",
+      "tags": [
+        "router",
+        "entry-point",
+        "huma",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/auth/api_key.go",
+      "type": "file",
+      "name": "api_key.go",
+      "filePath": "backend/internal/auth/api_key.go",
+      "summary": "Helpers for API key handling: SHA-256 hashing of raw keys, cryptographically random key generation, and format validation.",
+      "tags": [
+        "authentication",
+        "api-key",
+        "cryptography",
+        "utility",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/auth/api_key.go:HashAPIKey",
+      "type": "function",
+      "name": "HashAPIKey",
+      "filePath": "backend/internal/auth/api_key.go",
+      "lineRange": [
+        11,
+        14
+      ],
+      "summary": "Returns the hex-encoded SHA-256 hash of a raw API key for storage and lookup.",
+      "tags": [
+        "api-key",
+        "cryptography",
+        "hashing",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/auth/api_key.go:GenerateRawAPIKey",
+      "type": "function",
+      "name": "GenerateRawAPIKey",
+      "filePath": "backend/internal/auth/api_key.go",
+      "lineRange": [
+        18,
+        27
+      ],
+      "summary": "Generates a cryptographically random, URL-safe base64 API key.",
+      "tags": [
+        "api-key",
+        "cryptography",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/auth/api_key.go:ValidateAPIKeyFormat",
+      "type": "function",
+      "name": "ValidateAPIKeyFormat",
+      "filePath": "backend/internal/auth/api_key.go",
+      "lineRange": [
+        31,
+        44
+      ],
+      "summary": "Validates that a raw API key matches the expected prefix and length format.",
+      "tags": [
+        "api-key",
+        "validation",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/auth/api_key_test.go",
+      "type": "file",
+      "name": "api_key_test.go",
+      "filePath": "backend/internal/auth/api_key_test.go",
+      "summary": "Unit tests covering API key hashing determinism, uniqueness of generated keys, and format validation.",
+      "tags": [
+        "test",
+        "authentication",
+        "api-key",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/auth/middleware.go",
+      "type": "file",
+      "name": "middleware.go",
+      "filePath": "backend/internal/auth/middleware.go",
+      "summary": "HTTP authentication middleware that resolves the caller via session cookie or bearer API key, injects the user identifier and super-admin flag into the request context, and exposes context accessors.",
+      "tags": [
+        "middleware",
+        "authentication",
+        "authorization",
+        "context",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/auth/middleware.go:NewAuthMiddleware",
+      "type": "function",
+      "name": "NewAuthMiddleware",
+      "filePath": "backend/internal/auth/middleware.go",
+      "lineRange": [
+        31,
+        38
+      ],
+      "summary": "Constructs an AuthMiddleware with its session manager, API-key store, user service and super-admin identifier.",
+      "tags": [
+        "middleware",
+        "constructor",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/auth/middleware.go:Authenticate",
+      "type": "function",
+      "name": "Authenticate",
+      "filePath": "backend/internal/auth/middleware.go",
+      "lineRange": [
+        42,
+        75
+      ],
+      "summary": "Middleware handler that authenticates a request via session cookie or bearer API key and injects identity into the context.",
+      "tags": [
+        "middleware",
+        "authentication",
+        "authorization",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/auth/middleware.go:GetUserIdentifierFromContext",
+      "type": "function",
+      "name": "GetUserIdentifierFromContext",
+      "filePath": "backend/internal/auth/middleware.go",
+      "lineRange": [
+        99,
+        102
+      ],
+      "summary": "Extracts the authenticated user identifier injected into the request context.",
+      "tags": [
+        "context",
+        "authentication",
+        "utility",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/auth/middleware.go:IsSuperAdmin",
+      "type": "function",
+      "name": "IsSuperAdmin",
+      "filePath": "backend/internal/auth/middleware.go",
+      "lineRange": [
+        105,
+        108
+      ],
+      "summary": "Reports whether the request context belongs to the super-admin user.",
+      "tags": [
+        "context",
+        "authorization",
+        "utility",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/auth/middleware.go:AuthMiddleware",
+      "type": "class",
+      "name": "AuthMiddleware",
+      "filePath": "backend/internal/auth/middleware.go",
+      "lineRange": [
+        22,
+        27
+      ],
+      "summary": "HTTP middleware struct holding the session manager, API-key store, user service and super-admin identifier.",
+      "tags": [
+        "middleware",
+        "authentication",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/auth/oidc.go",
+      "type": "file",
+      "name": "oidc.go",
+      "filePath": "backend/internal/auth/oidc.go",
+      "summary": "OIDC provider wrapper around the OAuth2/go-oidc libraries that builds the authorization URL and exchanges the callback code for verified ID-token claims.",
+      "tags": [
+        "authentication",
+        "oidc",
+        "oauth2",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/auth/oidc.go:NewOIDCProvider",
+      "type": "function",
+      "name": "NewOIDCProvider",
+      "filePath": "backend/internal/auth/oidc.go",
+      "lineRange": [
+        19,
+        42
+      ],
+      "summary": "Initializes an OIDC provider by discovering the issuer and building the OAuth2 config.",
+      "tags": [
+        "authentication",
+        "oidc",
+        "constructor",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/auth/oidc.go:GetAuthURL",
+      "type": "function",
+      "name": "GetAuthURL",
+      "filePath": "backend/internal/auth/oidc.go",
+      "lineRange": [
+        45,
+        47
+      ],
+      "summary": "Builds the OAuth2 authorization-code URL for a given anti-forgery state.",
+      "tags": [
+        "authentication",
+        "oauth2",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/auth/oidc.go:HandleCallback",
+      "type": "function",
+      "name": "HandleCallback",
+      "filePath": "backend/internal/auth/oidc.go",
+      "lineRange": [
+        51,
+        81
+      ],
+      "summary": "Exchanges the authorization code for tokens and verifies the ID token, returning the user claims.",
+      "tags": [
+        "authentication",
+        "oidc",
+        "oauth2",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/auth/oidc.go:OIDCProvider",
+      "type": "class",
+      "name": "OIDCProvider",
+      "filePath": "backend/internal/auth/oidc.go",
+      "lineRange": [
+        12,
+        16
+      ],
+      "summary": "Wraps the OIDC verifier and OAuth2 config used for the login flow.",
+      "tags": [
+        "authentication",
+        "oidc",
+        "oauth2",
+        "go"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "function:backend/internal/api/router.go:NewRouter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "function:backend/internal/api/router.go:NewRouter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/auth/api_key_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/auth/api_key.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/auth/middleware.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/auth/oidc.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/auth/session.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/auth/super_admin_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/auth/super_admin.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/attachment_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/custom_field_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/element_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/group_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/link_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/link_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/phase_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/phase_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/project_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/project_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/service_fakes_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/user_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/user_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/version_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/version_worker.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/versionable_snapshot_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/router.go",
+      "target": "file:backend/internal/service/versionable_snapshot.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/api_key.go",
+      "target": "function:backend/internal/auth/api_key.go:HashAPIKey",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/api_key.go",
+      "target": "function:backend/internal/auth/api_key.go:HashAPIKey",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/api_key.go",
+      "target": "function:backend/internal/auth/api_key.go:GenerateRawAPIKey",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/api_key.go",
+      "target": "function:backend/internal/auth/api_key.go:GenerateRawAPIKey",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/api_key.go",
+      "target": "function:backend/internal/auth/api_key.go:ValidateAPIKeyFormat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/api_key.go",
+      "target": "function:backend/internal/auth/api_key.go:ValidateAPIKeyFormat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/api_key.go",
+      "target": "file:backend/internal/auth/api_key_test.go",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "function:backend/internal/auth/middleware.go:NewAuthMiddleware",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "function:backend/internal/auth/middleware.go:NewAuthMiddleware",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "function:backend/internal/auth/middleware.go:Authenticate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "function:backend/internal/auth/middleware.go:Authenticate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "function:backend/internal/auth/middleware.go:GetUserIdentifierFromContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "function:backend/internal/auth/middleware.go:GetUserIdentifierFromContext",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "function:backend/internal/auth/middleware.go:IsSuperAdmin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "function:backend/internal/auth/middleware.go:IsSuperAdmin",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "class:backend/internal/auth/middleware.go:AuthMiddleware",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "class:backend/internal/auth/middleware.go:AuthMiddleware",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/attachment_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/custom_field_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/element_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/group_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/link_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/link_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/phase_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/phase_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/project_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/project_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/service_fakes_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/user_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/user_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/version_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/version_worker.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/versionable_snapshot_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/middleware.go",
+      "target": "file:backend/internal/service/versionable_snapshot.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/oidc.go",
+      "target": "function:backend/internal/auth/oidc.go:NewOIDCProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/oidc.go",
+      "target": "function:backend/internal/auth/oidc.go:NewOIDCProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/oidc.go",
+      "target": "function:backend/internal/auth/oidc.go:GetAuthURL",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/oidc.go",
+      "target": "function:backend/internal/auth/oidc.go:GetAuthURL",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/oidc.go",
+      "target": "function:backend/internal/auth/oidc.go:HandleCallback",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/oidc.go",
+      "target": "function:backend/internal/auth/oidc.go:HandleCallback",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/oidc.go",
+      "target": "class:backend/internal/auth/oidc.go:OIDCProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/oidc.go",
+      "target": "class:backend/internal/auth/oidc.go:OIDCProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

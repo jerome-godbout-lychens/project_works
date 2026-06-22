@@ -1,0 +1,143 @@
+{
+  "nodes": [
+    {
+      "id": "service:docker-compose.yaml",
+      "type": "service",
+      "name": "docker-compose.yaml",
+      "filePath": "docker-compose.yaml",
+      "summary": "Defines the multi-service local stack for project_works: the Go backend (built from the Dockerfile), a PostgreSQL 16 database with a health check and persistent volume, and a SeaweedFS S3-compatible file storage service, all wired over a shared bridge network.",
+      "tags": ["orchestration", "infrastructure", "deployment", "containerization"],
+      "complexity": "moderate",
+      "languageNotes": "Uses depends_on with service_healthy/service_started conditions to order startup, and named volumes mapped to ./local_storage_data for Postgres and SeaweedFS persistence."
+    },
+    {
+      "id": "service:docker-compose.yaml:backend",
+      "type": "service",
+      "name": "backend",
+      "summary": "Go backend API service built from the local Dockerfile, exposed on port 8088. Configured via environment variables for the Postgres DSN, SeaweedFS file store endpoint/bucket, session secret, and super-admin credentials; waits for the database to be healthy before starting.",
+      "tags": ["api-handler", "service", "deployment", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yaml:database",
+      "type": "service",
+      "name": "database",
+      "summary": "PostgreSQL 16 (alpine) service exposing port 5432, with a pg_isready health check and a persistent volume under ./local_storage_data/postgres backing the project_works database.",
+      "tags": ["database", "service", "infrastructure", "persistence"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:docker-compose.yaml:file_storage",
+      "type": "service",
+      "name": "file_storage",
+      "summary": "SeaweedFS service running in S3 mode (server -s3) to provide S3-compatible object storage for attachments, exposing the S3 API (8333), master (9333), and filer web UI (8888) with a persistent data volume.",
+      "tags": ["object-storage", "service", "infrastructure", "s3"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "Dockerfile",
+      "summary": "Multi-stage Docker build that compiles the Go backend in a golang:1.26-alpine builder stage (static CGO-disabled binary from ./cmd/server) and copies the binary and migrations into a minimal alpine:3.20 runtime image exposing port 8088.",
+      "tags": ["containerization", "infrastructure", "deployment", "build-system"],
+      "complexity": "simple",
+      "languageNotes": "Multi-stage build separates the Go toolchain from the runtime image; CGO_ENABLED=0 produces a static binary so the final alpine stage only needs ca-certificates and tzdata."
+    },
+    {
+      "id": "service:Dockerfile:builder",
+      "type": "service",
+      "name": "builder",
+      "summary": "First build stage based on golang:1.26-alpine that downloads modules, tidies dependencies, and compiles the backend into a static linux binary at /build/project-works-server.",
+      "tags": ["build-system", "containerization", "go"],
+      "complexity": "simple"
+    },
+    {
+      "id": "service:Dockerfile:alpine",
+      "type": "service",
+      "name": "alpine",
+      "summary": "Final runtime stage based on alpine:3.20 that installs ca-certificates and tzdata, copies the compiled server binary and migrations from the builder stage, exposes port 8088, and runs the server as the entrypoint.",
+      "tags": ["containerization", "deployment", "runtime"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "service:docker-compose.yaml",
+      "target": "service:docker-compose.yaml:backend",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:docker-compose.yaml",
+      "target": "service:docker-compose.yaml:database",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:docker-compose.yaml",
+      "target": "service:docker-compose.yaml:file_storage",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:docker-compose.yaml",
+      "target": "service:Dockerfile",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yaml:backend",
+      "target": "service:docker-compose.yaml:database",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yaml:backend",
+      "target": "service:docker-compose.yaml:file_storage",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "service:docker-compose.yaml:backend",
+      "target": "file:backend/cmd/server/main.go",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:Dockerfile",
+      "target": "file:backend/cmd/server/main.go",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:Dockerfile",
+      "target": "service:Dockerfile:builder",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:Dockerfile",
+      "target": "service:Dockerfile:alpine",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:Dockerfile:alpine",
+      "target": "service:Dockerfile:builder",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

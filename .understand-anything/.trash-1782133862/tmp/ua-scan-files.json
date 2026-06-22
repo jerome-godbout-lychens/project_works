@@ -1,0 +1,659 @@
+{
+  "scriptCompleted": true,
+  "files": [
+    {
+      "path": ".github/workflows/package.yml",
+      "language": "yaml",
+      "sizeLines": 0,
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".github/workflows/tests.yml",
+      "language": "yaml",
+      "sizeLines": 42,
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "language": "markdown",
+      "sizeLines": 232,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "backend/cmd/integration-test/main.go",
+      "language": "go",
+      "sizeLines": 892,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/cmd/server/main.go",
+      "language": "go",
+      "sizeLines": 309,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/config.yaml",
+      "language": "yaml",
+      "sizeLines": 35,
+      "fileCategory": "config"
+    },
+    {
+      "path": "backend/DIAGRAM.md",
+      "language": "markdown",
+      "sizeLines": 295,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "backend/go.mod",
+      "language": "mod",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": "backend/internal/api/access_handler.go",
+      "language": "go",
+      "sizeLines": 214,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/api_key_handler.go",
+      "language": "go",
+      "sizeLines": 168,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/attachment_handler.go",
+      "language": "go",
+      "sizeLines": 192,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/auth_handler.go",
+      "language": "go",
+      "sizeLines": 206,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/custom_field_handler.go",
+      "language": "go",
+      "sizeLines": 342,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/element_handler.go",
+      "language": "go",
+      "sizeLines": 374,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/group_handler.go",
+      "language": "go",
+      "sizeLines": 315,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/link_handler.go",
+      "language": "go",
+      "sizeLines": 210,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/phase_handler.go",
+      "language": "go",
+      "sizeLines": 201,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/project_handler.go",
+      "language": "go",
+      "sizeLines": 256,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/router.go",
+      "language": "go",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/user_handler.go",
+      "language": "go",
+      "sizeLines": 142,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/api/version_handler.go",
+      "language": "go",
+      "sizeLines": 175,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/auth/api_key_test.go",
+      "language": "go",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/auth/api_key.go",
+      "language": "go",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/auth/middleware.go",
+      "language": "go",
+      "sizeLines": 108,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/auth/oidc.go",
+      "language": "go",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/auth/session.go",
+      "language": "go",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/auth/super_admin_test.go",
+      "language": "go",
+      "sizeLines": 290,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/auth/super_admin.go",
+      "language": "go",
+      "sizeLines": 112,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/cache/memory/ristretto_cache_test.go",
+      "language": "go",
+      "sizeLines": 100,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/cache/memory/ristretto_cache.go",
+      "language": "go",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/config/config.go",
+      "language": "go",
+      "sizeLines": 129,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/attachment.go",
+      "language": "go",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/custom_field.go",
+      "language": "go",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/element_link.go",
+      "language": "go",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/element_test.go",
+      "language": "go",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/element_type_test.go",
+      "language": "go",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/element_type.go",
+      "language": "go",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/element.go",
+      "language": "go",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/errors.go",
+      "language": "go",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/link_type_test.go",
+      "language": "go",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/link_type.go",
+      "language": "go",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/phase.go",
+      "language": "go",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/project.go",
+      "language": "go",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_attachment.go",
+      "language": "go",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_cache.go",
+      "language": "go",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_custom_field.go",
+      "language": "go",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_element_link.go",
+      "language": "go",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_element_version.go",
+      "language": "go",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_element.go",
+      "language": "go",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_file_storage.go",
+      "language": "go",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_phase.go",
+      "language": "go",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_project.go",
+      "language": "go",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/store_user.go",
+      "language": "go",
+      "sizeLines": 42,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/task_status_test.go",
+      "language": "go",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/task_status.go",
+      "language": "go",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/user.go",
+      "language": "go",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/domain/version.go",
+      "language": "go",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/filestore/s3/s3_file_storage.go",
+      "language": "go",
+      "sizeLines": 92,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/attachment_service.go",
+      "language": "go",
+      "sizeLines": 171,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/custom_field_service.go",
+      "language": "go",
+      "sizeLines": 134,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/element_service.go",
+      "language": "go",
+      "sizeLines": 206,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/group_service.go",
+      "language": "go",
+      "sizeLines": 78,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/link_service_test.go",
+      "language": "go",
+      "sizeLines": 177,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/link_service.go",
+      "language": "go",
+      "sizeLines": 154,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/phase_service_test.go",
+      "language": "go",
+      "sizeLines": 72,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/phase_service.go",
+      "language": "go",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/project_service_test.go",
+      "language": "go",
+      "sizeLines": 117,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/project_service.go",
+      "language": "go",
+      "sizeLines": 74,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/service_fakes_test.go",
+      "language": "go",
+      "sizeLines": 444,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/user_service_test.go",
+      "language": "go",
+      "sizeLines": 84,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/user_service.go",
+      "language": "go",
+      "sizeLines": 69,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/version_service.go",
+      "language": "go",
+      "sizeLines": 248,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/version_worker.go",
+      "language": "go",
+      "sizeLines": 229,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/versionable_snapshot_test.go",
+      "language": "go",
+      "sizeLines": 192,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/service/versionable_snapshot.go",
+      "language": "go",
+      "sizeLines": 159,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/api_key_store.go",
+      "language": "go",
+      "sizeLines": 101,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/attachment_store.go",
+      "language": "go",
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/connection.go",
+      "language": "go",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/custom_field_store.go",
+      "language": "go",
+      "sizeLines": 250,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/element_link_store.go",
+      "language": "go",
+      "sizeLines": 129,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/element_pending_store.go",
+      "language": "go",
+      "sizeLines": 94,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/element_store.go",
+      "language": "go",
+      "sizeLines": 249,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/element_version_store.go",
+      "language": "go",
+      "sizeLines": 176,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/group_store.go",
+      "language": "go",
+      "sizeLines": 273,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/phase_store.go",
+      "language": "go",
+      "sizeLines": 136,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/project_store.go",
+      "language": "go",
+      "sizeLines": 218,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/internal/store/postgres/user_store.go",
+      "language": "go",
+      "sizeLines": 104,
+      "fileCategory": "code"
+    },
+    {
+      "path": "backend/migrations/00001_create_extensions.sql",
+      "language": "sql",
+      "sizeLines": 7,
+      "fileCategory": "data"
+    },
+    {
+      "path": "backend/migrations/00002_create_users_and_groups.sql",
+      "language": "sql",
+      "sizeLines": 44,
+      "fileCategory": "data"
+    },
+    {
+      "path": "backend/migrations/00003_create_projects.sql",
+      "language": "sql",
+      "sizeLines": 39,
+      "fileCategory": "data"
+    },
+    {
+      "path": "backend/migrations/00004_create_elements.sql",
+      "language": "sql",
+      "sizeLines": 91,
+      "fileCategory": "data"
+    },
+    {
+      "path": "backend/migrations/00005_create_element_links.sql",
+      "language": "sql",
+      "sizeLines": 23,
+      "fileCategory": "data"
+    },
+    {
+      "path": "backend/migrations/00006_create_custom_fields.sql",
+      "language": "sql",
+      "sizeLines": 31,
+      "fileCategory": "data"
+    },
+    {
+      "path": "backend/migrations/00007_create_attachments.sql",
+      "language": "sql",
+      "sizeLines": 17,
+      "fileCategory": "data"
+    },
+    {
+      "path": "backend/migrations/00008_create_element_versions.sql",
+      "language": "sql",
+      "sizeLines": 45,
+      "fileCategory": "data"
+    },
+    {
+      "path": "backend/openapi.yaml",
+      "language": "yaml",
+      "sizeLines": 1818,
+      "fileCategory": "config"
+    },
+    {
+      "path": "Claude.md",
+      "language": "markdown",
+      "sizeLines": 140,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "DATA_MODEL.md",
+      "language": "markdown",
+      "sizeLines": 559,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docker-compose.yaml",
+      "language": "yaml",
+      "sizeLines": 66,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 28,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "Dockerfile_tests",
+      "language": "unknown",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "justfile",
+      "language": "unknown",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "sizeLines": 78,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "TestsResultsParser.sh",
+      "language": "shell",
+      "sizeLines": 48,
+      "fileCategory": "script"
+    }
+  ],
+  "totalFiles": 105,
+  "filteredByIgnore": 2,
+  "estimatedComplexity": "moderate",
+  "stats": {
+    "filesScanned": 105,
+    "byCategory": {
+      "infra": 4,
+      "code": 84,
+      "docs": 5,
+      "config": 3,
+      "data": 8,
+      "script": 1
+    },
+    "byLanguage": {
+      "yaml": 5,
+      "unknown": 3,
+      "markdown": 5,
+      "go": 81,
+      "mod": 1,
+      "sql": 8,
+      "dockerfile": 1,
+      "shell": 1
+    }
+  }
+}

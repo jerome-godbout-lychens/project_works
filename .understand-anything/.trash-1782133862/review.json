@@ -1,0 +1,40 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'pipeline:.github/workflows/package.yml' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 379,
+    "totalEdges": 1983,
+    "totalLayers": 9,
+    "tourSteps": 13,
+    "nodeTypes": {
+      "file": 83,
+      "class": 70,
+      "function": 171,
+      "service": 8,
+      "pipeline": 2,
+      "schema": 9,
+      "table": 17,
+      "document": 5,
+      "config": 2,
+      "endpoint": 12
+    },
+    "edgeTypes": {
+      "contains": 253,
+      "exports": 157,
+      "imports": 1427,
+      "implements": 22,
+      "tested_by": 12,
+      "calls": 14,
+      "deploys": 8,
+      "depends_on": 35,
+      "migrates": 17,
+      "documents": 18,
+      "related": 2,
+      "defines_schema": 13,
+      "configures": 3,
+      "triggers": 2
+    }
+  }
+}

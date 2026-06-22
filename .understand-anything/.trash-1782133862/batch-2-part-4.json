@@ -1,0 +1,972 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/store/postgres/element_version_store.go",
+      "type": "file",
+      "name": "element_version_store.go",
+      "filePath": "backend/internal/store/postgres/element_version_store.go",
+      "summary": "Postgres implementation of the ElementVersionStore interface, transactionally writing version rows plus JSON patches and reading patch ranges for diffing.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "versioning",
+        "serialization"
+      ],
+      "complexity": "complex",
+      "languageNotes": "CreateVersion uses a transaction (BeginTx/Commit/Rollback) to atomically insert a version and its forward/reverse patches."
+    },
+    {
+      "id": "class:backend/internal/store/postgres/element_version_store.go:ElementVersionStore",
+      "type": "class",
+      "name": "ElementVersionStore",
+      "filePath": "backend/internal/store/postgres/element_version_store.go",
+      "lineRange": [
+        11,
+        13
+      ],
+      "summary": "Postgres-backed store persisting element version history and patches.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "versioning"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_version_store.go:CreateVersion",
+      "type": "function",
+      "name": "CreateVersion",
+      "filePath": "backend/internal/store/postgres/element_version_store.go",
+      "lineRange": [
+        19,
+        72
+      ],
+      "summary": "Transactionally inserts a version record and its associated JSON-encoded patch, rolling back on failure.",
+      "tags": [
+        "repository",
+        "database",
+        "transaction",
+        "versioning"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_version_store.go:GetPatchesInRange",
+      "type": "function",
+      "name": "GetPatchesInRange",
+      "filePath": "backend/internal/store/postgres/element_version_store.go",
+      "lineRange": [
+        119,
+        176
+      ],
+      "summary": "Reads and unmarshals the version patches between two version numbers for an element to reconstruct a diff.",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "versioning"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_version_store.go:ListVersionsByElement",
+      "type": "function",
+      "name": "ListVersionsByElement",
+      "filePath": "backend/internal/store/postgres/element_version_store.go",
+      "lineRange": [
+        74,
+        117
+      ],
+      "summary": "Returns paginated version metadata records for an element.",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "pagination"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/store/postgres/group_store.go",
+      "type": "file",
+      "name": "group_store.go",
+      "filePath": "backend/internal/store/postgres/group_store.go",
+      "summary": "Postgres implementations of GroupStore and GroupProjectAccessStore covering group CRUD, membership management, and group-to-project access levels.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "authorization"
+      ],
+      "complexity": "complex",
+      "languageNotes": "GetUserAccessLevel uses a SQL CASE/COALESCE aggregation over joined memberships and access rows to resolve the effective access level."
+    },
+    {
+      "id": "class:backend/internal/store/postgres/group_store.go:GroupStore",
+      "type": "class",
+      "name": "GroupStore",
+      "filePath": "backend/internal/store/postgres/group_store.go",
+      "lineRange": [
+        12,
+        14
+      ],
+      "summary": "Postgres-backed store for groups and their memberships.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/store/postgres/group_store.go:GroupProjectAccessStore",
+      "type": "class",
+      "name": "GroupProjectAccessStore",
+      "filePath": "backend/internal/store/postgres/group_store.go",
+      "lineRange": [
+        160,
+        162
+      ],
+      "summary": "Postgres-backed store managing group-to-project access grants and resolving effective user access.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "authorization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/group_store.go:GetUserAccessLevel",
+      "type": "function",
+      "name": "GetUserAccessLevel",
+      "filePath": "backend/internal/store/postgres/group_store.go",
+      "lineRange": [
+        241,
+        273
+      ],
+      "summary": "Resolves the highest access level a user has to a project across all their group memberships via a SQL aggregation.",
+      "tags": [
+        "repository",
+        "database",
+        "authorization",
+        "query"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/group_store.go:ListUsersByGroup",
+      "type": "function",
+      "name": "ListUsersByGroup",
+      "filePath": "backend/internal/store/postgres/group_store.go",
+      "lineRange": [
+        134,
+        157
+      ],
+      "summary": "Lists the users belonging to a given group via the membership join.",
+      "tags": [
+        "repository",
+        "database",
+        "query"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/group_store.go:ListAccessByGroup",
+      "type": "function",
+      "name": "ListAccessByGroup",
+      "filePath": "backend/internal/store/postgres/group_store.go",
+      "lineRange": [
+        220,
+        239
+      ],
+      "summary": "Lists all project access grants held by a given group.",
+      "tags": [
+        "repository",
+        "database",
+        "authorization",
+        "query"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/group_store.go:ListGroupsByUser",
+      "type": "function",
+      "name": "ListGroupsByUser",
+      "filePath": "backend/internal/store/postgres/group_store.go",
+      "lineRange": [
+        110,
+        132
+      ],
+      "summary": "Lists the groups a given user is a member of via the membership join.",
+      "tags": [
+        "repository",
+        "database",
+        "query"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/store/postgres/phase_store.go",
+      "type": "file",
+      "name": "phase_store.go",
+      "filePath": "backend/internal/store/postgres/phase_store.go",
+      "summary": "Postgres implementation of the PhaseStore interface for project phase CRUD and ordered listing.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "scheduling"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/store/postgres/phase_store.go:PhaseStore",
+      "type": "class",
+      "name": "PhaseStore",
+      "filePath": "backend/internal/store/postgres/phase_store.go",
+      "lineRange": [
+        12,
+        14
+      ],
+      "summary": "Postgres-backed store for project phases.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/phase_store.go:ListPhasesByProject",
+      "type": "function",
+      "name": "ListPhasesByProject",
+      "filePath": "backend/internal/store/postgres/phase_store.go",
+      "lineRange": [
+        45,
+        81
+      ],
+      "summary": "Returns the phases of a project ordered by phase order.",
+      "tags": [
+        "repository",
+        "database",
+        "query"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/phase_store.go:UpdatePhase",
+      "type": "function",
+      "name": "UpdatePhase",
+      "filePath": "backend/internal/store/postgres/phase_store.go",
+      "lineRange": [
+        84,
+        115
+      ],
+      "summary": "Updates a phase's mutable fields and reports not-found when no row is affected.",
+      "tags": [
+        "repository",
+        "database",
+        "update"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "class:backend/internal/store/postgres/element_version_store.go:ElementVersionStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "function:backend/internal/store/postgres/element_version_store.go:CreateVersion",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "function:backend/internal/store/postgres/element_version_store.go:GetPatchesInRange",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "function:backend/internal/store/postgres/element_version_store.go:ListVersionsByElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "class:backend/internal/store/postgres/element_version_store.go:ElementVersionStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "class:backend/internal/domain/store_element_version.go:ElementVersionStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "class:backend/internal/store/postgres/group_store.go:GroupStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "class:backend/internal/store/postgres/group_store.go:GroupProjectAccessStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "function:backend/internal/store/postgres/group_store.go:GetUserAccessLevel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "function:backend/internal/store/postgres/group_store.go:ListUsersByGroup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "function:backend/internal/store/postgres/group_store.go:ListAccessByGroup",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "function:backend/internal/store/postgres/group_store.go:ListGroupsByUser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "class:backend/internal/store/postgres/group_store.go:GroupStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "class:backend/internal/store/postgres/group_store.go:GroupProjectAccessStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "class:backend/internal/domain/store_user.go:GroupStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "class:backend/internal/domain/store_user.go:GroupProjectAccessStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "class:backend/internal/store/postgres/phase_store.go:PhaseStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "function:backend/internal/store/postgres/phase_store.go:ListPhasesByProject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "function:backend/internal/store/postgres/phase_store.go:UpdatePhase",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "class:backend/internal/store/postgres/phase_store.go:PhaseStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "class:backend/internal/domain/store_phase.go:PhaseStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_version_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/group_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/phase_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

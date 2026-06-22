@@ -1,0 +1,15 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 7,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "All 7 dropped edges were recoverable and restored. They were re-pointed from incorrect file: prefixes to the correctly-prefixed existing nodes (6 document:DATA_MODEL.md -> schema:backend/migrations/* edges, type 'documents'; 1 file:TestsResultsParser.sh -> pipeline:.github/workflows/tests.yml edge, type 'related'). All target and source nodes were verified to exist before re-adding. Original edge properties from batch-7.json preserved (direction 'forward', weight 0.5).",
+    "Verified no batch nodes were lost: every node across all 25 batch files maps to a node in the assembled graph (by id or bare path); 0 nodes with missing id field in any batch.",
+    "Cross-batch import gap check: all 1427 import relationships in importMap (105 source entries) are already represented by edges in the graph (in either direction). No missing imports edges to add.",
+    "Node type and complexity integrity is clean: all 379 nodes use valid types (function, file, class, table, endpoint, schema, service, document, pipeline, config) and valid complexity values (simple 175, moderate 163, complex 41). Every node's id prefix matches its type field; no unknown types or complexity values to remap.",
+    "Fixed-section sanity: the merge report's func: -> function: normalization affecting all 171 function nodes is an expected systemic LLM output pattern, not a data-quality concern. No anomalies in the fixed counts."
+  ]
+}

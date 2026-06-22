@@ -1,0 +1,86 @@
+[
+  {
+    "order": 1,
+    "title": "Project Overview",
+    "description": "Start with the README to learn what Project Works is: an open-source project and task tracker built on Simultaneous Engineering rather than Agile. It introduces the element types (Requirement, Feature, Task, plus Bug, Risk, and Evaluation), the built-in git-like history of work progress, and the Go backend / TypeScript frontend split. This sets the vocabulary used everywhere else in the tour.",
+    "nodeIds": ["document:README.md"]
+  },
+  {
+    "order": 2,
+    "title": "Architecture & Data Model Design",
+    "description": "Before reading any Go, study the two design documents that the whole codebase implements. ARCHITECTURE.md lays out the layered/clean architecture, the OpenAPI-first API, the CQRS-lite read model and plugin philosophy, while DATA_MODEL.md details the hot-path tables, cold-path versioning tables, and the auto-commit versioning flow. Keeping these two in mind makes every later layer feel like a deliberate choice rather than an accident.",
+    "nodeIds": ["document:ARCHITECTURE.md", "document:DATA_MODEL.md", "document:backend/DIAGRAM.md"]
+  },
+  {
+    "order": 3,
+    "title": "The Domain Model",
+    "description": "The domain package is the foundation every other layer depends on (it has the highest fan-in in the codebase). Element is the polymorphic core type unifying requirements, features, tasks, bugs, risks, and evaluations, while ElementType, LinkType, and TaskStatus are the enums that constrain it and ComputeFeatureProgress rolls up child-task progress. Understanding these types is the prerequisite for everything that follows.",
+    "nodeIds": ["file:backend/internal/domain/element.go", "file:backend/internal/domain/element_type.go", "file:backend/internal/domain/task_status.go", "file:backend/internal/domain/link_type.go"],
+    "languageLesson": "Go has no enums; these files use the idiomatic pattern of a named string type plus typed constants and an IsValid() method, with an AllXxx() slice acting as the authoritative set."
+  },
+  {
+    "order": 4,
+    "title": "Links, Versions & Supporting Models",
+    "description": "Building on the Element type from Step 3, these models capture the relationships and history that make Project Works more than a flat list. ElementLink encodes the typed related/child/implement edges that drive the coupling and dependency matrices, while the version types model RFC6902-style patch operations, version metadata, and pending changes — the data backbone of the git-like history explored in Step 7. Custom fields and attachments round out the editable surface of an element.",
+    "nodeIds": ["file:backend/internal/domain/element_link.go", "file:backend/internal/domain/version.go", "file:backend/internal/domain/custom_field.go", "file:backend/internal/domain/attachment.go"]
+  },
+  {
+    "order": 5,
+    "title": "Pluggable Store Interfaces",
+    "description": "This is the seam that makes storage swappable, a core requirement of the project. Rather than depend on PostgreSQL directly, every service depends on these interfaces: ElementStore, ElementLinkStore, the user/group/API-key stores, the version store, plus the CacheStore and FileStorage abstractions. Any backend that satisfies these contracts can be dropped in without touching business logic.",
+    "nodeIds": ["file:backend/internal/domain/store_element.go", "file:backend/internal/domain/store_element_version.go", "file:backend/internal/domain/store_user.go", "file:backend/internal/domain/store_cache.go", "file:backend/internal/domain/store_file_storage.go"],
+    "languageLesson": "Go's implicit interface satisfaction means a Postgres struct never declares 'implements ElementStore' — it just has the right methods. This keeps the domain package free of any dependency on its implementors, inverting the dependency direction."
+  },
+  {
+    "order": 6,
+    "title": "Persistence: Postgres, S3 & Cache",
+    "description": "Here the interfaces from Step 5 become concrete. The Postgres connection opens the pool and runs filesystem migrations, the element and link stores implement filtered listing and full-text search, the S3 file storage handles attachment blobs with presigned URLs, and the Ristretto cache provides the prefix-invalidated in-memory read layer that serves the read-heavy workload. Swapping any of these out is a localized change because callers only see the domain interfaces.",
+    "nodeIds": ["file:backend/internal/store/postgres/connection.go", "file:backend/internal/store/postgres/element_store.go", "file:backend/internal/filestore/s3/s3_file_storage.go", "file:backend/internal/cache/memory/ristretto_cache.go"]
+  },
+  {
+    "order": 7,
+    "title": "The Service Layer & Versioning Engine",
+    "description": "The service layer orchestrates stores into business operations and houses the project's most distinctive subsystem: git-like versioning. ElementService assembles the full element aggregate and stages pending changes on every edit; versionable_snapshot builds a normalized, content-hashed snapshot; the version worker periodically commits stale pending changes as new versions with computed diffs; and version_service reconstructs any past state by replaying the forward patch chain. Together they deliver branchable, diffable history without slowing down writes.",
+    "nodeIds": ["file:backend/internal/service/element_service.go", "file:backend/internal/service/versionable_snapshot.go", "file:backend/internal/service/version_worker.go", "file:backend/internal/service/version_service.go"],
+    "languageLesson": "The version worker runs as a background goroutine started from main and driven by a time.Ticker, decoupling the expensive commit/diff work from the user-facing write path — a common Go pattern for deferred, asynchronous processing."
+  },
+  {
+    "order": 8,
+    "title": "Authentication & Authorization",
+    "description": "This layer secures the API and implements the project's identity requirements. The OIDC wrapper handles Office 365 login, session.go issues signed JWT session tokens, api_key.go provides hashed keys for CLI/automation access, super_admin.go seeds the local fallback admin so access is never lost, and middleware.go resolves every caller via cookie or bearer token before enforcing group-based project access. Authorization is by group, never by individual user, exactly as specified.",
+    "nodeIds": ["file:backend/internal/auth/oidc.go", "file:backend/internal/auth/session.go", "file:backend/internal/auth/api_key.go", "file:backend/internal/auth/middleware.go", "file:backend/internal/auth/super_admin.go"]
+  },
+  {
+    "order": 9,
+    "title": "The HTTP API Layer",
+    "description": "The handlers turn services into the REST surface that the frontend and CLI consume. router.go builds the chi router, applies the auth middleware from Step 8, and mounts the Huma OpenAPI app; the element, link, and version handlers then register typed endpoints that map domain objects to response DTOs and parse filter query parameters. Each handler is thin, delegating real work to its service.",
+    "nodeIds": ["file:backend/internal/api/router.go", "file:backend/internal/api/element_handler.go", "file:backend/internal/api/link_handler.go", "file:backend/internal/api/version_handler.go"],
+    "languageLesson": "Huma generates the OpenAPI spec from Go input/output structs and their tags, so the API contract and the handler code can never drift apart — the schema is derived from the types rather than hand-maintained."
+  },
+  {
+    "order": 10,
+    "title": "The Composition Root",
+    "description": "main.go is where every layer you have seen is wired together. It loads config, opens the Postgres connection and runs migrations, constructs the cache, file storage, stores, services, and auth, seeds the super-admin, starts the background version-commit worker from Step 7, launches the HTTP server, and handles graceful shutdown. Reading it top to bottom is the fastest way to see how the dependency-injection wiring assembles the whole application.",
+    "nodeIds": ["file:backend/cmd/server/main.go", "file:backend/internal/config/config.go", "config:backend/config.yaml"]
+  },
+  {
+    "order": 11,
+    "title": "The OpenAPI Contract",
+    "description": "openapi.yaml is the formal contract that the handlers in Step 9 expose and that the frontend and CLI program against. It groups the surface into auth, projects, elements, links, versions, attachments, custom fields, phases, users, groups, and access-control endpoints — a complete map of what the backend can do. This is the document an integrator reads first when scripting against the API.",
+    "nodeIds": ["schema:backend/openapi.yaml", "endpoint:backend/openapi.yaml:elements", "endpoint:backend/openapi.yaml:versions", "endpoint:backend/openapi.yaml:auth"]
+  },
+  {
+    "order": 12,
+    "title": "The Database Schema",
+    "description": "The migrations define the persisted model that the Postgres stores from Step 6 read and write. They build up incrementally: extensions, then users/groups/API-keys, projects and phases, the polymorphic elements table with full-text indexes, typed element_links, custom fields, attachments, and finally the element_versions / patches / pending-changes tables that back the versioning engine. The schema maps almost one-to-one onto the domain types from Steps 3-4.",
+    "nodeIds": ["schema:backend/migrations/00004_create_elements.sql", "schema:backend/migrations/00005_create_element_links.sql", "schema:backend/migrations/00008_create_element_versions.sql", "table:backend/migrations/00004_create_elements.sql:elements"],
+    "languageLesson": "Each migration file is numbered and applied in order, evolving the schema incrementally; connection.go runs them on startup so a fresh database is brought fully up to date before the server accepts requests."
+  },
+  {
+    "order": 13,
+    "title": "Infrastructure, Build & CI",
+    "description": "The tour ends with how the application is packaged, run, and tested. The multi-stage Dockerfile compiles a static binary then ships it in a minimal Alpine image; docker-compose wires the backend together with PostgreSQL 16 and a SeaweedFS S3 store for local development; the justfile provides the developer task recipes; and the GitHub Actions tests workflow builds a test image and runs the suite on pushes to dev. Together these let any contributor stand up and validate the full stack.",
+    "nodeIds": ["service:Dockerfile", "service:docker-compose.yaml", "file:justfile", "pipeline:.github/workflows/tests.yml"],
+    "languageLesson": "The Dockerfile uses a multi-stage build: the golang:1.26-alpine builder stage holds the toolchain and produces a static CGO-disabled binary, while the final alpine:3.20 stage carries only that binary plus the migrations — keeping the runtime image tiny and free of build dependencies."
+  }
+]

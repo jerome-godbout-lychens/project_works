@@ -1,0 +1,5484 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 21,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "backend/cmd/server/main.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 309,
+      "nonEmptyLines": 283,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 23,
+          "endLine": 283,
+          "params": []
+        },
+        {
+          "name": "redactDSN",
+          "startLine": 287,
+          "endLine": 309,
+          "params": [
+            "dsn"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "os.Getenv",
+          "lineNumber": 25
+        },
+        {
+          "caller": "main",
+          "callee": "config.Load",
+          "lineNumber": 26
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 28
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 32
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 33
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 34
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 35
+        },
+        {
+          "caller": "main",
+          "callee": "redactDSN",
+          "lineNumber": 35
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 55
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 59
+        },
+        {
+          "caller": "main",
+          "callee": "context.WithCancel",
+          "lineNumber": 61
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 61
+        },
+        {
+          "caller": "main",
+          "callee": "cancel",
+          "lineNumber": 62
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewConnection",
+          "lineNumber": 65
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 72
+        },
+        {
+          "caller": "main",
+          "callee": "database.Close",
+          "lineNumber": 74
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.RunMigrations",
+          "lineNumber": 77
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 78
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 80
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 83
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewProjectStore",
+          "lineNumber": 84
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewElementStore",
+          "lineNumber": 85
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewElementLinkStore",
+          "lineNumber": 86
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewElementVersionStore",
+          "lineNumber": 87
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewElementPendingChangeStore",
+          "lineNumber": 88
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewAttachmentStore",
+          "lineNumber": 89
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewCustomFieldDefinitionStore",
+          "lineNumber": 90
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewCustomFieldValueStore",
+          "lineNumber": 91
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewPhaseStore",
+          "lineNumber": 92
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewUserStore",
+          "lineNumber": 93
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewGroupStore",
+          "lineNumber": 94
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewGroupProjectAccessStore",
+          "lineNumber": 95
+        },
+        {
+          "caller": "main",
+          "callee": "postgres.NewAPIKeyStore",
+          "lineNumber": 96
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 97
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 100
+        },
+        {
+          "caller": "main",
+          "callee": "auth.SeedSuperAdmin",
+          "lineNumber": 101
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 110
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 112
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 115
+        },
+        {
+          "caller": "main",
+          "callee": "s3filestore.NewS3FileStorage",
+          "lineNumber": 116
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 123
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 125
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 128
+        },
+        {
+          "caller": "main",
+          "callee": "memory.NewRistrettoCache",
+          "lineNumber": 129
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 134
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 136
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 139
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewProjectService",
+          "lineNumber": 140
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewElementService",
+          "lineNumber": 141
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewVersionService",
+          "lineNumber": 149
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewLinkService",
+          "lineNumber": 156
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewAttachmentService",
+          "lineNumber": 164
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewCustomFieldService",
+          "lineNumber": 173
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewPhaseService",
+          "lineNumber": 182
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewUserService",
+          "lineNumber": 183
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewGroupService",
+          "lineNumber": 184
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 185
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 188
+        },
+        {
+          "caller": "main",
+          "callee": "auth.NewSessionManager",
+          "lineNumber": 189
+        },
+        {
+          "caller": "main",
+          "callee": "auth.NewOIDCProvider",
+          "lineNumber": 193
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 201
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 203
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 205
+        },
+        {
+          "caller": "main",
+          "callee": "auth.NewAuthMiddleware",
+          "lineNumber": 208
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 209
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 212
+        },
+        {
+          "caller": "main",
+          "callee": "service.NewVersionCommitWorker",
+          "lineNumber": 213
+        },
+        {
+          "caller": "main",
+          "callee": "versionWorker.Start",
+          "lineNumber": 223
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 224
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 230
+        },
+        {
+          "caller": "main",
+          "callee": "api.NewRouter",
+          "lineNumber": 231
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 246
+        },
+        {
+          "caller": "main",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 249
+        },
+        {
+          "caller": "main",
+          "callee": "make",
+          "lineNumber": 259
+        },
+        {
+          "caller": "main",
+          "callee": "signal.Notify",
+          "lineNumber": 260
+        },
+        {
+          "caller": "main",
+          "callee": "func() {\n\t\tlog.Printf(\"init: server listening on %s\", listenAddress)\n\t\tif err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {\n\t\t\tlog.Fatalf(\"server error: %v\", err)\n\t\t}\n\t}",
+          "lineNumber": 262
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 263
+        },
+        {
+          "caller": "main",
+          "callee": "server.ListenAndServe",
+          "lineNumber": 264
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 265
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 269
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 271
+        },
+        {
+          "caller": "main",
+          "callee": "cancel",
+          "lineNumber": 273
+        },
+        {
+          "caller": "main",
+          "callee": "context.WithTimeout",
+          "lineNumber": 275
+        },
+        {
+          "caller": "main",
+          "callee": "context.Background",
+          "lineNumber": 275
+        },
+        {
+          "caller": "main",
+          "callee": "shutdownCancel",
+          "lineNumber": 276
+        },
+        {
+          "caller": "main",
+          "callee": "server.Shutdown",
+          "lineNumber": 278
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 279
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 282
+        },
+        {
+          "caller": "redactDSN",
+          "callee": "strings.Index",
+          "lineNumber": 289
+        },
+        {
+          "caller": "redactDSN",
+          "callee": "strings.LastIndex",
+          "lineNumber": 291
+        },
+        {
+          "caller": "redactDSN",
+          "callee": "strings.Index",
+          "lineNumber": 294
+        },
+        {
+          "caller": "redactDSN",
+          "callee": "strings.Fields",
+          "lineNumber": 302
+        },
+        {
+          "caller": "redactDSN",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 304
+        },
+        {
+          "caller": "redactDSN",
+          "callee": "strings.ToLower",
+          "lineNumber": 304
+        },
+        {
+          "caller": "redactDSN",
+          "callee": "strings.Join",
+          "lineNumber": 308
+        }
+      ],
+      "metrics": {
+        "importCount": 53,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/api/access_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 214,
+      "nonEmptyLines": 183,
+      "functions": [
+        {
+          "name": "RegisterAccessHandlers",
+          "startLine": 86,
+          "endLine": 214,
+          "params": [
+            "api",
+            "groupService"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ProjectAccessResponse",
+          "startLine": 15,
+          "endLine": 19,
+          "methods": [],
+          "properties": [
+            "GroupIdentifier",
+            "ProjectIdentifier",
+            "AccessLevel"
+          ]
+        },
+        {
+          "name": "ListProjectAccessInput",
+          "startLine": 22,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "ProjectIdentifier"
+          ]
+        },
+        {
+          "name": "ListProjectAccessOutput",
+          "startLine": 27,
+          "endLine": 31,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "SetProjectAccessInput",
+          "startLine": 34,
+          "endLine": 40,
+          "methods": [],
+          "properties": [
+            "ProjectIdentifier",
+            "Body"
+          ]
+        },
+        {
+          "name": "SetProjectAccessOutput",
+          "startLine": 43,
+          "endLine": 45,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "RemoveProjectAccessInput",
+          "startLine": 48,
+          "endLine": 51,
+          "methods": [],
+          "properties": [
+            "ProjectIdentifier",
+            "GroupIdentifier"
+          ]
+        },
+        {
+          "name": "RemoveProjectAccessOutput",
+          "startLine": 54,
+          "endLine": 58,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "ListGroupAccessInput",
+          "startLine": 61,
+          "endLine": 63,
+          "methods": [],
+          "properties": [
+            "GroupIdentifier"
+          ]
+        },
+        {
+          "name": "ListGroupAccessOutput",
+          "startLine": 66,
+          "endLine": 70,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "CheckProjectAccessInput",
+          "startLine": 73,
+          "endLine": 75,
+          "methods": [],
+          "properties": [
+            "ProjectIdentifier"
+          ]
+        },
+        {
+          "name": "CheckProjectAccessOutput",
+          "startLine": 78,
+          "endLine": 83,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProjectAccessResponse",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ListProjectAccessInput",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "ListProjectAccessOutput",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "SetProjectAccessInput",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "SetProjectAccessOutput",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveProjectAccessInput",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveProjectAccessOutput",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "ListGroupAccessInput",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "ListGroupAccessOutput",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "CheckProjectAccessInput",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "CheckProjectAccessOutput",
+          "line": 78,
+          "isDefault": false
+        },
+        {
+          "name": "RegisterAccessHandlers",
+          "line": 86,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 88
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "groupService.ListAccessByProject",
+          "lineNumber": 95
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 97
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "make",
+          "lineNumber": 101
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "len",
+          "lineNumber": 101
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "string",
+          "lineNumber": 107
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 115
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "domain.AccessLevel",
+          "lineNumber": 122
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "groupService.SetProjectAccess",
+          "lineNumber": 124
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 126
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 139
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "groupService.RemoveProjectAccess",
+          "lineNumber": 146
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 148
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 161
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "groupService.ListAccessByGroup",
+          "lineNumber": 168
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 170
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "make",
+          "lineNumber": 174
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "len",
+          "lineNumber": 174
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "string",
+          "lineNumber": 180
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 188
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "auth.GetUserIdentifierFromContext",
+          "lineNumber": 195
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 197
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "groupService.GetUserAccessLevel",
+          "lineNumber": 200
+        },
+        {
+          "caller": "RegisterAccessHandlers",
+          "callee": "string",
+          "lineNumber": 209
+        }
+      ],
+      "metrics": {
+        "importCount": 50,
+        "exportCount": 12,
+        "functionCount": 1,
+        "classCount": 11
+      }
+    },
+    {
+      "path": "backend/internal/api/api_key_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 168,
+      "nonEmptyLines": 144,
+      "functions": [
+        {
+          "name": "RegisterAPIKeyHandlers",
+          "startLine": 65,
+          "endLine": 168,
+          "params": [
+            "api",
+            "apiKeyStore"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "APIKeyResponse",
+          "startLine": 16,
+          "endLine": 21,
+          "methods": [],
+          "properties": [
+            "APIKeyIdentifier",
+            "Label",
+            "CreatedTime",
+            "LastUsedTime"
+          ]
+        },
+        {
+          "name": "APIKeyGeneratedResponse",
+          "startLine": 24,
+          "endLine": 29,
+          "methods": [],
+          "properties": [
+            "APIKeyIdentifier",
+            "RawKey",
+            "Label",
+            "CreatedTime"
+          ]
+        },
+        {
+          "name": "ListAPIKeysInput",
+          "startLine": 32,
+          "endLine": 33,
+          "methods": [],
+          "properties": []
+        },
+        {
+          "name": "ListAPIKeysOutput",
+          "startLine": 36,
+          "endLine": 40,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "GenerateAPIKeyInput",
+          "startLine": 43,
+          "endLine": 45,
+          "methods": [],
+          "properties": [
+            "Label"
+          ]
+        },
+        {
+          "name": "GenerateAPIKeyOutput",
+          "startLine": 48,
+          "endLine": 50,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "DeleteAPIKeyInput",
+          "startLine": 53,
+          "endLine": 55,
+          "methods": [],
+          "properties": [
+            "APIKeyIdentifier"
+          ]
+        },
+        {
+          "name": "DeleteAPIKeyOutput",
+          "startLine": 58,
+          "endLine": 62,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "APIKeyResponse",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "APIKeyGeneratedResponse",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "ListAPIKeysInput",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "ListAPIKeysOutput",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateAPIKeyInput",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateAPIKeyOutput",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAPIKeyInput",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAPIKeyOutput",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "RegisterAPIKeyHandlers",
+          "line": 65,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 67
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "auth.GetUserIdentifierFromContext",
+          "lineNumber": 74
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 76
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "apiKeyStore.ListAPIKeysByUser",
+          "lineNumber": 79
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 81
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "make",
+          "lineNumber": 85
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "len",
+          "lineNumber": 85
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 100
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "auth.GetUserIdentifierFromContext",
+          "lineNumber": 108
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 110
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "auth.GenerateRawAPIKey",
+          "lineNumber": 114
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 116
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "auth.HashAPIKey",
+          "lineNumber": 120
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "uuid.New().String",
+          "lineNumber": 124
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "uuid.New",
+          "lineNumber": 124
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "time.Now().UTC",
+          "lineNumber": 128
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "time.Now",
+          "lineNumber": 128
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "apiKeyStore.CreateAPIKey",
+          "lineNumber": 132
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 134
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 148
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "apiKeyStore.DeleteAPIKey",
+          "lineNumber": 155
+        },
+        {
+          "caller": "RegisterAPIKeyHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 157
+        }
+      ],
+      "metrics": {
+        "importCount": 33,
+        "exportCount": 9,
+        "functionCount": 1,
+        "classCount": 8
+      }
+    },
+    {
+      "path": "backend/internal/api/attachment_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 192,
+      "nonEmptyLines": 168,
+      "functions": [
+        {
+          "name": "RegisterAttachmentHandlers",
+          "startLine": 77,
+          "endLine": 192,
+          "params": [
+            "api",
+            "attachmentService"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AttachmentResponse",
+          "startLine": 16,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "AttachmentIdentifier",
+            "ElementIdentifier",
+            "FileName",
+            "FileSizeBytes",
+            "ContentType",
+            "UploadTime",
+            "UploadedByIdentifier"
+          ]
+        },
+        {
+          "name": "ListAttachmentsInput",
+          "startLine": 27,
+          "endLine": 29,
+          "methods": [],
+          "properties": [
+            "ElementIdentifier"
+          ]
+        },
+        {
+          "name": "ListAttachmentsOutput",
+          "startLine": 32,
+          "endLine": 36,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "UploadAttachmentInput",
+          "startLine": 39,
+          "endLine": 44,
+          "methods": [],
+          "properties": [
+            "ElementIdentifier",
+            "FileName",
+            "ContentType",
+            "RawBody"
+          ]
+        },
+        {
+          "name": "UploadAttachmentOutput",
+          "startLine": 47,
+          "endLine": 49,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "GetAttachmentPresignedURLInput",
+          "startLine": 52,
+          "endLine": 54,
+          "methods": [],
+          "properties": [
+            "AttachmentIdentifier"
+          ]
+        },
+        {
+          "name": "GetAttachmentPresignedURLOutput",
+          "startLine": 57,
+          "endLine": 62,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        },
+        {
+          "name": "DeleteAttachmentInput",
+          "startLine": 65,
+          "endLine": 67,
+          "methods": [],
+          "properties": [
+            "AttachmentIdentifier"
+          ]
+        },
+        {
+          "name": "DeleteAttachmentOutput",
+          "startLine": 70,
+          "endLine": 74,
+          "methods": [],
+          "properties": [
+            "Body"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AttachmentResponse",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "ListAttachmentsInput",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "ListAttachmentsOutput",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "UploadAttachmentInput",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "UploadAttachmentOutput",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "GetAttachmentPresignedURLInput",
+          "line": 52,
+          "isDefault": false
+        },
+        {
+          "name": "GetAttachmentPresignedURLOutput",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAttachmentInput",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAttachmentOutput",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "RegisterAttachmentHandlers",
+          "line": 77,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 79
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "attachmentService.ListAttachmentsByElement",
+          "lineNumber": 86
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 88
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "make",
+          "lineNumber": 92
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "len",
+          "lineNumber": 92
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 110
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "auth.GetUserIdentifierFromContext",
+          "lineNumber": 118
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 120
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "attachmentService.UploadAttachment",
+          "lineNumber": 124
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "int64",
+          "lineNumber": 129
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "len",
+          "lineNumber": 129
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "bytes.NewReader",
+          "lineNumber": 130
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 134
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 151
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "attachmentService.GetPresignedURL",
+          "lineNumber": 159
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 161
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "time.Now().Add",
+          "lineNumber": 166
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "time.Now",
+          "lineNumber": 166
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.Register",
+          "lineNumber": 172
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "attachmentService.DeleteAttachment",
+          "lineNumber": 179
+        },
+        {
+          "caller": "RegisterAttachmentHandlers",
+          "callee": "huma.NewError",
+          "lineNumber": 181
+        }
+      ],
+      "metrics": {
+        "importCount": 24,
+        "exportCount": 10,
+        "functionCount": 1,
+        "classCount": 9
+      }
+    },
+    {
+      "path": "backend/internal/api/auth_handler.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 206,
+      "nonEmptyLines": 178,
+      "functions": [
+        {
+          "name": "RegisterAuthHandlers",
+          "startLine": 35,
+          "endLine": 194,
+          "params": [
+            "chiRouter",
+            "sessionManager",
+            "oidcProvider",
+            "userService"
+          ]
+        },
+        {
+          "name": "RegisterAuthHandlersWithHuma",
+          "startLine": 199,
+          "endLine": 206,
+          "params": [
+            "chiRouter",
+            "sessionManager",
+            "oidcProvider",
+            "userService"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LoginResponse",
+          "startLine": 15,
+          "endLine": 18,
+          "methods": [],
+          "properties": [
+            "Success",
+            "URL"
+          ]
+        },
+        {
+          "name": "LogoutResponse",
+          "startLine": 21,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "Success"
+          ]
+        },
+        {
+          "name": "CurrentUserResponse",
+          "startLine": 26,
+          "endLine": 30,
+          "methods": [],
+          "properties": [
+            "UserIdentifier",
+            "Email",
+            "DisplayName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LoginResponse",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "LogoutResponse",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "CurrentUserResponse",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "RegisterAuthHandlers",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "RegisterAuthHandlersWithHuma",
+          "line": 199,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "chiRouter.Get",
+          "lineNumber": 42
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "make",
+          "lineNumber": 44
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "rand.Read",
+          "lineNumber": 45
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Error",
+          "lineNumber": 47
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "base64.URLEncoding.EncodeToString",
+          "lineNumber": 50
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.SetCookie",
+          "lineNumber": 53
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "oidcProvider.GetAuthURL",
+          "lineNumber": 63
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Redirect",
+          "lineNumber": 66
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "chiRouter.Get",
+          "lineNumber": 70
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.URL.Query().Get",
+          "lineNumber": 72
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.URL.Query",
+          "lineNumber": 72
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Error",
+          "lineNumber": 74
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.Cookie",
+          "lineNumber": 78
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Error",
+          "lineNumber": 80
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Error",
+          "lineNumber": 85
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.SetCookie",
+          "lineNumber": 90
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.URL.Query().Get",
+          "lineNumber": 99
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.URL.Query",
+          "lineNumber": 99
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Error",
+          "lineNumber": 101
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "oidcProvider.HandleCallback",
+          "lineNumber": 106
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.Context",
+          "lineNumber": 106
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Error",
+          "lineNumber": 108
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "userService.GetOrCreateUserFromOIDC",
+          "lineNumber": 113
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.Context",
+          "lineNumber": 114
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Error",
+          "lineNumber": 121
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "sessionManager.CreateSessionToken",
+          "lineNumber": 126
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Error",
+          "lineNumber": 128
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.SetCookie",
+          "lineNumber": 133
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.Redirect",
+          "lineNumber": 143
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "chiRouter.Post",
+          "lineNumber": 147
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "http.SetCookie",
+          "lineNumber": 149
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Header().Set",
+          "lineNumber": 157
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Header",
+          "lineNumber": 157
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.WriteHeader",
+          "lineNumber": 158
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Write",
+          "lineNumber": 159
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "chiRouter.Get",
+          "lineNumber": 163
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "auth.GetUserIdentifierFromContext",
+          "lineNumber": 164
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.Context",
+          "lineNumber": 164
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.WriteHeader",
+          "lineNumber": 166
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Write",
+          "lineNumber": 167
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "userService.GetUserByIdentifier",
+          "lineNumber": 171
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "r.Context",
+          "lineNumber": 171
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.WriteHeader",
+          "lineNumber": 173
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Write",
+          "lineNumber": 174
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Header().Set",
+          "lineNumber": 178
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Header",
+          "lineNumber": 178
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.WriteHeader",
+          "lineNumber": 179
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Write",
+          "lineNumber": 188
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Write",
+          "lineNumber": 189
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Write",
+          "lineNumber": 190
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Write",
+          "lineNumber": 191
+        },
+        {
+          "caller": "RegisterAuthHandlers",
+          "callee": "w.Write",
+          "lineNumber": 192
+        },
+        {
+          "caller": "RegisterAuthHandlersWithHuma",
+          "callee": "RegisterAuthHandlers",
+          "lineNumber": 205
+        }
+      ],
+      "metrics": {
+        "importCount": 24,
+        "exportCount": 5,
+        "functionCount": 2,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "backend/internal/api/router.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 70,
+      "nonEmptyLines": 62,
+      "functions": [
+        {
+          "name": "NewRouter",
+          "startLine": 16,
+          "endLine": 70,
+          "params": [
+            "projectService",
+            "elementService",
+            "versionService",
+            "linkService",
+            "attachmentService",
+            "customFieldService",
+            "phaseService",
+            "userService",
+            "groupService",
+            "apiKeyStore",
+            "authMiddleware",
+            "sessionManager",
+            "oidcProvider"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewRouter",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewRouter",
+          "callee": "chi.NewRouter",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "router.Use",
+          "lineNumber": 34
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 35
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "next.ServeHTTP",
+          "lineNumber": 38
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "authMiddleware.Authenticate(next).ServeHTTP",
+          "lineNumber": 41
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "authMiddleware.Authenticate",
+          "lineNumber": 41
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "huma.DefaultConfig",
+          "lineNumber": 46
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "humachi.New",
+          "lineNumber": 53
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterProjectHandlers",
+          "lineNumber": 56
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterElementHandlers",
+          "lineNumber": 57
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterVersionHandlers",
+          "lineNumber": 58
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterLinkHandlers",
+          "lineNumber": 59
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterAttachmentHandlers",
+          "lineNumber": 60
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterCustomFieldHandlers",
+          "lineNumber": 61
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterPhaseHandlers",
+          "lineNumber": 62
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterUserHandlers",
+          "lineNumber": 63
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterGroupHandlers",
+          "lineNumber": 64
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterAccessHandlers",
+          "lineNumber": 65
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterAPIKeyHandlers",
+          "lineNumber": 66
+        },
+        {
+          "caller": "NewRouter",
+          "callee": "RegisterAuthHandlers",
+          "lineNumber": 67
+        }
+      ],
+      "metrics": {
+        "importCount": 50,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/auth/api_key.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 37,
+      "functions": [
+        {
+          "name": "HashAPIKey",
+          "startLine": 11,
+          "endLine": 14,
+          "params": [
+            "rawKey"
+          ]
+        },
+        {
+          "name": "GenerateRawAPIKey",
+          "startLine": 18,
+          "endLine": 27,
+          "params": []
+        },
+        {
+          "name": "ValidateAPIKeyFormat",
+          "startLine": 31,
+          "endLine": 44,
+          "params": [
+            "rawKey"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HashAPIKey",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateRawAPIKey",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateAPIKeyFormat",
+          "line": 31,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "HashAPIKey",
+          "callee": "sha256.Sum256",
+          "lineNumber": 12
+        },
+        {
+          "caller": "HashAPIKey",
+          "callee": "hex.EncodeToString",
+          "lineNumber": 13
+        },
+        {
+          "caller": "GenerateRawAPIKey",
+          "callee": "make",
+          "lineNumber": 19
+        },
+        {
+          "caller": "GenerateRawAPIKey",
+          "callee": "rand.Read",
+          "lineNumber": 20
+        },
+        {
+          "caller": "GenerateRawAPIKey",
+          "callee": "base64.URLEncoding.EncodeToString",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ValidateAPIKeyFormat",
+          "callee": "len",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ValidateAPIKeyFormat",
+          "callee": "len",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/auth/api_key_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 69,
+      "functions": [
+        {
+          "name": "TestHashAPIKey_DeterministicAndHex",
+          "startLine": 9,
+          "endLine": 26,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestHashAPIKey_DifferentInputsGiveDifferentHashes",
+          "startLine": 28,
+          "endLine": 32,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "startLine": 34,
+          "endLine": 57,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestValidateAPIKeyFormat",
+          "startLine": 59,
+          "endLine": 81,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestHashAPIKey_DeterministicAndHex",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TestHashAPIKey_DifferentInputsGiveDifferentHashes",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "TestValidateAPIKeyFormat",
+          "line": 59,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestHashAPIKey_DeterministicAndHex",
+          "callee": "HashAPIKey",
+          "lineNumber": 12
+        },
+        {
+          "caller": "TestHashAPIKey_DeterministicAndHex",
+          "callee": "HashAPIKey",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestHashAPIKey_DeterministicAndHex",
+          "callee": "t.Errorf",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestHashAPIKey_DeterministicAndHex",
+          "callee": "len",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestHashAPIKey_DeterministicAndHex",
+          "callee": "t.Errorf",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestHashAPIKey_DeterministicAndHex",
+          "callee": "len",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestHashAPIKey_DeterministicAndHex",
+          "callee": "hex.DecodeString",
+          "lineNumber": 23
+        },
+        {
+          "caller": "TestHashAPIKey_DeterministicAndHex",
+          "callee": "t.Errorf",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestHashAPIKey_DifferentInputsGiveDifferentHashes",
+          "callee": "HashAPIKey",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestHashAPIKey_DifferentInputsGiveDifferentHashes",
+          "callee": "HashAPIKey",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestHashAPIKey_DifferentInputsGiveDifferentHashes",
+          "callee": "t.Error",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "GenerateRawAPIKey",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "t.Fatalf",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "GenerateRawAPIKey",
+          "lineNumber": 39
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "t.Fatalf",
+          "lineNumber": 41
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "t.Error",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "len",
+          "lineNumber": 49
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "t.Errorf",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "len",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "strings.ContainsAny",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestGenerateRawAPIKey_ReturnsUniqueKeys",
+          "callee": "t.Errorf",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "strings.Repeat",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "strings.Repeat",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "strings.Repeat",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "strings.Repeat",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "strings.Repeat",
+          "lineNumber": 71
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "t.Run",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "ValidateAPIKeyFormat",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "t.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "TestValidateAPIKeyFormat",
+          "callee": "len",
+          "lineNumber": 77
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/auth/middleware.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 108,
+      "nonEmptyLines": 93,
+      "functions": [
+        {
+          "name": "NewAuthMiddleware",
+          "startLine": 31,
+          "endLine": 38,
+          "params": [
+            "sessionManager",
+            "apiKeyStore",
+            "userService",
+            "superAdminUserIdentifier"
+          ]
+        },
+        {
+          "name": "Authenticate",
+          "startLine": 42,
+          "endLine": 75,
+          "params": [
+            "next"
+          ]
+        },
+        {
+          "name": "authenticateWithAPIKey",
+          "startLine": 78,
+          "endLine": 86,
+          "params": [
+            "ctx",
+            "rawKey"
+          ]
+        },
+        {
+          "name": "extractBearerToken",
+          "startLine": 89,
+          "endLine": 95,
+          "params": [
+            "authHeader"
+          ]
+        },
+        {
+          "name": "GetUserIdentifierFromContext",
+          "startLine": 99,
+          "endLine": 102,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "IsSuperAdmin",
+          "startLine": 105,
+          "endLine": 108,
+          "params": [
+            "ctx"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AuthMiddleware",
+          "startLine": 22,
+          "endLine": 27,
+          "methods": [
+            "Authenticate",
+            "authenticateWithAPIKey"
+          ],
+          "properties": [
+            "sessionManager",
+            "apiKeyStore",
+            "userService",
+            "superAdminUserIdentifier"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AuthMiddleware",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "NewAuthMiddleware",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "Authenticate",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "GetUserIdentifierFromContext",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "IsSuperAdmin",
+          "line": 105,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Authenticate",
+          "callee": "http.HandlerFunc",
+          "lineNumber": 43
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "request.Header.Get",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "extractBearerToken",
+          "lineNumber": 47
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "authMiddleware.authenticateWithAPIKey",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "request.Context",
+          "lineNumber": 49
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "context.WithValue",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "request.Context",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "context.WithValue",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "next.ServeHTTP",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "request.WithContext",
+          "lineNumber": 53
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "request.Cookie",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "authMiddleware.sessionManager.ValidateSessionToken",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "context.WithValue",
+          "lineNumber": 64
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "request.Context",
+          "lineNumber": 64
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "context.WithValue",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "next.ServeHTTP",
+          "lineNumber": 66
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "request.WithContext",
+          "lineNumber": 66
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "responseWriter.WriteHeader",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Authenticate",
+          "callee": "responseWriter.Write",
+          "lineNumber": 73
+        },
+        {
+          "caller": "authenticateWithAPIKey",
+          "callee": "HashAPIKey",
+          "lineNumber": 79
+        },
+        {
+          "caller": "authenticateWithAPIKey",
+          "callee": "authMiddleware.apiKeyStore.GetAPIKeyByHash",
+          "lineNumber": 80
+        },
+        {
+          "caller": "extractBearerToken",
+          "callee": "strings.SplitN",
+          "lineNumber": 90
+        },
+        {
+          "caller": "extractBearerToken",
+          "callee": "len",
+          "lineNumber": 91
+        },
+        {
+          "caller": "extractBearerToken",
+          "callee": "strings.ToLower",
+          "lineNumber": 91
+        },
+        {
+          "caller": "GetUserIdentifierFromContext",
+          "callee": "ctx.Value",
+          "lineNumber": 100
+        },
+        {
+          "caller": "IsSuperAdmin",
+          "callee": "ctx.Value",
+          "lineNumber": 106
+        }
+      ],
+      "metrics": {
+        "importCount": 43,
+        "exportCount": 5,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/auth/oidc.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 66,
+      "functions": [
+        {
+          "name": "NewOIDCProvider",
+          "startLine": 19,
+          "endLine": 42,
+          "params": [
+            "ctx",
+            "issuerURL",
+            "clientId",
+            "clientSecret",
+            "redirectURL"
+          ]
+        },
+        {
+          "name": "GetAuthURL",
+          "startLine": 45,
+          "endLine": 47,
+          "params": [
+            "state"
+          ]
+        },
+        {
+          "name": "HandleCallback",
+          "startLine": 51,
+          "endLine": 81,
+          "params": [
+            "ctx",
+            "code"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "OIDCProvider",
+          "startLine": 12,
+          "endLine": 16,
+          "methods": [
+            "GetAuthURL",
+            "HandleCallback"
+          ],
+          "properties": [
+            "provider",
+            "oauth2Config",
+            "verifier"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "OIDCProvider",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewOIDCProvider",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "GetAuthURL",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "HandleCallback",
+          "line": 51,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewOIDCProvider",
+          "callee": "oidc.NewProvider",
+          "lineNumber": 20
+        },
+        {
+          "caller": "NewOIDCProvider",
+          "callee": "provider.Endpoint",
+          "lineNumber": 29
+        },
+        {
+          "caller": "NewOIDCProvider",
+          "callee": "provider.Verifier",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GetAuthURL",
+          "callee": "oidcProvider.oauth2Config.AuthCodeURL",
+          "lineNumber": 46
+        },
+        {
+          "caller": "HandleCallback",
+          "callee": "oidcProvider.oauth2Config.Exchange",
+          "lineNumber": 52
+        },
+        {
+          "caller": "HandleCallback",
+          "callee": "oauth2Token.Extra",
+          "lineNumber": 57
+        },
+        {
+          "caller": "HandleCallback",
+          "callee": "errors.New",
+          "lineNumber": 59
+        },
+        {
+          "caller": "HandleCallback",
+          "callee": "oidcProvider.verifier.Verify",
+          "lineNumber": 62
+        },
+        {
+          "caller": "HandleCallback",
+          "callee": "idToken.Claims",
+          "lineNumber": 73
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/auth/session.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 70,
+      "nonEmptyLines": 56,
+      "functions": [
+        {
+          "name": "NewSessionManager",
+          "startLine": 16,
+          "endLine": 20,
+          "params": [
+            "secretKey"
+          ]
+        },
+        {
+          "name": "CreateSessionToken",
+          "startLine": 24,
+          "endLine": 41,
+          "params": [
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "ValidateSessionToken",
+          "startLine": 45,
+          "endLine": 70,
+          "params": [
+            "tokenString"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SessionManager",
+          "startLine": 11,
+          "endLine": 13,
+          "methods": [
+            "CreateSessionToken",
+            "ValidateSessionToken"
+          ],
+          "properties": [
+            "secretKey"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SessionManager",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewSessionManager",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "CreateSessionToken",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateSessionToken",
+          "line": 45,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateSessionToken",
+          "callee": "time.Now",
+          "lineNumber": 25
+        },
+        {
+          "caller": "CreateSessionToken",
+          "callee": "now.Add",
+          "lineNumber": 26
+        },
+        {
+          "caller": "CreateSessionToken",
+          "callee": "now.Unix",
+          "lineNumber": 30
+        },
+        {
+          "caller": "CreateSessionToken",
+          "callee": "expirationTime.Unix",
+          "lineNumber": 31
+        },
+        {
+          "caller": "CreateSessionToken",
+          "callee": "jwt.NewWithClaims",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CreateSessionToken",
+          "callee": "token.SignedString",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ValidateSessionToken",
+          "callee": "jwt.ParseWithClaims",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ValidateSessionToken",
+          "callee": "errors.New",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ValidateSessionToken",
+          "callee": "errors.New",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ValidateSessionToken",
+          "callee": "errors.New",
+          "lineNumber": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/auth/super_admin.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 112,
+      "nonEmptyLines": 101,
+      "functions": [
+        {
+          "name": "SeedSuperAdmin",
+          "startLine": 26,
+          "endLine": 112,
+          "params": [
+            "ctx",
+            "userStore",
+            "apiKeyStore",
+            "email",
+            "displayName",
+            "rawAPIKey"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SeedSuperAdmin",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "log.Println",
+          "lineNumber": 35
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "userStore.GetUserByExternalIdentity",
+          "lineNumber": 47
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "errors.Is",
+          "lineNumber": 50
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "uuid.New().String",
+          "lineNumber": 51
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "uuid.New",
+          "lineNumber": 51
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "userStore.CreateUser",
+          "lineNumber": 59
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "log.Printf",
+          "lineNumber": 62
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "userStore.UpdateUser",
+          "lineNumber": 71
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "log.Printf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "HashAPIKey",
+          "lineNumber": 79
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "apiKeyStore.GetAPIKeyByHash",
+          "lineNumber": 82
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "log.Printf",
+          "lineNumber": 85
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "apiKeyStore.ListAPIKeysByUser",
+          "lineNumber": 91
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "apiKeyStore.DeleteAPIKey",
+          "lineNumber": 95
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "uuid.New().String",
+          "lineNumber": 101
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "uuid.New",
+          "lineNumber": 101
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "time.Now",
+          "lineNumber": 105
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "apiKeyStore.CreateAPIKey",
+          "lineNumber": 107
+        },
+        {
+          "caller": "SeedSuperAdmin",
+          "callee": "log.Printf",
+          "lineNumber": 110
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/auth/super_admin_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 290,
+      "nonEmptyLines": 249,
+      "functions": [
+        {
+          "name": "newFakeUserStore",
+          "startLine": 18,
+          "endLine": 23,
+          "params": []
+        },
+        {
+          "name": "externalIdentityKey",
+          "startLine": 25,
+          "endLine": 27,
+          "params": [
+            "provider",
+            "subject"
+          ]
+        },
+        {
+          "name": "GetUserByIdentifier",
+          "startLine": 29,
+          "endLine": 34,
+          "params": [
+            "_",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "GetUserByExternalIdentity",
+          "startLine": 36,
+          "endLine": 41,
+          "params": [
+            "_",
+            "provider",
+            "subject"
+          ]
+        },
+        {
+          "name": "CreateUser",
+          "startLine": 43,
+          "endLine": 48,
+          "params": [
+            "_",
+            "user"
+          ]
+        },
+        {
+          "name": "UpdateUser",
+          "startLine": 50,
+          "endLine": 55,
+          "params": [
+            "_",
+            "user"
+          ]
+        },
+        {
+          "name": "ListUsers",
+          "startLine": 57,
+          "endLine": 63,
+          "params": [
+            "_",
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "newFakeAPIKeyStore",
+          "startLine": 73,
+          "endLine": 78,
+          "params": []
+        },
+        {
+          "name": "CreateAPIKey",
+          "startLine": 80,
+          "endLine": 85,
+          "params": [
+            "_",
+            "apiKey"
+          ]
+        },
+        {
+          "name": "GetAPIKeyByHash",
+          "startLine": 87,
+          "endLine": 92,
+          "params": [
+            "_",
+            "hashedKey"
+          ]
+        },
+        {
+          "name": "ListAPIKeysByUser",
+          "startLine": 94,
+          "endLine": 102,
+          "params": [
+            "_",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "DeleteAPIKey",
+          "startLine": 104,
+          "endLine": 111,
+          "params": [
+            "_",
+            "apiKeyIdentifier"
+          ]
+        },
+        {
+          "name": "UpdateLastUsedTime",
+          "startLine": 113,
+          "endLine": 115,
+          "params": [
+            "_",
+            "_"
+          ]
+        },
+        {
+          "name": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "startLine": 119,
+          "endLine": 136,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "startLine": 138,
+          "endLine": 183,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "startLine": 185,
+          "endLine": 203,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "startLine": 205,
+          "endLine": 231,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "startLine": 233,
+          "endLine": 266,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "startLine": 268,
+          "endLine": 290,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "fakeUserStore",
+          "startLine": 11,
+          "endLine": 16,
+          "methods": [
+            "GetUserByIdentifier",
+            "GetUserByExternalIdentity",
+            "CreateUser",
+            "UpdateUser",
+            "ListUsers"
+          ],
+          "properties": [
+            "usersByIdentifier",
+            "usersByExternalIdentity",
+            "createCalls",
+            "updateCalls"
+          ]
+        },
+        {
+          "name": "fakeAPIKeyStore",
+          "startLine": 66,
+          "endLine": 71,
+          "methods": [
+            "CreateAPIKey",
+            "GetAPIKeyByHash",
+            "ListAPIKeysByUser",
+            "DeleteAPIKey",
+            "UpdateLastUsedTime"
+          ],
+          "properties": [
+            "keysByIdentifier",
+            "keysByHash",
+            "createCalls",
+            "deleteCalls"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GetUserByIdentifier",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "GetUserByExternalIdentity",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUser",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateUser",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "ListUsers",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAPIKey",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "GetAPIKeyByHash",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "ListAPIKeysByUser",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAPIKey",
+          "line": 104,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateLastUsedTime",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "line": 119,
+          "isDefault": false
+        },
+        {
+          "name": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "line": 185,
+          "isDefault": false
+        },
+        {
+          "name": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "line": 205,
+          "isDefault": false
+        },
+        {
+          "name": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "line": 233,
+          "isDefault": false
+        },
+        {
+          "name": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "line": 268,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "newFakeUserStore",
+          "callee": "make",
+          "lineNumber": 20
+        },
+        {
+          "caller": "newFakeUserStore",
+          "callee": "make",
+          "lineNumber": 21
+        },
+        {
+          "caller": "GetUserByExternalIdentity",
+          "callee": "externalIdentityKey",
+          "lineNumber": 37
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "externalIdentityKey",
+          "lineNumber": 46
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "externalIdentityKey",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "make",
+          "lineNumber": 58
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "len",
+          "lineNumber": 58
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "append",
+          "lineNumber": 60
+        },
+        {
+          "caller": "newFakeAPIKeyStore",
+          "callee": "make",
+          "lineNumber": 75
+        },
+        {
+          "caller": "newFakeAPIKeyStore",
+          "callee": "make",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "make",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "append",
+          "lineNumber": 98
+        },
+        {
+          "caller": "DeleteAPIKey",
+          "callee": "delete",
+          "lineNumber": 107
+        },
+        {
+          "caller": "DeleteAPIKey",
+          "callee": "delete",
+          "lineNumber": 109
+        },
+        {
+          "caller": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "callee": "newFakeUserStore",
+          "lineNumber": 120
+        },
+        {
+          "caller": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "callee": "newFakeAPIKeyStore",
+          "lineNumber": 121
+        },
+        {
+          "caller": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "callee": "context.Background",
+          "lineNumber": 123
+        },
+        {
+          "caller": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "callee": "t.Fatalf",
+          "lineNumber": 125
+        },
+        {
+          "caller": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "callee": "t.Errorf",
+          "lineNumber": 128
+        },
+        {
+          "caller": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "callee": "t.Errorf",
+          "lineNumber": 131
+        },
+        {
+          "caller": "TestSeedSuperAdmin_SkipsWhenNoAPIKeyConfigured",
+          "callee": "t.Errorf",
+          "lineNumber": 134
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "newFakeUserStore",
+          "lineNumber": 139
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "newFakeAPIKeyStore",
+          "lineNumber": 140
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 143
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "context.Background",
+          "lineNumber": 144
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Fatalf",
+          "lineNumber": 152
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Fatal",
+          "lineNumber": 156
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Errorf",
+          "lineNumber": 159
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Errorf",
+          "lineNumber": 162
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "userStore.GetUserByExternalIdentity",
+          "lineNumber": 165
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "context.Background",
+          "lineNumber": 165
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Fatalf",
+          "lineNumber": 167
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Errorf",
+          "lineNumber": 170
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "apiKeyStore.GetAPIKeyByHash",
+          "lineNumber": 173
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "context.Background",
+          "lineNumber": 173
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "HashAPIKey",
+          "lineNumber": 173
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Fatalf",
+          "lineNumber": 175
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Errorf",
+          "lineNumber": 178
+        },
+        {
+          "caller": "TestSeedSuperAdmin_CreatesUserAndKeyOnFirstRun",
+          "callee": "t.Errorf",
+          "lineNumber": 181
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "callee": "newFakeUserStore",
+          "lineNumber": 186
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "callee": "newFakeAPIKeyStore",
+          "lineNumber": 187
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 189
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "callee": "context.Background",
+          "lineNumber": 189
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "callee": "t.Fatalf",
+          "lineNumber": 191
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "callee": "t.Fatal",
+          "lineNumber": 195
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "callee": "t.Errorf",
+          "lineNumber": 198
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UsesDefaultEmailAndNameWhenOmitted",
+          "callee": "t.Errorf",
+          "lineNumber": 201
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "newFakeUserStore",
+          "lineNumber": 206
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "newFakeAPIKeyStore",
+          "lineNumber": 207
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 210
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "context.Background",
+          "lineNumber": 210
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "t.Fatalf",
+          "lineNumber": 212
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 214
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "context.Background",
+          "lineNumber": 214
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "t.Fatalf",
+          "lineNumber": 216
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "t.Errorf",
+          "lineNumber": 220
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "t.Errorf",
+          "lineNumber": 223
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "t.Errorf",
+          "lineNumber": 226
+        },
+        {
+          "caller": "TestSeedSuperAdmin_IsIdempotentWhenKeyUnchanged",
+          "callee": "t.Errorf",
+          "lineNumber": 229
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "newFakeUserStore",
+          "lineNumber": 234
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "newFakeAPIKeyStore",
+          "lineNumber": 235
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 237
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "context.Background",
+          "lineNumber": 237
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "t.Fatalf",
+          "lineNumber": 239
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 242
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "context.Background",
+          "lineNumber": 242
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "t.Fatalf",
+          "lineNumber": 244
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "t.Errorf",
+          "lineNumber": 248
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "apiKeyStore.GetAPIKeyByHash",
+          "lineNumber": 251
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "context.Background",
+          "lineNumber": 251
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "HashAPIKey",
+          "lineNumber": 251
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "t.Error",
+          "lineNumber": 252
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "apiKeyStore.GetAPIKeyByHash",
+          "lineNumber": 255
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "context.Background",
+          "lineNumber": 255
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "HashAPIKey",
+          "lineNumber": 255
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "t.Fatalf",
+          "lineNumber": 257
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "t.Errorf",
+          "lineNumber": 260
+        },
+        {
+          "caller": "TestSeedSuperAdmin_ReplacesKeyWhenRawKeyChanges",
+          "callee": "t.Errorf",
+          "lineNumber": 264
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "newFakeUserStore",
+          "lineNumber": 269
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "newFakeAPIKeyStore",
+          "lineNumber": 270
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 272
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "context.Background",
+          "lineNumber": 272
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "t.Fatalf",
+          "lineNumber": 273
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "SeedSuperAdmin",
+          "lineNumber": 276
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "context.Background",
+          "lineNumber": 276
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "t.Fatalf",
+          "lineNumber": 277
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "userStore.GetUserByExternalIdentity",
+          "lineNumber": 280
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "context.Background",
+          "lineNumber": 280
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "t.Fatalf",
+          "lineNumber": 282
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "t.Errorf",
+          "lineNumber": 285
+        },
+        {
+          "caller": "TestSeedSuperAdmin_UpdatesUserWhenEmailOrNameChanges",
+          "callee": "t.Error",
+          "lineNumber": 288
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 16,
+        "functionCount": 19,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "backend/internal/cache/memory/ristretto_cache_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 100,
+      "nonEmptyLines": 82,
+      "functions": [
+        {
+          "name": "waitForCacheWrite",
+          "startLine": 12,
+          "endLine": 14,
+          "params": []
+        },
+        {
+          "name": "newTestCache",
+          "startLine": 16,
+          "endLine": 23,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRistrettoCache_SetAndGet",
+          "startLine": 25,
+          "endLine": 39,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRistrettoCache_GetMissReturnsFalse",
+          "startLine": 41,
+          "endLine": 47,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRistrettoCache_InvalidateRemovesKey",
+          "startLine": 49,
+          "endLine": 61,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRistrettoCache_InvalidateByPrefix",
+          "startLine": 63,
+          "endLine": 83,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestRistrettoCache_TTLExpires",
+          "startLine": 85,
+          "endLine": 100,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestRistrettoCache_SetAndGet",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "TestRistrettoCache_GetMissReturnsFalse",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "TestRistrettoCache_InvalidateRemovesKey",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "TestRistrettoCache_InvalidateByPrefix",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "TestRistrettoCache_TTLExpires",
+          "line": 85,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "waitForCacheWrite",
+          "callee": "time.Sleep",
+          "lineNumber": 13
+        },
+        {
+          "caller": "newTestCache",
+          "callee": "t.Helper",
+          "lineNumber": 17
+        },
+        {
+          "caller": "newTestCache",
+          "callee": "NewRistrettoCache",
+          "lineNumber": 18
+        },
+        {
+          "caller": "newTestCache",
+          "callee": "t.Fatalf",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestRistrettoCache_SetAndGet",
+          "callee": "newTestCache",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestRistrettoCache_SetAndGet",
+          "callee": "context.Background",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestRistrettoCache_SetAndGet",
+          "callee": "cache.Set",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestRistrettoCache_SetAndGet",
+          "callee": "waitForCacheWrite",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestRistrettoCache_SetAndGet",
+          "callee": "cache.Get",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestRistrettoCache_SetAndGet",
+          "callee": "t.Fatal",
+          "lineNumber": 34
+        },
+        {
+          "caller": "TestRistrettoCache_SetAndGet",
+          "callee": "t.Errorf",
+          "lineNumber": 37
+        },
+        {
+          "caller": "TestRistrettoCache_GetMissReturnsFalse",
+          "callee": "newTestCache",
+          "lineNumber": 42
+        },
+        {
+          "caller": "TestRistrettoCache_GetMissReturnsFalse",
+          "callee": "cache.Get",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestRistrettoCache_GetMissReturnsFalse",
+          "callee": "context.Background",
+          "lineNumber": 43
+        },
+        {
+          "caller": "TestRistrettoCache_GetMissReturnsFalse",
+          "callee": "t.Error",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateRemovesKey",
+          "callee": "newTestCache",
+          "lineNumber": 50
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateRemovesKey",
+          "callee": "context.Background",
+          "lineNumber": 51
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateRemovesKey",
+          "callee": "cache.Set",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateRemovesKey",
+          "callee": "waitForCacheWrite",
+          "lineNumber": 54
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateRemovesKey",
+          "callee": "cache.Invalidate",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateRemovesKey",
+          "callee": "cache.Get",
+          "lineNumber": 57
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateRemovesKey",
+          "callee": "t.Error",
+          "lineNumber": 59
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "newTestCache",
+          "lineNumber": 64
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "context.Background",
+          "lineNumber": 65
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "cache.Set",
+          "lineNumber": 67
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "cache.Set",
+          "lineNumber": 68
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "cache.Set",
+          "lineNumber": 69
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "waitForCacheWrite",
+          "lineNumber": 70
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "cache.InvalidateByPrefix",
+          "lineNumber": 72
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "cache.Get",
+          "lineNumber": 74
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "t.Error",
+          "lineNumber": 75
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "cache.Get",
+          "lineNumber": 77
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "t.Error",
+          "lineNumber": 78
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "cache.Get",
+          "lineNumber": 80
+        },
+        {
+          "caller": "TestRistrettoCache_InvalidateByPrefix",
+          "callee": "t.Error",
+          "lineNumber": 81
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "newTestCache",
+          "lineNumber": 86
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "context.Background",
+          "lineNumber": 87
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "cache.Set",
+          "lineNumber": 89
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "waitForCacheWrite",
+          "lineNumber": 90
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "cache.Get",
+          "lineNumber": 92
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "t.Fatal",
+          "lineNumber": 93
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "time.Sleep",
+          "lineNumber": 96
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "cache.Get",
+          "lineNumber": 97
+        },
+        {
+          "caller": "TestRistrettoCache_TTLExpires",
+          "callee": "t.Error",
+          "lineNumber": 98
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/config/config.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 129,
+      "nonEmptyLines": 111,
+      "functions": [
+        {
+          "name": "Load",
+          "startLine": 64,
+          "endLine": 127,
+          "params": [
+            "configPath"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Config",
+          "startLine": 10,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "Server",
+            "Database",
+            "FileStore",
+            "Cache",
+            "Auth",
+            "Version"
+          ]
+        },
+        {
+          "name": "ServerConfig",
+          "startLine": 19,
+          "endLine": 22,
+          "methods": [],
+          "properties": [
+            "Domain",
+            "Port"
+          ]
+        },
+        {
+          "name": "DatabaseConfig",
+          "startLine": 24,
+          "endLine": 30,
+          "methods": [],
+          "properties": [
+            "Driver",
+            "DSN",
+            "MaxOpenConns",
+            "MaxIdleConns",
+            "ConnMaxLifetime"
+          ]
+        },
+        {
+          "name": "FileStoreConfig",
+          "startLine": 32,
+          "endLine": 37,
+          "methods": [],
+          "properties": [
+            "Driver",
+            "Endpoint",
+            "Bucket",
+            "Region"
+          ]
+        },
+        {
+          "name": "CacheConfig",
+          "startLine": 39,
+          "endLine": 44,
+          "methods": [],
+          "properties": [
+            "Driver",
+            "Address",
+            "TimeToLive",
+            "MaxCostBytes"
+          ]
+        },
+        {
+          "name": "AuthConfig",
+          "startLine": 46,
+          "endLine": 55,
+          "methods": [],
+          "properties": [
+            "OIDCIssuerURL",
+            "OIDCClientId",
+            "OIDCClientSecret",
+            "OIDCRedirectURL",
+            "SessionSecret",
+            "SuperAdminEmail",
+            "SuperAdminAPIKey",
+            "SuperAdminName"
+          ]
+        },
+        {
+          "name": "VersionConfig",
+          "startLine": 57,
+          "endLine": 60,
+          "methods": [],
+          "properties": [
+            "InactivityWindow",
+            "CommitPollInterval"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Config",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ServerConfig",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "DatabaseConfig",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "FileStoreConfig",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "CacheConfig",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "AuthConfig",
+          "line": 46,
+          "isDefault": false
+        },
+        {
+          "name": "VersionConfig",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "Load",
+          "line": 64,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Load",
+          "callee": "viper.New",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 68
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 74
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 75
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 76
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 77
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 78
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 79
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 80
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetDefault",
+          "lineNumber": 81
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetConfigFile",
+          "lineNumber": 85
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetConfigName",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Load",
+          "callee": "v.SetConfigType",
+          "lineNumber": 88
+        },
+        {
+          "caller": "Load",
+          "callee": "v.AddConfigPath",
+          "lineNumber": 89
+        },
+        {
+          "caller": "Load",
+          "callee": "v.AddConfigPath",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 96
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 97
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 98
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 99
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 100
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 101
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 103
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 104
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 106
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 108
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 110
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 111
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 114
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Load",
+          "callee": "v.BindEnv",
+          "lineNumber": 116
+        },
+        {
+          "caller": "Load",
+          "callee": "v.ReadInConfig",
+          "lineNumber": 119
+        },
+        {
+          "caller": "Load",
+          "callee": "v.Unmarshal",
+          "lineNumber": 122
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 1,
+        "classCount": 7
+      }
+    },
+    {
+      "path": "backend/internal/domain/element_type.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 31,
+      "functions": [
+        {
+          "name": "AllElementTypes",
+          "startLine": 16,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "IsValid",
+          "startLine": 28,
+          "endLine": 35,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AllElementTypes",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "IsValid",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "IsValid",
+          "callee": "AllElementTypes",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/domain/store_element_version.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 17,
+      "classes": [
+        {
+          "name": "ElementVersionStore",
+          "startLine": 9,
+          "endLine": 13,
+          "methods": [
+            "CreateVersion",
+            "ListVersionsByElement",
+            "GetPatchesInRange"
+          ],
+          "properties": []
+        },
+        {
+          "name": "ElementPendingChangeStore",
+          "startLine": 16,
+          "endLine": 20,
+          "methods": [
+            "UpsertPendingChange",
+            "GetStalePendingChanges",
+            "DeletePendingChange"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ElementVersionStore",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ElementPendingChangeStore",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "backend/internal/service/custom_field_service.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 134,
+      "nonEmptyLines": 112,
+      "functions": [
+        {
+          "name": "NewCustomFieldService",
+          "startLine": 23,
+          "endLine": 41,
+          "params": [
+            "fieldDefinitionStore",
+            "fieldValueStore",
+            "elementPendingChangeStore",
+            "elementStore",
+            "elementLinkStore",
+            "attachmentStore",
+            "cacheStore"
+          ]
+        },
+        {
+          "name": "CreateFieldDefinition",
+          "startLine": 43,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "definition"
+          ]
+        },
+        {
+          "name": "ListFieldDefinitionsByProject",
+          "startLine": 49,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "projectIdentifier",
+            "elementType"
+          ]
+        },
+        {
+          "name": "UpdateFieldDefinition",
+          "startLine": 53,
+          "endLine": 55,
+          "params": [
+            "ctx",
+            "definition"
+          ]
+        },
+        {
+          "name": "DeleteFieldDefinition",
+          "startLine": 57,
+          "endLine": 59,
+          "params": [
+            "ctx",
+            "fieldDefinitionIdentifier"
+          ]
+        },
+        {
+          "name": "SetFieldValue",
+          "startLine": 62,
+          "endLine": 73,
+          "params": [
+            "ctx",
+            "elementIdentifier",
+            "fieldDefinitionIdentifier",
+            "value"
+          ]
+        },
+        {
+          "name": "GetFieldValues",
+          "startLine": 76,
+          "endLine": 78,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        },
+        {
+          "name": "DeleteFieldValue",
+          "startLine": 81,
+          "endLine": 92,
+          "params": [
+            "ctx",
+            "elementIdentifier",
+            "fieldDefinitionIdentifier"
+          ]
+        },
+        {
+          "name": "stagePendingChange",
+          "startLine": 95,
+          "endLine": 134,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CustomFieldService",
+          "startLine": 12,
+          "endLine": 20,
+          "methods": [
+            "CreateFieldDefinition",
+            "ListFieldDefinitionsByProject",
+            "UpdateFieldDefinition",
+            "DeleteFieldDefinition",
+            "SetFieldValue",
+            "GetFieldValues",
+            "DeleteFieldValue",
+            "stagePendingChange"
+          ],
+          "properties": [
+            "fieldDefinitionStore",
+            "fieldValueStore",
+            "elementPendingChangeStore",
+            "elementStore",
+            "elementLinkStore",
+            "attachmentStore",
+            "cacheStore"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CustomFieldService",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewCustomFieldService",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "CreateFieldDefinition",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "ListFieldDefinitionsByProject",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateFieldDefinition",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteFieldDefinition",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "SetFieldValue",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "GetFieldValues",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteFieldValue",
+          "line": 81,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateFieldDefinition",
+          "callee": "s.fieldDefinitionStore.CreateFieldDefinition",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "s.fieldDefinitionStore.ListFieldDefinitionsByProject",
+          "lineNumber": 50
+        },
+        {
+          "caller": "UpdateFieldDefinition",
+          "callee": "s.fieldDefinitionStore.UpdateFieldDefinition",
+          "lineNumber": 54
+        },
+        {
+          "caller": "DeleteFieldDefinition",
+          "callee": "s.fieldDefinitionStore.DeleteFieldDefinition",
+          "lineNumber": 58
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "s.fieldValueStore.SetFieldValue",
+          "lineNumber": 63
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "s.stagePendingChange",
+          "lineNumber": 67
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 68
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "s.cacheStore.Invalidate",
+          "lineNumber": 71
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 71
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "s.fieldValueStore.GetFieldValues",
+          "lineNumber": 77
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "s.fieldValueStore.DeleteFieldValue",
+          "lineNumber": 82
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "s.stagePendingChange",
+          "lineNumber": 86
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "s.cacheStore.Invalidate",
+          "lineNumber": 90
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 90
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.elementStore.GetElementByIdentifier",
+          "lineNumber": 96
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.fieldValueStore.GetFieldValues",
+          "lineNumber": 101
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 103
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.elementLinkStore.ListLinksByElement",
+          "lineNumber": 107
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 109
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.elementLinkStore.ListLinksByElement",
+          "lineNumber": 111
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 113
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "append",
+          "lineNumber": 115
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.attachmentStore.ListAttachmentsByElement",
+          "lineNumber": 117
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 119
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "BuildSnapshot",
+          "lineNumber": 122
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "SerializeSnapshot",
+          "lineNumber": 123
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 125
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "json.Unmarshal",
+          "lineNumber": 129
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 130
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.elementPendingChangeStore.UpsertPendingChange",
+          "lineNumber": 133
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 9,
+        "functionCount": 9,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/service/group_service.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 78,
+      "nonEmptyLines": 61,
+      "functions": [
+        {
+          "name": "NewGroupService",
+          "startLine": 16,
+          "endLine": 21,
+          "params": [
+            "groupStore",
+            "accessStore"
+          ]
+        },
+        {
+          "name": "GetGroupByIdentifier",
+          "startLine": 23,
+          "endLine": 25,
+          "params": [
+            "ctx",
+            "groupIdentifier"
+          ]
+        },
+        {
+          "name": "ListGroups",
+          "startLine": 27,
+          "endLine": 29,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "CreateGroup",
+          "startLine": 31,
+          "endLine": 33,
+          "params": [
+            "ctx",
+            "group"
+          ]
+        },
+        {
+          "name": "DeleteGroup",
+          "startLine": 35,
+          "endLine": 37,
+          "params": [
+            "ctx",
+            "groupIdentifier"
+          ]
+        },
+        {
+          "name": "AddUserToGroup",
+          "startLine": 39,
+          "endLine": 41,
+          "params": [
+            "ctx",
+            "groupIdentifier",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "RemoveUserFromGroup",
+          "startLine": 43,
+          "endLine": 45,
+          "params": [
+            "ctx",
+            "groupIdentifier",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "ListGroupsByUser",
+          "startLine": 47,
+          "endLine": 49,
+          "params": [
+            "ctx",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "ListUsersByGroup",
+          "startLine": 51,
+          "endLine": 53,
+          "params": [
+            "ctx",
+            "groupIdentifier"
+          ]
+        },
+        {
+          "name": "SetProjectAccess",
+          "startLine": 55,
+          "endLine": 62,
+          "params": [
+            "ctx",
+            "groupIdentifier",
+            "projectIdentifier",
+            "accessLevel"
+          ]
+        },
+        {
+          "name": "RemoveProjectAccess",
+          "startLine": 64,
+          "endLine": 66,
+          "params": [
+            "ctx",
+            "groupIdentifier",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "ListAccessByGroup",
+          "startLine": 68,
+          "endLine": 70,
+          "params": [
+            "ctx",
+            "groupIdentifier"
+          ]
+        },
+        {
+          "name": "ListAccessByProject",
+          "startLine": 72,
+          "endLine": 74,
+          "params": [
+            "ctx",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "GetUserAccessLevel",
+          "startLine": 76,
+          "endLine": 78,
+          "params": [
+            "ctx",
+            "userIdentifier",
+            "projectIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "GroupService",
+          "startLine": 10,
+          "endLine": 13,
+          "methods": [
+            "GetGroupByIdentifier",
+            "ListGroups",
+            "CreateGroup",
+            "DeleteGroup",
+            "AddUserToGroup",
+            "RemoveUserFromGroup",
+            "ListGroupsByUser",
+            "ListUsersByGroup",
+            "SetProjectAccess",
+            "RemoveProjectAccess",
+            "ListAccessByGroup",
+            "ListAccessByProject",
+            "GetUserAccessLevel"
+          ],
+          "properties": [
+            "groupStore",
+            "accessStore"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GroupService",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "NewGroupService",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "GetGroupByIdentifier",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "ListGroups",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "CreateGroup",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteGroup",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "AddUserToGroup",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveUserFromGroup",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "ListGroupsByUser",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "ListUsersByGroup",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "SetProjectAccess",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveProjectAccess",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "ListAccessByGroup",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "ListAccessByProject",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "GetUserAccessLevel",
+          "line": 76,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetGroupByIdentifier",
+          "callee": "s.groupStore.GetGroupByIdentifier",
+          "lineNumber": 24
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "s.groupStore.ListGroups",
+          "lineNumber": 28
+        },
+        {
+          "caller": "CreateGroup",
+          "callee": "s.groupStore.CreateGroup",
+          "lineNumber": 32
+        },
+        {
+          "caller": "DeleteGroup",
+          "callee": "s.groupStore.DeleteGroup",
+          "lineNumber": 36
+        },
+        {
+          "caller": "AddUserToGroup",
+          "callee": "s.groupStore.AddUserToGroup",
+          "lineNumber": 40
+        },
+        {
+          "caller": "RemoveUserFromGroup",
+          "callee": "s.groupStore.RemoveUserFromGroup",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "s.groupStore.ListGroupsByUser",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "s.groupStore.ListUsersByGroup",
+          "lineNumber": 52
+        },
+        {
+          "caller": "SetProjectAccess",
+          "callee": "s.accessStore.SetAccess",
+          "lineNumber": 61
+        },
+        {
+          "caller": "RemoveProjectAccess",
+          "callee": "s.accessStore.RemoveAccess",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "s.accessStore.ListAccessByGroup",
+          "lineNumber": 69
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "s.accessStore.ListAccessByProject",
+          "lineNumber": 73
+        },
+        {
+          "caller": "GetUserAccessLevel",
+          "callee": "s.accessStore.GetUserAccessLevel",
+          "lineNumber": 77
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 15,
+        "functionCount": 14,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/service/link_service.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 154,
+      "nonEmptyLines": 130,
+      "functions": [
+        {
+          "name": "NewLinkService",
+          "startLine": 22,
+          "endLine": 38,
+          "params": [
+            "linkStore",
+            "elementPendingChangeStore",
+            "elementStore",
+            "customFieldValueStore",
+            "attachmentStore",
+            "cacheStore"
+          ]
+        },
+        {
+          "name": "CreateLink",
+          "startLine": 41,
+          "endLine": 56,
+          "params": [
+            "ctx",
+            "link"
+          ]
+        },
+        {
+          "name": "DeleteLink",
+          "startLine": 59,
+          "endLine": 79,
+          "params": [
+            "ctx",
+            "linkIdentifier"
+          ]
+        },
+        {
+          "name": "GetLinkByIdentifier",
+          "startLine": 82,
+          "endLine": 84,
+          "params": [
+            "ctx",
+            "linkIdentifier"
+          ]
+        },
+        {
+          "name": "UpdateLinkType",
+          "startLine": 87,
+          "endLine": 107,
+          "params": [
+            "ctx",
+            "linkIdentifier",
+            "linkType"
+          ]
+        },
+        {
+          "name": "ListLinksByElement",
+          "startLine": 110,
+          "endLine": 112,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        },
+        {
+          "name": "stagePendingChange",
+          "startLine": 115,
+          "endLine": 154,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LinkService",
+          "startLine": 12,
+          "endLine": 19,
+          "methods": [
+            "CreateLink",
+            "DeleteLink",
+            "GetLinkByIdentifier",
+            "UpdateLinkType",
+            "ListLinksByElement",
+            "stagePendingChange"
+          ],
+          "properties": [
+            "linkStore",
+            "elementPendingChangeStore",
+            "elementStore",
+            "customFieldValueStore",
+            "attachmentStore",
+            "cacheStore"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LinkService",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewLinkService",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "CreateLink",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteLink",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "GetLinkByIdentifier",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateLinkType",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "ListLinksByElement",
+          "line": 110,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateLink",
+          "callee": "s.linkStore.CreateLink",
+          "lineNumber": 42
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "s.stagePendingChange",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "fmt.Errorf",
+          "lineNumber": 47
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "s.stagePendingChange",
+          "lineNumber": 49
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "fmt.Errorf",
+          "lineNumber": 50
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "s.cacheStore.Invalidate",
+          "lineNumber": 53
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 53
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "s.cacheStore.Invalidate",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 54
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "s.linkStore.GetLinkByIdentifier",
+          "lineNumber": 60
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "s.linkStore.DeleteLink",
+          "lineNumber": 65
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "s.stagePendingChange",
+          "lineNumber": 69
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "fmt.Errorf",
+          "lineNumber": 70
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "s.stagePendingChange",
+          "lineNumber": 72
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "fmt.Errorf",
+          "lineNumber": 73
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "s.cacheStore.Invalidate",
+          "lineNumber": 76
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "s.cacheStore.Invalidate",
+          "lineNumber": 77
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetLinkByIdentifier",
+          "callee": "s.linkStore.GetLinkByIdentifier",
+          "lineNumber": 83
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "s.linkStore.GetLinkByIdentifier",
+          "lineNumber": 88
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "s.linkStore.UpdateLinkType",
+          "lineNumber": 93
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "s.stagePendingChange",
+          "lineNumber": 97
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "fmt.Errorf",
+          "lineNumber": 98
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "s.stagePendingChange",
+          "lineNumber": 100
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "fmt.Errorf",
+          "lineNumber": 101
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "s.cacheStore.Invalidate",
+          "lineNumber": 104
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 104
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "s.cacheStore.Invalidate",
+          "lineNumber": 105
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ListLinksByElement",
+          "callee": "s.linkStore.ListLinksByElement",
+          "lineNumber": 111
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.elementStore.GetElementByIdentifier",
+          "lineNumber": 116
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.customFieldValueStore.GetFieldValues",
+          "lineNumber": 121
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 123
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.linkStore.ListLinksByElement",
+          "lineNumber": 127
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 129
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.linkStore.ListLinksByElement",
+          "lineNumber": 131
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 133
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "append",
+          "lineNumber": 135
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.attachmentStore.ListAttachmentsByElement",
+          "lineNumber": 137
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 139
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "BuildSnapshot",
+          "lineNumber": 142
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "SerializeSnapshot",
+          "lineNumber": 143
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 145
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "json.Unmarshal",
+          "lineNumber": 149
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "fmt.Errorf",
+          "lineNumber": 150
+        },
+        {
+          "caller": "stagePendingChange",
+          "callee": "s.elementPendingChangeStore.UpsertPendingChange",
+          "lineNumber": 153
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/connection.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 29,
+      "functions": [
+        {
+          "name": "NewConnection",
+          "startLine": 13,
+          "endLine": 30,
+          "params": [
+            "dsn",
+            "maxOpenConns",
+            "maxIdleConns",
+            "connMaxLifetime"
+          ]
+        },
+        {
+          "name": "RunMigrations",
+          "startLine": 34,
+          "endLine": 36,
+          "params": [
+            "db",
+            "migrationsDir"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NewConnection",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "RunMigrations",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewConnection",
+          "callee": "sql.Open",
+          "lineNumber": 14
+        },
+        {
+          "caller": "NewConnection",
+          "callee": "database.SetMaxOpenConns",
+          "lineNumber": 19
+        },
+        {
+          "caller": "NewConnection",
+          "callee": "database.SetMaxIdleConns",
+          "lineNumber": 20
+        },
+        {
+          "caller": "NewConnection",
+          "callee": "database.SetConnMaxLifetime",
+          "lineNumber": 21
+        },
+        {
+          "caller": "NewConnection",
+          "callee": "database.Ping",
+          "lineNumber": 24
+        },
+        {
+          "caller": "RunMigrations",
+          "callee": "goose.Up",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,1056 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/service/user_service_test.go",
+      "type": "file",
+      "name": "user_service_test.go",
+      "filePath": "backend/internal/service/user_service_test.go",
+      "summary": "Unit tests for the user service covering CRUD and OIDC get-or-create behavior using fake stores.",
+      "tags": [
+        "test",
+        "user",
+        "service",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/service/version_service.go",
+      "type": "file",
+      "name": "version_service.go",
+      "filePath": "backend/internal/service/version_service.go",
+      "summary": "Service reconstructing element state at arbitrary versions by replaying patch chains, computing version diffs, and converting between snapshots and domain elements.",
+      "tags": [
+        "service",
+        "version",
+        "history",
+        "diff",
+        "snapshot"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/internal/service/version_worker.go",
+      "type": "file",
+      "name": "version_worker.go",
+      "filePath": "backend/internal/service/version_worker.go",
+      "summary": "Background worker that periodically scans stale pending changes and commits them as new element versions with computed diffs, providing git-like history.",
+      "tags": [
+        "service",
+        "worker",
+        "version",
+        "background-job",
+        "snapshot"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:backend/internal/service/version_service.go:VersionService",
+      "type": "class",
+      "name": "VersionService",
+      "filePath": "backend/internal/service/version_service.go",
+      "lineRange": [
+        18,
+        23
+      ],
+      "summary": "Service reconstructing element state at versions and computing diffs.",
+      "tags": [
+        "service",
+        "version",
+        "history"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/service/version_service.go:NewVersionService",
+      "type": "function",
+      "name": "NewVersionService",
+      "filePath": "backend/internal/service/version_service.go",
+      "lineRange": [
+        25,
+        39
+      ],
+      "summary": "Constructs a VersionService.",
+      "tags": [
+        "constructor",
+        "version"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/version_service.go:ListVersionsByElement",
+      "type": "function",
+      "name": "ListVersionsByElement",
+      "filePath": "backend/internal/service/version_service.go",
+      "lineRange": [
+        42,
+        49
+      ],
+      "summary": "Lists version metadata for an element.",
+      "tags": [
+        "service",
+        "version"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/version_service.go:GetElementAtVersion",
+      "type": "function",
+      "name": "GetElementAtVersion",
+      "filePath": "backend/internal/service/version_service.go",
+      "lineRange": [
+        53,
+        140
+      ],
+      "summary": "Reconstructs an element at a target version by replaying its patch chain.",
+      "tags": [
+        "service",
+        "version",
+        "history",
+        "reconstruction"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/service/version_service.go:GetElementVersionDiff",
+      "type": "function",
+      "name": "GetElementVersionDiff",
+      "filePath": "backend/internal/service/version_service.go",
+      "lineRange": [
+        143,
+        158
+      ],
+      "summary": "Computes the diff between two element versions.",
+      "tags": [
+        "service",
+        "version",
+        "diff"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/version_service.go:loadFullAggregate",
+      "type": "function",
+      "name": "loadFullAggregate",
+      "filePath": "backend/internal/service/version_service.go",
+      "lineRange": [
+        161,
+        194
+      ],
+      "summary": "Assembles the full element aggregate for snapshotting.",
+      "tags": [
+        "service",
+        "element",
+        "aggregate"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/version_service.go:snapshotToElement",
+      "type": "function",
+      "name": "snapshotToElement",
+      "filePath": "backend/internal/service/version_service.go",
+      "lineRange": [
+        203,
+        248
+      ],
+      "summary": "Converts a versioned snapshot back into a domain element.",
+      "tags": [
+        "service",
+        "version",
+        "snapshot",
+        "mapping"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/version_worker.go:VersionCommitWorker",
+      "type": "class",
+      "name": "VersionCommitWorker",
+      "filePath": "backend/internal/service/version_worker.go",
+      "lineRange": [
+        18,
+        23
+      ],
+      "summary": "Background worker that commits stale pending changes as element versions.",
+      "tags": [
+        "service",
+        "worker",
+        "version",
+        "background-job"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/service/version_worker.go:NewVersionCommitWorker",
+      "type": "function",
+      "name": "NewVersionCommitWorker",
+      "filePath": "backend/internal/service/version_worker.go",
+      "lineRange": [
+        30,
+        50
+      ],
+      "summary": "Constructs a VersionCommitWorker with its dependencies.",
+      "tags": [
+        "constructor",
+        "worker",
+        "version"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/version_worker.go:Start",
+      "type": "function",
+      "name": "Start",
+      "filePath": "backend/internal/service/version_worker.go",
+      "lineRange": [
+        53,
+        68
+      ],
+      "summary": "Starts the worker loop processing pending changes on an interval.",
+      "tags": [
+        "service",
+        "worker",
+        "background-job"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/version_worker.go:processStalePendingChanges",
+      "type": "function",
+      "name": "processStalePendingChanges",
+      "filePath": "backend/internal/service/version_worker.go",
+      "lineRange": [
+        71,
+        90
+      ],
+      "summary": "Fetches and commits all stale pending changes.",
+      "tags": [
+        "service",
+        "worker",
+        "version"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/version_worker.go:commitPendingChange",
+      "type": "function",
+      "name": "commitPendingChange",
+      "filePath": "backend/internal/service/version_worker.go",
+      "lineRange": [
+        93,
+        175
+      ],
+      "summary": "Commits a pending change as a new element version, computing the patch diff.",
+      "tags": [
+        "service",
+        "worker",
+        "version",
+        "diff"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/service/version_worker.go:loadFullAggregate",
+      "type": "function",
+      "name": "loadFullAggregate",
+      "filePath": "backend/internal/service/version_worker.go",
+      "lineRange": [
+        178,
+        211
+      ],
+      "summary": "Assembles the full element aggregate for committing a version.",
+      "tags": [
+        "service",
+        "element",
+        "aggregate"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/user_service_test.go:TestUserService_GetOrCreateUserFromOIDC_CreatesNewUser",
+      "type": "function",
+      "name": "TestUserService_GetOrCreateUserFromOIDC_CreatesNewUser",
+      "filePath": "backend/internal/service/user_service_test.go",
+      "lineRange": [
+        10,
+        33
+      ],
+      "summary": "Unit test: TestUserService_GetOrCreateUserFromOIDC_CreatesNewUser.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/user_service_test.go:TestUserService_GetOrCreateUserFromOIDC_ReturnsExistingUser",
+      "type": "function",
+      "name": "TestUserService_GetOrCreateUserFromOIDC_ReturnsExistingUser",
+      "filePath": "backend/internal/service/user_service_test.go",
+      "lineRange": [
+        35,
+        63
+      ],
+      "summary": "Unit test: TestUserService_GetOrCreateUserFromOIDC_ReturnsExistingUser.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/user_service_test.go:TestUserService_CreateAndGetUser",
+      "type": "function",
+      "name": "TestUserService_CreateAndGetUser",
+      "filePath": "backend/internal/service/user_service_test.go",
+      "lineRange": [
+        65,
+        84
+      ],
+      "summary": "Unit test: TestUserService_CreateAndGetUser.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "class:backend/internal/service/version_service.go:VersionService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "class:backend/internal/service/version_service.go:VersionService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:NewVersionService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:NewVersionService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:ListVersionsByElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:ListVersionsByElement",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:GetElementAtVersion",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:GetElementAtVersion",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:GetElementVersionDiff",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:GetElementVersionDiff",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:loadFullAggregate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "function:backend/internal/service/version_service.go:snapshotToElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "class:backend/internal/service/version_worker.go:VersionCommitWorker",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "class:backend/internal/service/version_worker.go:VersionCommitWorker",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "function:backend/internal/service/version_worker.go:NewVersionCommitWorker",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "function:backend/internal/service/version_worker.go:NewVersionCommitWorker",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "function:backend/internal/service/version_worker.go:Start",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "function:backend/internal/service/version_worker.go:Start",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "function:backend/internal/service/version_worker.go:processStalePendingChanges",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "function:backend/internal/service/version_worker.go:commitPendingChange",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "function:backend/internal/service/version_worker.go:loadFullAggregate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "function:backend/internal/service/user_service_test.go:TestUserService_GetOrCreateUserFromOIDC_CreatesNewUser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "function:backend/internal/service/user_service_test.go:TestUserService_GetOrCreateUserFromOIDC_CreatesNewUser",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "function:backend/internal/service/user_service_test.go:TestUserService_GetOrCreateUserFromOIDC_ReturnsExistingUser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "function:backend/internal/service/user_service_test.go:TestUserService_GetOrCreateUserFromOIDC_ReturnsExistingUser",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "function:backend/internal/service/user_service_test.go:TestUserService_CreateAndGetUser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "function:backend/internal/service/user_service_test.go:TestUserService_CreateAndGetUser",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service_test.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_service.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/version_worker.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "projectRoot": "/Users/godboutj/code/project_works",
+  "batchFiles": [
+    {"path": "backend/migrations/00001_create_extensions.sql", "language": "sql", "sizeLines": 7, "fileCategory": "data"},
+    {"path": "backend/migrations/00002_create_users_and_groups.sql", "language": "sql", "sizeLines": 44, "fileCategory": "data"},
+    {"path": "backend/migrations/00003_create_projects.sql", "language": "sql", "sizeLines": 39, "fileCategory": "data"},
+    {"path": "backend/migrations/00004_create_elements.sql", "language": "sql", "sizeLines": 91, "fileCategory": "data"},
+    {"path": "backend/migrations/00005_create_element_links.sql", "language": "sql", "sizeLines": 23, "fileCategory": "data"},
+    {"path": "backend/migrations/00006_create_custom_fields.sql", "language": "sql", "sizeLines": 31, "fileCategory": "data"},
+    {"path": "backend/migrations/00007_create_attachments.sql", "language": "sql", "sizeLines": 17, "fileCategory": "data"},
+    {"path": "backend/migrations/00008_create_element_versions.sql", "language": "sql", "sizeLines": 45, "fileCategory": "data"}
+  ],
+  "batchImportData": {
+    "backend/migrations/00001_create_extensions.sql": [],
+    "backend/migrations/00002_create_users_and_groups.sql": [],
+    "backend/migrations/00003_create_projects.sql": [],
+    "backend/migrations/00004_create_elements.sql": [],
+    "backend/migrations/00005_create_element_links.sql": [],
+    "backend/migrations/00006_create_custom_fields.sql": [],
+    "backend/migrations/00007_create_attachments.sql": [],
+    "backend/migrations/00008_create_element_versions.sql": []
+  }
+}

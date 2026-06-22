@@ -1,0 +1,643 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/store/postgres/project_store.go",
+      "type": "file",
+      "name": "project_store.go",
+      "filePath": "backend/internal/store/postgres/project_store.go",
+      "summary": "Postgres implementation of the ProjectStore interface with project CRUD, prefix-filtered listing, and distinct folder-path enumeration for navigation.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:backend/internal/store/postgres/project_store.go:ProjectStore",
+      "type": "class",
+      "name": "ProjectStore",
+      "filePath": "backend/internal/store/postgres/project_store.go",
+      "lineRange": [
+        13,
+        15
+      ],
+      "summary": "Postgres-backed store for projects and folder-path queries.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/project_store.go:ListProjects",
+      "type": "function",
+      "name": "ListProjects",
+      "filePath": "backend/internal/store/postgres/project_store.go",
+      "lineRange": [
+        56,
+        104
+      ],
+      "summary": "Lists projects optionally filtered by folder-path prefix for hierarchical navigation.",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "filtering"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/project_store.go:ListFolderPaths",
+      "type": "function",
+      "name": "ListFolderPaths",
+      "filePath": "backend/internal/store/postgres/project_store.go",
+      "lineRange": [
+        113,
+        140
+      ],
+      "summary": "Returns the distinct folder paths across all projects to build the navigation tree.",
+      "tags": [
+        "repository",
+        "database",
+        "query"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/project_store.go:UpdateProject",
+      "type": "function",
+      "name": "UpdateProject",
+      "filePath": "backend/internal/store/postgres/project_store.go",
+      "lineRange": [
+        166,
+        197
+      ],
+      "summary": "Updates a project's fields with a refreshed modification time, reporting not-found when no row matches.",
+      "tags": [
+        "repository",
+        "database",
+        "update"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/project_store.go:GetProjectByIdentifier",
+      "type": "function",
+      "name": "GetProjectByIdentifier",
+      "filePath": "backend/internal/store/postgres/project_store.go",
+      "lineRange": [
+        25,
+        50
+      ],
+      "summary": "Fetches a single project by its identifier, mapping no-rows to a not-found error.",
+      "tags": [
+        "repository",
+        "database",
+        "query"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/store/postgres/user_store.go",
+      "type": "file",
+      "name": "user_store.go",
+      "filePath": "backend/internal/store/postgres/user_store.go",
+      "summary": "Postgres implementation of the UserStore interface supporting lookup by identifier or external identity, creation, update, and paginated listing.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "authentication"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/store/postgres/user_store.go:UserStore",
+      "type": "class",
+      "name": "UserStore",
+      "filePath": "backend/internal/store/postgres/user_store.go",
+      "lineRange": [
+        12,
+        14
+      ],
+      "summary": "Postgres-backed store for user records.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/user_store.go:GetUserByExternalIdentity",
+      "type": "function",
+      "name": "GetUserByExternalIdentity",
+      "filePath": "backend/internal/store/postgres/user_store.go",
+      "lineRange": [
+        36,
+        51
+      ],
+      "summary": "Looks up a user by external identity provider and subject, used during OIDC login.",
+      "tags": [
+        "repository",
+        "database",
+        "authentication"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/user_store.go:ListUsers",
+      "type": "function",
+      "name": "ListUsers",
+      "filePath": "backend/internal/store/postgres/user_store.go",
+      "lineRange": [
+        84,
+        104
+      ],
+      "summary": "Returns a paginated list of users ordered for stable enumeration.",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "pagination"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/user_store.go:GetUserByIdentifier",
+      "type": "function",
+      "name": "GetUserByIdentifier",
+      "filePath": "backend/internal/store/postgres/user_store.go",
+      "lineRange": [
+        20,
+        34
+      ],
+      "summary": "Fetches a single user by identifier, mapping no-rows to a not-found error.",
+      "tags": [
+        "repository",
+        "database",
+        "query"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "class:backend/internal/store/postgres/project_store.go:ProjectStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "function:backend/internal/store/postgres/project_store.go:ListProjects",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "function:backend/internal/store/postgres/project_store.go:ListFolderPaths",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "function:backend/internal/store/postgres/project_store.go:UpdateProject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "function:backend/internal/store/postgres/project_store.go:GetProjectByIdentifier",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "class:backend/internal/store/postgres/project_store.go:ProjectStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "class:backend/internal/domain/store_project.go:ProjectStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "class:backend/internal/store/postgres/user_store.go:UserStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "function:backend/internal/store/postgres/user_store.go:GetUserByExternalIdentity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "function:backend/internal/store/postgres/user_store.go:ListUsers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "function:backend/internal/store/postgres/user_store.go:GetUserByIdentifier",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "class:backend/internal/store/postgres/user_store.go:UserStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "class:backend/internal/domain/store_user.go:UserStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/project_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/user_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

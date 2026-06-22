@@ -1,0 +1,1178 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/service/attachment_service.go",
+      "type": "file",
+      "name": "attachment_service.go",
+      "filePath": "backend/internal/service/attachment_service.go",
+      "summary": "Service handling attachment uploads to blob storage, listing, deletion, presigned URL generation, and staging pending changes for version snapshots.",
+      "tags": [
+        "service",
+        "attachment",
+        "file-storage",
+        "versioning"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/service/element_service.go",
+      "type": "file",
+      "name": "element_service.go",
+      "filePath": "backend/internal/service/element_service.go",
+      "summary": "Service orchestrating element CRUD, search, cache invalidation, pending-change staging, and assembly of the full element aggregate from multiple stores.",
+      "tags": [
+        "service",
+        "element",
+        "caching",
+        "aggregate",
+        "crud"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/internal/service/link_service_test.go",
+      "type": "file",
+      "name": "link_service_test.go",
+      "filePath": "backend/internal/service/link_service_test.go",
+      "summary": "Unit tests for the link service covering link creation, deletion both-direction cleanup, type updates, cache invalidation, and pending-change staging using fakes.",
+      "tags": [
+        "test",
+        "element-link",
+        "service",
+        "unit-test"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:backend/internal/service/attachment_service.go:AttachmentService",
+      "type": "class",
+      "name": "AttachmentService",
+      "filePath": "backend/internal/service/attachment_service.go",
+      "lineRange": [
+        15,
+        23
+      ],
+      "summary": "Service managing attachment lifecycle, blob storage, and version staging.",
+      "tags": [
+        "service",
+        "attachment"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/attachment_service.go:NewAttachmentService",
+      "type": "function",
+      "name": "NewAttachmentService",
+      "filePath": "backend/internal/service/attachment_service.go",
+      "lineRange": [
+        26,
+        44
+      ],
+      "summary": "Constructs an AttachmentService with its store dependencies.",
+      "tags": [
+        "constructor",
+        "attachment"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/attachment_service.go:UploadAttachment",
+      "type": "function",
+      "name": "UploadAttachment",
+      "filePath": "backend/internal/service/attachment_service.go",
+      "lineRange": [
+        47,
+        86
+      ],
+      "summary": "Uploads an attachment to blob storage, persists metadata, and stages a pending change.",
+      "tags": [
+        "service",
+        "attachment",
+        "upload"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/attachment_service.go:DeleteAttachment",
+      "type": "function",
+      "name": "DeleteAttachment",
+      "filePath": "backend/internal/service/attachment_service.go",
+      "lineRange": [
+        94,
+        115
+      ],
+      "summary": "Deletes an attachment from storage and metadata, staging a pending change.",
+      "tags": [
+        "service",
+        "attachment"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/attachment_service.go:GetPresignedURL",
+      "type": "function",
+      "name": "GetPresignedURL",
+      "filePath": "backend/internal/service/attachment_service.go",
+      "lineRange": [
+        118,
+        129
+      ],
+      "summary": "Generates a presigned download URL for an attachment.",
+      "tags": [
+        "service",
+        "attachment",
+        "file-storage"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/attachment_service.go:stagePendingChange",
+      "type": "function",
+      "name": "stagePendingChange",
+      "filePath": "backend/internal/service/attachment_service.go",
+      "lineRange": [
+        132,
+        171
+      ],
+      "summary": "Stages a pending change snapshot for the element's version history.",
+      "tags": [
+        "service",
+        "versioning",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/element_service.go:ElementService",
+      "type": "class",
+      "name": "ElementService",
+      "filePath": "backend/internal/service/element_service.go",
+      "lineRange": [
+        14,
+        21
+      ],
+      "summary": "Service orchestrating element CRUD, search, caching, and aggregate assembly.",
+      "tags": [
+        "service",
+        "element"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/service/element_service.go:NewElementService",
+      "type": "function",
+      "name": "NewElementService",
+      "filePath": "backend/internal/service/element_service.go",
+      "lineRange": [
+        24,
+        40
+      ],
+      "summary": "Constructs an ElementService with its store dependencies.",
+      "tags": [
+        "constructor",
+        "element"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/element_service.go:GetElementByIdentifier",
+      "type": "function",
+      "name": "GetElementByIdentifier",
+      "filePath": "backend/internal/service/element_service.go",
+      "lineRange": [
+        45,
+        65
+      ],
+      "summary": "Retrieves an element, using cache and loading its full aggregate.",
+      "tags": [
+        "service",
+        "element",
+        "caching"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/element_service.go:CreateElement",
+      "type": "function",
+      "name": "CreateElement",
+      "filePath": "backend/internal/service/element_service.go",
+      "lineRange": [
+        78,
+        96
+      ],
+      "summary": "Creates an element and stages a pending version change.",
+      "tags": [
+        "service",
+        "element",
+        "crud"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/element_service.go:UpdateElement",
+      "type": "function",
+      "name": "UpdateElement",
+      "filePath": "backend/internal/service/element_service.go",
+      "lineRange": [
+        101,
+        137
+      ],
+      "summary": "Updates an element, invalidates cache, and stages a pending change.",
+      "tags": [
+        "service",
+        "element",
+        "crud",
+        "caching"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/element_service.go:DeleteElement",
+      "type": "function",
+      "name": "DeleteElement",
+      "filePath": "backend/internal/service/element_service.go",
+      "lineRange": [
+        140,
+        154
+      ],
+      "summary": "Deletes an element and invalidates related cache entries.",
+      "tags": [
+        "service",
+        "element",
+        "crud",
+        "caching"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/element_service.go:SearchElements",
+      "type": "function",
+      "name": "SearchElements",
+      "filePath": "backend/internal/service/element_service.go",
+      "lineRange": [
+        157,
+        165
+      ],
+      "summary": "Searches elements within a project using a query with pagination.",
+      "tags": [
+        "service",
+        "element",
+        "search"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/element_service.go:loadFullAggregate",
+      "type": "function",
+      "name": "loadFullAggregate",
+      "filePath": "backend/internal/service/element_service.go",
+      "lineRange": [
+        169,
+        206
+      ],
+      "summary": "Assembles the full element aggregate from links, fields, and attachments.",
+      "tags": [
+        "service",
+        "element",
+        "aggregate"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/link_service_test.go:seedElementsForLinkTests",
+      "type": "function",
+      "name": "seedElementsForLinkTests",
+      "filePath": "backend/internal/service/link_service_test.go",
+      "lineRange": [
+        11,
+        23
+      ],
+      "summary": "Seeds fake element store with elements for link tests.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/link_service_test.go:newLinkServiceWithFakes",
+      "type": "function",
+      "name": "newLinkServiceWithFakes",
+      "filePath": "backend/internal/service/link_service_test.go",
+      "lineRange": [
+        34,
+        57
+      ],
+      "summary": "Builds a link service wired to fake stores for testing.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/link_service_test.go:TestLinkService_CreateLink_StoresLinkStagesChangesAndInvalidatesCache",
+      "type": "function",
+      "name": "TestLinkService_CreateLink_StoresLinkStagesChangesAndInvalidatesCache",
+      "filePath": "backend/internal/service/link_service_test.go",
+      "lineRange": [
+        59,
+        93
+      ],
+      "summary": "Tests link creation stores the link, stages changes, and invalidates cache.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/link_service_test.go:TestLinkService_DeleteLink_RemovesLinkAndInvalidatesBothSides",
+      "type": "function",
+      "name": "TestLinkService_DeleteLink_RemovesLinkAndInvalidatesBothSides",
+      "filePath": "backend/internal/service/link_service_test.go",
+      "lineRange": [
+        95,
+        123
+      ],
+      "summary": "Tests link deletion removes the link and invalidates both endpoints' cache.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/link_service_test.go:TestLinkService_UpdateLinkType_ChangesTypeAndStagesChanges",
+      "type": "function",
+      "name": "TestLinkService_UpdateLinkType_ChangesTypeAndStagesChanges",
+      "filePath": "backend/internal/service/link_service_test.go",
+      "lineRange": [
+        134,
+        157
+      ],
+      "summary": "Tests updating a link's type and staging the resulting changes.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/link_service_test.go:TestLinkService_ListLinksByElement_ReturnsBothDirections",
+      "type": "function",
+      "name": "TestLinkService_ListLinksByElement_ReturnsBothDirections",
+      "filePath": "backend/internal/service/link_service_test.go",
+      "lineRange": [
+        159,
+        177
+      ],
+      "summary": "Tests listing links returns both incoming and outgoing links.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "class:backend/internal/service/attachment_service.go:AttachmentService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "class:backend/internal/service/attachment_service.go:AttachmentService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:NewAttachmentService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:NewAttachmentService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:UploadAttachment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:UploadAttachment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:DeleteAttachment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:DeleteAttachment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:GetPresignedURL",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:GetPresignedURL",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "function:backend/internal/service/attachment_service.go:stagePendingChange",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "class:backend/internal/service/element_service.go:ElementService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "class:backend/internal/service/element_service.go:ElementService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:NewElementService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:NewElementService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:GetElementByIdentifier",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:GetElementByIdentifier",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:CreateElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:CreateElement",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:UpdateElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:UpdateElement",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:DeleteElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:DeleteElement",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:SearchElements",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:SearchElements",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "function:backend/internal/service/element_service.go:loadFullAggregate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:seedElementsForLinkTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:newLinkServiceWithFakes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:TestLinkService_CreateLink_StoresLinkStagesChangesAndInvalidatesCache",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:TestLinkService_CreateLink_StoresLinkStagesChangesAndInvalidatesCache",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:TestLinkService_DeleteLink_RemovesLinkAndInvalidatesBothSides",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:TestLinkService_DeleteLink_RemovesLinkAndInvalidatesBothSides",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:TestLinkService_UpdateLinkType_ChangesTypeAndStagesChanges",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:TestLinkService_UpdateLinkType_ChangesTypeAndStagesChanges",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:TestLinkService_ListLinksByElement_ReturnsBothDirections",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "function:backend/internal/service/link_service_test.go:TestLinkService_ListLinksByElement_ReturnsBothDirections",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/attachment_service.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/element_service.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/link_service_test.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

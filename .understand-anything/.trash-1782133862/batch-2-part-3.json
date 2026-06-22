@@ -1,0 +1,932 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/store/postgres/element_link_store.go",
+      "type": "file",
+      "name": "element_link_store.go",
+      "filePath": "backend/internal/store/postgres/element_link_store.go",
+      "summary": "Postgres implementation of the ElementLinkStore interface for creating, fetching, updating type, deleting, and listing element links by direction.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "relationships"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/store/postgres/element_link_store.go:ElementLinkStore",
+      "type": "class",
+      "name": "ElementLinkStore",
+      "filePath": "backend/internal/store/postgres/element_link_store.go",
+      "lineRange": [
+        12,
+        14
+      ],
+      "summary": "Postgres-backed store wrapping a database handle for element link persistence.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_link_store.go:ListLinksByElement",
+      "type": "function",
+      "name": "ListLinksByElement",
+      "filePath": "backend/internal/store/postgres/element_link_store.go",
+      "lineRange": [
+        97,
+        129
+      ],
+      "summary": "Lists element links touching a given element, filtering by source/destination/both direction.",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "relationships"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_link_store.go:UpdateLinkType",
+      "type": "function",
+      "name": "UpdateLinkType",
+      "filePath": "backend/internal/store/postgres/element_link_store.go",
+      "lineRange": [
+        64,
+        80
+      ],
+      "summary": "Updates the link type of an existing link and reports not-found when no row is affected.",
+      "tags": [
+        "repository",
+        "database",
+        "update"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/store/postgres/element_pending_store.go",
+      "type": "file",
+      "name": "element_pending_store.go",
+      "filePath": "backend/internal/store/postgres/element_pending_store.go",
+      "summary": "Postgres implementation of the ElementPendingChangeStore interface, upserting pre-edit snapshots and surfacing stale pending changes for deferred version commits.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "versioning"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Stores a JSON snapshot of the element before edits to support debounced version commit by a background worker."
+    },
+    {
+      "id": "class:backend/internal/store/postgres/element_pending_store.go:ElementPendingChangeStore",
+      "type": "class",
+      "name": "ElementPendingChangeStore",
+      "filePath": "backend/internal/store/postgres/element_pending_store.go",
+      "lineRange": [
+        12,
+        14
+      ],
+      "summary": "Postgres-backed store tracking pending element changes awaiting version commit.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "versioning"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_pending_store.go:GetStalePendingChanges",
+      "type": "function",
+      "name": "GetStalePendingChanges",
+      "filePath": "backend/internal/store/postgres/element_pending_store.go",
+      "lineRange": [
+        40,
+        85
+      ],
+      "summary": "Returns pending changes whose last-edit time is older than an inactivity threshold, unmarshaling their stored snapshots.",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "versioning"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_pending_store.go:UpsertPendingChange",
+      "type": "function",
+      "name": "UpsertPendingChange",
+      "filePath": "backend/internal/store/postgres/element_pending_store.go",
+      "lineRange": [
+        20,
+        38
+      ],
+      "summary": "Inserts or updates the pre-edit snapshot for an element, marshaling it to JSON.",
+      "tags": [
+        "repository",
+        "database",
+        "upsert",
+        "versioning"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/store/postgres/element_store.go",
+      "type": "file",
+      "name": "element_store.go",
+      "filePath": "backend/internal/store/postgres/element_store.go",
+      "summary": "Postgres implementation of the ElementStore interface with dynamic filtered listing, full-text search, and CRUD over the unified element table.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "search"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Builds parameterized WHERE clauses dynamically from an ElementFilter and uses a shared scanElement helper for row decoding."
+    },
+    {
+      "id": "class:backend/internal/store/postgres/element_store.go:ElementStore",
+      "type": "class",
+      "name": "ElementStore",
+      "filePath": "backend/internal/store/postgres/element_store.go",
+      "lineRange": [
+        14,
+        16
+      ],
+      "summary": "Postgres-backed store wrapping a database handle for element CRUD and search.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_store.go:ListElementsByProject",
+      "type": "function",
+      "name": "ListElementsByProject",
+      "filePath": "backend/internal/store/postgres/element_store.go",
+      "lineRange": [
+        70,
+        137
+      ],
+      "summary": "Lists elements in a project, dynamically composing WHERE conditions from an ElementFilter (type, status, assignee, parent feature).",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "filtering"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_store.go:UpdateElement",
+      "type": "function",
+      "name": "UpdateElement",
+      "filePath": "backend/internal/store/postgres/element_store.go",
+      "lineRange": [
+        170,
+        209
+      ],
+      "summary": "Updates an element after loading the existing row, refreshing the modification time, and rescanning the result.",
+      "tags": [
+        "repository",
+        "database",
+        "update"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_store.go:CreateElement",
+      "type": "function",
+      "name": "CreateElement",
+      "filePath": "backend/internal/store/postgres/element_store.go",
+      "lineRange": [
+        139,
+        168
+      ],
+      "summary": "Inserts a new element row with system timestamps and returns the scanned record.",
+      "tags": [
+        "repository",
+        "database",
+        "insert"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_store.go:SearchElements",
+      "type": "function",
+      "name": "SearchElements",
+      "filePath": "backend/internal/store/postgres/element_store.go",
+      "lineRange": [
+        226,
+        249
+      ],
+      "summary": "Performs a paginated text search over elements within a project.",
+      "tags": [
+        "repository",
+        "database",
+        "search",
+        "pagination"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/element_store.go:scanElement",
+      "type": "function",
+      "name": "scanElement",
+      "filePath": "backend/internal/store/postgres/element_store.go",
+      "lineRange": [
+        30,
+        56
+      ],
+      "summary": "Shared helper scanning a database row into an Element struct including nullable type-specific fields.",
+      "tags": [
+        "repository",
+        "database",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "class:backend/internal/store/postgres/element_link_store.go:ElementLinkStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "function:backend/internal/store/postgres/element_link_store.go:ListLinksByElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "function:backend/internal/store/postgres/element_link_store.go:UpdateLinkType",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "class:backend/internal/store/postgres/element_link_store.go:ElementLinkStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "class:backend/internal/domain/store_element_link.go:ElementLinkStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "class:backend/internal/store/postgres/element_pending_store.go:ElementPendingChangeStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "function:backend/internal/store/postgres/element_pending_store.go:GetStalePendingChanges",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "function:backend/internal/store/postgres/element_pending_store.go:UpsertPendingChange",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "class:backend/internal/store/postgres/element_pending_store.go:ElementPendingChangeStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "class:backend/internal/domain/store_element_version.go:ElementPendingChangeStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "class:backend/internal/store/postgres/element_store.go:ElementStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "function:backend/internal/store/postgres/element_store.go:ListElementsByProject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "function:backend/internal/store/postgres/element_store.go:UpdateElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "function:backend/internal/store/postgres/element_store.go:CreateElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "function:backend/internal/store/postgres/element_store.go:SearchElements",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "function:backend/internal/store/postgres/element_store.go:scanElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "class:backend/internal/store/postgres/element_store.go:ElementStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "class:backend/internal/domain/store_element.go:ElementStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_link_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_pending_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/element_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

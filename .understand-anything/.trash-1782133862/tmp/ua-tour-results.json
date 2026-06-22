@@ -1,0 +1,1584 @@
+{
+  "scriptCompleted": true,
+  "entryPointCandidates": [
+    {
+      "id": "document:README.md",
+      "score": 5,
+      "name": "README.md",
+      "summary": "Project overview README with background, installation requirements and steps, app workflow, element types, license, contribution notes, and unit/integration test instructions.",
+      "type": "document"
+    },
+    {
+      "id": "file:backend/cmd/server/main.go",
+      "score": 4,
+      "name": "main.go",
+      "summary": "Application entry point that loads config, opens the Postgres connection, runs migrations, wires all stores/services/auth, starts the version-commit worker and HTTP server, and handles graceful shutdown.",
+      "type": "file"
+    },
+    {
+      "id": "file:backend/cmd/integration-test/main.go",
+      "score": 3,
+      "name": "main.go",
+      "summary": "Standalone end-to-end integration test harness that drives the running backend's HTTP API, exercising the full lifecycle of projects, elements, links, attachments, versions, phases, custom fields, groups/access, and auth, then emits a markdown test report.",
+      "type": "file"
+    },
+    {
+      "id": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "score": 2,
+      "name": "ristretto_cache.go",
+      "summary": "In-memory implementation of the domain CacheStore interface backed by the Ristretto library, with prefix-based invalidation via a mutex-guarded key tracker.",
+      "type": "file"
+    },
+    {
+      "id": "document:ARCHITECTURE.md",
+      "score": 2,
+      "name": "ARCHITECTURE.md",
+      "summary": "Architecture and technology design document describing the Go backend layered/clean architecture, React+TypeScript frontend, repository layout, CQRS-lite read model, plugin system, OpenAPI-first API, custom fields, auth flow, and deployment targets.",
+      "type": "document"
+    }
+  ],
+  "fanInRanking": [
+    {
+      "id": "file:backend/internal/domain/task_status.go",
+      "fanIn": 44,
+      "name": "task_status.go"
+    },
+    {
+      "id": "file:backend/internal/domain/task_status_test.go",
+      "fanIn": 44,
+      "name": "task_status_test.go"
+    },
+    {
+      "id": "file:backend/internal/domain/element.go",
+      "fanIn": 44,
+      "name": "element.go"
+    },
+    {
+      "id": "file:backend/internal/domain/element_test.go",
+      "fanIn": 44,
+      "name": "element_test.go"
+    },
+    {
+      "id": "file:backend/internal/domain/element_type_test.go",
+      "fanIn": 44,
+      "name": "element_type_test.go"
+    },
+    {
+      "id": "file:backend/internal/domain/link_type.go",
+      "fanIn": 44,
+      "name": "link_type.go"
+    },
+    {
+      "id": "file:backend/internal/domain/link_type_test.go",
+      "fanIn": 44,
+      "name": "link_type_test.go"
+    },
+    {
+      "id": "file:backend/internal/domain/element_type.go",
+      "fanIn": 44,
+      "name": "element_type.go"
+    },
+    {
+      "id": "file:backend/internal/domain/attachment.go",
+      "fanIn": 43,
+      "name": "attachment.go"
+    },
+    {
+      "id": "file:backend/internal/domain/store_element.go",
+      "fanIn": 43,
+      "name": "store_element.go"
+    },
+    {
+      "id": "file:backend/internal/domain/store_element_link.go",
+      "fanIn": 43,
+      "name": "store_element_link.go"
+    },
+    {
+      "id": "file:backend/internal/domain/store_file_storage.go",
+      "fanIn": 43,
+      "name": "store_file_storage.go"
+    },
+    {
+      "id": "file:backend/internal/domain/store_phase.go",
+      "fanIn": 43,
+      "name": "store_phase.go"
+    },
+    {
+      "id": "file:backend/internal/domain/store_project.go",
+      "fanIn": 43,
+      "name": "store_project.go"
+    },
+    {
+      "id": "file:backend/internal/domain/store_user.go",
+      "fanIn": 43,
+      "name": "store_user.go"
+    },
+    {
+      "id": "file:backend/internal/domain/user.go",
+      "fanIn": 43,
+      "name": "user.go"
+    },
+    {
+      "id": "file:backend/internal/domain/version.go",
+      "fanIn": 43,
+      "name": "version.go"
+    },
+    {
+      "id": "file:backend/internal/domain/custom_field.go",
+      "fanIn": 43,
+      "name": "custom_field.go"
+    },
+    {
+      "id": "file:backend/internal/domain/element_link.go",
+      "fanIn": 43,
+      "name": "element_link.go"
+    },
+    {
+      "id": "file:backend/internal/domain/errors.go",
+      "fanIn": 43,
+      "name": "errors.go"
+    }
+  ],
+  "fanOutRanking": [
+    {
+      "id": "file:backend/cmd/server/main.go",
+      "fanOut": 53,
+      "name": "main.go"
+    },
+    {
+      "id": "file:backend/internal/api/access_handler.go",
+      "fanOut": 50,
+      "name": "access_handler.go"
+    },
+    {
+      "id": "file:backend/internal/api/router.go",
+      "fanOut": 50,
+      "name": "router.go"
+    },
+    {
+      "id": "file:backend/internal/api/version_handler.go",
+      "fanOut": 43,
+      "name": "version_handler.go"
+    },
+    {
+      "id": "file:backend/internal/api/group_handler.go",
+      "fanOut": 43,
+      "name": "group_handler.go"
+    },
+    {
+      "id": "file:backend/internal/api/link_handler.go",
+      "fanOut": 43,
+      "name": "link_handler.go"
+    },
+    {
+      "id": "file:backend/internal/api/phase_handler.go",
+      "fanOut": 43,
+      "name": "phase_handler.go"
+    },
+    {
+      "id": "file:backend/internal/api/project_handler.go",
+      "fanOut": 43,
+      "name": "project_handler.go"
+    },
+    {
+      "id": "file:backend/internal/api/custom_field_handler.go",
+      "fanOut": 43,
+      "name": "custom_field_handler.go"
+    },
+    {
+      "id": "file:backend/internal/api/element_handler.go",
+      "fanOut": 43,
+      "name": "element_handler.go"
+    },
+    {
+      "id": "file:backend/internal/auth/middleware.go",
+      "fanOut": 43,
+      "name": "middleware.go"
+    },
+    {
+      "id": "file:backend/internal/api/api_key_handler.go",
+      "fanOut": 33,
+      "name": "api_key_handler.go"
+    },
+    {
+      "id": "file:backend/internal/service/versionable_snapshot.go",
+      "fanOut": 27,
+      "name": "versionable_snapshot.go"
+    },
+    {
+      "id": "file:backend/internal/service/phase_service.go",
+      "fanOut": 27,
+      "name": "phase_service.go"
+    },
+    {
+      "id": "file:backend/internal/service/project_service.go",
+      "fanOut": 27,
+      "name": "project_service.go"
+    },
+    {
+      "id": "file:backend/internal/service/user_service.go",
+      "fanOut": 27,
+      "name": "user_service.go"
+    },
+    {
+      "id": "file:backend/internal/cache/memory/ristretto_cache.go",
+      "fanOut": 27,
+      "name": "ristretto_cache.go"
+    },
+    {
+      "id": "file:backend/internal/auth/super_admin.go",
+      "fanOut": 27,
+      "name": "super_admin.go"
+    },
+    {
+      "id": "file:backend/internal/service/link_service.go",
+      "fanOut": 27,
+      "name": "link_service.go"
+    },
+    {
+      "id": "file:backend/internal/service/user_service_test.go",
+      "fanOut": 26,
+      "name": "user_service_test.go"
+    }
+  ],
+  "bfsTraversal": {
+    "startNode": "file:backend/cmd/server/main.go",
+    "order": [
+      "file:backend/cmd/server/main.go",
+      "file:backend/internal/api/access_handler.go",
+      "file:backend/internal/api/api_key_handler.go",
+      "file:backend/internal/api/attachment_handler.go",
+      "file:backend/internal/api/auth_handler.go",
+      "file:backend/internal/api/custom_field_handler.go",
+      "file:backend/internal/api/element_handler.go",
+      "file:backend/internal/api/group_handler.go",
+      "file:backend/internal/api/link_handler.go",
+      "file:backend/internal/api/phase_handler.go",
+      "file:backend/internal/api/project_handler.go",
+      "file:backend/internal/api/router.go",
+      "file:backend/internal/api/user_handler.go",
+      "file:backend/internal/api/version_handler.go",
+      "file:backend/internal/auth/api_key_test.go",
+      "file:backend/internal/auth/api_key.go",
+      "file:backend/internal/auth/middleware.go",
+      "file:backend/internal/auth/oidc.go",
+      "file:backend/internal/auth/session.go",
+      "file:backend/internal/auth/super_admin_test.go",
+      "file:backend/internal/auth/super_admin.go",
+      "file:backend/internal/cache/memory/ristretto_cache_test.go",
+      "file:backend/internal/cache/memory/ristretto_cache.go",
+      "file:backend/internal/config/config.go",
+      "file:backend/internal/filestore/s3/s3_file_storage.go",
+      "file:backend/internal/service/attachment_service.go",
+      "file:backend/internal/service/custom_field_service.go",
+      "file:backend/internal/service/element_service.go",
+      "file:backend/internal/service/group_service.go",
+      "file:backend/internal/service/link_service_test.go",
+      "file:backend/internal/service/link_service.go",
+      "file:backend/internal/service/phase_service_test.go",
+      "file:backend/internal/service/phase_service.go",
+      "file:backend/internal/service/project_service_test.go",
+      "file:backend/internal/service/project_service.go",
+      "file:backend/internal/service/service_fakes_test.go",
+      "file:backend/internal/service/user_service_test.go",
+      "file:backend/internal/service/user_service.go",
+      "file:backend/internal/service/version_service.go",
+      "file:backend/internal/service/version_worker.go",
+      "file:backend/internal/service/versionable_snapshot_test.go",
+      "file:backend/internal/service/versionable_snapshot.go",
+      "file:backend/internal/store/postgres/api_key_store.go",
+      "file:backend/internal/store/postgres/attachment_store.go",
+      "file:backend/internal/store/postgres/connection.go",
+      "file:backend/internal/store/postgres/custom_field_store.go",
+      "file:backend/internal/store/postgres/element_link_store.go",
+      "file:backend/internal/store/postgres/element_pending_store.go",
+      "file:backend/internal/store/postgres/element_store.go",
+      "file:backend/internal/store/postgres/element_version_store.go",
+      "file:backend/internal/store/postgres/group_store.go",
+      "file:backend/internal/store/postgres/phase_store.go",
+      "file:backend/internal/store/postgres/project_store.go",
+      "file:backend/internal/store/postgres/user_store.go",
+      "file:backend/internal/domain/attachment.go",
+      "file:backend/internal/domain/custom_field.go",
+      "file:backend/internal/domain/element_link.go",
+      "file:backend/internal/domain/element_test.go",
+      "file:backend/internal/domain/element_type_test.go",
+      "file:backend/internal/domain/element_type.go",
+      "file:backend/internal/domain/element.go",
+      "file:backend/internal/domain/errors.go",
+      "file:backend/internal/domain/link_type_test.go",
+      "file:backend/internal/domain/link_type.go",
+      "file:backend/internal/domain/phase.go",
+      "file:backend/internal/domain/project.go",
+      "file:backend/internal/domain/store_attachment.go",
+      "file:backend/internal/domain/store_cache.go",
+      "file:backend/internal/domain/store_custom_field.go",
+      "file:backend/internal/domain/store_element_link.go",
+      "file:backend/internal/domain/store_element_version.go",
+      "file:backend/internal/domain/store_element.go",
+      "file:backend/internal/domain/store_file_storage.go",
+      "file:backend/internal/domain/store_phase.go",
+      "file:backend/internal/domain/store_project.go",
+      "file:backend/internal/domain/store_user.go",
+      "file:backend/internal/domain/task_status_test.go",
+      "file:backend/internal/domain/task_status.go",
+      "file:backend/internal/domain/user.go",
+      "file:backend/internal/domain/version.go"
+    ],
+    "depthMap": {
+      "file:backend/cmd/server/main.go": 0,
+      "file:backend/internal/api/access_handler.go": 1,
+      "file:backend/internal/api/api_key_handler.go": 1,
+      "file:backend/internal/api/attachment_handler.go": 1,
+      "file:backend/internal/api/auth_handler.go": 1,
+      "file:backend/internal/api/custom_field_handler.go": 1,
+      "file:backend/internal/api/element_handler.go": 1,
+      "file:backend/internal/api/group_handler.go": 1,
+      "file:backend/internal/api/link_handler.go": 1,
+      "file:backend/internal/api/phase_handler.go": 1,
+      "file:backend/internal/api/project_handler.go": 1,
+      "file:backend/internal/api/router.go": 1,
+      "file:backend/internal/api/user_handler.go": 1,
+      "file:backend/internal/api/version_handler.go": 1,
+      "file:backend/internal/auth/api_key_test.go": 1,
+      "file:backend/internal/auth/api_key.go": 1,
+      "file:backend/internal/auth/middleware.go": 1,
+      "file:backend/internal/auth/oidc.go": 1,
+      "file:backend/internal/auth/session.go": 1,
+      "file:backend/internal/auth/super_admin_test.go": 1,
+      "file:backend/internal/auth/super_admin.go": 1,
+      "file:backend/internal/cache/memory/ristretto_cache_test.go": 1,
+      "file:backend/internal/cache/memory/ristretto_cache.go": 1,
+      "file:backend/internal/config/config.go": 1,
+      "file:backend/internal/filestore/s3/s3_file_storage.go": 1,
+      "file:backend/internal/service/attachment_service.go": 1,
+      "file:backend/internal/service/custom_field_service.go": 1,
+      "file:backend/internal/service/element_service.go": 1,
+      "file:backend/internal/service/group_service.go": 1,
+      "file:backend/internal/service/link_service_test.go": 1,
+      "file:backend/internal/service/link_service.go": 1,
+      "file:backend/internal/service/phase_service_test.go": 1,
+      "file:backend/internal/service/phase_service.go": 1,
+      "file:backend/internal/service/project_service_test.go": 1,
+      "file:backend/internal/service/project_service.go": 1,
+      "file:backend/internal/service/service_fakes_test.go": 1,
+      "file:backend/internal/service/user_service_test.go": 1,
+      "file:backend/internal/service/user_service.go": 1,
+      "file:backend/internal/service/version_service.go": 1,
+      "file:backend/internal/service/version_worker.go": 1,
+      "file:backend/internal/service/versionable_snapshot_test.go": 1,
+      "file:backend/internal/service/versionable_snapshot.go": 1,
+      "file:backend/internal/store/postgres/api_key_store.go": 1,
+      "file:backend/internal/store/postgres/attachment_store.go": 1,
+      "file:backend/internal/store/postgres/connection.go": 1,
+      "file:backend/internal/store/postgres/custom_field_store.go": 1,
+      "file:backend/internal/store/postgres/element_link_store.go": 1,
+      "file:backend/internal/store/postgres/element_pending_store.go": 1,
+      "file:backend/internal/store/postgres/element_store.go": 1,
+      "file:backend/internal/store/postgres/element_version_store.go": 1,
+      "file:backend/internal/store/postgres/group_store.go": 1,
+      "file:backend/internal/store/postgres/phase_store.go": 1,
+      "file:backend/internal/store/postgres/project_store.go": 1,
+      "file:backend/internal/store/postgres/user_store.go": 1,
+      "file:backend/internal/domain/attachment.go": 2,
+      "file:backend/internal/domain/custom_field.go": 2,
+      "file:backend/internal/domain/element_link.go": 2,
+      "file:backend/internal/domain/element_test.go": 2,
+      "file:backend/internal/domain/element_type_test.go": 2,
+      "file:backend/internal/domain/element_type.go": 2,
+      "file:backend/internal/domain/element.go": 2,
+      "file:backend/internal/domain/errors.go": 2,
+      "file:backend/internal/domain/link_type_test.go": 2,
+      "file:backend/internal/domain/link_type.go": 2,
+      "file:backend/internal/domain/phase.go": 2,
+      "file:backend/internal/domain/project.go": 2,
+      "file:backend/internal/domain/store_attachment.go": 2,
+      "file:backend/internal/domain/store_cache.go": 2,
+      "file:backend/internal/domain/store_custom_field.go": 2,
+      "file:backend/internal/domain/store_element_link.go": 2,
+      "file:backend/internal/domain/store_element_version.go": 2,
+      "file:backend/internal/domain/store_element.go": 2,
+      "file:backend/internal/domain/store_file_storage.go": 2,
+      "file:backend/internal/domain/store_phase.go": 2,
+      "file:backend/internal/domain/store_project.go": 2,
+      "file:backend/internal/domain/store_user.go": 2,
+      "file:backend/internal/domain/task_status_test.go": 2,
+      "file:backend/internal/domain/task_status.go": 2,
+      "file:backend/internal/domain/user.go": 2,
+      "file:backend/internal/domain/version.go": 2
+    },
+    "byDepth": {
+      "0": [
+        "file:backend/cmd/server/main.go"
+      ],
+      "1": [
+        "file:backend/internal/api/access_handler.go",
+        "file:backend/internal/api/api_key_handler.go",
+        "file:backend/internal/api/attachment_handler.go",
+        "file:backend/internal/api/auth_handler.go",
+        "file:backend/internal/api/custom_field_handler.go",
+        "file:backend/internal/api/element_handler.go",
+        "file:backend/internal/api/group_handler.go",
+        "file:backend/internal/api/link_handler.go",
+        "file:backend/internal/api/phase_handler.go",
+        "file:backend/internal/api/project_handler.go",
+        "file:backend/internal/api/router.go",
+        "file:backend/internal/api/user_handler.go",
+        "file:backend/internal/api/version_handler.go",
+        "file:backend/internal/auth/api_key_test.go",
+        "file:backend/internal/auth/api_key.go",
+        "file:backend/internal/auth/middleware.go",
+        "file:backend/internal/auth/oidc.go",
+        "file:backend/internal/auth/session.go",
+        "file:backend/internal/auth/super_admin_test.go",
+        "file:backend/internal/auth/super_admin.go",
+        "file:backend/internal/cache/memory/ristretto_cache_test.go",
+        "file:backend/internal/cache/memory/ristretto_cache.go",
+        "file:backend/internal/config/config.go",
+        "file:backend/internal/filestore/s3/s3_file_storage.go",
+        "file:backend/internal/service/attachment_service.go",
+        "file:backend/internal/service/custom_field_service.go",
+        "file:backend/internal/service/element_service.go",
+        "file:backend/internal/service/group_service.go",
+        "file:backend/internal/service/link_service_test.go",
+        "file:backend/internal/service/link_service.go",
+        "file:backend/internal/service/phase_service_test.go",
+        "file:backend/internal/service/phase_service.go",
+        "file:backend/internal/service/project_service_test.go",
+        "file:backend/internal/service/project_service.go",
+        "file:backend/internal/service/service_fakes_test.go",
+        "file:backend/internal/service/user_service_test.go",
+        "file:backend/internal/service/user_service.go",
+        "file:backend/internal/service/version_service.go",
+        "file:backend/internal/service/version_worker.go",
+        "file:backend/internal/service/versionable_snapshot_test.go",
+        "file:backend/internal/service/versionable_snapshot.go",
+        "file:backend/internal/store/postgres/api_key_store.go",
+        "file:backend/internal/store/postgres/attachment_store.go",
+        "file:backend/internal/store/postgres/connection.go",
+        "file:backend/internal/store/postgres/custom_field_store.go",
+        "file:backend/internal/store/postgres/element_link_store.go",
+        "file:backend/internal/store/postgres/element_pending_store.go",
+        "file:backend/internal/store/postgres/element_store.go",
+        "file:backend/internal/store/postgres/element_version_store.go",
+        "file:backend/internal/store/postgres/group_store.go",
+        "file:backend/internal/store/postgres/phase_store.go",
+        "file:backend/internal/store/postgres/project_store.go",
+        "file:backend/internal/store/postgres/user_store.go"
+      ],
+      "2": [
+        "file:backend/internal/domain/attachment.go",
+        "file:backend/internal/domain/custom_field.go",
+        "file:backend/internal/domain/element_link.go",
+        "file:backend/internal/domain/element_test.go",
+        "file:backend/internal/domain/element_type_test.go",
+        "file:backend/internal/domain/element_type.go",
+        "file:backend/internal/domain/element.go",
+        "file:backend/internal/domain/errors.go",
+        "file:backend/internal/domain/link_type_test.go",
+        "file:backend/internal/domain/link_type.go",
+        "file:backend/internal/domain/phase.go",
+        "file:backend/internal/domain/project.go",
+        "file:backend/internal/domain/store_attachment.go",
+        "file:backend/internal/domain/store_cache.go",
+        "file:backend/internal/domain/store_custom_field.go",
+        "file:backend/internal/domain/store_element_link.go",
+        "file:backend/internal/domain/store_element_version.go",
+        "file:backend/internal/domain/store_element.go",
+        "file:backend/internal/domain/store_file_storage.go",
+        "file:backend/internal/domain/store_phase.go",
+        "file:backend/internal/domain/store_project.go",
+        "file:backend/internal/domain/store_user.go",
+        "file:backend/internal/domain/task_status_test.go",
+        "file:backend/internal/domain/task_status.go",
+        "file:backend/internal/domain/user.go",
+        "file:backend/internal/domain/version.go"
+      ]
+    }
+  },
+  "nonCodeFiles": {
+    "documentation": [
+      {
+        "id": "document:ARCHITECTURE.md",
+        "name": "ARCHITECTURE.md",
+        "type": "document",
+        "summary": "Architecture and technology design document describing the Go backend layered/clean architecture, React+TypeScript frontend, repository layout, CQRS-lite read model, plugin system, OpenAPI-first API, custom fields, auth flow, and deployment targets."
+      },
+      {
+        "id": "document:Claude.md",
+        "name": "Claude.md",
+        "type": "document",
+        "summary": "Product and domain specification covering the simultaneous-engineering concept, element types (requirements, features, tasks, bugs, evals), link types, task status lifecycle, authentication, and configuration requirements."
+      },
+      {
+        "id": "document:DATA_MODEL.md",
+        "name": "DATA_MODEL.md",
+        "type": "document",
+        "summary": "Detailed data model design documenting the hot-path tables (projects, elements, custom fields, links, attachments, phases, auth), cold-path versioning tables, Go domain types, store interfaces, and the auto-commit versioning flow."
+      },
+      {
+        "id": "document:README.md",
+        "name": "README.md",
+        "type": "document",
+        "summary": "Project overview README with background, installation requirements and steps, app workflow, element types, license, contribution notes, and unit/integration test instructions."
+      },
+      {
+        "id": "document:backend/DIAGRAM.md",
+        "name": "DIAGRAM.md",
+        "type": "document",
+        "summary": "Backend architecture documentation with Mermaid diagrams covering package structure, domain interfaces, cache-backed read flow, the versioning pending-change/commit lifecycle, version reconstruction, authentication, service-layer dependencies, and an API endpoints overview."
+      }
+    ],
+    "infrastructure": [
+      {
+        "id": "service:docker-compose.yaml",
+        "name": "docker-compose.yaml",
+        "type": "service",
+        "summary": "Defines the multi-service local stack for project_works: the Go backend (built from the Dockerfile), a PostgreSQL 16 database with a health check and persistent volume, and a SeaweedFS S3-compatible file storage service, all wired over a shared bridge network."
+      },
+      {
+        "id": "service:docker-compose.yaml:backend",
+        "name": "backend",
+        "type": "service",
+        "summary": "Go backend API service built from the local Dockerfile, exposed on port 8088. Configured via environment variables for the Postgres DSN, SeaweedFS file store endpoint/bucket, session secret, and super-admin credentials; waits for the database to be healthy before starting."
+      },
+      {
+        "id": "service:docker-compose.yaml:database",
+        "name": "database",
+        "type": "service",
+        "summary": "PostgreSQL 16 (alpine) service exposing port 5432, with a pg_isready health check and a persistent volume under ./local_storage_data/postgres backing the project_works database."
+      },
+      {
+        "id": "service:docker-compose.yaml:file_storage",
+        "name": "file_storage",
+        "type": "service",
+        "summary": "SeaweedFS service running in S3 mode (server -s3) to provide S3-compatible object storage for attachments, exposing the S3 API (8333), master (9333), and filer web UI (8888) with a persistent data volume."
+      },
+      {
+        "id": "service:Dockerfile",
+        "name": "Dockerfile",
+        "type": "service",
+        "summary": "Multi-stage Docker build that compiles the Go backend in a golang:1.26-alpine builder stage (static CGO-disabled binary from ./cmd/server) and copies the binary and migrations into a minimal alpine:3.20 runtime image exposing port 8088."
+      },
+      {
+        "id": "service:Dockerfile:builder",
+        "name": "builder",
+        "type": "service",
+        "summary": "First build stage based on golang:1.26-alpine that downloads modules, tidies dependencies, and compiles the backend into a static linux binary at /build/project-works-server."
+      },
+      {
+        "id": "service:Dockerfile:alpine",
+        "name": "alpine",
+        "type": "service",
+        "summary": "Final runtime stage based on alpine:3.20 that installs ca-certificates and tzdata, copies the compiled server binary and migrations from the builder stage, exposes port 8088, and runs the server as the entrypoint."
+      },
+      {
+        "id": "pipeline:.github/workflows/package.yml",
+        "name": "package.yml",
+        "type": "pipeline",
+        "summary": "Currently empty GitHub Actions workflow placeholder, presumably reserved for a future packaging or release pipeline."
+      },
+      {
+        "id": "pipeline:.github/workflows/tests.yml",
+        "name": "tests.yml",
+        "type": "pipeline",
+        "summary": "GitHub Actions workflow that builds a test Docker image and runs the unit-test suite (via 'just unit-test-ci') on pushes and pull requests targeting the dev branch, then uploads JSON/Markdown test reports as artifacts."
+      },
+      {
+        "id": "service:Dockerfile_tests",
+        "name": "Dockerfile_tests",
+        "type": "service",
+        "summary": "Builds the test container image from golang:1.26-alpine, installing just/gotestsum and tooling, then compiling the integration-test binary used to run unit and integration tests in CI and locally."
+      }
+    ],
+    "data": [
+      {
+        "id": "schema:backend/migrations/00001_create_extensions.sql",
+        "name": "00001_create_extensions.sql",
+        "type": "schema",
+        "summary": "First migration that enables required PostgreSQL extensions (such as pgcrypto/uuid generation) used by all subsequent schema migrations."
+      },
+      {
+        "id": "schema:backend/migrations/00002_create_users_and_groups.sql",
+        "name": "00002_create_users_and_groups.sql",
+        "type": "schema",
+        "summary": "Defines the authentication and authorization core: users, groups, group memberships, and API keys with their indexes."
+      },
+      {
+        "id": "schema:backend/migrations/00003_create_projects.sql",
+        "name": "00003_create_projects.sql",
+        "type": "schema",
+        "summary": "Creates the project hierarchy: projects with folder paths, group-based project access control, and project phases."
+      },
+      {
+        "id": "schema:backend/migrations/00004_create_elements.sql",
+        "name": "00004_create_elements.sql",
+        "type": "schema",
+        "summary": "Central migration defining the polymorphic elements table (requirements, features, tasks, bugs, etc.) plus element supervisors and requirement clients, with full-text search and lookup indexes."
+      },
+      {
+        "id": "schema:backend/migrations/00005_create_element_links.sql",
+        "name": "00005_create_element_links.sql",
+        "type": "schema",
+        "summary": "Defines the element_links table modeling typed relationships (related, child, implement) between any two elements, with source and destination indexes."
+      },
+      {
+        "id": "schema:backend/migrations/00006_create_custom_fields.sql",
+        "name": "00006_create_custom_fields.sql",
+        "type": "schema",
+        "summary": "Implements user-defined custom fields: per-project field definitions scoped by element type and the corresponding per-element field values."
+      },
+      {
+        "id": "schema:backend/migrations/00007_create_attachments.sql",
+        "name": "00007_create_attachments.sql",
+        "type": "schema",
+        "summary": "Creates the element_attachments table storing file metadata (storage key, name, size, content type) for files attached to elements in external object storage."
+      },
+      {
+        "id": "schema:backend/migrations/00008_create_element_versions.sql",
+        "name": "00008_create_element_versions.sql",
+        "type": "schema",
+        "summary": "Adds git-like version history for elements: element_versions snapshots, forward patch storage, and pending-change tracking for unsaved edits."
+      },
+      {
+        "id": "table:backend/migrations/00002_create_users_and_groups.sql:users",
+        "name": "users",
+        "type": "table",
+        "summary": "Stores user accounts including external identity provider and subject for Office 365/OIDC single sign-on."
+      },
+      {
+        "id": "table:backend/migrations/00002_create_users_and_groups.sql:groups",
+        "name": "groups",
+        "type": "table",
+        "summary": "Defines access-control groups to which users are assigned and through which project access is granted."
+      },
+      {
+        "id": "table:backend/migrations/00002_create_users_and_groups.sql:group_memberships",
+        "name": "group_memberships",
+        "type": "table",
+        "summary": "Join table mapping users to the groups they belong to."
+      },
+      {
+        "id": "table:backend/migrations/00002_create_users_and_groups.sql:api_keys",
+        "name": "api_keys",
+        "type": "table",
+        "summary": "Stores hashed API keys tied to a user for CLI and automation access to the backend."
+      },
+      {
+        "id": "table:backend/migrations/00003_create_projects.sql:projects",
+        "name": "projects",
+        "type": "table",
+        "summary": "Top-level projects with name, description, and folder path for multi-depth navigation."
+      },
+      {
+        "id": "table:backend/migrations/00003_create_projects.sql:group_project_access",
+        "name": "group_project_access",
+        "type": "table",
+        "summary": "Grants groups an access level to specific projects, implementing group-level project authorization."
+      },
+      {
+        "id": "table:backend/migrations/00003_create_projects.sql:phases",
+        "name": "phases",
+        "type": "table",
+        "summary": "Ordered project phases with planned start/end dates used for scheduling tasks (Gantt/PERT)."
+      },
+      {
+        "id": "table:backend/migrations/00004_create_elements.sql:elements",
+        "name": "elements",
+        "type": "table",
+        "summary": "Polymorphic core table holding all element types (requirements, features, tasks, bugs, evaluations, risks) with self-referential parent feature and phase references."
+      },
+      {
+        "id": "table:backend/migrations/00004_create_elements.sql:element_supervisors",
+        "name": "element_supervisors",
+        "type": "table",
+        "summary": "Join table linking elements to the users who supervise them (requirement/feature reference persons)."
+      },
+      {
+        "id": "table:backend/migrations/00004_create_elements.sql:requirement_clients",
+        "name": "requirement_clients",
+        "type": "table",
+        "summary": "Stores client contacts (name, email, notes) associated with requirement elements."
+      },
+      {
+        "id": "table:backend/migrations/00005_create_element_links.sql:element_links",
+        "name": "element_links",
+        "type": "table",
+        "summary": "Typed directed links (related, child, implement) between a source and destination element, enabling coupling and dependency views."
+      },
+      {
+        "id": "table:backend/migrations/00006_create_custom_fields.sql:custom_field_definitions",
+        "name": "custom_field_definitions",
+        "type": "table",
+        "summary": "Per-project definitions of custom fields, scoped by element type, with field type, options, and display order."
+      },
+      {
+        "id": "table:backend/migrations/00006_create_custom_fields.sql:element_custom_field_values",
+        "name": "element_custom_field_values",
+        "type": "table",
+        "summary": "Stores the custom field values for individual elements against their field definitions."
+      },
+      {
+        "id": "table:backend/migrations/00007_create_attachments.sql:element_attachments",
+        "name": "element_attachments",
+        "type": "table",
+        "summary": "File attachment metadata for elements, referencing files held in external object storage by storage key."
+      },
+      {
+        "id": "table:backend/migrations/00008_create_element_versions.sql:element_versions",
+        "name": "element_versions",
+        "type": "table",
+        "summary": "Immutable version snapshots of an element, recording content SHA, version number, committer, and commit message."
+      },
+      {
+        "id": "table:backend/migrations/00008_create_element_versions.sql:element_version_patches",
+        "name": "element_version_patches",
+        "type": "table",
+        "summary": "Stores the forward patch payload for each element version to reconstruct content diffs/history."
+      },
+      {
+        "id": "table:backend/migrations/00008_create_element_versions.sql:element_pending_changes",
+        "name": "element_pending_changes",
+        "type": "table",
+        "summary": "Tracks an element's unsaved/in-progress edits and a snapshot taken before editing for draft recovery."
+      },
+      {
+        "id": "schema:backend/openapi.yaml",
+        "name": "openapi.yaml",
+        "type": "schema",
+        "summary": "OpenAPI 3 specification defining the complete backend REST contract: auth, projects and folders, elements, links, versions and diffs, attachments, custom field definitions and values, phases, users, groups and membership, project access control, and API keys."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:auth",
+        "name": "auth",
+        "type": "endpoint",
+        "summary": "Authentication endpoints: OAuth login, callback, logout, and current-user (/auth/login, /auth/callback, /auth/logout, /auth/me)."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:projects",
+        "name": "projects",
+        "type": "endpoint",
+        "summary": "Project and folder management endpoints including listing, creation, folder hierarchy, and per-project retrieval/update (/projects, /projects/folders, /projects/{project_identifier})."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:elements",
+        "name": "elements",
+        "type": "endpoint",
+        "summary": "Element CRUD and search endpoints scoped to a project, plus standalone element access (/projects/{project_identifier}/elements, /elements/{element_identifier}, /elements/search)."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:links",
+        "name": "links",
+        "type": "endpoint",
+        "summary": "Element link management endpoints for creating links from an element and operating on a single link (/elements/{element_identifier}/links, /links/{link_identifier})."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:versions",
+        "name": "versions",
+        "type": "endpoint",
+        "summary": "Element version history endpoints: list versions, fetch a specific version, and diff between versions (/elements/{element_identifier}/versions[/{version_number}][/diff])."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:attachments",
+        "name": "attachments",
+        "type": "endpoint",
+        "summary": "File attachment endpoints for listing/uploading on an element and accessing a single attachment (/elements/{element_identifier}/attachments, /attachments/{attachment_identifier})."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:custom-fields",
+        "name": "custom-fields",
+        "type": "endpoint",
+        "summary": "Custom field endpoints covering per-project field definitions and per-element field values (/projects/{project_identifier}/custom-field-definitions, /elements/{element_identifier}/custom-field-values)."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:phases",
+        "name": "phases",
+        "type": "endpoint",
+        "summary": "Project phase endpoints for listing/creating phases and operating on a single phase (/projects/{project_identifier}/phases, /phases/{phase_identifier})."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:users",
+        "name": "users",
+        "type": "endpoint",
+        "summary": "User management endpoints for listing users, single-user access, and a user's group memberships (/users, /users/{user_identifier}, /users/{user_identifier}/groups)."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:groups",
+        "name": "groups",
+        "type": "endpoint",
+        "summary": "Group endpoints covering group CRUD, membership management, and group access listings (/groups, /groups/{group_identifier}, /groups/{group_identifier}/members[/{user_identifier}], /groups/{group_identifier}/access)."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:access",
+        "name": "access",
+        "type": "endpoint",
+        "summary": "Project access-control endpoints for granting/revoking group access to projects and checking access (/projects/{project_identifier}/access[/{group_identifier}], /projects/{project_identifier}/access/check)."
+      },
+      {
+        "id": "endpoint:backend/openapi.yaml:api-keys",
+        "name": "api-keys",
+        "type": "endpoint",
+        "summary": "API key endpoints for listing/creating automation keys and operating on a single key (/api-keys, /api-keys/{api_key_identifier})."
+      }
+    ],
+    "config": [
+      {
+        "id": "config:backend/config.yaml",
+        "name": "config.yaml",
+        "type": "config",
+        "summary": "Runtime configuration for the backend covering server host/port, database connection, file storage, cache, authentication (including super-admin local account), and versioning behavior."
+      },
+      {
+        "id": "config:backend/go.mod",
+        "name": "go.mod",
+        "type": "config",
+        "summary": "Go module definition declaring the module path github.com/jerome-godbout-lychens/project_works/backend and pinning the Go 1.23 toolchain."
+      }
+    ]
+  },
+  "clusters": [],
+  "layers": {
+    "count": 9,
+    "list": [
+      {
+        "id": "layer:api",
+        "name": "API Layer",
+        "description": "HTTP request handling via go-chi and Huma — route registration, request/response binding, and the OpenAPI interface consumed by the frontend and CLI."
+      },
+      {
+        "id": "layer:auth",
+        "name": "Authentication & Authorization",
+        "description": "Office 365 OIDC login, API keys for automation, sessions, super-admin fallback, and the middleware enforcing group-based project access."
+      },
+      {
+        "id": "layer:service",
+        "name": "Service Layer",
+        "description": "Business logic and orchestration including the git-like versioning subsystem (snapshots, patches, async version worker) that sits between handlers and stores."
+      },
+      {
+        "id": "layer:domain",
+        "name": "Domain & Store Interfaces",
+        "description": "Core domain models (elements, requirements, features, tasks, links, phases, versions) and the pluggable store/cache/file-storage interfaces every other layer depends on."
+      },
+      {
+        "id": "layer:persistence",
+        "name": "Persistence & Storage",
+        "description": "Concrete implementations of the domain store interfaces — PostgreSQL stores, S3 file storage, and the Ristretto in-memory read cache."
+      },
+      {
+        "id": "layer:data",
+        "name": "Data Schema & Migrations",
+        "description": "PostgreSQL schema migrations and the table/schema/endpoint definitions describing the persisted data model and the OpenAPI surface."
+      },
+      {
+        "id": "layer:infrastructure",
+        "name": "Infrastructure & CI/CD",
+        "description": "Docker images, Docker Compose topology (backend, database, file storage), test container, and GitHub Actions packaging/test pipelines."
+      },
+      {
+        "id": "layer:config",
+        "name": "Configuration & Tooling",
+        "description": "Application config loading, the config.yaml / go.mod project config, and build/dev tooling scripts (justfile, test results parser, entry points)."
+      },
+      {
+        "id": "layer:documentation",
+        "name": "Documentation",
+        "description": "Project documentation: README, ARCHITECTURE, DATA_MODEL, backend DIAGRAM, and Claude guidance."
+      }
+    ]
+  },
+  "nodeSummaryIndex": {
+    "file:backend/internal/service/user_service_test.go": {
+      "name": "user_service_test.go",
+      "type": "file",
+      "summary": "Unit tests for the user service covering CRUD and OIDC get-or-create behavior using fake stores."
+    },
+    "file:backend/internal/service/version_service.go": {
+      "name": "version_service.go",
+      "type": "file",
+      "summary": "Service reconstructing element state at arbitrary versions by replaying patch chains, computing version diffs, and converting between snapshots and domain elements."
+    },
+    "file:backend/internal/service/version_worker.go": {
+      "name": "version_worker.go",
+      "type": "file",
+      "summary": "Background worker that periodically scans stale pending changes and commits them as new element versions with computed diffs, providing git-like history."
+    },
+    "file:backend/internal/api/version_handler.go": {
+      "name": "version_handler.go",
+      "type": "file",
+      "summary": "Registers REST endpoints for listing element version history, retrieving an element at a specific version, and computing diffs between versions."
+    },
+    "file:backend/internal/domain/attachment.go": {
+      "name": "attachment.go",
+      "type": "file",
+      "summary": "Domain model for a file attachment associated with an element, including metadata such as content type, size, and uploader."
+    },
+    "file:backend/internal/domain/store_element.go": {
+      "name": "store_element.go",
+      "type": "file",
+      "summary": "Defines the ElementStore persistence interface and ElementFilter struct for querying, creating, updating, and searching elements."
+    },
+    "file:backend/internal/domain/store_element_link.go": {
+      "name": "store_element_link.go",
+      "type": "file",
+      "summary": "Defines the ElementLinkStore persistence interface for creating, retrieving, updating, deleting, and listing links between elements."
+    },
+    "file:backend/internal/domain/store_file_storage.go": {
+      "name": "store_file_storage.go",
+      "type": "file",
+      "summary": "Defines the FileStorage interface abstracting blob storage operations (put, get, delete, presigned URLs) for pluggable backends like S3."
+    },
+    "file:backend/internal/domain/store_phase.go": {
+      "name": "store_phase.go",
+      "type": "file",
+      "summary": "Defines the PhaseStore persistence interface for creating, listing, updating, and deleting project phases."
+    },
+    "file:backend/internal/domain/store_project.go": {
+      "name": "store_project.go",
+      "type": "file",
+      "summary": "Defines the ProjectStore persistence interface for project CRUD and folder-path listing."
+    },
+    "file:backend/internal/domain/store_user.go": {
+      "name": "store_user.go",
+      "type": "file",
+      "summary": "Defines persistence interfaces for users, groups, group-project access, and API keys, supporting authentication and group-based authorization."
+    },
+    "file:backend/internal/domain/task_status.go": {
+      "name": "task_status.go",
+      "type": "file",
+      "summary": "Defines the TaskStatus enum with open/closed classification helpers and validation for the eight task lifecycle states."
+    },
+    "file:backend/internal/domain/task_status_test.go": {
+      "name": "task_status_test.go",
+      "type": "file",
+      "summary": "Unit tests validating TaskStatus validity, open/closed classification, and completeness of the enumerated status set."
+    },
+    "file:backend/internal/domain/user.go": {
+      "name": "user.go",
+      "type": "file",
+      "summary": "Domain models for users, groups, group memberships, group-project access levels, and API keys."
+    },
+    "file:backend/internal/domain/version.go": {
+      "name": "version.go",
+      "type": "file",
+      "summary": "Domain models for element version metadata, version patches, RFC6902-style patch operations, and pending changes used in git-like version history."
+    },
+    "file:backend/internal/service/attachment_service.go": {
+      "name": "attachment_service.go",
+      "type": "file",
+      "summary": "Service handling attachment uploads to blob storage, listing, deletion, presigned URL generation, and staging pending changes for version snapshots."
+    },
+    "file:backend/internal/service/element_service.go": {
+      "name": "element_service.go",
+      "type": "file",
+      "summary": "Service orchestrating element CRUD, search, cache invalidation, pending-change staging, and assembly of the full element aggregate from multiple stores."
+    },
+    "file:backend/internal/service/link_service_test.go": {
+      "name": "link_service_test.go",
+      "type": "file",
+      "summary": "Unit tests for the link service covering link creation, deletion both-direction cleanup, type updates, cache invalidation, and pending-change staging using fakes."
+    },
+    "file:backend/internal/service/versionable_snapshot.go": {
+      "name": "versionable_snapshot.go",
+      "type": "file",
+      "summary": "Builds, serializes, and content-hashes a normalized snapshot of an element aggregate (fields, contacts, links, attachments) for version diffing."
+    },
+    "file:backend/internal/service/versionable_snapshot_test.go": {
+      "name": "versionable_snapshot_test.go",
+      "type": "file",
+      "summary": "Unit tests for snapshot building, serialization round-trips, and content SHA stability used by the versioning subsystem."
+    },
+    "file:backend/internal/api/group_handler.go": {
+      "name": "group_handler.go",
+      "type": "file",
+      "summary": "Registers REST endpoints for group management and group membership operations, delegating to the group service."
+    },
+    "file:backend/internal/api/link_handler.go": {
+      "name": "link_handler.go",
+      "type": "file",
+      "summary": "Registers REST endpoints for creating, listing, updating, and deleting links between elements."
+    },
+    "file:backend/internal/api/phase_handler.go": {
+      "name": "phase_handler.go",
+      "type": "file",
+      "summary": "Registers REST endpoints for managing project phases used in scheduling tasks across start and delivery phases."
+    },
+    "file:backend/internal/api/project_handler.go": {
+      "name": "project_handler.go",
+      "type": "file",
+      "summary": "Registers REST endpoints for project CRUD, folder-path listing, and hierarchical project navigation, mapping projects to response DTOs."
+    },
+    "file:backend/internal/api/user_handler.go": {
+      "name": "user_handler.go",
+      "type": "file",
+      "summary": "Registers REST endpoints for listing, retrieving, and updating users."
+    },
+    "file:backend/internal/api/custom_field_handler.go": {
+      "name": "custom_field_handler.go",
+      "type": "file",
+      "summary": "Registers Huma REST endpoints for managing custom field definitions and per-element custom field values, delegating to the custom field service."
+    },
+    "file:backend/internal/api/element_handler.go": {
+      "name": "element_handler.go",
+      "type": "file",
+      "summary": "Registers REST endpoints for CRUD and search over project elements, mapping domain elements to API response DTOs and parsing filter query parameters."
+    },
+    "file:backend/internal/service/phase_service.go": {
+      "name": "phase_service.go",
+      "type": "file",
+      "summary": "Thin service wrapping the PhaseStore to create, list, update, and delete project phases."
+    },
+    "file:backend/internal/service/phase_service_test.go": {
+      "name": "phase_service_test.go",
+      "type": "file",
+      "summary": "Unit tests for the phase service covering create/list, update, delete, and not-found error propagation using fake stores."
+    },
+    "file:backend/internal/service/project_service.go": {
+      "name": "project_service.go",
+      "type": "file",
+      "summary": "Service wrapping the ProjectStore with cache-backed reads for project CRUD and folder-path listing."
+    },
+    "file:backend/internal/service/project_service_test.go": {
+      "name": "project_service_test.go",
+      "type": "file",
+      "summary": "Unit tests for the project service covering cached reads, CRUD operations, and folder-path listing using fake stores."
+    },
+    "file:backend/internal/service/service_fakes_test.go": {
+      "name": "service_fakes_test.go",
+      "type": "file",
+      "summary": "Shared in-memory fake implementations of all domain store interfaces used across service unit tests."
+    },
+    "file:backend/internal/service/user_service.go": {
+      "name": "user_service.go",
+      "type": "file",
+      "summary": "Service wrapping the UserStore for user CRUD plus get-or-create-from-OIDC logic for external identity provider login."
+    },
+    "file:backend/internal/store/postgres/element_link_store.go": {
+      "name": "element_link_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the ElementLinkStore interface for creating, fetching, updating type, deleting, and listing element links by direction."
+    },
+    "file:backend/internal/store/postgres/element_pending_store.go": {
+      "name": "element_pending_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the ElementPendingChangeStore interface, upserting pre-edit snapshots and surfacing stale pending changes for deferred version commits."
+    },
+    "file:backend/internal/store/postgres/element_store.go": {
+      "name": "element_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the ElementStore interface with dynamic filtered listing, full-text search, and CRUD over the unified element table."
+    },
+    "file:backend/internal/store/postgres/api_key_store.go": {
+      "name": "api_key_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the APIKeyStore interface for creating, looking up by hash, listing, deleting, and touching API keys."
+    },
+    "file:backend/internal/store/postgres/attachment_store.go": {
+      "name": "attachment_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the AttachmentStore interface for persisting attachment metadata rows linked to elements."
+    },
+    "file:backend/internal/store/postgres/custom_field_store.go": {
+      "name": "custom_field_store.go",
+      "type": "file",
+      "summary": "Postgres implementations of both the custom field definition and value stores, serializing field options to JSON and supporting per-element value upserts."
+    },
+    "file:backend/internal/store/postgres/project_store.go": {
+      "name": "project_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the ProjectStore interface with project CRUD, prefix-filtered listing, and distinct folder-path enumeration for navigation."
+    },
+    "file:backend/internal/store/postgres/user_store.go": {
+      "name": "user_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the UserStore interface supporting lookup by identifier or external identity, creation, update, and paginated listing."
+    },
+    "file:backend/internal/store/postgres/element_version_store.go": {
+      "name": "element_version_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the ElementVersionStore interface, transactionally writing version rows plus JSON patches and reading patch ranges for diffing."
+    },
+    "file:backend/internal/store/postgres/group_store.go": {
+      "name": "group_store.go",
+      "type": "file",
+      "summary": "Postgres implementations of GroupStore and GroupProjectAccessStore covering group CRUD, membership management, and group-to-project access levels."
+    },
+    "file:backend/internal/store/postgres/phase_store.go": {
+      "name": "phase_store.go",
+      "type": "file",
+      "summary": "Postgres implementation of the PhaseStore interface for project phase CRUD and ordered listing."
+    },
+    "file:backend/internal/cache/memory/ristretto_cache.go": {
+      "name": "ristretto_cache.go",
+      "type": "file",
+      "summary": "In-memory implementation of the domain CacheStore interface backed by the Ristretto library, with prefix-based invalidation via a mutex-guarded key tracker."
+    },
+    "file:backend/internal/domain/custom_field.go": {
+      "name": "custom_field.go",
+      "type": "file",
+      "summary": "Domain types for project-scoped custom field definitions and their per-element values."
+    },
+    "file:backend/internal/domain/element.go": {
+      "name": "element.go",
+      "type": "file",
+      "summary": "Core Element domain type unifying requirements, features, tasks, bugs, and other element kinds, plus ContactInfo and feature-progress computation."
+    },
+    "file:backend/internal/domain/element_link.go": {
+      "name": "element_link.go",
+      "type": "file",
+      "summary": "Domain type representing a typed link between a source and destination element."
+    },
+    "file:backend/internal/domain/element_test.go": {
+      "name": "element_test.go",
+      "type": "file",
+      "summary": "Unit tests for ComputeFeatureProgress covering empty input, averaging, nil-progress handling, and integer truncation."
+    },
+    "file:backend/internal/domain/element_type_test.go": {
+      "name": "element_type_test.go",
+      "type": "file",
+      "summary": "Unit tests validating ElementType.IsValid and that AllElementTypes contains all six unique values."
+    },
+    "file:backend/internal/domain/errors.go": {
+      "name": "errors.go",
+      "type": "file",
+      "summary": "Sentinel error values shared across the domain layer for not-found and validation conditions."
+    },
+    "file:backend/internal/domain/link_type.go": {
+      "name": "link_type.go",
+      "type": "file",
+      "summary": "Defines the LinkType enumeration (related, child, implement) with validity checking and a full-set accessor."
+    },
+    "file:backend/internal/domain/link_type_test.go": {
+      "name": "link_type_test.go",
+      "type": "file",
+      "summary": "Unit tests for LinkType.IsValid and that AllLinkTypes contains all three unique values."
+    },
+    "file:backend/internal/domain/phase.go": {
+      "name": "phase.go",
+      "type": "file",
+      "summary": "Domain type for a project phase with ordering and planned start/end dates."
+    },
+    "file:backend/internal/domain/project.go": {
+      "name": "project.go",
+      "type": "file",
+      "summary": "Domain type for a project with name, description, folder path, and timestamps."
+    },
+    "file:backend/internal/domain/store_attachment.go": {
+      "name": "store_attachment.go",
+      "type": "file",
+      "summary": "Repository interface defining attachment persistence operations, decoupling the domain from any concrete store implementation."
+    },
+    "file:backend/internal/domain/store_cache.go": {
+      "name": "store_cache.go",
+      "type": "file",
+      "summary": "Repository interface defining cache operations (get, set, invalidate, invalidate-by-prefix) implemented by cache backends."
+    },
+    "file:backend/internal/domain/store_custom_field.go": {
+      "name": "store_custom_field.go",
+      "type": "file",
+      "summary": "Repository interfaces for custom field definition and value persistence."
+    },
+    "file:backend/internal/filestore/s3/s3_file_storage.go": {
+      "name": "s3_file_storage.go",
+      "type": "file",
+      "summary": "S3-compatible implementation of the domain FileStorage interface using the AWS SDK v2, supporting put, get, delete, and presigned URL generation."
+    },
+    "file:backend/cmd/server/main.go": {
+      "name": "main.go",
+      "type": "file",
+      "summary": "Application entry point that loads config, opens the Postgres connection, runs migrations, wires all stores/services/auth, starts the version-commit worker and HTTP server, and handles graceful shutdown."
+    },
+    "file:backend/internal/api/access_handler.go": {
+      "name": "access_handler.go",
+      "type": "file",
+      "summary": "Registers Huma API endpoints for managing and querying group-to-project access levels (list, set, remove, list-by-group, and current-user access checks)."
+    },
+    "file:backend/internal/api/api_key_handler.go": {
+      "name": "api_key_handler.go",
+      "type": "file",
+      "summary": "Registers Huma API endpoints for listing, generating, and deleting per-user API keys, hashing the raw key before storage and returning the plaintext only once on creation."
+    },
+    "file:backend/internal/api/attachment_handler.go": {
+      "name": "attachment_handler.go",
+      "type": "file",
+      "summary": "Registers Huma API endpoints for listing, uploading, presigning download URLs for, and deleting element attachments via the attachment service."
+    },
+    "file:backend/internal/api/auth_handler.go": {
+      "name": "auth_handler.go",
+      "type": "file",
+      "summary": "Registers chi HTTP routes for the OIDC login flow (login redirect, callback, logout) and the current-user endpoint, managing OAuth state cookies and session tokens."
+    },
+    "file:backend/internal/api/router.go": {
+      "name": "router.go",
+      "type": "file",
+      "summary": "Constructs the chi router, applies the auth middleware, mounts the Huma OpenAPI API, and registers every domain handler group plus the auth routes."
+    },
+    "file:backend/internal/auth/api_key.go": {
+      "name": "api_key.go",
+      "type": "file",
+      "summary": "Helpers for API key handling: SHA-256 hashing of raw keys, cryptographically random key generation, and format validation."
+    },
+    "file:backend/internal/auth/api_key_test.go": {
+      "name": "api_key_test.go",
+      "type": "file",
+      "summary": "Unit tests covering API key hashing determinism, uniqueness of generated keys, and format validation."
+    },
+    "file:backend/internal/auth/middleware.go": {
+      "name": "middleware.go",
+      "type": "file",
+      "summary": "HTTP authentication middleware that resolves the caller via session cookie or bearer API key, injects the user identifier and super-admin flag into the request context, and exposes context accessors."
+    },
+    "file:backend/internal/auth/oidc.go": {
+      "name": "oidc.go",
+      "type": "file",
+      "summary": "OIDC provider wrapper around the OAuth2/go-oidc libraries that builds the authorization URL and exchanges the callback code for verified ID-token claims."
+    },
+    "file:backend/internal/auth/session.go": {
+      "name": "session.go",
+      "type": "file",
+      "summary": "Session manager that issues and validates signed JWT session tokens carrying the user identifier."
+    },
+    "file:backend/internal/auth/super_admin.go": {
+      "name": "super_admin.go",
+      "type": "file",
+      "summary": "Seeds the local super-admin user and its API key at startup, idempotently creating or updating the account so administrative access survives loss of external authentication."
+    },
+    "file:backend/internal/auth/super_admin_test.go": {
+      "name": "super_admin_test.go",
+      "type": "file",
+      "summary": "Unit tests for super-admin seeding using in-memory fake user and API-key stores, covering first-run creation, idempotency, key rotation, and profile updates."
+    },
+    "file:backend/internal/cache/memory/ristretto_cache_test.go": {
+      "name": "ristretto_cache_test.go",
+      "type": "file",
+      "summary": "Unit tests for the Ristretto in-memory cache covering set/get, miss behavior, invalidation by key and prefix, and TTL expiry."
+    },
+    "file:backend/internal/config/config.go": {
+      "name": "config.go",
+      "type": "file",
+      "summary": "Defines the layered application configuration structs (server, database, file store, cache, auth, version) and loads them from a YAML config file."
+    },
+    "file:backend/internal/domain/element_type.go": {
+      "name": "element_type.go",
+      "type": "file",
+      "summary": "Defines the ElementType enumeration (Feature, Task, Requirement, Bug, Eval, Risk) with helpers to list all types and validate a value."
+    },
+    "file:backend/internal/domain/store_element_version.go": {
+      "name": "store_element_version.go",
+      "type": "file",
+      "summary": "Declares the ElementVersionStore and ElementPendingChangeStore persistence interfaces used by the versioning subsystem."
+    },
+    "file:backend/internal/service/custom_field_service.go": {
+      "name": "custom_field_service.go",
+      "type": "file",
+      "summary": "Service orchestrating custom field definitions and values, persisting changes and staging pending element snapshots for versioning while invalidating cache entries."
+    },
+    "file:backend/internal/service/group_service.go": {
+      "name": "group_service.go",
+      "type": "file",
+      "summary": "Thin service facade over the group and group-project-access stores, exposing group CRUD, membership management, and project access-level operations."
+    },
+    "file:backend/internal/service/link_service.go": {
+      "name": "link_service.go",
+      "type": "file",
+      "summary": "Service managing element links (create, delete, update type, list), staging pending snapshots of both endpoints for versioning and invalidating their cache entries."
+    },
+    "file:backend/internal/store/postgres/connection.go": {
+      "name": "connection.go",
+      "type": "file",
+      "summary": "Opens and configures a Postgres connection pool and runs filesystem-based SQL migrations."
+    },
+    "service:docker-compose.yaml": {
+      "name": "docker-compose.yaml",
+      "type": "service",
+      "summary": "Defines the multi-service local stack for project_works: the Go backend (built from the Dockerfile), a PostgreSQL 16 database with a health check and persistent volume, and a SeaweedFS S3-compatible file storage service, all wired over a shared bridge network."
+    },
+    "service:docker-compose.yaml:backend": {
+      "name": "backend",
+      "type": "service",
+      "summary": "Go backend API service built from the local Dockerfile, exposed on port 8088. Configured via environment variables for the Postgres DSN, SeaweedFS file store endpoint/bucket, session secret, and super-admin credentials; waits for the database to be healthy before starting."
+    },
+    "service:docker-compose.yaml:database": {
+      "name": "database",
+      "type": "service",
+      "summary": "PostgreSQL 16 (alpine) service exposing port 5432, with a pg_isready health check and a persistent volume under ./local_storage_data/postgres backing the project_works database."
+    },
+    "service:docker-compose.yaml:file_storage": {
+      "name": "file_storage",
+      "type": "service",
+      "summary": "SeaweedFS service running in S3 mode (server -s3) to provide S3-compatible object storage for attachments, exposing the S3 API (8333), master (9333), and filer web UI (8888) with a persistent data volume."
+    },
+    "service:Dockerfile": {
+      "name": "Dockerfile",
+      "type": "service",
+      "summary": "Multi-stage Docker build that compiles the Go backend in a golang:1.26-alpine builder stage (static CGO-disabled binary from ./cmd/server) and copies the binary and migrations into a minimal alpine:3.20 runtime image exposing port 8088."
+    },
+    "service:Dockerfile:builder": {
+      "name": "builder",
+      "type": "service",
+      "summary": "First build stage based on golang:1.26-alpine that downloads modules, tidies dependencies, and compiles the backend into a static linux binary at /build/project-works-server."
+    },
+    "service:Dockerfile:alpine": {
+      "name": "alpine",
+      "type": "service",
+      "summary": "Final runtime stage based on alpine:3.20 that installs ca-certificates and tzdata, copies the compiled server binary and migrations from the builder stage, exposes port 8088, and runs the server as the entrypoint."
+    },
+    "pipeline:.github/workflows/package.yml": {
+      "name": "package.yml",
+      "type": "pipeline",
+      "summary": "Currently empty GitHub Actions workflow placeholder, presumably reserved for a future packaging or release pipeline."
+    },
+    "pipeline:.github/workflows/tests.yml": {
+      "name": "tests.yml",
+      "type": "pipeline",
+      "summary": "GitHub Actions workflow that builds a test Docker image and runs the unit-test suite (via 'just unit-test-ci') on pushes and pull requests targeting the dev branch, then uploads JSON/Markdown test reports as artifacts."
+    },
+    "schema:backend/migrations/00001_create_extensions.sql": {
+      "name": "00001_create_extensions.sql",
+      "type": "schema",
+      "summary": "First migration that enables required PostgreSQL extensions (such as pgcrypto/uuid generation) used by all subsequent schema migrations."
+    },
+    "schema:backend/migrations/00002_create_users_and_groups.sql": {
+      "name": "00002_create_users_and_groups.sql",
+      "type": "schema",
+      "summary": "Defines the authentication and authorization core: users, groups, group memberships, and API keys with their indexes."
+    },
+    "schema:backend/migrations/00003_create_projects.sql": {
+      "name": "00003_create_projects.sql",
+      "type": "schema",
+      "summary": "Creates the project hierarchy: projects with folder paths, group-based project access control, and project phases."
+    },
+    "schema:backend/migrations/00004_create_elements.sql": {
+      "name": "00004_create_elements.sql",
+      "type": "schema",
+      "summary": "Central migration defining the polymorphic elements table (requirements, features, tasks, bugs, etc.) plus element supervisors and requirement clients, with full-text search and lookup indexes."
+    },
+    "schema:backend/migrations/00005_create_element_links.sql": {
+      "name": "00005_create_element_links.sql",
+      "type": "schema",
+      "summary": "Defines the element_links table modeling typed relationships (related, child, implement) between any two elements, with source and destination indexes."
+    },
+    "schema:backend/migrations/00006_create_custom_fields.sql": {
+      "name": "00006_create_custom_fields.sql",
+      "type": "schema",
+      "summary": "Implements user-defined custom fields: per-project field definitions scoped by element type and the corresponding per-element field values."
+    },
+    "schema:backend/migrations/00007_create_attachments.sql": {
+      "name": "00007_create_attachments.sql",
+      "type": "schema",
+      "summary": "Creates the element_attachments table storing file metadata (storage key, name, size, content type) for files attached to elements in external object storage."
+    },
+    "schema:backend/migrations/00008_create_element_versions.sql": {
+      "name": "00008_create_element_versions.sql",
+      "type": "schema",
+      "summary": "Adds git-like version history for elements: element_versions snapshots, forward patch storage, and pending-change tracking for unsaved edits."
+    },
+    "table:backend/migrations/00002_create_users_and_groups.sql:users": {
+      "name": "users",
+      "type": "table",
+      "summary": "Stores user accounts including external identity provider and subject for Office 365/OIDC single sign-on."
+    },
+    "table:backend/migrations/00002_create_users_and_groups.sql:groups": {
+      "name": "groups",
+      "type": "table",
+      "summary": "Defines access-control groups to which users are assigned and through which project access is granted."
+    },
+    "table:backend/migrations/00002_create_users_and_groups.sql:group_memberships": {
+      "name": "group_memberships",
+      "type": "table",
+      "summary": "Join table mapping users to the groups they belong to."
+    },
+    "table:backend/migrations/00002_create_users_and_groups.sql:api_keys": {
+      "name": "api_keys",
+      "type": "table",
+      "summary": "Stores hashed API keys tied to a user for CLI and automation access to the backend."
+    },
+    "table:backend/migrations/00003_create_projects.sql:projects": {
+      "name": "projects",
+      "type": "table",
+      "summary": "Top-level projects with name, description, and folder path for multi-depth navigation."
+    },
+    "table:backend/migrations/00003_create_projects.sql:group_project_access": {
+      "name": "group_project_access",
+      "type": "table",
+      "summary": "Grants groups an access level to specific projects, implementing group-level project authorization."
+    },
+    "table:backend/migrations/00003_create_projects.sql:phases": {
+      "name": "phases",
+      "type": "table",
+      "summary": "Ordered project phases with planned start/end dates used for scheduling tasks (Gantt/PERT)."
+    },
+    "table:backend/migrations/00004_create_elements.sql:elements": {
+      "name": "elements",
+      "type": "table",
+      "summary": "Polymorphic core table holding all element types (requirements, features, tasks, bugs, evaluations, risks) with self-referential parent feature and phase references."
+    },
+    "table:backend/migrations/00004_create_elements.sql:element_supervisors": {
+      "name": "element_supervisors",
+      "type": "table",
+      "summary": "Join table linking elements to the users who supervise them (requirement/feature reference persons)."
+    },
+    "table:backend/migrations/00004_create_elements.sql:requirement_clients": {
+      "name": "requirement_clients",
+      "type": "table",
+      "summary": "Stores client contacts (name, email, notes) associated with requirement elements."
+    },
+    "table:backend/migrations/00005_create_element_links.sql:element_links": {
+      "name": "element_links",
+      "type": "table",
+      "summary": "Typed directed links (related, child, implement) between a source and destination element, enabling coupling and dependency views."
+    },
+    "table:backend/migrations/00006_create_custom_fields.sql:custom_field_definitions": {
+      "name": "custom_field_definitions",
+      "type": "table",
+      "summary": "Per-project definitions of custom fields, scoped by element type, with field type, options, and display order."
+    },
+    "table:backend/migrations/00006_create_custom_fields.sql:element_custom_field_values": {
+      "name": "element_custom_field_values",
+      "type": "table",
+      "summary": "Stores the custom field values for individual elements against their field definitions."
+    },
+    "table:backend/migrations/00007_create_attachments.sql:element_attachments": {
+      "name": "element_attachments",
+      "type": "table",
+      "summary": "File attachment metadata for elements, referencing files held in external object storage by storage key."
+    },
+    "table:backend/migrations/00008_create_element_versions.sql:element_versions": {
+      "name": "element_versions",
+      "type": "table",
+      "summary": "Immutable version snapshots of an element, recording content SHA, version number, committer, and commit message."
+    },
+    "table:backend/migrations/00008_create_element_versions.sql:element_version_patches": {
+      "name": "element_version_patches",
+      "type": "table",
+      "summary": "Stores the forward patch payload for each element version to reconstruct content diffs/history."
+    },
+    "table:backend/migrations/00008_create_element_versions.sql:element_pending_changes": {
+      "name": "element_pending_changes",
+      "type": "table",
+      "summary": "Tracks an element's unsaved/in-progress edits and a snapshot taken before editing for draft recovery."
+    },
+    "document:ARCHITECTURE.md": {
+      "name": "ARCHITECTURE.md",
+      "type": "document",
+      "summary": "Architecture and technology design document describing the Go backend layered/clean architecture, React+TypeScript frontend, repository layout, CQRS-lite read model, plugin system, OpenAPI-first API, custom fields, auth flow, and deployment targets."
+    },
+    "document:Claude.md": {
+      "name": "Claude.md",
+      "type": "document",
+      "summary": "Product and domain specification covering the simultaneous-engineering concept, element types (requirements, features, tasks, bugs, evals), link types, task status lifecycle, authentication, and configuration requirements."
+    },
+    "document:DATA_MODEL.md": {
+      "name": "DATA_MODEL.md",
+      "type": "document",
+      "summary": "Detailed data model design documenting the hot-path tables (projects, elements, custom fields, links, attachments, phases, auth), cold-path versioning tables, Go domain types, store interfaces, and the auto-commit versioning flow."
+    },
+    "document:README.md": {
+      "name": "README.md",
+      "type": "document",
+      "summary": "Project overview README with background, installation requirements and steps, app workflow, element types, license, contribution notes, and unit/integration test instructions."
+    },
+    "file:TestsResultsParser.sh": {
+      "name": "TestsResultsParser.sh",
+      "type": "file",
+      "summary": "Bash script that parses Go test JSON output with jq into a Markdown summary table for the GitHub Actions step summary, counting passed/failed/skipped tests and failing the job on any failures."
+    },
+    "document:backend/DIAGRAM.md": {
+      "name": "DIAGRAM.md",
+      "type": "document",
+      "summary": "Backend architecture documentation with Mermaid diagrams covering package structure, domain interfaces, cache-backed read flow, the versioning pending-change/commit lifecycle, version reconstruction, authentication, service-layer dependencies, and an API endpoints overview."
+    },
+    "config:backend/config.yaml": {
+      "name": "config.yaml",
+      "type": "config",
+      "summary": "Runtime configuration for the backend covering server host/port, database connection, file storage, cache, authentication (including super-admin local account), and versioning behavior."
+    },
+    "config:backend/go.mod": {
+      "name": "go.mod",
+      "type": "config",
+      "summary": "Go module definition declaring the module path github.com/jerome-godbout-lychens/project_works/backend and pinning the Go 1.23 toolchain."
+    },
+    "schema:backend/openapi.yaml": {
+      "name": "openapi.yaml",
+      "type": "schema",
+      "summary": "OpenAPI 3 specification defining the complete backend REST contract: auth, projects and folders, elements, links, versions and diffs, attachments, custom field definitions and values, phases, users, groups and membership, project access control, and API keys."
+    },
+    "endpoint:backend/openapi.yaml:auth": {
+      "name": "auth",
+      "type": "endpoint",
+      "summary": "Authentication endpoints: OAuth login, callback, logout, and current-user (/auth/login, /auth/callback, /auth/logout, /auth/me)."
+    },
+    "endpoint:backend/openapi.yaml:projects": {
+      "name": "projects",
+      "type": "endpoint",
+      "summary": "Project and folder management endpoints including listing, creation, folder hierarchy, and per-project retrieval/update (/projects, /projects/folders, /projects/{project_identifier})."
+    },
+    "endpoint:backend/openapi.yaml:elements": {
+      "name": "elements",
+      "type": "endpoint",
+      "summary": "Element CRUD and search endpoints scoped to a project, plus standalone element access (/projects/{project_identifier}/elements, /elements/{element_identifier}, /elements/search)."
+    },
+    "endpoint:backend/openapi.yaml:links": {
+      "name": "links",
+      "type": "endpoint",
+      "summary": "Element link management endpoints for creating links from an element and operating on a single link (/elements/{element_identifier}/links, /links/{link_identifier})."
+    },
+    "endpoint:backend/openapi.yaml:versions": {
+      "name": "versions",
+      "type": "endpoint",
+      "summary": "Element version history endpoints: list versions, fetch a specific version, and diff between versions (/elements/{element_identifier}/versions[/{version_number}][/diff])."
+    },
+    "endpoint:backend/openapi.yaml:attachments": {
+      "name": "attachments",
+      "type": "endpoint",
+      "summary": "File attachment endpoints for listing/uploading on an element and accessing a single attachment (/elements/{element_identifier}/attachments, /attachments/{attachment_identifier})."
+    },
+    "endpoint:backend/openapi.yaml:custom-fields": {
+      "name": "custom-fields",
+      "type": "endpoint",
+      "summary": "Custom field endpoints covering per-project field definitions and per-element field values (/projects/{project_identifier}/custom-field-definitions, /elements/{element_identifier}/custom-field-values)."
+    },
+    "endpoint:backend/openapi.yaml:phases": {
+      "name": "phases",
+      "type": "endpoint",
+      "summary": "Project phase endpoints for listing/creating phases and operating on a single phase (/projects/{project_identifier}/phases, /phases/{phase_identifier})."
+    },
+    "endpoint:backend/openapi.yaml:users": {
+      "name": "users",
+      "type": "endpoint",
+      "summary": "User management endpoints for listing users, single-user access, and a user's group memberships (/users, /users/{user_identifier}, /users/{user_identifier}/groups)."
+    },
+    "endpoint:backend/openapi.yaml:groups": {
+      "name": "groups",
+      "type": "endpoint",
+      "summary": "Group endpoints covering group CRUD, membership management, and group access listings (/groups, /groups/{group_identifier}, /groups/{group_identifier}/members[/{user_identifier}], /groups/{group_identifier}/access)."
+    },
+    "endpoint:backend/openapi.yaml:access": {
+      "name": "access",
+      "type": "endpoint",
+      "summary": "Project access-control endpoints for granting/revoking group access to projects and checking access (/projects/{project_identifier}/access[/{group_identifier}], /projects/{project_identifier}/access/check)."
+    },
+    "endpoint:backend/openapi.yaml:api-keys": {
+      "name": "api-keys",
+      "type": "endpoint",
+      "summary": "API key endpoints for listing/creating automation keys and operating on a single key (/api-keys, /api-keys/{api_key_identifier})."
+    },
+    "file:backend/cmd/integration-test/main.go": {
+      "name": "main.go",
+      "type": "file",
+      "summary": "Standalone end-to-end integration test harness that drives the running backend's HTTP API, exercising the full lifecycle of projects, elements, links, attachments, versions, phases, custom fields, groups/access, and auth, then emits a markdown test report."
+    },
+    "service:Dockerfile_tests": {
+      "name": "Dockerfile_tests",
+      "type": "service",
+      "summary": "Builds the test container image from golang:1.26-alpine, installing just/gotestsum and tooling, then compiling the integration-test binary used to run unit and integration tests in CI and locally."
+    },
+    "file:justfile": {
+      "name": "justfile",
+      "type": "file",
+      "summary": "Task runner recipes (just) for the project: docker compose lifecycle, local storage cleanup, building the test image, and running unit and integration tests both locally and inside Docker."
+    }
+  },
+  "totalNodes": 138,
+  "totalEdges": 1983
+}

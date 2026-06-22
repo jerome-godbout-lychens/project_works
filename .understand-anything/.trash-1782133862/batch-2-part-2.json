@@ -1,0 +1,961 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/store/postgres/api_key_store.go",
+      "type": "file",
+      "name": "api_key_store.go",
+      "filePath": "backend/internal/store/postgres/api_key_store.go",
+      "summary": "Postgres implementation of the APIKeyStore interface for creating, looking up by hash, listing, deleting, and touching API keys.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "security"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/store/postgres/api_key_store.go:APIKeyStore",
+      "type": "class",
+      "name": "APIKeyStore",
+      "filePath": "backend/internal/store/postgres/api_key_store.go",
+      "lineRange": [
+        12,
+        14
+      ],
+      "summary": "Postgres-backed store wrapping a database handle to persist API keys.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/api_key_store.go:ListAPIKeysByUser",
+      "type": "function",
+      "name": "ListAPIKeysByUser",
+      "filePath": "backend/internal/store/postgres/api_key_store.go",
+      "lineRange": [
+        49,
+        69
+      ],
+      "summary": "Queries and scans all API keys belonging to a given user identifier.",
+      "tags": [
+        "repository",
+        "database",
+        "query"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/api_key_store.go:GetAPIKeyByHash",
+      "type": "function",
+      "name": "GetAPIKeyByHash",
+      "filePath": "backend/internal/store/postgres/api_key_store.go",
+      "lineRange": [
+        33,
+        47
+      ],
+      "summary": "Looks up a single API key row by its hashed key value for authentication.",
+      "tags": [
+        "repository",
+        "database",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/store/postgres/attachment_store.go",
+      "type": "file",
+      "name": "attachment_store.go",
+      "filePath": "backend/internal/store/postgres/attachment_store.go",
+      "summary": "Postgres implementation of the AttachmentStore interface for persisting attachment metadata rows linked to elements.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/store/postgres/attachment_store.go:AttachmentStore",
+      "type": "class",
+      "name": "AttachmentStore",
+      "filePath": "backend/internal/store/postgres/attachment_store.go",
+      "lineRange": [
+        13,
+        15
+      ],
+      "summary": "Postgres-backed store wrapping a database handle for attachment metadata persistence.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/attachment_store.go:ListAttachmentsByElement",
+      "type": "function",
+      "name": "ListAttachmentsByElement",
+      "filePath": "backend/internal/store/postgres/attachment_store.go",
+      "lineRange": [
+        68,
+        87
+      ],
+      "summary": "Queries and scans all attachment rows associated with a given element identifier.",
+      "tags": [
+        "repository",
+        "database",
+        "query"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/attachment_store.go:CreateAttachment",
+      "type": "function",
+      "name": "CreateAttachment",
+      "filePath": "backend/internal/store/postgres/attachment_store.go",
+      "lineRange": [
+        39,
+        52
+      ],
+      "summary": "Inserts a new attachment metadata row and returns the generated identifier and upload time.",
+      "tags": [
+        "repository",
+        "database",
+        "insert"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/store/postgres/custom_field_store.go",
+      "type": "file",
+      "name": "custom_field_store.go",
+      "filePath": "backend/internal/store/postgres/custom_field_store.go",
+      "summary": "Postgres implementations of both the custom field definition and value stores, serializing field options to JSON and supporting per-element value upserts.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres",
+        "custom-fields",
+        "serialization"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Field options are marshaled to/from JSON columns via encoding/json for flexible choice-type custom fields."
+    },
+    {
+      "id": "class:backend/internal/store/postgres/custom_field_store.go:CustomFieldDefinitionStore",
+      "type": "class",
+      "name": "CustomFieldDefinitionStore",
+      "filePath": "backend/internal/store/postgres/custom_field_store.go",
+      "lineRange": [
+        13,
+        15
+      ],
+      "summary": "Postgres-backed store for creating, listing, updating, and deleting custom field definitions.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/store/postgres/custom_field_store.go:CustomFieldValueStore",
+      "type": "class",
+      "name": "CustomFieldValueStore",
+      "filePath": "backend/internal/store/postgres/custom_field_store.go",
+      "lineRange": [
+        164,
+        166
+      ],
+      "summary": "Postgres-backed store for setting, getting, and deleting custom field values on elements.",
+      "tags": [
+        "repository",
+        "database",
+        "postgres"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/custom_field_store.go:ListFieldDefinitionsByProject",
+      "type": "function",
+      "name": "ListFieldDefinitionsByProject",
+      "filePath": "backend/internal/store/postgres/custom_field_store.go",
+      "lineRange": [
+        50,
+        107
+      ],
+      "summary": "Queries custom field definitions for a project (optionally filtered by element type) and unmarshals their JSON options.",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/custom_field_store.go:GetFieldValues",
+      "type": "function",
+      "name": "GetFieldValues",
+      "filePath": "backend/internal/store/postgres/custom_field_store.go",
+      "lineRange": [
+        193,
+        230
+      ],
+      "summary": "Retrieves and unmarshals all custom field values set on a given element.",
+      "tags": [
+        "repository",
+        "database",
+        "query",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/custom_field_store.go:SetFieldValue",
+      "type": "function",
+      "name": "SetFieldValue",
+      "filePath": "backend/internal/store/postgres/custom_field_store.go",
+      "lineRange": [
+        172,
+        191
+      ],
+      "summary": "Upserts a JSON-encoded custom field value for an element and field definition pair.",
+      "tags": [
+        "repository",
+        "database",
+        "upsert",
+        "serialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/custom_field_store.go:CreateFieldDefinition",
+      "type": "function",
+      "name": "CreateFieldDefinition",
+      "filePath": "backend/internal/store/postgres/custom_field_store.go",
+      "lineRange": [
+        21,
+        48
+      ],
+      "summary": "Inserts a new custom field definition, marshaling its options to JSON.",
+      "tags": [
+        "repository",
+        "database",
+        "insert",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/store/postgres/custom_field_store.go:UpdateFieldDefinition",
+      "type": "function",
+      "name": "UpdateFieldDefinition",
+      "filePath": "backend/internal/store/postgres/custom_field_store.go",
+      "lineRange": [
+        109,
+        143
+      ],
+      "summary": "Updates an existing custom field definition's columns and JSON-encoded options.",
+      "tags": [
+        "repository",
+        "database",
+        "update",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "class:backend/internal/store/postgres/api_key_store.go:APIKeyStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "function:backend/internal/store/postgres/api_key_store.go:ListAPIKeysByUser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "function:backend/internal/store/postgres/api_key_store.go:GetAPIKeyByHash",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "class:backend/internal/store/postgres/api_key_store.go:APIKeyStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "class:backend/internal/store/postgres/attachment_store.go:AttachmentStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "function:backend/internal/store/postgres/attachment_store.go:ListAttachmentsByElement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "function:backend/internal/store/postgres/attachment_store.go:CreateAttachment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "class:backend/internal/store/postgres/attachment_store.go:AttachmentStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "class:backend/internal/domain/store_attachment.go:AttachmentStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "class:backend/internal/store/postgres/custom_field_store.go:CustomFieldDefinitionStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "class:backend/internal/store/postgres/custom_field_store.go:CustomFieldValueStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "function:backend/internal/store/postgres/custom_field_store.go:ListFieldDefinitionsByProject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "function:backend/internal/store/postgres/custom_field_store.go:GetFieldValues",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "function:backend/internal/store/postgres/custom_field_store.go:SetFieldValue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "function:backend/internal/store/postgres/custom_field_store.go:CreateFieldDefinition",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "function:backend/internal/store/postgres/custom_field_store.go:UpdateFieldDefinition",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "class:backend/internal/store/postgres/custom_field_store.go:CustomFieldDefinitionStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "class:backend/internal/store/postgres/custom_field_store.go:CustomFieldValueStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "class:backend/internal/domain/store_custom_field.go:CustomFieldDefinitionStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "class:backend/internal/domain/store_custom_field.go:CustomFieldValueStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/api_key_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/attachment_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/store/postgres/custom_field_store.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

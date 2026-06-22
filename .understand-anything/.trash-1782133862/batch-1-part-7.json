@@ -1,0 +1,1117 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/service/project_service_test.go",
+      "type": "file",
+      "name": "project_service_test.go",
+      "filePath": "backend/internal/service/project_service_test.go",
+      "summary": "Unit tests for the project service covering cached reads, CRUD operations, and folder-path listing using fake stores.",
+      "tags": [
+        "test",
+        "project",
+        "service",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/service/service_fakes_test.go",
+      "type": "file",
+      "name": "service_fakes_test.go",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "summary": "Shared in-memory fake implementations of all domain store interfaces used across service unit tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "test-helper",
+        "in-memory-store"
+      ],
+      "complexity": "complex",
+      "languageNotes": "In-memory fakes implementing the domain store interfaces, enabling fast isolated service tests without a database."
+    },
+    {
+      "id": "file:backend/internal/service/user_service.go",
+      "type": "file",
+      "name": "user_service.go",
+      "filePath": "backend/internal/service/user_service.go",
+      "summary": "Service wrapping the UserStore for user CRUD plus get-or-create-from-OIDC logic for external identity provider login.",
+      "tags": [
+        "service",
+        "user",
+        "authentication",
+        "oidc"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/user_service.go:UserService",
+      "type": "class",
+      "name": "UserService",
+      "filePath": "backend/internal/service/user_service.go",
+      "lineRange": [
+        12,
+        15
+      ],
+      "summary": "Service wrapping UserStore with OIDC get-or-create logic.",
+      "tags": [
+        "service",
+        "user",
+        "authentication"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/user_service.go:NewUserService",
+      "type": "function",
+      "name": "NewUserService",
+      "filePath": "backend/internal/service/user_service.go",
+      "lineRange": [
+        17,
+        19
+      ],
+      "summary": "Constructs a UserService.",
+      "tags": [
+        "constructor",
+        "user"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/service/user_service.go:GetOrCreateUserFromOIDC",
+      "type": "function",
+      "name": "GetOrCreateUserFromOIDC",
+      "filePath": "backend/internal/service/user_service.go",
+      "lineRange": [
+        39,
+        69
+      ],
+      "summary": "Looks up a user by external identity or provisions a new one from OIDC claims.",
+      "tags": [
+        "service",
+        "user",
+        "authentication",
+        "oidc"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/project_service_test.go:TestProjectService_GetProjectByIdentifier_CacheMissLoadsFromStoreAndCaches",
+      "type": "function",
+      "name": "TestProjectService_GetProjectByIdentifier_CacheMissLoadsFromStoreAndCaches",
+      "filePath": "backend/internal/service/project_service_test.go",
+      "lineRange": [
+        11,
+        34
+      ],
+      "summary": "Unit test: TestProjectService_GetProjectByIdentifier_CacheMissLoadsFromStoreAndCaches.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/project_service_test.go:TestProjectService_GetProjectByIdentifier_CacheHitDoesNotTouchStore",
+      "type": "function",
+      "name": "TestProjectService_GetProjectByIdentifier_CacheHitDoesNotTouchStore",
+      "filePath": "backend/internal/service/project_service_test.go",
+      "lineRange": [
+        36,
+        51
+      ],
+      "summary": "Unit test: TestProjectService_GetProjectByIdentifier_CacheHitDoesNotTouchStore.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/project_service_test.go:TestProjectService_CreateProject_PrimesCache",
+      "type": "function",
+      "name": "TestProjectService_CreateProject_PrimesCache",
+      "filePath": "backend/internal/service/project_service_test.go",
+      "lineRange": [
+        62,
+        78
+      ],
+      "summary": "Unit test: TestProjectService_CreateProject_PrimesCache.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/project_service_test.go:TestProjectService_UpdateProject_InvalidatesCache",
+      "type": "function",
+      "name": "TestProjectService_UpdateProject_InvalidatesCache",
+      "filePath": "backend/internal/service/project_service_test.go",
+      "lineRange": [
+        80,
+        97
+      ],
+      "summary": "Unit test: TestProjectService_UpdateProject_InvalidatesCache.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/project_service_test.go:TestProjectService_DeleteProject_RemovesAndInvalidatesCache",
+      "type": "function",
+      "name": "TestProjectService_DeleteProject_RemovesAndInvalidatesCache",
+      "filePath": "backend/internal/service/project_service_test.go",
+      "lineRange": [
+        99,
+        117
+      ],
+      "summary": "Unit test: TestProjectService_DeleteProject_RemovesAndInvalidatesCache.",
+      "tags": [
+        "test",
+        "unit-test"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakeCacheStore",
+      "type": "class",
+      "name": "fakeCacheStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        20,
+        53
+      ],
+      "summary": "In-memory fake implementing the CacheStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakeElementStore",
+      "type": "class",
+      "name": "fakeElementStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        61,
+        103
+      ],
+      "summary": "In-memory fake implementing the ElementStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakeElementLinkStore",
+      "type": "class",
+      "name": "fakeElementLinkStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        111,
+        171
+      ],
+      "summary": "In-memory fake implementing the ElementLinkStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakeCustomFieldValueStore",
+      "type": "class",
+      "name": "fakeCustomFieldValueStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        179,
+        208
+      ],
+      "summary": "In-memory fake implementing the CustomFieldValueStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakeAttachmentStore",
+      "type": "class",
+      "name": "fakeAttachmentStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        216,
+        250
+      ],
+      "summary": "In-memory fake implementing the AttachmentStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakePendingChangeStore",
+      "type": "class",
+      "name": "fakePendingChangeStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        260,
+        282
+      ],
+      "summary": "In-memory fake implementing the ElementPendingChangeStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakeProjectStore",
+      "type": "class",
+      "name": "fakeProjectStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        290,
+        345
+      ],
+      "summary": "In-memory fake implementing the ProjectStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakePhaseStore",
+      "type": "class",
+      "name": "fakePhaseStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        353,
+        388
+      ],
+      "summary": "In-memory fake implementing the PhaseStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/service_fakes_test.go:fakeUserStore",
+      "type": "class",
+      "name": "fakeUserStore",
+      "filePath": "backend/internal/service/service_fakes_test.go",
+      "lineRange": [
+        397,
+        444
+      ],
+      "summary": "In-memory fake implementing the UserStore interface for tests.",
+      "tags": [
+        "test",
+        "fakes",
+        "in-memory-store"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "class:backend/internal/service/user_service.go:UserService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "class:backend/internal/service/user_service.go:UserService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "function:backend/internal/service/user_service.go:NewUserService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "function:backend/internal/service/user_service.go:NewUserService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "function:backend/internal/service/user_service.go:GetOrCreateUserFromOIDC",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "function:backend/internal/service/user_service.go:GetOrCreateUserFromOIDC",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_GetProjectByIdentifier_CacheMissLoadsFromStoreAndCaches",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_GetProjectByIdentifier_CacheMissLoadsFromStoreAndCaches",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_GetProjectByIdentifier_CacheHitDoesNotTouchStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_GetProjectByIdentifier_CacheHitDoesNotTouchStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_CreateProject_PrimesCache",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_CreateProject_PrimesCache",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_UpdateProject_InvalidatesCache",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_UpdateProject_InvalidatesCache",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_DeleteProject_RemovesAndInvalidatesCache",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "function:backend/internal/service/project_service_test.go:TestProjectService_DeleteProject_RemovesAndInvalidatesCache",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakeCacheStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakeElementStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakeElementLinkStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakeCustomFieldValueStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakeAttachmentStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakePendingChangeStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakeProjectStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakePhaseStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "class:backend/internal/service/service_fakes_test.go:fakeUserStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/project_service_test.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/service_fakes_test.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/user_service.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakeCacheStore",
+      "target": "class:backend/internal/domain/store_cache.go:CacheStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakeElementStore",
+      "target": "class:backend/internal/domain/store_element.go:ElementStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakeElementLinkStore",
+      "target": "class:backend/internal/domain/store_element_link.go:ElementLinkStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakeCustomFieldValueStore",
+      "target": "class:backend/internal/domain/store_custom_field.go:CustomFieldValueStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakeAttachmentStore",
+      "target": "class:backend/internal/domain/store_attachment.go:AttachmentStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakePendingChangeStore",
+      "target": "class:backend/internal/domain/store_element_version.go:ElementPendingChangeStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakeProjectStore",
+      "target": "class:backend/internal/domain/store_project.go:ProjectStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakePhaseStore",
+      "target": "class:backend/internal/domain/store_phase.go:PhaseStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:backend/internal/service/service_fakes_test.go:fakeUserStore",
+      "target": "class:backend/internal/domain/store_user.go:UserStore",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    }
+  ]
+}

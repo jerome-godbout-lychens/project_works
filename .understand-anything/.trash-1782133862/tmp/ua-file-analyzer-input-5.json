@@ -1,0 +1,11 @@
+{
+  "projectRoot": "/Users/godboutj/code/project_works",
+  "batchFiles": [
+    {"path": ".github/workflows/package.yml", "language": "yaml", "sizeLines": 0, "fileCategory": "infra"},
+    {"path": ".github/workflows/tests.yml", "language": "yaml", "sizeLines": 42, "fileCategory": "infra"}
+  ],
+  "batchImportData": {
+    ".github/workflows/package.yml": [],
+    ".github/workflows/tests.yml": []
+  }
+}

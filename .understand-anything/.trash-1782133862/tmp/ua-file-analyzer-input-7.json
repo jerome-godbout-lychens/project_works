@@ -1,0 +1,11 @@
+{
+  "projectRoot": "/Users/godboutj/code/project_works",
+  "batchFiles": [
+    {"path": "ARCHITECTURE.md", "language": "markdown", "sizeLines": 232, "fileCategory": "docs"},
+    {"path": "Claude.md", "language": "markdown", "sizeLines": 140, "fileCategory": "docs"},
+    {"path": "DATA_MODEL.md", "language": "markdown", "sizeLines": 559, "fileCategory": "docs"},
+    {"path": "README.md", "language": "markdown", "sizeLines": 78, "fileCategory": "docs"},
+    {"path": "TestsResultsParser.sh", "language": "shell", "sizeLines": 48, "fileCategory": "script"}
+  ],
+  "batchImportData": {}
+}

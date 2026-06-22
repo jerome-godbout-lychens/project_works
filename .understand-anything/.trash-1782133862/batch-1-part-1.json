@@ -1,0 +1,794 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/api/custom_field_handler.go",
+      "type": "file",
+      "name": "custom_field_handler.go",
+      "filePath": "backend/internal/api/custom_field_handler.go",
+      "summary": "Registers Huma REST endpoints for managing custom field definitions and per-element custom field values, delegating to the custom field service.",
+      "tags": [
+        "api-handler",
+        "custom-fields",
+        "rest",
+        "openapi"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/internal/api/element_handler.go",
+      "type": "file",
+      "name": "element_handler.go",
+      "filePath": "backend/internal/api/element_handler.go",
+      "summary": "Registers REST endpoints for CRUD and search over project elements, mapping domain elements to API response DTOs and parsing filter query parameters.",
+      "tags": [
+        "api-handler",
+        "element",
+        "rest",
+        "crud",
+        "search"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/api/custom_field_handler.go:RegisterCustomFieldHandlers",
+      "type": "function",
+      "name": "RegisterCustomFieldHandlers",
+      "filePath": "backend/internal/api/custom_field_handler.go",
+      "lineRange": [
+        138,
+        342
+      ],
+      "summary": "Registers all custom field definition and value REST operations on the Huma API and wires them to the custom field service.",
+      "tags": [
+        "api-handler",
+        "registration",
+        "custom-fields"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/api/element_handler.go:RegisterElementHandlers",
+      "type": "function",
+      "name": "RegisterElementHandlers",
+      "filePath": "backend/internal/api/element_handler.go",
+      "lineRange": [
+        137,
+        314
+      ],
+      "summary": "Registers element CRUD and search REST operations on the API and wires them to the element service.",
+      "tags": [
+        "api-handler",
+        "registration",
+        "element"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:backend/internal/api/element_handler.go:mapElementToResponse",
+      "type": "function",
+      "name": "mapElementToResponse",
+      "filePath": "backend/internal/api/element_handler.go",
+      "lineRange": [
+        317,
+        341
+      ],
+      "summary": "Maps a domain element to its API response DTO.",
+      "tags": [
+        "utility",
+        "mapping",
+        "element"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/api/element_handler.go:parseCommaSeparated",
+      "type": "function",
+      "name": "parseCommaSeparated",
+      "filePath": "backend/internal/api/element_handler.go",
+      "lineRange": [
+        344,
+        356
+      ],
+      "summary": "Parses a comma-separated query string into a slice of trimmed values.",
+      "tags": [
+        "utility",
+        "parsing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/api/element_handler.go:parseCommaSeparatedElementTypes",
+      "type": "function",
+      "name": "parseCommaSeparatedElementTypes",
+      "filePath": "backend/internal/api/element_handler.go",
+      "lineRange": [
+        358,
+        365
+      ],
+      "summary": "Parses a comma-separated string into element types.",
+      "tags": [
+        "utility",
+        "parsing",
+        "element"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/api/element_handler.go:parseCommaSeparatedTaskStatuses",
+      "type": "function",
+      "name": "parseCommaSeparatedTaskStatuses",
+      "filePath": "backend/internal/api/element_handler.go",
+      "lineRange": [
+        367,
+        374
+      ],
+      "summary": "Parses a comma-separated string into task statuses.",
+      "tags": [
+        "utility",
+        "parsing",
+        "task-status"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "function:backend/internal/api/custom_field_handler.go:RegisterCustomFieldHandlers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "function:backend/internal/api/custom_field_handler.go:RegisterCustomFieldHandlers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "function:backend/internal/api/element_handler.go:RegisterElementHandlers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "function:backend/internal/api/element_handler.go:RegisterElementHandlers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "function:backend/internal/api/element_handler.go:mapElementToResponse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "function:backend/internal/api/element_handler.go:parseCommaSeparated",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "function:backend/internal/api/element_handler.go:parseCommaSeparatedElementTypes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "function:backend/internal/api/element_handler.go:parseCommaSeparatedTaskStatuses",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/attachment_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/custom_field_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/element_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/group_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/link_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/link_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/phase_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/phase_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/project_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/project_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/service_fakes_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/user_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/user_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/version_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/version_worker.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/custom_field_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/attachment_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/custom_field_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/element_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/group_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/link_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/link_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/phase_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/phase_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/project_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/project_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/service_fakes_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/user_service_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/user_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/version_service.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/version_worker.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/api/element_handler.go",
+      "target": "file:backend/internal/service/versionable_snapshot.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

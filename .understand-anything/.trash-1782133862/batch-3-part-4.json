@@ -1,0 +1,1175 @@
+{
+  "nodes": [
+    {
+      "id": "file:backend/internal/auth/session.go",
+      "type": "file",
+      "name": "session.go",
+      "filePath": "backend/internal/auth/session.go",
+      "summary": "Session manager that issues and validates signed JWT session tokens carrying the user identifier.",
+      "tags": [
+        "authentication",
+        "session",
+        "jwt",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/auth/session.go:NewSessionManager",
+      "type": "function",
+      "name": "NewSessionManager",
+      "filePath": "backend/internal/auth/session.go",
+      "lineRange": [
+        16,
+        20
+      ],
+      "summary": "Creates a SessionManager from the configured signing secret.",
+      "tags": [
+        "session",
+        "constructor",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/auth/session.go:CreateSessionToken",
+      "type": "function",
+      "name": "CreateSessionToken",
+      "filePath": "backend/internal/auth/session.go",
+      "lineRange": [
+        24,
+        41
+      ],
+      "summary": "Issues a signed JWT session token carrying the user identifier.",
+      "tags": [
+        "session",
+        "jwt",
+        "authentication",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/auth/session.go:ValidateSessionToken",
+      "type": "function",
+      "name": "ValidateSessionToken",
+      "filePath": "backend/internal/auth/session.go",
+      "lineRange": [
+        45,
+        70
+      ],
+      "summary": "Parses and verifies a signed session token and returns the embedded user identifier.",
+      "tags": [
+        "session",
+        "jwt",
+        "validation",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/auth/session.go:SessionManager",
+      "type": "class",
+      "name": "SessionManager",
+      "filePath": "backend/internal/auth/session.go",
+      "lineRange": [
+        11,
+        13
+      ],
+      "summary": "Holds the signing secret used to issue and validate session tokens.",
+      "tags": [
+        "session",
+        "jwt",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/auth/super_admin.go",
+      "type": "file",
+      "name": "super_admin.go",
+      "filePath": "backend/internal/auth/super_admin.go",
+      "summary": "Seeds the local super-admin user and its API key at startup, idempotently creating or updating the account so administrative access survives loss of external authentication.",
+      "tags": [
+        "authentication",
+        "bootstrap",
+        "super-admin",
+        "api-key",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/auth/super_admin.go:SeedSuperAdmin",
+      "type": "function",
+      "name": "SeedSuperAdmin",
+      "filePath": "backend/internal/auth/super_admin.go",
+      "lineRange": [
+        26,
+        112
+      ],
+      "summary": "Idempotently creates or updates the local super-admin user and its API key at startup so admin access survives external-auth loss.",
+      "tags": [
+        "bootstrap",
+        "super-admin",
+        "api-key",
+        "authentication",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/auth/super_admin_test.go",
+      "type": "file",
+      "name": "super_admin_test.go",
+      "filePath": "backend/internal/auth/super_admin_test.go",
+      "summary": "Unit tests for super-admin seeding using in-memory fake user and API-key stores, covering first-run creation, idempotency, key rotation, and profile updates.",
+      "tags": [
+        "test",
+        "authentication",
+        "super-admin",
+        "fakes",
+        "go"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:backend/internal/cache/memory/ristretto_cache_test.go",
+      "type": "file",
+      "name": "ristretto_cache_test.go",
+      "filePath": "backend/internal/cache/memory/ristretto_cache_test.go",
+      "summary": "Unit tests for the Ristretto in-memory cache covering set/get, miss behavior, invalidation by key and prefix, and TTL expiry.",
+      "tags": [
+        "test",
+        "cache",
+        "ristretto",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:backend/internal/config/config.go",
+      "type": "file",
+      "name": "config.go",
+      "filePath": "backend/internal/config/config.go",
+      "summary": "Defines the layered application configuration structs (server, database, file store, cache, auth, version) and loads them from a YAML config file.",
+      "tags": [
+        "config",
+        "yaml",
+        "configuration",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/config/config.go:Load",
+      "type": "function",
+      "name": "Load",
+      "filePath": "backend/internal/config/config.go",
+      "lineRange": [
+        64,
+        127
+      ],
+      "summary": "Reads and unmarshals the YAML configuration file into the Config struct.",
+      "tags": [
+        "config",
+        "yaml",
+        "loader",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/config/config.go:Config",
+      "type": "class",
+      "name": "Config",
+      "filePath": "backend/internal/config/config.go",
+      "lineRange": [
+        10,
+        17
+      ],
+      "summary": "Top-level configuration aggregate composing server, database, file-store, cache, auth and version settings.",
+      "tags": [
+        "config",
+        "data-model",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/element_type.go",
+      "type": "file",
+      "name": "element_type.go",
+      "filePath": "backend/internal/domain/element_type.go",
+      "summary": "Defines the ElementType enumeration (Feature, Task, Requirement, Bug, Eval, Risk) with helpers to list all types and validate a value.",
+      "tags": [
+        "domain",
+        "data-model",
+        "enum",
+        "validation",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/element_type.go:AllElementTypes",
+      "type": "function",
+      "name": "AllElementTypes",
+      "filePath": "backend/internal/domain/element_type.go",
+      "lineRange": [
+        16,
+        25
+      ],
+      "summary": "Returns the complete slice of valid element types.",
+      "tags": [
+        "domain",
+        "enum",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:backend/internal/domain/element_type.go:IsValid",
+      "type": "function",
+      "name": "IsValid",
+      "filePath": "backend/internal/domain/element_type.go",
+      "lineRange": [
+        28,
+        35
+      ],
+      "summary": "Reports whether a value is a recognized element type.",
+      "tags": [
+        "domain",
+        "validation",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/domain/store_element_version.go",
+      "type": "file",
+      "name": "store_element_version.go",
+      "filePath": "backend/internal/domain/store_element_version.go",
+      "summary": "Declares the ElementVersionStore and ElementPendingChangeStore persistence interfaces used by the versioning subsystem.",
+      "tags": [
+        "domain",
+        "type-definition",
+        "store-interface",
+        "versioning",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_element_version.go:ElementVersionStore",
+      "type": "class",
+      "name": "ElementVersionStore",
+      "filePath": "backend/internal/domain/store_element_version.go",
+      "lineRange": [
+        9,
+        13
+      ],
+      "summary": "Persistence interface for creating and querying element versions and patches.",
+      "tags": [
+        "store-interface",
+        "versioning",
+        "type-definition",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:backend/internal/domain/store_element_version.go:ElementPendingChangeStore",
+      "type": "class",
+      "name": "ElementPendingChangeStore",
+      "filePath": "backend/internal/domain/store_element_version.go",
+      "lineRange": [
+        16,
+        20
+      ],
+      "summary": "Persistence interface for upserting, querying and deleting pending element changes awaiting version commit.",
+      "tags": [
+        "store-interface",
+        "versioning",
+        "type-definition",
+        "go"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:backend/internal/service/custom_field_service.go",
+      "type": "file",
+      "name": "custom_field_service.go",
+      "filePath": "backend/internal/service/custom_field_service.go",
+      "summary": "Service orchestrating custom field definitions and values, persisting changes and staging pending element snapshots for versioning while invalidating cache entries.",
+      "tags": [
+        "service",
+        "custom-field",
+        "versioning",
+        "cache",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/custom_field_service.go:NewCustomFieldService",
+      "type": "function",
+      "name": "NewCustomFieldService",
+      "filePath": "backend/internal/service/custom_field_service.go",
+      "lineRange": [
+        23,
+        41
+      ],
+      "summary": "Constructs a CustomFieldService from its dependent stores.",
+      "tags": [
+        "service",
+        "constructor",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/custom_field_service.go:SetFieldValue",
+      "type": "function",
+      "name": "SetFieldValue",
+      "filePath": "backend/internal/service/custom_field_service.go",
+      "lineRange": [
+        62,
+        73
+      ],
+      "summary": "Sets a custom field value on an element and stages a pending snapshot for versioning.",
+      "tags": [
+        "service",
+        "custom-field",
+        "versioning",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/custom_field_service.go:DeleteFieldValue",
+      "type": "function",
+      "name": "DeleteFieldValue",
+      "filePath": "backend/internal/service/custom_field_service.go",
+      "lineRange": [
+        81,
+        92
+      ],
+      "summary": "Deletes a custom field value from an element and stages a pending snapshot for versioning.",
+      "tags": [
+        "service",
+        "custom-field",
+        "versioning",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:backend/internal/service/custom_field_service.go:stagePendingChange",
+      "type": "function",
+      "name": "stagePendingChange",
+      "filePath": "backend/internal/service/custom_field_service.go",
+      "lineRange": [
+        95,
+        134
+      ],
+      "summary": "Builds a versionable snapshot of an element and upserts it as a pending change for the version worker.",
+      "tags": [
+        "service",
+        "versioning",
+        "snapshot",
+        "go"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:backend/internal/service/custom_field_service.go:CustomFieldService",
+      "type": "class",
+      "name": "CustomFieldService",
+      "filePath": "backend/internal/service/custom_field_service.go",
+      "lineRange": [
+        12,
+        20
+      ],
+      "summary": "Service holding the field-definition, field-value, pending-change, element, link, attachment and cache stores.",
+      "tags": [
+        "service",
+        "custom-field",
+        "go"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:backend/internal/auth/session.go",
+      "target": "function:backend/internal/auth/session.go:NewSessionManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/session.go",
+      "target": "function:backend/internal/auth/session.go:NewSessionManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/session.go",
+      "target": "function:backend/internal/auth/session.go:CreateSessionToken",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/session.go",
+      "target": "function:backend/internal/auth/session.go:CreateSessionToken",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/session.go",
+      "target": "function:backend/internal/auth/session.go:ValidateSessionToken",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/session.go",
+      "target": "function:backend/internal/auth/session.go:ValidateSessionToken",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/session.go",
+      "target": "class:backend/internal/auth/session.go:SessionManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/session.go",
+      "target": "class:backend/internal/auth/session.go:SessionManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "function:backend/internal/auth/super_admin.go:SeedSuperAdmin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "function:backend/internal/auth/super_admin.go:SeedSuperAdmin",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin.go",
+      "target": "file:backend/internal/auth/super_admin_test.go",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/auth/super_admin_test.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/config/config.go",
+      "target": "function:backend/internal/config/config.go:Load",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/config/config.go",
+      "target": "function:backend/internal/config/config.go:Load",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/config/config.go",
+      "target": "class:backend/internal/config/config.go:Config",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/config/config.go",
+      "target": "class:backend/internal/config/config.go:Config",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/element_type.go",
+      "target": "function:backend/internal/domain/element_type.go:AllElementTypes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/element_type.go",
+      "target": "function:backend/internal/domain/element_type.go:AllElementTypes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/element_type.go",
+      "target": "function:backend/internal/domain/element_type.go:IsValid",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/element_type.go",
+      "target": "function:backend/internal/domain/element_type.go:IsValid",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_element_version.go",
+      "target": "class:backend/internal/domain/store_element_version.go:ElementVersionStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/store_element_version.go",
+      "target": "class:backend/internal/domain/store_element_version.go:ElementVersionStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/domain/store_element_version.go",
+      "target": "class:backend/internal/domain/store_element_version.go:ElementPendingChangeStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/domain/store_element_version.go",
+      "target": "class:backend/internal/domain/store_element_version.go:ElementPendingChangeStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "function:backend/internal/service/custom_field_service.go:NewCustomFieldService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "function:backend/internal/service/custom_field_service.go:NewCustomFieldService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "function:backend/internal/service/custom_field_service.go:SetFieldValue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "function:backend/internal/service/custom_field_service.go:SetFieldValue",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "function:backend/internal/service/custom_field_service.go:DeleteFieldValue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "function:backend/internal/service/custom_field_service.go:DeleteFieldValue",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "function:backend/internal/service/custom_field_service.go:stagePendingChange",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "class:backend/internal/service/custom_field_service.go:CustomFieldService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "class:backend/internal/service/custom_field_service.go:CustomFieldService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/element_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/element_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/element_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/errors.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/link_type_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/link_type.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_attachment.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_cache.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_custom_field.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_element_link.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_element_version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_element.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_file_storage.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_phase.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_project.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/store_user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/task_status_test.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/task_status.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/user.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:backend/internal/service/custom_field_service.go",
+      "target": "file:backend/internal/domain/version.go",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

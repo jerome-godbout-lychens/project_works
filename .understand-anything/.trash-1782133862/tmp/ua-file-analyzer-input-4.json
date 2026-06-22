@@ -1,0 +1,11 @@
+{
+  "projectRoot": "/Users/godboutj/code/project_works",
+  "batchFiles": [
+    {"path": "docker-compose.yaml", "language": "yaml", "sizeLines": 66, "fileCategory": "infra"},
+    {"path": "Dockerfile", "language": "dockerfile", "sizeLines": 28, "fileCategory": "infra"}
+  ],
+  "batchImportData": {
+    "docker-compose.yaml": [],
+    "Dockerfile": []
+  }
+}

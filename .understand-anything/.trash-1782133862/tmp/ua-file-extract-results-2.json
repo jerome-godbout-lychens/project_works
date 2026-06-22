@@ -1,0 +1,4379 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 26,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "backend/internal/cache/memory/ristretto_cache.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 80,
+      "nonEmptyLines": 66,
+      "functions": [
+        {
+          "name": "NewRistrettoCache",
+          "startLine": 26,
+          "endLine": 41,
+          "params": [
+            "maxCostBytes",
+            "timeToLive"
+          ]
+        },
+        {
+          "name": "Get",
+          "startLine": 43,
+          "endLine": 45,
+          "params": [
+            "_",
+            "cacheKey"
+          ]
+        },
+        {
+          "name": "Set",
+          "startLine": 47,
+          "endLine": 57,
+          "params": [
+            "_",
+            "cacheKey",
+            "value",
+            "timeToLive"
+          ]
+        },
+        {
+          "name": "Invalidate",
+          "startLine": 59,
+          "endLine": 65,
+          "params": [
+            "_",
+            "cacheKey"
+          ]
+        },
+        {
+          "name": "InvalidateByPrefix",
+          "startLine": 67,
+          "endLine": 80,
+          "params": [
+            "_",
+            "prefix"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "RistrettoCache",
+          "startLine": 15,
+          "endLine": 23,
+          "methods": [
+            "Get",
+            "Set",
+            "Invalidate",
+            "InvalidateByPrefix"
+          ],
+          "properties": [
+            "cache",
+            "timeToLive",
+            "keyTracker",
+            "keyTrackerMu"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RistrettoCache",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "NewRistrettoCache",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Get",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "Set",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "Invalidate",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "InvalidateByPrefix",
+          "line": 67,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewRistrettoCache",
+          "callee": "ristretto.NewCache",
+          "lineNumber": 27
+        },
+        {
+          "caller": "NewRistrettoCache",
+          "callee": "make",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Get",
+          "callee": "cacheStore.cache.Get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Set",
+          "callee": "cacheStore.cache.SetWithTTL",
+          "lineNumber": 52
+        },
+        {
+          "caller": "Set",
+          "callee": "cacheStore.keyTrackerMu.Lock",
+          "lineNumber": 54
+        },
+        {
+          "caller": "Set",
+          "callee": "cacheStore.keyTrackerMu.Unlock",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Invalidate",
+          "callee": "cacheStore.cache.Del",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Invalidate",
+          "callee": "cacheStore.keyTrackerMu.Lock",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Invalidate",
+          "callee": "delete",
+          "lineNumber": 63
+        },
+        {
+          "caller": "Invalidate",
+          "callee": "cacheStore.keyTrackerMu.Unlock",
+          "lineNumber": 64
+        },
+        {
+          "caller": "InvalidateByPrefix",
+          "callee": "cacheStore.keyTrackerMu.Lock",
+          "lineNumber": 68
+        },
+        {
+          "caller": "InvalidateByPrefix",
+          "callee": "make",
+          "lineNumber": 69
+        },
+        {
+          "caller": "InvalidateByPrefix",
+          "callee": "strings.HasPrefix",
+          "lineNumber": 71
+        },
+        {
+          "caller": "InvalidateByPrefix",
+          "callee": "append",
+          "lineNumber": 72
+        },
+        {
+          "caller": "InvalidateByPrefix",
+          "callee": "cacheStore.cache.Del",
+          "lineNumber": 76
+        },
+        {
+          "caller": "InvalidateByPrefix",
+          "callee": "delete",
+          "lineNumber": 77
+        },
+        {
+          "caller": "InvalidateByPrefix",
+          "callee": "cacheStore.keyTrackerMu.Unlock",
+          "lineNumber": 79
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/domain/custom_field.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "CustomFieldDefinition",
+          "startLine": 5,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "FieldDefinitionIdentifier",
+            "ProjectIdentifier",
+            "ApplicableElementType",
+            "FieldName",
+            "FieldType",
+            "FieldOptions",
+            "DisplayOrder"
+          ]
+        },
+        {
+          "name": "CustomFieldValue",
+          "startLine": 16,
+          "endLine": 20,
+          "methods": [],
+          "properties": [
+            "FieldDefinitionIdentifier",
+            "FieldName",
+            "FieldValue"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CustomFieldDefinition",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "CustomFieldValue",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "backend/internal/domain/element.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 61,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "ComputeFeatureProgress",
+          "startLine": 45,
+          "endLine": 61,
+          "params": [
+            "childTasks"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Element",
+          "startLine": 7,
+          "endLine": 33,
+          "methods": [],
+          "properties": [
+            "ElementIdentifier",
+            "ProjectIdentifier",
+            "ElementType",
+            "Title",
+            "Description",
+            "ContentSha",
+            "CreationTime",
+            "ModificationTime",
+            "InterestLevel",
+            "AssigneeIdentifier",
+            "TaskStatus",
+            "TaskProgress",
+            "CloseTime",
+            "ParentFeatureIdentifier",
+            "StartPhaseIdentifier",
+            "DeliveryPhaseIdentifier",
+            "CustomFieldValues",
+            "Supervisors",
+            "Clients"
+          ]
+        },
+        {
+          "name": "ContactInfo",
+          "startLine": 36,
+          "endLine": 40,
+          "methods": [],
+          "properties": [
+            "ContactName",
+            "ContactEmail",
+            "ContactNotes"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Element",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "ContactInfo",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "ComputeFeatureProgress",
+          "line": 45,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ComputeFeatureProgress",
+          "callee": "len",
+          "lineNumber": 46
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "backend/internal/domain/element_link.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "classes": [
+        {
+          "name": "ElementLink",
+          "startLine": 6,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "LinkIdentifier",
+            "SourceElementIdentifier",
+            "DestinationElementIdentifier",
+            "LinkType",
+            "CreationTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ElementLink",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/domain/element_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 51,
+      "functions": [
+        {
+          "name": "intPointer",
+          "startLine": 5,
+          "endLine": 7,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "TestComputeFeatureProgress_EmptyReturnsZero",
+          "startLine": 9,
+          "endLine": 16,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestComputeFeatureProgress_AveragesTaskProgress",
+          "startLine": 18,
+          "endLine": 27,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestComputeFeatureProgress_IgnoresTasksWithNilProgress",
+          "startLine": 29,
+          "endLine": 38,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestComputeFeatureProgress_AllNilReturnsZero",
+          "startLine": 40,
+          "endLine": 48,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestComputeFeatureProgress_IntegerDivisionTruncates",
+          "startLine": 50,
+          "endLine": 58,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestComputeFeatureProgress_EmptyReturnsZero",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TestComputeFeatureProgress_AveragesTaskProgress",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "TestComputeFeatureProgress_IgnoresTasksWithNilProgress",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "TestComputeFeatureProgress_AllNilReturnsZero",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "TestComputeFeatureProgress_IntegerDivisionTruncates",
+          "line": 50,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestComputeFeatureProgress_EmptyReturnsZero",
+          "callee": "ComputeFeatureProgress",
+          "lineNumber": 10
+        },
+        {
+          "caller": "TestComputeFeatureProgress_EmptyReturnsZero",
+          "callee": "t.Errorf",
+          "lineNumber": 11
+        },
+        {
+          "caller": "TestComputeFeatureProgress_EmptyReturnsZero",
+          "callee": "ComputeFeatureProgress",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestComputeFeatureProgress_EmptyReturnsZero",
+          "callee": "t.Errorf",
+          "lineNumber": 14
+        },
+        {
+          "caller": "TestComputeFeatureProgress_AveragesTaskProgress",
+          "callee": "intPointer",
+          "lineNumber": 20
+        },
+        {
+          "caller": "TestComputeFeatureProgress_AveragesTaskProgress",
+          "callee": "intPointer",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestComputeFeatureProgress_AveragesTaskProgress",
+          "callee": "intPointer",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestComputeFeatureProgress_AveragesTaskProgress",
+          "callee": "ComputeFeatureProgress",
+          "lineNumber": 24
+        },
+        {
+          "caller": "TestComputeFeatureProgress_AveragesTaskProgress",
+          "callee": "t.Errorf",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestComputeFeatureProgress_IgnoresTasksWithNilProgress",
+          "callee": "intPointer",
+          "lineNumber": 31
+        },
+        {
+          "caller": "TestComputeFeatureProgress_IgnoresTasksWithNilProgress",
+          "callee": "intPointer",
+          "lineNumber": 33
+        },
+        {
+          "caller": "TestComputeFeatureProgress_IgnoresTasksWithNilProgress",
+          "callee": "ComputeFeatureProgress",
+          "lineNumber": 35
+        },
+        {
+          "caller": "TestComputeFeatureProgress_IgnoresTasksWithNilProgress",
+          "callee": "t.Errorf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "TestComputeFeatureProgress_AllNilReturnsZero",
+          "callee": "ComputeFeatureProgress",
+          "lineNumber": 45
+        },
+        {
+          "caller": "TestComputeFeatureProgress_AllNilReturnsZero",
+          "callee": "t.Errorf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "TestComputeFeatureProgress_IntegerDivisionTruncates",
+          "callee": "intPointer",
+          "lineNumber": 52
+        },
+        {
+          "caller": "TestComputeFeatureProgress_IntegerDivisionTruncates",
+          "callee": "intPointer",
+          "lineNumber": 53
+        },
+        {
+          "caller": "TestComputeFeatureProgress_IntegerDivisionTruncates",
+          "callee": "ComputeFeatureProgress",
+          "lineNumber": 55
+        },
+        {
+          "caller": "TestComputeFeatureProgress_IntegerDivisionTruncates",
+          "callee": "t.Errorf",
+          "lineNumber": 56
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 6,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/domain/element_type_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 36,
+      "functions": [
+        {
+          "name": "TestElementType_IsValid",
+          "startLine": 5,
+          "endLine": 25,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "startLine": 27,
+          "endLine": 39,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestElementType_IsValid",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "line": 27,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestElementType_IsValid",
+          "callee": "ElementType",
+          "lineNumber": 16
+        },
+        {
+          "caller": "TestElementType_IsValid",
+          "callee": "ElementType",
+          "lineNumber": 17
+        },
+        {
+          "caller": "TestElementType_IsValid",
+          "callee": "ElementType",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestElementType_IsValid",
+          "callee": "testCase.elementType.IsValid",
+          "lineNumber": 21
+        },
+        {
+          "caller": "TestElementType_IsValid",
+          "callee": "t.Errorf",
+          "lineNumber": 22
+        },
+        {
+          "caller": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "callee": "AllElementTypes",
+          "lineNumber": 28
+        },
+        {
+          "caller": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "callee": "len",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "callee": "t.Fatalf",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "callee": "len",
+          "lineNumber": 30
+        },
+        {
+          "caller": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "callee": "make",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "callee": "len",
+          "lineNumber": 32
+        },
+        {
+          "caller": "TestAllElementTypes_ContainsAllSixValuesUnique",
+          "callee": "t.Errorf",
+          "lineNumber": 35
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/domain/errors.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 16,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/domain/link_type.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 31,
+      "functions": [
+        {
+          "name": "AllLinkTypes",
+          "startLine": 21,
+          "endLine": 27,
+          "params": []
+        },
+        {
+          "name": "IsValid",
+          "startLine": 30,
+          "endLine": 37,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AllLinkTypes",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "IsValid",
+          "line": 30,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "IsValid",
+          "callee": "AllLinkTypes",
+          "lineNumber": 31
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/domain/link_type_test.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 33,
+      "functions": [
+        {
+          "name": "TestLinkType_IsValid",
+          "startLine": 5,
+          "endLine": 22,
+          "params": [
+            "t"
+          ]
+        },
+        {
+          "name": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "startLine": 24,
+          "endLine": 36,
+          "params": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TestLinkType_IsValid",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "TestLinkType_IsValid",
+          "callee": "LinkType",
+          "lineNumber": 13
+        },
+        {
+          "caller": "TestLinkType_IsValid",
+          "callee": "LinkType",
+          "lineNumber": 14
+        },
+        {
+          "caller": "TestLinkType_IsValid",
+          "callee": "LinkType",
+          "lineNumber": 15
+        },
+        {
+          "caller": "TestLinkType_IsValid",
+          "callee": "testCase.linkType.IsValid",
+          "lineNumber": 18
+        },
+        {
+          "caller": "TestLinkType_IsValid",
+          "callee": "t.Errorf",
+          "lineNumber": 19
+        },
+        {
+          "caller": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "callee": "AllLinkTypes",
+          "lineNumber": 25
+        },
+        {
+          "caller": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "callee": "len",
+          "lineNumber": 26
+        },
+        {
+          "caller": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "callee": "t.Fatalf",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "callee": "len",
+          "lineNumber": 27
+        },
+        {
+          "caller": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "callee": "make",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "callee": "len",
+          "lineNumber": 29
+        },
+        {
+          "caller": "TestAllLinkTypes_ContainsAllThreeValuesUnique",
+          "callee": "t.Errorf",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "backend/internal/domain/phase.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "Phase",
+          "startLine": 6,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "PhaseIdentifier",
+            "ProjectIdentifier",
+            "PhaseName",
+            "PhaseOrder",
+            "PlannedStartDate",
+            "PlannedEndDate"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Phase",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/domain/project.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "Project",
+          "startLine": 6,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "ProjectIdentifier",
+            "ProjectName",
+            "ProjectDescription",
+            "FolderPath",
+            "CreationTime",
+            "ModificationTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Project",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/domain/store_attachment.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "classes": [
+        {
+          "name": "AttachmentStore",
+          "startLine": 6,
+          "endLine": 11,
+          "methods": [
+            "CreateAttachment",
+            "GetAttachmentByIdentifier",
+            "ListAttachmentsByElement",
+            "DeleteAttachment"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AttachmentStore",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/domain/store_cache.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "CacheStore",
+          "startLine": 10,
+          "endLine": 15,
+          "methods": [
+            "Get",
+            "Set",
+            "Invalidate",
+            "InvalidateByPrefix"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CacheStore",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/domain/store_custom_field.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "CustomFieldDefinitionStore",
+          "startLine": 6,
+          "endLine": 11,
+          "methods": [
+            "CreateFieldDefinition",
+            "ListFieldDefinitionsByProject",
+            "UpdateFieldDefinition",
+            "DeleteFieldDefinition"
+          ],
+          "properties": []
+        },
+        {
+          "name": "CustomFieldValueStore",
+          "startLine": 14,
+          "endLine": 18,
+          "methods": [
+            "SetFieldValue",
+            "GetFieldValues",
+            "DeleteFieldValue"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CustomFieldDefinitionStore",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "CustomFieldValueStore",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "backend/internal/filestore/s3/s3_file_storage.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 92,
+      "nonEmptyLines": 79,
+      "functions": [
+        {
+          "name": "NewS3FileStorage",
+          "startLine": 26,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "endpoint",
+            "bucketName",
+            "region"
+          ]
+        },
+        {
+          "name": "PutFile",
+          "startLine": 54,
+          "endLine": 62,
+          "params": [
+            "ctx",
+            "storageKey",
+            "data",
+            "contentType"
+          ]
+        },
+        {
+          "name": "GetFile",
+          "startLine": 64,
+          "endLine": 73,
+          "params": [
+            "ctx",
+            "storageKey"
+          ]
+        },
+        {
+          "name": "DeleteFile",
+          "startLine": 75,
+          "endLine": 81,
+          "params": [
+            "ctx",
+            "storageKey"
+          ]
+        },
+        {
+          "name": "GeneratePresignedURL",
+          "startLine": 83,
+          "endLine": 92,
+          "params": [
+            "ctx",
+            "storageKey",
+            "expiration"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "S3FileStorage",
+          "startLine": 17,
+          "endLine": 21,
+          "methods": [
+            "PutFile",
+            "GetFile",
+            "DeleteFile",
+            "GeneratePresignedURL"
+          ],
+          "properties": [
+            "client",
+            "presigner",
+            "bucketName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "S3FileStorage",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "NewS3FileStorage",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "PutFile",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "GetFile",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteFile",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "GeneratePresignedURL",
+          "line": 83,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "NewS3FileStorage",
+          "callee": "awsconfig.WithRegion",
+          "lineNumber": 28
+        },
+        {
+          "caller": "NewS3FileStorage",
+          "callee": "awsconfig.LoadDefaultConfig",
+          "lineNumber": 31
+        },
+        {
+          "caller": "NewS3FileStorage",
+          "callee": "append",
+          "lineNumber": 38
+        },
+        {
+          "caller": "NewS3FileStorage",
+          "callee": "aws.String",
+          "lineNumber": 39
+        },
+        {
+          "caller": "NewS3FileStorage",
+          "callee": "s3.NewFromConfig",
+          "lineNumber": 44
+        },
+        {
+          "caller": "NewS3FileStorage",
+          "callee": "s3.NewPresignClient",
+          "lineNumber": 45
+        },
+        {
+          "caller": "PutFile",
+          "callee": "storage.client.PutObject",
+          "lineNumber": 55
+        },
+        {
+          "caller": "PutFile",
+          "callee": "aws.String",
+          "lineNumber": 56
+        },
+        {
+          "caller": "PutFile",
+          "callee": "aws.String",
+          "lineNumber": 57
+        },
+        {
+          "caller": "PutFile",
+          "callee": "aws.String",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GetFile",
+          "callee": "storage.client.GetObject",
+          "lineNumber": 65
+        },
+        {
+          "caller": "GetFile",
+          "callee": "aws.String",
+          "lineNumber": 66
+        },
+        {
+          "caller": "GetFile",
+          "callee": "aws.String",
+          "lineNumber": 67
+        },
+        {
+          "caller": "DeleteFile",
+          "callee": "storage.client.DeleteObject",
+          "lineNumber": 76
+        },
+        {
+          "caller": "DeleteFile",
+          "callee": "aws.String",
+          "lineNumber": 77
+        },
+        {
+          "caller": "DeleteFile",
+          "callee": "aws.String",
+          "lineNumber": 78
+        },
+        {
+          "caller": "GeneratePresignedURL",
+          "callee": "storage.presigner.PresignGetObject",
+          "lineNumber": 84
+        },
+        {
+          "caller": "GeneratePresignedURL",
+          "callee": "aws.String",
+          "lineNumber": 85
+        },
+        {
+          "caller": "GeneratePresignedURL",
+          "callee": "aws.String",
+          "lineNumber": 86
+        },
+        {
+          "caller": "GeneratePresignedURL",
+          "callee": "s3.WithPresignExpires",
+          "lineNumber": 87
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/api_key_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 101,
+      "nonEmptyLines": 91,
+      "functions": [
+        {
+          "name": "NewAPIKeyStore",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "CreateAPIKey",
+          "startLine": 20,
+          "endLine": 31,
+          "params": [
+            "ctx",
+            "apiKey"
+          ]
+        },
+        {
+          "name": "GetAPIKeyByHash",
+          "startLine": 33,
+          "endLine": 47,
+          "params": [
+            "ctx",
+            "hashedKey"
+          ]
+        },
+        {
+          "name": "ListAPIKeysByUser",
+          "startLine": 49,
+          "endLine": 69,
+          "params": [
+            "ctx",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "DeleteAPIKey",
+          "startLine": 71,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "apiKeyIdentifier"
+          ]
+        },
+        {
+          "name": "UpdateLastUsedTime",
+          "startLine": 87,
+          "endLine": 101,
+          "params": [
+            "ctx",
+            "apiKeyIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "APIKeyStore",
+          "startLine": 12,
+          "endLine": 14,
+          "methods": [
+            "CreateAPIKey",
+            "GetAPIKeyByHash",
+            "ListAPIKeysByUser",
+            "DeleteAPIKey",
+            "UpdateLastUsedTime"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "APIKeyStore",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewAPIKeyStore",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAPIKey",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "GetAPIKeyByHash",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "ListAPIKeysByUser",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAPIKey",
+          "line": 71,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateLastUsedTime",
+          "line": 87,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAPIKey",
+          "callee": "store.db.QueryRowContext(ctx,\n\t\t`INSERT INTO api_keys (api_key_identifier, user_identifier, hashed_key, label, created_time)\n\t\t VALUES ($1, $2, $3, $4, $5)\n\t\t RETURNING api_key_identifier`,\n\t\tapiKey.APIKeyIdentifier, apiKey.UserIdentifier, apiKey.HashedKey, apiKey.Label, apiKey.CreatedTime,\n\t).Scan",
+          "lineNumber": 21
+        },
+        {
+          "caller": "CreateAPIKey",
+          "callee": "store.db.QueryRowContext",
+          "lineNumber": 21
+        },
+        {
+          "caller": "CreateAPIKey",
+          "callee": "fmt.Errorf",
+          "lineNumber": 28
+        },
+        {
+          "caller": "GetAPIKeyByHash",
+          "callee": "store.db.QueryRowContext(ctx,\n\t\t`SELECT api_key_identifier, user_identifier, hashed_key, label, created_time, last_used_time\n\t\t FROM api_keys WHERE hashed_key = $1`, hashedKey,\n\t).Scan",
+          "lineNumber": 35
+        },
+        {
+          "caller": "GetAPIKeyByHash",
+          "callee": "store.db.QueryRowContext",
+          "lineNumber": 35
+        },
+        {
+          "caller": "GetAPIKeyByHash",
+          "callee": "fmt.Errorf",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "store.db.QueryContext",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 55
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "rows.Close",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "rows.Next",
+          "lineNumber": 60
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "rows.Scan",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 64
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "append",
+          "lineNumber": 66
+        },
+        {
+          "caller": "ListAPIKeysByUser",
+          "callee": "rows.Err",
+          "lineNumber": 68
+        },
+        {
+          "caller": "DeleteAPIKey",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 72
+        },
+        {
+          "caller": "DeleteAPIKey",
+          "callee": "fmt.Errorf",
+          "lineNumber": 75
+        },
+        {
+          "caller": "DeleteAPIKey",
+          "callee": "result.RowsAffected",
+          "lineNumber": 77
+        },
+        {
+          "caller": "DeleteAPIKey",
+          "callee": "fmt.Errorf",
+          "lineNumber": 79
+        },
+        {
+          "caller": "UpdateLastUsedTime",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 88
+        },
+        {
+          "caller": "UpdateLastUsedTime",
+          "callee": "fmt.Errorf",
+          "lineNumber": 91
+        },
+        {
+          "caller": "UpdateLastUsedTime",
+          "callee": "result.RowsAffected",
+          "lineNumber": 93
+        },
+        {
+          "caller": "UpdateLastUsedTime",
+          "callee": "fmt.Errorf",
+          "lineNumber": 95
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 7,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/attachment_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 103,
+      "nonEmptyLines": 93,
+      "functions": [
+        {
+          "name": "NewAttachmentStore",
+          "startLine": 17,
+          "endLine": 19,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "scanAttachment",
+          "startLine": 21,
+          "endLine": 37,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "CreateAttachment",
+          "startLine": 39,
+          "endLine": 52,
+          "params": [
+            "ctx",
+            "attachment"
+          ]
+        },
+        {
+          "name": "GetAttachmentByIdentifier",
+          "startLine": 54,
+          "endLine": 66,
+          "params": [
+            "ctx",
+            "attachmentIdentifier"
+          ]
+        },
+        {
+          "name": "ListAttachmentsByElement",
+          "startLine": 68,
+          "endLine": 87,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        },
+        {
+          "name": "DeleteAttachment",
+          "startLine": 89,
+          "endLine": 103,
+          "params": [
+            "ctx",
+            "attachmentIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AttachmentStore",
+          "startLine": 13,
+          "endLine": 15,
+          "methods": [
+            "CreateAttachment",
+            "GetAttachmentByIdentifier",
+            "ListAttachmentsByElement",
+            "DeleteAttachment"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AttachmentStore",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewAttachmentStore",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAttachment",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "GetAttachmentByIdentifier",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "ListAttachmentsByElement",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAttachment",
+          "line": 89,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "scanAttachment",
+          "callee": "row.Scan",
+          "lineNumber": 23
+        },
+        {
+          "caller": "CreateAttachment",
+          "callee": "s.db.QueryRowContext(ctx,\n\t\t`INSERT INTO element_attachments (attachment_identifier, element_identifier, file_storage_key, file_name, file_size_bytes, content_type, upload_time, uploaded_by_identifier)\n\t\t VALUES ($1, $2, $3, $4, $5, $6, $7, $8)\n\t\t RETURNING attachment_identifier, upload_time`,\n\t\tattachment.AttachmentIdentifier, attachment.ElementIdentifier, attachment.FileStorageKey,\n\t\tattachment.FileName, attachment.FileSizeBytes, attachment.ContentType,\n\t\ttime.Now().UTC(), attachment.UploadedByIdentifier,\n\t).Scan",
+          "lineNumber": 40
+        },
+        {
+          "caller": "CreateAttachment",
+          "callee": "s.db.QueryRowContext",
+          "lineNumber": 40
+        },
+        {
+          "caller": "CreateAttachment",
+          "callee": "time.Now().UTC",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CreateAttachment",
+          "callee": "time.Now",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CreateAttachment",
+          "callee": "fmt.Errorf",
+          "lineNumber": 49
+        },
+        {
+          "caller": "GetAttachmentByIdentifier",
+          "callee": "scanAttachment",
+          "lineNumber": 55
+        },
+        {
+          "caller": "GetAttachmentByIdentifier",
+          "callee": "s.db.QueryRowContext",
+          "lineNumber": 55
+        },
+        {
+          "caller": "GetAttachmentByIdentifier",
+          "callee": "fmt.Errorf",
+          "lineNumber": 63
+        },
+        {
+          "caller": "ListAttachmentsByElement",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 69
+        },
+        {
+          "caller": "ListAttachmentsByElement",
+          "callee": "fmt.Errorf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ListAttachmentsByElement",
+          "callee": "rows.Close",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ListAttachmentsByElement",
+          "callee": "rows.Next",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ListAttachmentsByElement",
+          "callee": "scanAttachment",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ListAttachmentsByElement",
+          "callee": "fmt.Errorf",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ListAttachmentsByElement",
+          "callee": "append",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ListAttachmentsByElement",
+          "callee": "rows.Err",
+          "lineNumber": 86
+        },
+        {
+          "caller": "DeleteAttachment",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 90
+        },
+        {
+          "caller": "DeleteAttachment",
+          "callee": "fmt.Errorf",
+          "lineNumber": 93
+        },
+        {
+          "caller": "DeleteAttachment",
+          "callee": "result.RowsAffected",
+          "lineNumber": 95
+        },
+        {
+          "caller": "DeleteAttachment",
+          "callee": "fmt.Errorf",
+          "lineNumber": 97
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 6,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/custom_field_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 250,
+      "nonEmptyLines": 209,
+      "functions": [
+        {
+          "name": "NewCustomFieldDefinitionStore",
+          "startLine": 17,
+          "endLine": 19,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "CreateFieldDefinition",
+          "startLine": 21,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "definition"
+          ]
+        },
+        {
+          "name": "ListFieldDefinitionsByProject",
+          "startLine": 50,
+          "endLine": 107,
+          "params": [
+            "ctx",
+            "projectIdentifier",
+            "elementType"
+          ]
+        },
+        {
+          "name": "UpdateFieldDefinition",
+          "startLine": 109,
+          "endLine": 143,
+          "params": [
+            "ctx",
+            "definition"
+          ]
+        },
+        {
+          "name": "DeleteFieldDefinition",
+          "startLine": 145,
+          "endLine": 161,
+          "params": [
+            "ctx",
+            "fieldDefinitionIdentifier"
+          ]
+        },
+        {
+          "name": "NewCustomFieldValueStore",
+          "startLine": 168,
+          "endLine": 170,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "SetFieldValue",
+          "startLine": 172,
+          "endLine": 191,
+          "params": [
+            "ctx",
+            "elementIdentifier",
+            "fieldDefinitionIdentifier",
+            "value"
+          ]
+        },
+        {
+          "name": "GetFieldValues",
+          "startLine": 193,
+          "endLine": 230,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        },
+        {
+          "name": "DeleteFieldValue",
+          "startLine": 232,
+          "endLine": 250,
+          "params": [
+            "ctx",
+            "elementIdentifier",
+            "fieldDefinitionIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CustomFieldDefinitionStore",
+          "startLine": 13,
+          "endLine": 15,
+          "methods": [
+            "CreateFieldDefinition",
+            "ListFieldDefinitionsByProject",
+            "UpdateFieldDefinition",
+            "DeleteFieldDefinition"
+          ],
+          "properties": [
+            "db"
+          ]
+        },
+        {
+          "name": "CustomFieldValueStore",
+          "startLine": 164,
+          "endLine": 166,
+          "methods": [
+            "SetFieldValue",
+            "GetFieldValues",
+            "DeleteFieldValue"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CustomFieldDefinitionStore",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewCustomFieldDefinitionStore",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "CreateFieldDefinition",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ListFieldDefinitionsByProject",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateFieldDefinition",
+          "line": 109,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteFieldDefinition",
+          "line": 145,
+          "isDefault": false
+        },
+        {
+          "name": "CustomFieldValueStore",
+          "line": 164,
+          "isDefault": false
+        },
+        {
+          "name": "NewCustomFieldValueStore",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "SetFieldValue",
+          "line": 172,
+          "isDefault": false
+        },
+        {
+          "name": "GetFieldValues",
+          "line": 193,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteFieldValue",
+          "line": 232,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateFieldDefinition",
+          "callee": "json.Marshal",
+          "lineNumber": 22
+        },
+        {
+          "caller": "CreateFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 24
+        },
+        {
+          "caller": "CreateFieldDefinition",
+          "callee": "s.db.QueryRowContext(ctx, query,\n\t\tdefinition.FieldDefinitionIdentifier,\n\t\tdefinition.ProjectIdentifier,\n\t\tdefinition.ApplicableElementType,\n\t\tdefinition.FieldName,\n\t\tdefinition.FieldType,\n\t\toptionsJSON,\n\t\tdefinition.DisplayOrder,\n\t).Scan",
+          "lineNumber": 33
+        },
+        {
+          "caller": "CreateFieldDefinition",
+          "callee": "s.db.QueryRowContext",
+          "lineNumber": 33
+        },
+        {
+          "caller": "CreateFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 72
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "fmt.Errorf",
+          "lineNumber": 74
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "rows.Close",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "rows.Next",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "rows.Scan",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "fmt.Errorf",
+          "lineNumber": 93
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "make",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "len",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "json.Unmarshal",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "fmt.Errorf",
+          "lineNumber": 99
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "append",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ListFieldDefinitionsByProject",
+          "callee": "rows.Err",
+          "lineNumber": 106
+        },
+        {
+          "caller": "UpdateFieldDefinition",
+          "callee": "json.Marshal",
+          "lineNumber": 110
+        },
+        {
+          "caller": "UpdateFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 112
+        },
+        {
+          "caller": "UpdateFieldDefinition",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 121
+        },
+        {
+          "caller": "UpdateFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 131
+        },
+        {
+          "caller": "UpdateFieldDefinition",
+          "callee": "result.RowsAffected",
+          "lineNumber": 134
+        },
+        {
+          "caller": "UpdateFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 136
+        },
+        {
+          "caller": "UpdateFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 139
+        },
+        {
+          "caller": "DeleteFieldDefinition",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 146
+        },
+        {
+          "caller": "DeleteFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 149
+        },
+        {
+          "caller": "DeleteFieldDefinition",
+          "callee": "result.RowsAffected",
+          "lineNumber": 152
+        },
+        {
+          "caller": "DeleteFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 154
+        },
+        {
+          "caller": "DeleteFieldDefinition",
+          "callee": "fmt.Errorf",
+          "lineNumber": 157
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "json.Marshal",
+          "lineNumber": 173
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 175
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 185
+        },
+        {
+          "caller": "SetFieldValue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 187
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 202
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "fmt.Errorf",
+          "lineNumber": 204
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "rows.Close",
+          "lineNumber": 206
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "rows.Next",
+          "lineNumber": 209
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "rows.Scan",
+          "lineNumber": 213
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "fmt.Errorf",
+          "lineNumber": 219
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "json.Unmarshal",
+          "lineNumber": 222
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "fmt.Errorf",
+          "lineNumber": 223
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "append",
+          "lineNumber": 226
+        },
+        {
+          "caller": "GetFieldValues",
+          "callee": "rows.Err",
+          "lineNumber": 229
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 233
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 238
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "result.RowsAffected",
+          "lineNumber": 241
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 243
+        },
+        {
+          "caller": "DeleteFieldValue",
+          "callee": "fmt.Errorf",
+          "lineNumber": 246
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 11,
+        "functionCount": 9,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/element_link_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 129,
+      "nonEmptyLines": 117,
+      "functions": [
+        {
+          "name": "NewElementLinkStore",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "scanLink",
+          "startLine": 20,
+          "endLine": 33,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "CreateLink",
+          "startLine": 35,
+          "endLine": 48,
+          "params": [
+            "ctx",
+            "link"
+          ]
+        },
+        {
+          "name": "GetLinkByIdentifier",
+          "startLine": 50,
+          "endLine": 62,
+          "params": [
+            "ctx",
+            "linkIdentifier"
+          ]
+        },
+        {
+          "name": "UpdateLinkType",
+          "startLine": 64,
+          "endLine": 80,
+          "params": [
+            "ctx",
+            "linkIdentifier",
+            "linkType"
+          ]
+        },
+        {
+          "name": "DeleteLink",
+          "startLine": 82,
+          "endLine": 95,
+          "params": [
+            "ctx",
+            "linkIdentifier"
+          ]
+        },
+        {
+          "name": "ListLinksByElement",
+          "startLine": 97,
+          "endLine": 129,
+          "params": [
+            "ctx",
+            "elementIdentifier",
+            "direction"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ElementLinkStore",
+          "startLine": 12,
+          "endLine": 14,
+          "methods": [
+            "CreateLink",
+            "GetLinkByIdentifier",
+            "UpdateLinkType",
+            "DeleteLink",
+            "ListLinksByElement"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ElementLinkStore",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewElementLinkStore",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "CreateLink",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "GetLinkByIdentifier",
+          "line": 50,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateLinkType",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteLink",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "ListLinksByElement",
+          "line": 97,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "scanLink",
+          "callee": "row.Scan",
+          "lineNumber": 22
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "scanLink",
+          "lineNumber": 36
+        },
+        {
+          "caller": "CreateLink",
+          "callee": "s.db.QueryRowContext",
+          "lineNumber": 36
+        },
+        {
+          "caller": "GetLinkByIdentifier",
+          "callee": "scanLink",
+          "lineNumber": 51
+        },
+        {
+          "caller": "GetLinkByIdentifier",
+          "callee": "s.db.QueryRowContext",
+          "lineNumber": 51
+        },
+        {
+          "caller": "GetLinkByIdentifier",
+          "callee": "fmt.Errorf",
+          "lineNumber": 59
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 65
+        },
+        {
+          "caller": "UpdateLinkType",
+          "callee": "result.RowsAffected",
+          "lineNumber": 72
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 83
+        },
+        {
+          "caller": "DeleteLink",
+          "callee": "result.RowsAffected",
+          "lineNumber": 87
+        },
+        {
+          "caller": "ListLinksByElement",
+          "callee": "fmt.Errorf",
+          "lineNumber": 107
+        },
+        {
+          "caller": "ListLinksByElement",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 110
+        },
+        {
+          "caller": "ListLinksByElement",
+          "callee": "rows.Close",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ListLinksByElement",
+          "callee": "rows.Next",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ListLinksByElement",
+          "callee": "scanLink",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ListLinksByElement",
+          "callee": "append",
+          "lineNumber": 126
+        },
+        {
+          "caller": "ListLinksByElement",
+          "callee": "rows.Err",
+          "lineNumber": 128
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 7,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/element_pending_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 94,
+      "nonEmptyLines": 77,
+      "functions": [
+        {
+          "name": "NewElementPendingChangeStore",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "UpsertPendingChange",
+          "startLine": 20,
+          "endLine": 38,
+          "params": [
+            "ctx",
+            "elementIdentifier",
+            "snapshotBeforeEdits"
+          ]
+        },
+        {
+          "name": "GetStalePendingChanges",
+          "startLine": 40,
+          "endLine": 85,
+          "params": [
+            "ctx",
+            "inactivityThreshold"
+          ]
+        },
+        {
+          "name": "DeletePendingChange",
+          "startLine": 87,
+          "endLine": 94,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ElementPendingChangeStore",
+          "startLine": 12,
+          "endLine": 14,
+          "methods": [
+            "UpsertPendingChange",
+            "GetStalePendingChanges",
+            "DeletePendingChange"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ElementPendingChangeStore",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewElementPendingChangeStore",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "UpsertPendingChange",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "GetStalePendingChanges",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "DeletePendingChange",
+          "line": 87,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "UpsertPendingChange",
+          "callee": "json.Marshal",
+          "lineNumber": 25
+        },
+        {
+          "caller": "UpsertPendingChange",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 36
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "time.Now().Add",
+          "lineNumber": 44
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "time.Now",
+          "lineNumber": 44
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 52
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "rows.Close",
+          "lineNumber": 56
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "rows.Next",
+          "lineNumber": 59
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "rows.Scan",
+          "lineNumber": 63
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "json.Unmarshal",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "append",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GetStalePendingChanges",
+          "callee": "rows.Err",
+          "lineNumber": 80
+        },
+        {
+          "caller": "DeletePendingChange",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 92
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/element_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 249,
+      "nonEmptyLines": 222,
+      "functions": [
+        {
+          "name": "NewElementStore",
+          "startLine": 19,
+          "endLine": 21,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "scanElement",
+          "startLine": 30,
+          "endLine": 56,
+          "params": [
+            "row"
+          ]
+        },
+        {
+          "name": "GetElementByIdentifier",
+          "startLine": 58,
+          "endLine": 68,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        },
+        {
+          "name": "ListElementsByProject",
+          "startLine": 70,
+          "endLine": 137,
+          "params": [
+            "ctx",
+            "projectIdentifier",
+            "filter"
+          ]
+        },
+        {
+          "name": "CreateElement",
+          "startLine": 139,
+          "endLine": 168,
+          "params": [
+            "ctx",
+            "element"
+          ]
+        },
+        {
+          "name": "UpdateElement",
+          "startLine": 170,
+          "endLine": 209,
+          "params": [
+            "ctx",
+            "element"
+          ]
+        },
+        {
+          "name": "DeleteElement",
+          "startLine": 211,
+          "endLine": 224,
+          "params": [
+            "ctx",
+            "elementIdentifier"
+          ]
+        },
+        {
+          "name": "SearchElements",
+          "startLine": 226,
+          "endLine": 249,
+          "params": [
+            "ctx",
+            "projectIdentifier",
+            "query",
+            "limit",
+            "offset"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ElementStore",
+          "startLine": 14,
+          "endLine": 16,
+          "methods": [
+            "GetElementByIdentifier",
+            "ListElementsByProject",
+            "CreateElement",
+            "UpdateElement",
+            "DeleteElement",
+            "SearchElements"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ElementStore",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NewElementStore",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "GetElementByIdentifier",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "ListElementsByProject",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "CreateElement",
+          "line": 139,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateElement",
+          "line": 170,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteElement",
+          "line": 211,
+          "isDefault": false
+        },
+        {
+          "name": "SearchElements",
+          "line": 226,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "scanElement",
+          "callee": "row.Scan",
+          "lineNumber": 34
+        },
+        {
+          "caller": "GetElementByIdentifier",
+          "callee": "scanElement",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GetElementByIdentifier",
+          "callee": "s.db.QueryRowContext",
+          "lineNumber": 60
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "len",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "make",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "len",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 78
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "append",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "strings.Join",
+          "lineNumber": 81
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "len",
+          "lineNumber": 82
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "len",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "make",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "len",
+          "lineNumber": 86
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "append",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "strings.Join",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "len",
+          "lineNumber": 92
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "append",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "append",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "append",
+          "lineNumber": 114
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 118
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "append",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "rows.Close",
+          "lineNumber": 126
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "rows.Next",
+          "lineNumber": 129
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "scanElement",
+          "lineNumber": 130
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "append",
+          "lineNumber": 134
+        },
+        {
+          "caller": "ListElementsByProject",
+          "callee": "rows.Err",
+          "lineNumber": 136
+        },
+        {
+          "caller": "CreateElement",
+          "callee": "time.Now",
+          "lineNumber": 142
+        },
+        {
+          "caller": "CreateElement",
+          "callee": "scanElement",
+          "lineNumber": 155
+        },
+        {
+          "caller": "CreateElement",
+          "callee": "s.db.QueryRowContext",
+          "lineNumber": 155
+        },
+        {
+          "caller": "UpdateElement",
+          "callee": "s.GetElementByIdentifier",
+          "lineNumber": 171
+        },
+        {
+          "caller": "UpdateElement",
+          "callee": "time.Now",
+          "lineNumber": 181
+        },
+        {
+          "caller": "UpdateElement",
+          "callee": "scanElement",
+          "lineNumber": 197
+        },
+        {
+          "caller": "UpdateElement",
+          "callee": "s.db.QueryRowContext",
+          "lineNumber": 197
+        },
+        {
+          "caller": "DeleteElement",
+          "callee": "s.db.ExecContext",
+          "lineNumber": 212
+        },
+        {
+          "caller": "DeleteElement",
+          "callee": "result.RowsAffected",
+          "lineNumber": 216
+        },
+        {
+          "caller": "SearchElements",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 234
+        },
+        {
+          "caller": "SearchElements",
+          "callee": "rows.Close",
+          "lineNumber": 238
+        },
+        {
+          "caller": "SearchElements",
+          "callee": "rows.Next",
+          "lineNumber": 241
+        },
+        {
+          "caller": "SearchElements",
+          "callee": "scanElement",
+          "lineNumber": 242
+        },
+        {
+          "caller": "SearchElements",
+          "callee": "append",
+          "lineNumber": 246
+        },
+        {
+          "caller": "SearchElements",
+          "callee": "rows.Err",
+          "lineNumber": 248
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/element_version_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 176,
+      "nonEmptyLines": 150,
+      "functions": [
+        {
+          "name": "NewElementVersionStore",
+          "startLine": 15,
+          "endLine": 17,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "CreateVersion",
+          "startLine": 19,
+          "endLine": 72,
+          "params": [
+            "ctx",
+            "version",
+            "patch"
+          ]
+        },
+        {
+          "name": "ListVersionsByElement",
+          "startLine": 74,
+          "endLine": 117,
+          "params": [
+            "ctx",
+            "elementIdentifier",
+            "limit",
+            "offset"
+          ]
+        },
+        {
+          "name": "GetPatchesInRange",
+          "startLine": 119,
+          "endLine": 176,
+          "params": [
+            "ctx",
+            "elementIdentifier",
+            "fromVersionNumber",
+            "toVersionNumber"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ElementVersionStore",
+          "startLine": 11,
+          "endLine": 13,
+          "methods": [
+            "CreateVersion",
+            "ListVersionsByElement",
+            "GetPatchesInRange"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ElementVersionStore",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "NewElementVersionStore",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "CreateVersion",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "ListVersionsByElement",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "GetPatchesInRange",
+          "line": 119,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateVersion",
+          "callee": "s.db.BeginTx",
+          "lineNumber": 24
+        },
+        {
+          "caller": "CreateVersion",
+          "callee": "tx.Rollback",
+          "lineNumber": 28
+        },
+        {
+          "caller": "CreateVersion",
+          "callee": "json.Marshal",
+          "lineNumber": 30
+        },
+        {
+          "caller": "CreateVersion",
+          "callee": "json.Marshal",
+          "lineNumber": 35
+        },
+        {
+          "caller": "CreateVersion",
+          "callee": "tx.QueryRowContext(\n\t\tctx,\n\t\tinsertVersionQuery,\n\t\tversion.ElementIdentifier,\n\t\tversion.VersionNumber,\n\t\tversion.ContentSha,\n\t\tversion.CommittedTime,\n\t\tversion.CommittedByIdentifier,\n\t\tversion.CommitMessage,\n\t).Scan",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CreateVersion",
+          "callee": "tx.QueryRowContext",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CreateVersion",
+          "callee": "tx.ExecContext",
+          "lineNumber": 66
+        },
+        {
+          "caller": "CreateVersion",
+          "callee": "tx.Commit",
+          "lineNumber": 71
+        },
+        {
+          "caller": "ListVersionsByElement",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ListVersionsByElement",
+          "callee": "rows.Close",
+          "lineNumber": 92
+        },
+        {
+          "caller": "ListVersionsByElement",
+          "callee": "rows.Next",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ListVersionsByElement",
+          "callee": "rows.Scan",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ListVersionsByElement",
+          "callee": "append",
+          "lineNumber": 109
+        },
+        {
+          "caller": "ListVersionsByElement",
+          "callee": "rows.Err",
+          "lineNumber": 112
+        },
+        {
+          "caller": "GetPatchesInRange",
+          "callee": "s.db.QueryContext",
+          "lineNumber": 135
+        },
+        {
+          "caller": "GetPatchesInRange",
+          "callee": "rows.Close",
+          "lineNumber": 139
+        },
+        {
+          "caller": "GetPatchesInRange",
+          "callee": "rows.Next",
+          "lineNumber": 142
+        },
+        {
+          "caller": "GetPatchesInRange",
+          "callee": "rows.Scan",
+          "lineNumber": 148
+        },
+        {
+          "caller": "GetPatchesInRange",
+          "callee": "json.Unmarshal",
+          "lineNumber": 158
+        },
+        {
+          "caller": "GetPatchesInRange",
+          "callee": "json.Unmarshal",
+          "lineNumber": 163
+        },
+        {
+          "caller": "GetPatchesInRange",
+          "callee": "append",
+          "lineNumber": 168
+        },
+        {
+          "caller": "GetPatchesInRange",
+          "callee": "rows.Err",
+          "lineNumber": 171
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/group_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 273,
+      "nonEmptyLines": 247,
+      "functions": [
+        {
+          "name": "NewGroupStore",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "GetGroupByIdentifier",
+          "startLine": 20,
+          "endLine": 32,
+          "params": [
+            "ctx",
+            "groupIdentifier"
+          ]
+        },
+        {
+          "name": "ListGroups",
+          "startLine": 34,
+          "endLine": 51,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "CreateGroup",
+          "startLine": 53,
+          "endLine": 62,
+          "params": [
+            "ctx",
+            "group"
+          ]
+        },
+        {
+          "name": "DeleteGroup",
+          "startLine": 64,
+          "endLine": 78,
+          "params": [
+            "ctx",
+            "groupIdentifier"
+          ]
+        },
+        {
+          "name": "AddUserToGroup",
+          "startLine": 80,
+          "endLine": 90,
+          "params": [
+            "ctx",
+            "groupIdentifier",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "RemoveUserFromGroup",
+          "startLine": 92,
+          "endLine": 108,
+          "params": [
+            "ctx",
+            "groupIdentifier",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "ListGroupsByUser",
+          "startLine": 110,
+          "endLine": 132,
+          "params": [
+            "ctx",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "ListUsersByGroup",
+          "startLine": 134,
+          "endLine": 157,
+          "params": [
+            "ctx",
+            "groupIdentifier"
+          ]
+        },
+        {
+          "name": "NewGroupProjectAccessStore",
+          "startLine": 164,
+          "endLine": 166,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "SetAccess",
+          "startLine": 168,
+          "endLine": 179,
+          "params": [
+            "ctx",
+            "access"
+          ]
+        },
+        {
+          "name": "RemoveAccess",
+          "startLine": 181,
+          "endLine": 197,
+          "params": [
+            "ctx",
+            "groupIdentifier",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "ListAccessByProject",
+          "startLine": 199,
+          "endLine": 218,
+          "params": [
+            "ctx",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "ListAccessByGroup",
+          "startLine": 220,
+          "endLine": 239,
+          "params": [
+            "ctx",
+            "groupIdentifier"
+          ]
+        },
+        {
+          "name": "GetUserAccessLevel",
+          "startLine": 241,
+          "endLine": 273,
+          "params": [
+            "ctx",
+            "userIdentifier",
+            "projectIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "GroupStore",
+          "startLine": 12,
+          "endLine": 14,
+          "methods": [
+            "GetGroupByIdentifier",
+            "ListGroups",
+            "CreateGroup",
+            "DeleteGroup",
+            "AddUserToGroup",
+            "RemoveUserFromGroup",
+            "ListGroupsByUser",
+            "ListUsersByGroup"
+          ],
+          "properties": [
+            "db"
+          ]
+        },
+        {
+          "name": "GroupProjectAccessStore",
+          "startLine": 160,
+          "endLine": 162,
+          "methods": [
+            "SetAccess",
+            "RemoveAccess",
+            "ListAccessByProject",
+            "ListAccessByGroup",
+            "GetUserAccessLevel"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GroupStore",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewGroupStore",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "GetGroupByIdentifier",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "ListGroups",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "CreateGroup",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteGroup",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "AddUserToGroup",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveUserFromGroup",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "ListGroupsByUser",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "ListUsersByGroup",
+          "line": 134,
+          "isDefault": false
+        },
+        {
+          "name": "GroupProjectAccessStore",
+          "line": 160,
+          "isDefault": false
+        },
+        {
+          "name": "NewGroupProjectAccessStore",
+          "line": 164,
+          "isDefault": false
+        },
+        {
+          "name": "SetAccess",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveAccess",
+          "line": 181,
+          "isDefault": false
+        },
+        {
+          "name": "ListAccessByProject",
+          "line": 199,
+          "isDefault": false
+        },
+        {
+          "name": "ListAccessByGroup",
+          "line": 220,
+          "isDefault": false
+        },
+        {
+          "name": "GetUserAccessLevel",
+          "line": 241,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetGroupByIdentifier",
+          "callee": "store.db.QueryRowContext(ctx,\n\t\t`SELECT group_identifier, group_name FROM groups WHERE group_identifier = $1`, groupIdentifier,\n\t).Scan",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GetGroupByIdentifier",
+          "callee": "store.db.QueryRowContext",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GetGroupByIdentifier",
+          "callee": "fmt.Errorf",
+          "lineNumber": 29
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "store.db.QueryContext",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "fmt.Errorf",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "rows.Close",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "rows.Next",
+          "lineNumber": 43
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "rows.Scan",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "fmt.Errorf",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "append",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ListGroups",
+          "callee": "rows.Err",
+          "lineNumber": 50
+        },
+        {
+          "caller": "CreateGroup",
+          "callee": "store.db.QueryRowContext(ctx,\n\t\t`INSERT INTO groups (group_name) VALUES ($1) RETURNING group_identifier`,\n\t\tgroup.GroupName,\n\t).Scan",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateGroup",
+          "callee": "store.db.QueryRowContext",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 59
+        },
+        {
+          "caller": "DeleteGroup",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 65
+        },
+        {
+          "caller": "DeleteGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 68
+        },
+        {
+          "caller": "DeleteGroup",
+          "callee": "result.RowsAffected",
+          "lineNumber": 70
+        },
+        {
+          "caller": "DeleteGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 72
+        },
+        {
+          "caller": "AddUserToGroup",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 81
+        },
+        {
+          "caller": "AddUserToGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 87
+        },
+        {
+          "caller": "RemoveUserFromGroup",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 93
+        },
+        {
+          "caller": "RemoveUserFromGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 98
+        },
+        {
+          "caller": "RemoveUserFromGroup",
+          "callee": "result.RowsAffected",
+          "lineNumber": 100
+        },
+        {
+          "caller": "RemoveUserFromGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 102
+        },
+        {
+          "caller": "RemoveUserFromGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 105
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "store.db.QueryContext",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "rows.Close",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "rows.Next",
+          "lineNumber": 124
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "rows.Scan",
+          "lineNumber": 126
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "append",
+          "lineNumber": 129
+        },
+        {
+          "caller": "ListGroupsByUser",
+          "callee": "rows.Err",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "store.db.QueryContext",
+          "lineNumber": 135
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 143
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "rows.Close",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "rows.Next",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "rows.Scan",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 152
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "append",
+          "lineNumber": 154
+        },
+        {
+          "caller": "ListUsersByGroup",
+          "callee": "rows.Err",
+          "lineNumber": 156
+        },
+        {
+          "caller": "SetAccess",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 169
+        },
+        {
+          "caller": "SetAccess",
+          "callee": "fmt.Errorf",
+          "lineNumber": 176
+        },
+        {
+          "caller": "RemoveAccess",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 182
+        },
+        {
+          "caller": "RemoveAccess",
+          "callee": "fmt.Errorf",
+          "lineNumber": 187
+        },
+        {
+          "caller": "RemoveAccess",
+          "callee": "result.RowsAffected",
+          "lineNumber": 189
+        },
+        {
+          "caller": "RemoveAccess",
+          "callee": "fmt.Errorf",
+          "lineNumber": 191
+        },
+        {
+          "caller": "RemoveAccess",
+          "callee": "fmt.Errorf",
+          "lineNumber": 194
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "store.db.QueryContext",
+          "lineNumber": 200
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "fmt.Errorf",
+          "lineNumber": 205
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "rows.Close",
+          "lineNumber": 207
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "rows.Next",
+          "lineNumber": 210
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "rows.Scan",
+          "lineNumber": 212
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "fmt.Errorf",
+          "lineNumber": 213
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "append",
+          "lineNumber": 215
+        },
+        {
+          "caller": "ListAccessByProject",
+          "callee": "rows.Err",
+          "lineNumber": 217
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "store.db.QueryContext",
+          "lineNumber": 221
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 226
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "rows.Close",
+          "lineNumber": 228
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "rows.Next",
+          "lineNumber": 231
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "rows.Scan",
+          "lineNumber": 233
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "fmt.Errorf",
+          "lineNumber": 234
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "append",
+          "lineNumber": 236
+        },
+        {
+          "caller": "ListAccessByGroup",
+          "callee": "rows.Err",
+          "lineNumber": 238
+        },
+        {
+          "caller": "GetUserAccessLevel",
+          "callee": "store.db.QueryRowContext(ctx,\n\t\t`SELECT COALESCE(MAX(CASE\n\t\t\tWHEN gpa.access_level = 'admin' THEN 3\n\t\t\tWHEN gpa.access_level = 'write' THEN 2\n\t\t\tWHEN gpa.access_level = 'read'  THEN 1\n\t\t\tELSE 0\n\t\t END), 0)\n\t\t FROM group_memberships gm\n\t\t INNER JOIN group_project_access gpa ON gm.group_identifier = gpa.group_identifier\n\t\t WHERE gm.user_identifier = $1 AND gpa.project_identifier = $2`,\n\t\tuserIdentifier, projectIdentifier,\n\t).Scan",
+          "lineNumber": 243
+        },
+        {
+          "caller": "GetUserAccessLevel",
+          "callee": "store.db.QueryRowContext",
+          "lineNumber": 243
+        },
+        {
+          "caller": "GetUserAccessLevel",
+          "callee": "fmt.Errorf",
+          "lineNumber": 256
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 17,
+        "functionCount": 15,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/phase_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 136,
+      "nonEmptyLines": 113,
+      "functions": [
+        {
+          "name": "NewPhaseStore",
+          "startLine": 17,
+          "endLine": 21,
+          "params": [
+            "database"
+          ]
+        },
+        {
+          "name": "CreatePhase",
+          "startLine": 24,
+          "endLine": 42,
+          "params": [
+            "ctx",
+            "phase"
+          ]
+        },
+        {
+          "name": "ListPhasesByProject",
+          "startLine": 45,
+          "endLine": 81,
+          "params": [
+            "ctx",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "UpdatePhase",
+          "startLine": 84,
+          "endLine": 115,
+          "params": [
+            "ctx",
+            "phase"
+          ]
+        },
+        {
+          "name": "DeletePhase",
+          "startLine": 118,
+          "endLine": 136,
+          "params": [
+            "ctx",
+            "phaseIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "PhaseStore",
+          "startLine": 12,
+          "endLine": 14,
+          "methods": [
+            "CreatePhase",
+            "ListPhasesByProject",
+            "UpdatePhase",
+            "DeletePhase"
+          ],
+          "properties": [
+            "database"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PhaseStore",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewPhaseStore",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "CreatePhase",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "ListPhasesByProject",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "UpdatePhase",
+          "line": 84,
+          "isDefault": false
+        },
+        {
+          "name": "DeletePhase",
+          "line": 118,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreatePhase",
+          "callee": "store.database.QueryRowContext(\n\t\tctx,\n\t\tquery,\n\t\tphase.ProjectIdentifier,\n\t\tphase.PhaseName,\n\t\tphase.PhaseOrder,\n\t\tphase.PlannedStartDate,\n\t\tphase.PlannedEndDate,\n\t).Scan",
+          "lineNumber": 31
+        },
+        {
+          "caller": "CreatePhase",
+          "callee": "store.database.QueryRowContext",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ListPhasesByProject",
+          "callee": "store.database.QueryContext",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ListPhasesByProject",
+          "callee": "rows.Close",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ListPhasesByProject",
+          "callee": "rows.Next",
+          "lineNumber": 60
+        },
+        {
+          "caller": "ListPhasesByProject",
+          "callee": "rows.Scan",
+          "lineNumber": 62
+        },
+        {
+          "caller": "ListPhasesByProject",
+          "callee": "append",
+          "lineNumber": 73
+        },
+        {
+          "caller": "ListPhasesByProject",
+          "callee": "rows.Err",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdatePhase",
+          "callee": "store.database.ExecContext",
+          "lineNumber": 91
+        },
+        {
+          "caller": "UpdatePhase",
+          "callee": "result.RowsAffected",
+          "lineNumber": 105
+        },
+        {
+          "caller": "UpdatePhase",
+          "callee": "fmt.Errorf",
+          "lineNumber": 111
+        },
+        {
+          "caller": "DeletePhase",
+          "callee": "store.database.ExecContext",
+          "lineNumber": 121
+        },
+        {
+          "caller": "DeletePhase",
+          "callee": "result.RowsAffected",
+          "lineNumber": 126
+        },
+        {
+          "caller": "DeletePhase",
+          "callee": "fmt.Errorf",
+          "lineNumber": 132
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 6,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/project_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 218,
+      "nonEmptyLines": 186,
+      "functions": [
+        {
+          "name": "NewProjectStore",
+          "startLine": 18,
+          "endLine": 22,
+          "params": [
+            "database"
+          ]
+        },
+        {
+          "name": "GetProjectByIdentifier",
+          "startLine": 25,
+          "endLine": 50,
+          "params": [
+            "ctx",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "ListProjects",
+          "startLine": 56,
+          "endLine": 104,
+          "params": [
+            "ctx",
+            "folderPathPrefix"
+          ]
+        },
+        {
+          "name": "ListFolderPaths",
+          "startLine": 113,
+          "endLine": 140,
+          "params": [
+            "ctx"
+          ]
+        },
+        {
+          "name": "CreateProject",
+          "startLine": 143,
+          "endLine": 163,
+          "params": [
+            "ctx",
+            "project"
+          ]
+        },
+        {
+          "name": "UpdateProject",
+          "startLine": 166,
+          "endLine": 197,
+          "params": [
+            "ctx",
+            "project"
+          ]
+        },
+        {
+          "name": "DeleteProject",
+          "startLine": 200,
+          "endLine": 218,
+          "params": [
+            "ctx",
+            "projectIdentifier"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ProjectStore",
+          "startLine": 13,
+          "endLine": 15,
+          "methods": [
+            "GetProjectByIdentifier",
+            "ListProjects",
+            "ListFolderPaths",
+            "CreateProject",
+            "UpdateProject",
+            "DeleteProject"
+          ],
+          "properties": [
+            "database"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProjectStore",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "NewProjectStore",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "GetProjectByIdentifier",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "ListProjects",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "ListFolderPaths",
+          "line": 113,
+          "isDefault": false
+        },
+        {
+          "name": "CreateProject",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProject",
+          "line": 166,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteProject",
+          "line": 200,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetProjectByIdentifier",
+          "callee": "store.database.QueryRowContext(ctx, query, projectIdentifier).Scan",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GetProjectByIdentifier",
+          "callee": "store.database.QueryRowContext",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GetProjectByIdentifier",
+          "callee": "fmt.Errorf",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ListProjects",
+          "callee": "append",
+          "lineNumber": 73
+        },
+        {
+          "caller": "ListProjects",
+          "callee": "store.database.QueryContext",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ListProjects",
+          "callee": "rows.Close",
+          "lineNumber": 80
+        },
+        {
+          "caller": "ListProjects",
+          "callee": "rows.Next",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ListProjects",
+          "callee": "rows.Scan",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ListProjects",
+          "callee": "append",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ListProjects",
+          "callee": "rows.Err",
+          "lineNumber": 99
+        },
+        {
+          "caller": "ListFolderPaths",
+          "callee": "store.database.QueryContext",
+          "lineNumber": 124
+        },
+        {
+          "caller": "ListFolderPaths",
+          "callee": "rows.Close",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ListFolderPaths",
+          "callee": "rows.Next",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ListFolderPaths",
+          "callee": "rows.Scan",
+          "lineNumber": 133
+        },
+        {
+          "caller": "ListFolderPaths",
+          "callee": "append",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ListFolderPaths",
+          "callee": "rows.Err",
+          "lineNumber": 139
+        },
+        {
+          "caller": "CreateProject",
+          "callee": "store.database.QueryRowContext(\n\t\tctx,\n\t\tquery,\n\t\tproject.ProjectName,\n\t\tproject.ProjectDescription,\n\t\tproject.FolderPath,\n\t).Scan",
+          "lineNumber": 150
+        },
+        {
+          "caller": "CreateProject",
+          "callee": "store.database.QueryRowContext",
+          "lineNumber": 150
+        },
+        {
+          "caller": "UpdateProject",
+          "callee": "store.database.ExecContext",
+          "lineNumber": 173
+        },
+        {
+          "caller": "UpdateProject",
+          "callee": "time.Now",
+          "lineNumber": 179
+        },
+        {
+          "caller": "UpdateProject",
+          "callee": "result.RowsAffected",
+          "lineNumber": 187
+        },
+        {
+          "caller": "UpdateProject",
+          "callee": "fmt.Errorf",
+          "lineNumber": 193
+        },
+        {
+          "caller": "DeleteProject",
+          "callee": "store.database.ExecContext",
+          "lineNumber": 203
+        },
+        {
+          "caller": "DeleteProject",
+          "callee": "result.RowsAffected",
+          "lineNumber": 208
+        },
+        {
+          "caller": "DeleteProject",
+          "callee": "fmt.Errorf",
+          "lineNumber": 214
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/internal/store/postgres/user_store.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 94,
+      "functions": [
+        {
+          "name": "NewUserStore",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "db"
+          ]
+        },
+        {
+          "name": "GetUserByIdentifier",
+          "startLine": 20,
+          "endLine": 34,
+          "params": [
+            "ctx",
+            "userIdentifier"
+          ]
+        },
+        {
+          "name": "GetUserByExternalIdentity",
+          "startLine": 36,
+          "endLine": 51,
+          "params": [
+            "ctx",
+            "provider",
+            "subject"
+          ]
+        },
+        {
+          "name": "CreateUser",
+          "startLine": 53,
+          "endLine": 64,
+          "params": [
+            "ctx",
+            "user"
+          ]
+        },
+        {
+          "name": "UpdateUser",
+          "startLine": 66,
+          "endLine": 82,
+          "params": [
+            "ctx",
+            "user"
+          ]
+        },
+        {
+          "name": "ListUsers",
+          "startLine": 84,
+          "endLine": 104,
+          "params": [
+            "ctx",
+            "limit",
+            "offset"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "UserStore",
+          "startLine": 12,
+          "endLine": 14,
+          "methods": [
+            "GetUserByIdentifier",
+            "GetUserByExternalIdentity",
+            "CreateUser",
+            "UpdateUser",
+            "ListUsers"
+          ],
+          "properties": [
+            "db"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UserStore",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "NewUserStore",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "GetUserByIdentifier",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "GetUserByExternalIdentity",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUser",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateUser",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "ListUsers",
+          "line": 84,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetUserByIdentifier",
+          "callee": "store.db.QueryRowContext(ctx,\n\t\t`SELECT user_identifier, email, display_name, external_identity_provider, external_identity_subject\n\t\t FROM users WHERE user_identifier = $1`, userIdentifier,\n\t).Scan",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GetUserByIdentifier",
+          "callee": "store.db.QueryRowContext",
+          "lineNumber": 22
+        },
+        {
+          "caller": "GetUserByIdentifier",
+          "callee": "fmt.Errorf",
+          "lineNumber": 31
+        },
+        {
+          "caller": "GetUserByExternalIdentity",
+          "callee": "store.db.QueryRowContext(ctx,\n\t\t`SELECT user_identifier, email, display_name, external_identity_provider, external_identity_subject\n\t\t FROM users WHERE external_identity_provider = $1 AND external_identity_subject = $2`,\n\t\tprovider, subject,\n\t).Scan",
+          "lineNumber": 38
+        },
+        {
+          "caller": "GetUserByExternalIdentity",
+          "callee": "store.db.QueryRowContext",
+          "lineNumber": 38
+        },
+        {
+          "caller": "GetUserByExternalIdentity",
+          "callee": "fmt.Errorf",
+          "lineNumber": 48
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 61
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "store.db.ExecContext",
+          "lineNumber": 67
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 72
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "result.RowsAffected",
+          "lineNumber": 74
+        },
+        {
+          "caller": "UpdateUser",
+          "callee": "fmt.Errorf",
+          "lineNumber": 76
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "store.db.QueryContext",
+          "lineNumber": 85
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "fmt.Errorf",
+          "lineNumber": 90
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "rows.Close",
+          "lineNumber": 92
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "rows.Next",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "rows.Scan",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "fmt.Errorf",
+          "lineNumber": 99
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "append",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ListUsers",
+          "callee": "rows.Err",
+          "lineNumber": 103
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 7,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "projectRoot": "/Users/godboutj/code/project_works",
+  "batchFiles": [
+    {"path": "backend/cmd/integration-test/main.go", "language": "go", "sizeLines": 892, "fileCategory": "code"},
+    {"path": "Dockerfile_tests", "language": "dockerfile", "sizeLines": 27, "fileCategory": "infra"},
+    {"path": "justfile", "language": "make", "sizeLines": 79, "fileCategory": "script"}
+  ],
+  "batchImportData": {
+    "backend/cmd/integration-test/main.go": [],
+    "Dockerfile_tests": [],
+    "justfile": []
+  }
+}

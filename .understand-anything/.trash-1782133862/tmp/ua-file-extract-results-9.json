@@ -1,0 +1,1847 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "backend/cmd/integration-test/main.go",
+      "language": "go",
+      "fileCategory": "code",
+      "totalLines": 892,
+      "nonEmptyLines": 774,
+      "functions": [
+        {
+          "name": "init",
+          "startLine": 39,
+          "endLine": 42,
+          "params": []
+        },
+        {
+          "name": "request",
+          "startLine": 62,
+          "endLine": 104,
+          "params": [
+            "method",
+            "path",
+            "body"
+          ]
+        },
+        {
+          "name": "requestRaw",
+          "startLine": 106,
+          "endLine": 136,
+          "params": [
+            "method",
+            "path",
+            "bodyBytes",
+            "contentType"
+          ]
+        },
+        {
+          "name": "assert",
+          "startLine": 138,
+          "endLine": 147,
+          "params": [
+            "testName",
+            "condition",
+            "format"
+          ]
+        },
+        {
+          "name": "assertStatus",
+          "startLine": 149,
+          "endLine": 159,
+          "params": [
+            "testName",
+            "got",
+            "want"
+          ]
+        },
+        {
+          "name": "getString",
+          "startLine": 161,
+          "endLine": 174,
+          "params": [
+            "m",
+            "key"
+          ]
+        },
+        {
+          "name": "getItems",
+          "startLine": 176,
+          "endLine": 189,
+          "params": [
+            "m"
+          ]
+        },
+        {
+          "name": "testProjectLifecycle",
+          "startLine": 195,
+          "endLine": 260,
+          "params": [
+            "tc"
+          ]
+        },
+        {
+          "name": "testElementLifecycle",
+          "startLine": 262,
+          "endLine": 367,
+          "params": [
+            "tc",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "testLinkLifecycle",
+          "startLine": 369,
+          "endLine": 430,
+          "params": [
+            "tc",
+            "featureIdentifier",
+            "taskIdentifier",
+            "requirementIdentifier"
+          ]
+        },
+        {
+          "name": "testAttachmentLifecycle",
+          "startLine": 432,
+          "endLine": 476,
+          "params": [
+            "tc",
+            "elementIdentifier"
+          ]
+        },
+        {
+          "name": "testVersionLifecycle",
+          "startLine": 478,
+          "endLine": 501,
+          "params": [
+            "tc",
+            "elementIdentifier"
+          ]
+        },
+        {
+          "name": "testPhaseLifecycle",
+          "startLine": 503,
+          "endLine": 543,
+          "params": [
+            "tc",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "testCustomFieldLifecycle",
+          "startLine": 545,
+          "endLine": 618,
+          "params": [
+            "tc",
+            "projectIdentifier"
+          ]
+        },
+        {
+          "name": "testGroupAndAccessLifecycle",
+          "startLine": 620,
+          "endLine": 715,
+          "params": [
+            "tc"
+          ]
+        },
+        {
+          "name": "testUserEndpoints",
+          "startLine": 717,
+          "endLine": 736,
+          "params": [
+            "tc"
+          ]
+        },
+        {
+          "name": "testAuthMeEndpoint",
+          "startLine": 738,
+          "endLine": 748,
+          "params": [
+            "tc"
+          ]
+        },
+        {
+          "name": "writeMarkdownReport",
+          "startLine": 754,
+          "endLine": 821,
+          "params": [
+            "results"
+          ]
+        },
+        {
+          "name": "main",
+          "startLine": 827,
+          "endLine": 891,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "testResult",
+          "startLine": 48,
+          "endLine": 52,
+          "methods": [],
+          "properties": [
+            "name",
+            "passed",
+            "message"
+          ]
+        },
+        {
+          "name": "testContext",
+          "startLine": 54,
+          "endLine": 60,
+          "methods": [
+            "request",
+            "requestRaw",
+            "assert",
+            "assertStatus"
+          ],
+          "properties": [
+            "client",
+            "apiKey",
+            "userIdentifier",
+            "failures",
+            "results"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "init",
+          "callee": "flag.StringVar",
+          "lineNumber": 40
+        },
+        {
+          "caller": "init",
+          "callee": "flag.StringVar",
+          "lineNumber": 41
+        },
+        {
+          "caller": "request",
+          "callee": "json.Marshal",
+          "lineNumber": 65
+        },
+        {
+          "caller": "request",
+          "callee": "fmt.Errorf",
+          "lineNumber": 67
+        },
+        {
+          "caller": "request",
+          "callee": "bytes.NewReader",
+          "lineNumber": 69
+        },
+        {
+          "caller": "request",
+          "callee": "http.NewRequest",
+          "lineNumber": 73
+        },
+        {
+          "caller": "request",
+          "callee": "fmt.Errorf",
+          "lineNumber": 75
+        },
+        {
+          "caller": "request",
+          "callee": "request.Header.Set",
+          "lineNumber": 77
+        },
+        {
+          "caller": "request",
+          "callee": "request.Header.Set",
+          "lineNumber": 79
+        },
+        {
+          "caller": "request",
+          "callee": "tc.client.Do",
+          "lineNumber": 82
+        },
+        {
+          "caller": "request",
+          "callee": "fmt.Errorf",
+          "lineNumber": 84
+        },
+        {
+          "caller": "request",
+          "callee": "response.Body.Close",
+          "lineNumber": 86
+        },
+        {
+          "caller": "request",
+          "callee": "io.ReadAll",
+          "lineNumber": 88
+        },
+        {
+          "caller": "request",
+          "callee": "fmt.Errorf",
+          "lineNumber": 90
+        },
+        {
+          "caller": "request",
+          "callee": "len",
+          "lineNumber": 93
+        },
+        {
+          "caller": "request",
+          "callee": "json.Unmarshal",
+          "lineNumber": 98
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "http.NewRequest",
+          "lineNumber": 108
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "bytes.NewReader",
+          "lineNumber": 108
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "fmt.Errorf",
+          "lineNumber": 110
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "request.Header.Set",
+          "lineNumber": 112
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "request.Header.Set",
+          "lineNumber": 113
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "tc.client.Do",
+          "lineNumber": 115
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "fmt.Errorf",
+          "lineNumber": 117
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "response.Body.Close",
+          "lineNumber": 119
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "io.ReadAll",
+          "lineNumber": 121
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "fmt.Errorf",
+          "lineNumber": 123
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "len",
+          "lineNumber": 126
+        },
+        {
+          "caller": "requestRaw",
+          "callee": "json.Unmarshal",
+          "lineNumber": 131
+        },
+        {
+          "caller": "assert",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 141
+        },
+        {
+          "caller": "assert",
+          "callee": "log.Printf",
+          "lineNumber": 142
+        },
+        {
+          "caller": "assert",
+          "callee": "append",
+          "lineNumber": 143
+        },
+        {
+          "caller": "assert",
+          "callee": "append",
+          "lineNumber": 145
+        },
+        {
+          "caller": "assertStatus",
+          "callee": "fmt.Sprintf",
+          "lineNumber": 152
+        },
+        {
+          "caller": "assertStatus",
+          "callee": "log.Printf",
+          "lineNumber": 153
+        },
+        {
+          "caller": "assertStatus",
+          "callee": "append",
+          "lineNumber": 154
+        },
+        {
+          "caller": "assertStatus",
+          "callee": "append",
+          "lineNumber": 157
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 196
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 199
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 206
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 209
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 210
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "getString",
+          "lineNumber": 213
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 214
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 215
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 218
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 220
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "getItems",
+          "lineNumber": 221
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 222
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "len",
+          "lineNumber": 222
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "len",
+          "lineNumber": 222
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 226
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 228
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 229
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "getString",
+          "lineNumber": 229
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 233
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 238
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 239
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "getString",
+          "lineNumber": 239
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "testElementLifecycle",
+          "lineNumber": 243
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "testPhaseLifecycle",
+          "lineNumber": 244
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "testCustomFieldLifecycle",
+          "lineNumber": 245
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 248
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 250
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 254
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 256
+        },
+        {
+          "caller": "testProjectLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 259
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 263
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 266
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 271
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 272
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "getString",
+          "lineNumber": 275
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 276
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 277
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 280
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 288
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 289
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "getString",
+          "lineNumber": 292
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 293
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 296
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 302
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "getString",
+          "lineNumber": 305
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 306
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 309
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 311
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "getItems",
+          "lineNumber": 312
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 313
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "len",
+          "lineNumber": 313
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "len",
+          "lineNumber": 313
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 317
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 319
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "getItems",
+          "lineNumber": 320
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 321
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "len",
+          "lineNumber": 321
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 325
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 327
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 328
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "getString",
+          "lineNumber": 328
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 332
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 339
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 340
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "getString",
+          "lineNumber": 340
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 344
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 346
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "testLinkLifecycle",
+          "lineNumber": 350
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "testAttachmentLifecycle",
+          "lineNumber": 353
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "testVersionLifecycle",
+          "lineNumber": 356
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 360
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 362
+        },
+        {
+          "caller": "testElementLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 366
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 370
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 373
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 377
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 378
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "getString",
+          "lineNumber": 381
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 382
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 383
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 386
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 390
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "getString",
+          "lineNumber": 393
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 394
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 397
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 399
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "getItems",
+          "lineNumber": 400
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 401
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "len",
+          "lineNumber": 401
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 405
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 407
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "getItems",
+          "lineNumber": 408
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 409
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "len",
+          "lineNumber": 409
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "len",
+          "lineNumber": 409
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 413
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 417
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 418
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "getString",
+          "lineNumber": 418
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 423
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 425
+        },
+        {
+          "caller": "testLinkLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 429
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 433
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.requestRaw",
+          "lineNumber": 438
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 445
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "getString",
+          "lineNumber": 448
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 449
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 450
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "getString",
+          "lineNumber": 450
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 451
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 454
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 456
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "getItems",
+          "lineNumber": 457
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 458
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "len",
+          "lineNumber": 458
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 462
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 465
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 470
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 472
+        },
+        {
+          "caller": "testAttachmentLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 475
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 479
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 482
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 484
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "getItems",
+          "lineNumber": 485
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 486
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "len",
+          "lineNumber": 486
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "getItems",
+          "lineNumber": 491
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "len",
+          "lineNumber": 492
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 493
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 495
+        },
+        {
+          "caller": "testVersionLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 500
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 504
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 507
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 511
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 512
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "getString",
+          "lineNumber": 515
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 516
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 517
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 520
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 522
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "getItems",
+          "lineNumber": 523
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 524
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "len",
+          "lineNumber": 524
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 528
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 533
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 537
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 539
+        },
+        {
+          "caller": "testPhaseLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 542
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 546
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 549
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 555
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "getString",
+          "lineNumber": 558
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 561
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 568
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 569
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "getString",
+          "lineNumber": 572
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 573
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 574
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 577
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 579
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "getItems",
+          "lineNumber": 580
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 581
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "len",
+          "lineNumber": 581
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 585
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 591
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 595
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 597
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "getItems",
+          "lineNumber": 598
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 599
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "len",
+          "lineNumber": 599
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 603
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 605
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 609
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 611
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 615
+        },
+        {
+          "caller": "testCustomFieldLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 617
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 621
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 624
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 627
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 628
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "getString",
+          "lineNumber": 631
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 632
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "log.Printf",
+          "lineNumber": 633
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 636
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 638
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "getItems",
+          "lineNumber": 639
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 640
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "len",
+          "lineNumber": 640
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 644
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 648
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 652
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 654
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "getItems",
+          "lineNumber": 655
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 656
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "len",
+          "lineNumber": 656
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 660
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 664
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "getString",
+          "lineNumber": 665
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 670
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 675
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 679
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 681
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "getItems",
+          "lineNumber": 682
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assert",
+          "lineNumber": 683
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "len",
+          "lineNumber": 683
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 687
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 689
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 693
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 695
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 699
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 703
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 705
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.request",
+          "lineNumber": 709
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "tc.assertStatus",
+          "lineNumber": 711
+        },
+        {
+          "caller": "testGroupAndAccessLifecycle",
+          "callee": "log.Println",
+          "lineNumber": 714
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "log.Println",
+          "lineNumber": 718
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "tc.request",
+          "lineNumber": 721
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "tc.assertStatus",
+          "lineNumber": 723
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "getItems",
+          "lineNumber": 724
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "tc.assert",
+          "lineNumber": 725
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "len",
+          "lineNumber": 725
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "tc.request",
+          "lineNumber": 729
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "tc.assertStatus",
+          "lineNumber": 731
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "tc.assert",
+          "lineNumber": 732
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "getString",
+          "lineNumber": 732
+        },
+        {
+          "caller": "testUserEndpoints",
+          "callee": "log.Println",
+          "lineNumber": 735
+        },
+        {
+          "caller": "testAuthMeEndpoint",
+          "callee": "log.Println",
+          "lineNumber": 739
+        },
+        {
+          "caller": "testAuthMeEndpoint",
+          "callee": "tc.request",
+          "lineNumber": 741
+        },
+        {
+          "caller": "testAuthMeEndpoint",
+          "callee": "tc.assertStatus",
+          "lineNumber": 743
+        },
+        {
+          "caller": "testAuthMeEndpoint",
+          "callee": "tc.assert",
+          "lineNumber": 744
+        },
+        {
+          "caller": "testAuthMeEndpoint",
+          "callee": "getString",
+          "lineNumber": 744
+        },
+        {
+          "caller": "testAuthMeEndpoint",
+          "callee": "log.Println",
+          "lineNumber": 747
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "os.MkdirAll",
+          "lineNumber": 755
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "log.Printf",
+          "lineNumber": 756
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "os.Create",
+          "lineNumber": 759
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "log.Printf",
+          "lineNumber": 761
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "f.Close",
+          "lineNumber": 764
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "len",
+          "lineNumber": 788
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "append",
+          "lineNumber": 789
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 802
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 803
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "time.Now().UTC().Format",
+          "lineNumber": 803
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "time.Now().UTC",
+          "lineNumber": 803
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "time.Now",
+          "lineNumber": 803
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 804
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 805
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 811
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "strings.ReplaceAll",
+          "lineNumber": 812
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 813
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 816
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 817
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 818
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 819
+        },
+        {
+          "caller": "writeMarkdownReport",
+          "callee": "fmt.Fprintf",
+          "lineNumber": 820
+        },
+        {
+          "caller": "main",
+          "callee": "flag.Parse",
+          "lineNumber": 828
+        },
+        {
+          "caller": "main",
+          "callee": "log.SetFlags",
+          "lineNumber": 830
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 831
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 832
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 833
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 834
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 835
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 838
+        },
+        {
+          "caller": "main",
+          "callee": "http.NewRequest",
+          "lineNumber": 842
+        },
+        {
+          "caller": "main",
+          "callee": "request.Header.Set",
+          "lineNumber": 843
+        },
+        {
+          "caller": "main",
+          "callee": "client.Do",
+          "lineNumber": 844
+        },
+        {
+          "caller": "main",
+          "callee": "response.Body.Close",
+          "lineNumber": 846
+        },
+        {
+          "caller": "main",
+          "callee": "time.Sleep",
+          "lineNumber": 852
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatal",
+          "lineNumber": 855
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 857
+        },
+        {
+          "caller": "main",
+          "callee": "tc.request",
+          "lineNumber": 864
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatalf",
+          "lineNumber": 866
+        },
+        {
+          "caller": "main",
+          "callee": "getString",
+          "lineNumber": 868
+        },
+        {
+          "caller": "main",
+          "callee": "log.Fatal",
+          "lineNumber": 870
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 872
+        },
+        {
+          "caller": "main",
+          "callee": "testAuthMeEndpoint",
+          "lineNumber": 875
+        },
+        {
+          "caller": "main",
+          "callee": "testUserEndpoints",
+          "lineNumber": 876
+        },
+        {
+          "caller": "main",
+          "callee": "testGroupAndAccessLifecycle",
+          "lineNumber": 877
+        },
+        {
+          "caller": "main",
+          "callee": "testProjectLifecycle",
+          "lineNumber": 878
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 881
+        },
+        {
+          "caller": "main",
+          "callee": "writeMarkdownReport",
+          "lineNumber": 882
+        },
+        {
+          "caller": "main",
+          "callee": "log.Printf",
+          "lineNumber": 884
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 885
+        },
+        {
+          "caller": "main",
+          "callee": "os.Exit",
+          "lineNumber": 886
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 888
+        },
+        {
+          "caller": "main",
+          "callee": "log.Println",
+          "lineNumber": 889
+        },
+        {
+          "caller": "main",
+          "callee": "os.Exit",
+          "lineNumber": 890
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 19,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "Dockerfile_tests",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 27,
+      "nonEmptyLines": 19,
+      "metrics": {}
+    },
+    {
+      "path": "justfile",
+      "language": "make",
+      "fileCategory": "script",
+      "totalLines": 79,
+      "nonEmptyLines": 59,
+      "metrics": {}
+    }
+  ]
+}

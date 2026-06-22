@@ -1,0 +1,148 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 2,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "docker-compose.yaml",
+      "language": "yaml",
+      "fileCategory": "infra",
+      "totalLines": 66,
+      "nonEmptyLines": 63,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "services",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "networks",
+          "level": 1,
+          "line": 64
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 28,
+      "nonEmptyLines": 16,
+      "services": [
+        {
+          "name": "builder",
+          "image": "golang:1.26-alpine",
+          "ports": [],
+          "startLine": 1,
+          "endLine": 16
+        },
+        {
+          "name": "alpine",
+          "image": "alpine:3.20",
+          "ports": [
+            8088
+          ],
+          "startLine": 17,
+          "endLine": 29
+        }
+      ],
+      "steps": [
+        {
+          "name": "FROM golang:1.26-alpine AS builder",
+          "startLine": 1,
+          "endLine": 1
+        },
+        {
+          "name": "RUN apk add --no-cache git",
+          "startLine": 3,
+          "endLine": 3
+        },
+        {
+          "name": "WORKDIR /build",
+          "startLine": 5,
+          "endLine": 5
+        },
+        {
+          "name": "COPY backend/go.mod backend/go.sum* ./",
+          "startLine": 7,
+          "endLine": 7
+        },
+        {
+          "name": "RUN go mod download",
+          "startLine": 8,
+          "endLine": 8
+        },
+        {
+          "name": "COPY backend/ .",
+          "startLine": 10,
+          "endLine": 10
+        },
+        {
+          "name": "RUN go mod tidy",
+          "startLine": 11,
+          "endLine": 11
+        },
+        {
+          "name": "RUN CGO_ENABLED=0 GOOS=linux go build -o /build/project-works-se",
+          "startLine": 13,
+          "endLine": 13
+        },
+        {
+          "name": "FROM alpine:3.20",
+          "startLine": 17,
+          "endLine": 17
+        },
+        {
+          "name": "RUN apk add --no-cache ca-certificates tzdata",
+          "startLine": 19,
+          "endLine": 19
+        },
+        {
+          "name": "WORKDIR /app",
+          "startLine": 21,
+          "endLine": 21
+        },
+        {
+          "name": "COPY --from=builder /build/project-works-server /app/project-work",
+          "startLine": 23,
+          "endLine": 23
+        },
+        {
+          "name": "COPY --from=builder /build/migrations /app/migrations",
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "name": "EXPOSE 8088",
+          "startLine": 26,
+          "endLine": 26
+        },
+        {
+          "name": "ENTRYPOINT [\"/app/project-works-server\"]",
+          "startLine": 28,
+          "endLine": 28
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "serviceCount": 2,
+        "stepCount": 15
+      }
+    }
+  ]
+}

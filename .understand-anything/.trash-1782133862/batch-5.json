@@ -1,0 +1,33 @@
+{
+  "nodes": [
+    {
+      "id": "pipeline:.github/workflows/package.yml",
+      "type": "pipeline",
+      "name": "package.yml",
+      "filePath": ".github/workflows/package.yml",
+      "summary": "Currently empty GitHub Actions workflow placeholder, presumably reserved for a future packaging or release pipeline.",
+      "tags": ["ci-cd", "infrastructure", "deployment", "placeholder"],
+      "complexity": "simple",
+      "languageNotes": "Empty file (0 non-empty lines); no workflow defined yet."
+    },
+    {
+      "id": "pipeline:.github/workflows/tests.yml",
+      "type": "pipeline",
+      "name": "tests.yml",
+      "filePath": ".github/workflows/tests.yml",
+      "summary": "GitHub Actions workflow that builds a test Docker image and runs the unit-test suite (via 'just unit-test-ci') on pushes and pull requests targeting the dev branch, then uploads JSON/Markdown test reports as artifacts.",
+      "tags": ["ci-cd", "infrastructure", "test", "containerization", "deployment"],
+      "complexity": "simple",
+      "languageNotes": "Runs tests inside a Docker container built from Dockerfile_tests, mounting a host volume for test-results and surfacing the Markdown report in the GitHub step summary."
+    }
+  ],
+  "edges": [
+    {
+      "source": "pipeline:.github/workflows/tests.yml",
+      "target": "service:Dockerfile_tests",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}
