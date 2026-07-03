@@ -77,3 +77,12 @@ integration-test-run-docker:
     # Run integration tests in a Docker container. This command assumes that the backend service is running and accessible at the specified base URL.
     mkdir -p test-results
     docker run --rm --network project_works_app_network -v "$(pwd)/test-results:/app/test-results" -w /app project-works-test:latest -c "just integration-test-run"
+
+#################
+# Frontend 
+
+frontend-install:
+    cd frontend && npm install && npm run codegen
+
+frontend-run:
+    cd frontend && npm run dev

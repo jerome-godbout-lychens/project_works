@@ -1,0 +1,11 @@
+{
+  "sso": {
+    "providers": [
+      { "id": "microsoft", "label": "Sign in with Microsoft", "enabled": true },
+      { "id": "google", "label": "Sign in with Google", "enabled": false },
+      { "id": "apple", "label": "Sign in with Apple", "enabled": false }
+    ],
+    "allowedDomain": "lichens.ai",
+    "enterpriseRestriction": true
+  }
+}

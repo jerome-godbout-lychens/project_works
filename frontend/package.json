@@ -1,0 +1,38 @@
+{
+  "name": "project-works-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsr generate && tsc -b && vite build",
+    "preview": "vite preview",
+    "codegen": "openapi-ts",
+    "routes:gen": "tsr generate"
+  },
+  "dependencies": {
+    "@hey-api/client-fetch": "^0.13.1",
+    "@radix-ui/react-slot": "^1.3.0",
+    "@tanstack/react-query": "^5.101.2",
+    "@tanstack/react-router": "^1.170.17",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.23.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.97.3",
+    "@tailwindcss/vite": "^4.3.2",
+    "@tanstack/router-cli": "^1.167.18",
+    "@tanstack/router-plugin": "^1.168.19",
+    "@types/node": "^26.1.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.1.3"
+  }
+}
